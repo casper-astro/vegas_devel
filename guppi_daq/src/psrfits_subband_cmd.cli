@@ -1,0 +1,30 @@
+Name psrfits_subband
+
+Usage "\nPartially de-disperse and subband PSRFITS search-mode data.\n"
+
+Version [exec date +%d%b%y]
+
+Commandline full_cmd_line
+
+# Options (in order you want them to appear)
+Double -dm       dm       {Dispersion measure to use for the subband de-dispersion} \
+    -r 0.0 10000.0  -d 0.0
+Int    -nsub     nsub     {Number of output frequency subbands} \
+    -r 1 4096
+Int    -dstime   dstime   {Power-of-2 number of samples to average in time} \
+    -r 1 128 -d 1
+Int    -startfile startfile {Starting file number of sequence} \
+    -r 1 2000 -d 1
+Int    -numfiles  numfiles  {Number of files to process} \
+    -r 1 2000
+Float  -filetime filetime {Desired length of the resulting files in sec} \
+    -r 0.0 100000.0
+Float  -filelen  filelen  {Desired length of the resulting files in GB} \
+    -r 0.0 1000.0
+Flag   -bytes    bytes    {Make the raw data unsigned chars instead of signed shorts}
+Flag   -onlyI    inlyI    {Only output total intensity data}
+String -weights  wgtsfile {Filename containing ASCII list of channels and weights to use}
+
+# Rest of command line:
+Rest infile {Input file name(s) of the PSRFITs datafiles} \
+        -c 1 2000

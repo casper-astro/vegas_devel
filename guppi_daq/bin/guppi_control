@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Accept command-line arguments.  Run interactively.
+exec /opt/64bit/guppi/bin/guppi

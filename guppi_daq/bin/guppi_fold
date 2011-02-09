@@ -1,0 +1,27 @@
+#! /usr/bin/env python
+import os, sys, time
+
+# Check for ongoing observations
+if (os.popen("pgrep guppi_daq").read() != ""):
+    print "guppi_fold: Error: Another GUPPI datataking process is currently running."
+    sys.exit(1)
+
+# Check for test_net_thread
+if (os.popen("pgrep test_net_thread").read() != ""):
+    print "guppi_fold: Error: Stop test_net_thread before running guppi_fold."
+    sys.exit(1)
+
+# connect to bee2 client
+from guppi.client import Client
+cicada = Client()
+
+cmd = os.path.join(os.environ['GUPPI_DIR'], "bin/guppi_daq_fold")
+
+# Set extra arm
+cicada.arm()
+time.sleep(2)
+pid = os.spawnl(os.P_NOWAIT, cmd, "guppi_daq_fold")
+time.sleep(3)
+cicada.arm()
+os.waitpid(pid,0)
+
