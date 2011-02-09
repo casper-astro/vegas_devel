@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
     }
 
     /* Launch PSRFITS disk thread */
-    pthread_t disk_thread_id;
+/*    pthread_t disk_thread_id;
     rv = pthread_create(&disk_thread_id, NULL, guppi_psrfits_thread, 
             (void *)&disk_args);
     if (rv) { 
@@ -73,21 +73,21 @@ int main(int argc, char *argv[]) {
         perror("pthread_create");
         exit(1);
     }
-
+*/
     /* Wait for end */
     run=1;
     while (run) { 
         sleep(1); 
         if (disk_args.finished) run=0;
     }
-    pthread_cancel(disk_thread_id);
+//    pthread_cancel(disk_thread_id);
     pthread_cancel(net_thread_id);
-    pthread_kill(disk_thread_id,SIGINT);
+//    pthread_kill(disk_thread_id,SIGINT);
     pthread_kill(net_thread_id,SIGINT);
     pthread_join(net_thread_id,NULL);
     printf("Joined net thread\n"); fflush(stdout);
-    pthread_join(disk_thread_id,NULL);
-    printf("Joined disk thread\n"); fflush(stdout);
+//    pthread_join(disk_thread_id,NULL);
+//    printf("Joined disk thread\n"); fflush(stdout);
 
     guppi_thread_args_destroy(&disk_args);
 
