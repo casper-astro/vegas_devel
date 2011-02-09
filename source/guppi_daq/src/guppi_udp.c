@@ -131,6 +131,7 @@ unsigned long long guppi_udp_packet_seq_num(const struct guppi_udp_packet *p) {
 #define PACKET_SIZE_1SFA_OLD ((size_t)8160)
 #define PACKET_SIZE_FAST4K ((size_t)4128)
 #define PACKET_SIZE_PASP ((size_t)528)
+#define PACKET_SIZE_SPEAD ((size_t)8248)
 
 size_t guppi_udp_packet_datasize(size_t packet_size) {
     /* Special case for the new "1SFA" packets, which have an extra
@@ -144,6 +145,8 @@ size_t guppi_udp_packet_datasize(size_t packet_size) {
     else if (packet_size==PACKET_SIZE_SHORT) 
         //return((size_t)256);
         return((size_t)512);
+	else if (packet_size=PACTET_SIZE_SPEAD)
+		return(packet_size -4*sizeof(unsigned long long)); // 8248-8*8
     else              
         return(packet_size - 2*sizeof(unsigned long long));
 }
