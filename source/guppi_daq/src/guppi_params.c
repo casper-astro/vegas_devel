@@ -30,7 +30,7 @@
 #define get_dbl(key, param, def) {                                      \
         if (hgetr8(buf, (key), &(param))==0) {                          \
             if (DEBUGOUT)                                               \
-                printf("Warning:  %s not in status shm!\n", (key));     \
+                printf("Warning:%s not in status shm\n ", (key));       \
             (param) = (def);                                            \
         }                                                               \
     }
@@ -135,6 +135,8 @@ void guppi_read_net_params(char *buf, struct guppi_udp_params *u) {
         u->packet_size = 4128;
     else if (strncmp(u->packet_format, "SHORT", 5)==0)
         u->packet_size = 544;
+	else if (strncmp(u->packet_format, "SPEAD", 5)==0)
+		u->packet_size = 8248;
     else
         u->packet_size = 8208;
 }
