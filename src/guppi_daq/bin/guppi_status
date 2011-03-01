@@ -1,0 +1,6 @@
+#! /bin/bash
+if test "${GUPPI_DIR}zz" = zz; then
+	echo "Error: GUPPI_DIR environment variable not set, exiting."
+	exit 1
+fi
+python $GUPPI_DIR/python/guppi_status_monitor.py
