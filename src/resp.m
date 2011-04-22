@@ -8,4 +8,3 @@ adc_vals_out=adc_dump.signals.values(1:end,1:end);
 %number of elements
 numel(adc_vals_out)
 
-
