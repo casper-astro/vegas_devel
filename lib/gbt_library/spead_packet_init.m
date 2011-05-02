@@ -1,5 +1,9 @@
 function spead_packet(spead_msw, spead_lsw, pkt_bits, fifo_latency)
 % function spead_packet(blk,vararg)
+% Default to spead_msw:64
+%            spead_lsw:40
+%            pkt_bits:12
+%            fifo_latency:4
 % This is a generated function based on subsystem:
 %     SPEAD_packetizer/spead_packet
 % Though there are limitations about the generated script, 
