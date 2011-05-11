@@ -11,10 +11,24 @@ sys.stdout.flush()
 # Connection to local controller (on beef)
 g = Client()
 
+#nodelist = (
+#        'gpu1',
+#        'gpu2',
+#        'gpu9',
+#        'gpu4',
+#        'gpu5',
+#        'gpu6',
+#        'gpu7',
+#        'gpu8')
+
 # Direct connections to gpu nodes daq servers
 gpu_g = {}
 for i in range(1,9): 
-    node = 'gpu%d' % i
+    #node = 'gpu%d' % i
+    #node = nodelist[i-1]
+    node = guppi2.node(i-1)
+    print "NODE(%d) = %s" % (i-1,node)
+    sys.stdout.flush()
     gpu_g[node] = Client(host=node)
 
 # Parameters we don't want to send
@@ -24,15 +38,25 @@ nosend = ['DAQPULSE', 'DAQSTATE', 'DISKSTAT', 'NETSTAT', 'FOLDSTAT',
 
 # GPU setup params:
 # BEE2 IP addrs for each node
+#datahost = {
+#        'gpu1': '10.17.0.20',
+#        'gpu2': '10.17.0.21',
+#        'gpu9': '10.17.0.22',
+#        'gpu4': '10.17.0.23',
+#        'gpu5': '10.17.0.20',
+#        'gpu6': '10.17.0.21',
+#        'gpu7': '10.17.0.22',
+#        'gpu8': '10.17.0.23'
+#        }
 datahost = {
-        'gpu1': '192.168.3.20',
-        'gpu2': '192.168.3.21',
-        'gpu3': '192.168.3.22',
-        'gpu4': '192.168.3.23',
-        'gpu5': '192.168.3.20',
-        'gpu6': '192.168.3.21',
-        'gpu7': '192.168.3.22',
-        'gpu8': '192.168.3.23'
+        guppi2.node(0): '10.17.0.20',
+        guppi2.node(1): '10.17.0.21',
+        guppi2.node(2): '10.17.0.22',
+        guppi2.node(3): '10.17.0.23',
+        guppi2.node(4): '10.17.0.20',
+        guppi2.node(5): '10.17.0.21',
+        guppi2.node(6): '10.17.0.22',
+        guppi2.node(7): '10.17.0.23'
         }
 # dir for parfiles on cluster
 pardir = "/home/gpu/tzpar"
@@ -75,7 +99,8 @@ while run:
         # Parfile-related parameters
         parfile_full = daqparam['DAQ/PARFILE']
         parfile = ''
-        if parfile_full != None and parfile_full != '': 
+        if parfile_full != None and parfile_full != '' \
+                and parfile_full != 'None': 
             parfile = parfile_full.split('/')[-1]
             os.system("cp %s /export/%s/" % (parfile_full, pardir))
             try:
@@ -90,7 +115,9 @@ while run:
         gpuset = {}
         for i in range(1,9):
 
-            node = "gpu%d" % i
+            #node = "gpu%d" % i
+            #node = nodelist[i-1]
+            node = guppi2.node(i-1)
 
             # For going through beef's controller:
             #gpukeys = ["%s/%s" % (node.upper(), k) for k in daqkeys]
@@ -113,6 +140,7 @@ while run:
             gpuset[pfx+'OBSNCHAN'] = repr(node_nchan)
             gpuset[pfx+'TBIN'] = repr(abs(1e-6*nchan/bw))
             gpuset[pfx+'DATADIR'] = '/data/gpu/partial/' + node
+            gpuset[pfx+'POL_TYPE'] = 'AABBCRCI'
             gpuset[pfx+'SCALE0'] = '1.0'
             gpuset[pfx+'SCALE1'] = '1.0'
             gpuset[pfx+'SCALE2'] = '1.0'
@@ -131,7 +159,12 @@ while run:
             gpuset[pfx+'BLOCSIZE'] = repr(blocsize)
 
             # Set using a direct connection to each node's server:
-            gpu_g[node].set(gpuset)
+            try:
+                gpu_g[node].set(gpuset)
+            except KeyboardInterrupt:
+                run=False
+            except:
+                pass
 
         # Set using a single call to beef's server (this is slower):
         #g.set(gpuset)

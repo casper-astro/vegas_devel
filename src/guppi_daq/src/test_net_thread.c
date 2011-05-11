@@ -24,7 +24,7 @@
 void usage() {
     fprintf(stderr,
             "Usage: test_net_thread [options] [sender_hostname]\n"
-            "Default hostname: bee2_10\n"
+            "Default hostname: bee2-10\n"
             "Options:\n"
             "  -h, --help        This message\n"
             "  -d, --disk        Write raw data to disk (default no)\n"

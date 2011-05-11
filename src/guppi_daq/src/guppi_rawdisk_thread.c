@@ -17,6 +17,7 @@
 
 #include "fitshead.h"
 #include "psrfits.h"
+#include "quantization.h"
 #include "guppi_error.h"
 #include "guppi_status.h"
 #include "guppi_databuf.h"
@@ -102,11 +103,17 @@ void guppi_rawdisk_thread(void *_args) {
     FILE *fraw = NULL;
     pthread_cleanup_push((void *)safe_fclose, fraw);
 
+    /* Pointers for quantization params */
+    double *mean = NULL;
+    double *std = NULL;
+
     /* Loop */
     int packetidx=0, npacket=0, ndrop=0, packetsize=0, blocksize=0;
+    int orig_blocksize=0;
     int curblock=0;
     int block_count=0, blocks_per_file=128, filenum=0;
     int got_packet_0=0, first=1;
+    int requantize = 0;
     char *ptr, *hend;
     signal(SIGINT,cc);
     while (run) {
@@ -134,12 +141,33 @@ void guppi_rawdisk_thread(void *_args) {
         hgeti4(ptr, "PKTSIZE", &packetsize);
         hgeti4(ptr, "NPKT", &npacket);
         hgeti4(ptr, "NDROP", &ndrop);
-        hgeti4(ptr, "BLOCSIZE", &blocksize);
+
+        /* Check for re-quantization flag */
+        int nbits_req = 0;
+        if (hgeti4(ptr, "NBITSREQ", &nbits_req) == 0) {
+            /* Param not present, don't requantize */
+            requantize = 0;
+        } else {
+            /* Param is present */
+            if (nbits_req==8)
+                requantize = 0;
+            else if (nbits_req==2) 
+                requantize = 1;
+            else
+                /* Invalid selection for requested nbits 
+                 * .. die or ignore?
+                 */
+                requantize = 0;
+        }
+
+        /* Set up data ptr for quant routines */
+        pf.sub.data = (unsigned char *)guppi_databuf_data(db, curblock);
 
         /* Wait for packet 0 before starting write */
         if (got_packet_0==0 && packetidx==0 && gp.stt_valid==1) {
             got_packet_0 = 1;
             guppi_read_obs_params(ptr, &gp, &pf);
+            orig_blocksize = pf.sub.bytes_per_subint;
             char fname[256];
             sprintf(fname, "%s.%4.4d.raw", pf.basefilename, filenum);
             fprintf(stderr, "Opening raw file '%s'\n", fname);
@@ -148,6 +176,15 @@ void guppi_rawdisk_thread(void *_args) {
             if (fraw==NULL) {
                 guppi_error("guppi_rawdisk_thread", "Error opening file.");
                 pthread_exit(NULL);
+            }
+            /* Determine scaling factors for quantization if appropriate */
+            if (requantize) {
+                mean = (double *)realloc(mean, 
+                        pf.hdr.rcvr_polns * pf.hdr.nchan * sizeof(double));
+                std  = (double *)realloc(std,  
+                        pf.hdr.rcvr_polns * pf.hdr.nchan * sizeof(double));
+                compute_stat(&pf, mean, std);
+                fprintf(stderr, "Computed 2-bit stats\n");
             }
         }
         
@@ -168,6 +205,21 @@ void guppi_rawdisk_thread(void *_args) {
 
         /* See how full databuf is */
         //total_status = guppi_databuf_total_status(db);
+
+        /* Requantize from 8 bits to 2 bits if necessary.
+         * See raw_quant.c for more usage examples.
+         */
+        if (requantize && got_packet_0) {
+            pf.sub.bytes_per_subint = orig_blocksize;
+            /* Does the quantization in-place */
+            quantize_2bit(&pf, mean, std);
+            /* Update some parameters for output */
+            hputi4(ptr, "BLOCSIZE", pf.sub.bytes_per_subint);
+            hputi4(ptr, "NBITS", pf.hdr.nbits);
+        }
+
+        /* Get full data block size */
+        hgeti4(ptr, "BLOCSIZE", &blocksize);
 
         /* If we got packet 0, write data to disk */
         if (got_packet_0) { 

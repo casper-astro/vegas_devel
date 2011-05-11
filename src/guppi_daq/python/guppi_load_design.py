@@ -31,8 +31,8 @@ par.add_option("-f", "--force", dest="force",
 # TODO if load order matters we may want to change some of this
 
 # BEE2 IP Addr settings
-ip_text = 'begin\nmac = 10:10:10:10:10:11\nip = 192.168.3.8\n' + \
-        'gateway = 192.168.3.8\nport = 50000\nend\n'
+ip_text = 'begin\nmac = 10:10:10:10:10:11\nip = 10.17.0.8\n' + \
+        'gateway = 10.17.0.8\nport = 50000\nend\n'
 
 # Standard 2k mode
 bofs_2k = [
@@ -62,7 +62,7 @@ init_2k = {
         'BEE2/FPGA2/SCALE_U':'01000000',
         'BEE2/FPGA2/SCALE_V':'01000000',
         'BEE2/FPGA2/ACC_LENGTH':'0000000f',
-        'BEE2/FPGA2/DEST_IP':'c0a80307',
+        'BEE2/FPGA2/DEST_IP':'0a110007',
         'BEE2/FPGA2/DEST_PORT':'0000c350',
         'BEE2/FPGA2/DC_BINS_EN':'00000001',
         'BEE2/FPGA2/ten_GbE':hexlify(ip_text)
@@ -94,7 +94,7 @@ init_4k_1sfa = {
         'BEE2/FPGA2/SCALE_U':'01000000',
         'BEE2/FPGA2/SCALE_V':'01000000',
         'BEE2/FPGA2/ACC_LENGTH':'0000000f',
-        'BEE2/FPGA2/DEST_IP':'c0a80307',
+        'BEE2/FPGA2/DEST_IP':'0a110007',
         'BEE2/FPGA2/DEST_PORT':'0000c350',
         'BEE2/FPGA2/DC_BINS_EN':'00000001',
         'BEE2/FPGA2/GUPPi_PIPES_BW_SEL':'00000002',
