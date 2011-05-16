@@ -28,6 +28,7 @@
 
 #define STATUS_KEY "NETSTAT"  /* Define before guppi_threads.h */
 #include "guppi_threads.h"
+#include "guppi_defines.h"
 
 // Read a status buffer all of the key observation paramters
 extern void guppi_read_obs_params(char *buf, 
@@ -142,10 +143,17 @@ void write_baseband_packet_to_block(struct datablock_stats *d,
 
     const unsigned long long seq_num = guppi_udp_packet_seq_num(p);
     int block_pkt_idx = seq_num - d->packet_idx;
+
+#ifdef NEW_GBT
+    guppi_udp_packet_data_copy(guppi_databuf_data(d->db, 0), p);
+
+#else
+
     guppi_udp_packet_data_copy_transpose(
             guppi_databuf_data(d->db, d->block_idx),
             nchan, block_pkt_idx, 
             d->packets_per_block, p);
+#endif
 
     /* Consider any skipped packets to have been dropped,
      * update counters.
@@ -323,7 +331,7 @@ void *guppi_net_thread(void *_args) {
 
     /* Misc counters, etc */
     char *curdata=NULL, *curheader=NULL;
-    unsigned long long seq_num, last_seq_num=2048, nextblock_seq_num=0;
+    unsigned long long seq_num=0, last_seq_num=2048, nextblock_seq_num=0;
     long long seq_num_diff;
     double drop_frac_avg=0.0;
     const double drop_lpf = 0.25;
@@ -352,7 +360,7 @@ void *guppi_net_thread(void *_args) {
                 pthread_exit(NULL);
             }
         }
-
+	
         /* Read packet */
         rv = guppi_udp_recv(&up, &p);
         if (rv!=GUPPI_OK) {
@@ -367,7 +375,7 @@ void *guppi_net_thread(void *_args) {
                 pthread_exit(NULL);
             }
         }
-
+	
         /* Update status if needed */
         if (waiting!=0) {
             guppi_status_lock_safe(&st);
@@ -381,8 +389,27 @@ void *guppi_net_thread(void *_args) {
             parkes_to_guppi(&p, acclen, npol, nchan);
 
         /* Check seq num diff */
-        seq_num = guppi_udp_packet_seq_num(&p);
+
+#if !defined(NEW_GBT)
+
+       seq_num = guppi_udp_packet_seq_num(&p);
+
+#else
+
+        /* Check for missing SPEAD packets by checking BOTH the heap counter and 
+         * heap pointer. If the heap counter is the same as the last packet's heap
+         * counter, then the heap pointer must be checked that it incremented by the
+         * previous packet's payload size. */
+        //TODO
+        if(last_seq_num == 2048 && seq_num == 0)
+            seq_num = 0;
+        else
+            seq_num = last_seq_num + 1;
+
+#endif
+
         seq_num_diff = seq_num - last_seq_num;
+
         if (seq_num_diff<=0) { 
             if (seq_num_diff<-1024) { force_new_block=1; }
             else if (seq_num_diff==0) {
@@ -401,7 +428,7 @@ void *guppi_net_thread(void *_args) {
 
         /* Determine if we go to next block */
         if ((seq_num>=nextblock_seq_num) || force_new_block) {
-
+            printf("casper: going to next shared memory block\n");
             /* Update drop stats */
             if (fblock->npacket)  
                 drop_frac_avg = (1.0-drop_lpf)*drop_frac_avg 
@@ -420,7 +447,7 @@ void *guppi_net_thread(void *_args) {
                     (double)fblock->ndropped/(double)fblock->npacket
                     : 0.0);
             guppi_status_unlock_safe(&st);
-
+            
             /* Finalize first block, and push it off the list.
              * Then grab next available block.
              */
@@ -438,7 +465,7 @@ void *guppi_net_thread(void *_args) {
              * than 100ms.  Any current blocks on the stack
              * are also finalized/reset */
             if (force_new_block) {
-
+            
                 /* Reset stats */
                 npacket_total=0;
                 ndropped_total=0;
@@ -463,7 +490,7 @@ void *guppi_net_thread(void *_args) {
                             seq_num);
                     guppi_warn("guppi_net_thread", msg);
                 }
-
+            
                 /* Flush any current buffers */
                 for (i=0; i<nblock-1; i++) {
                     if (blocks[i].block_idx>=0) 
@@ -472,7 +499,7 @@ void *guppi_net_thread(void *_args) {
                 }
 
             }
-
+            
             /* Read/update current status shared mem */
             guppi_status_lock_safe(&st);
             if (stt_imjd!=0) {
@@ -496,7 +523,7 @@ void *guppi_net_thread(void *_args) {
             }
             memcpy(status_buf, st.buf, GUPPI_STATUS_SIZE);
             guppi_status_unlock_safe(&st);
-
+            
             /* block size possibly changed on new obs */
             /* TODO: what about overlap...
              * Also, should this even be allowed ?
@@ -549,9 +576,9 @@ void *guppi_net_thread(void *_args) {
                     && (block_packet_check(&blocks[i],seq_num)==0)) {
                 if (baseband_packets) 
                     write_baseband_packet_to_block(&blocks[i], &p, nchan);
-                else
+                 else
                     write_search_packet_to_block(&blocks[i], &p);
-            }
+           }
         }
 
         /* Will exit if thread has been cancelled */

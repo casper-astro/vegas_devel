@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
     /* If attach fails, first try to create the databuf */
     if (dbuf==NULL) 
         dbuf = guppi_databuf_create(24, 32*1024*1024, net_args.output_buffer);
-    /* If that also fails, exit */
+     /* If that also fails, exit */
     if (dbuf==NULL) {
         fprintf(stderr, "Error connecting to guppi_databuf\n");
         exit(1);

@@ -7,17 +7,17 @@ echo "Setting GUPPI_DIR, PATH, PYTHONPATH, LD_LIBRARY_PATH, TEMPO, PRESTO and PG
 
 # User must set this variable (GUPPI) for their home directory
 # No other variables should need changing
-export GUPPI=~/guppi
+export GUPPI=~/casper/gbt_devel/src
 
 # export GUPPI=$OPT64/guppi
 export GUPPI_DIR=$GUPPI/guppi_daq
 
 # Simon added these two lines line
-export CFITSIO=/opt/cfitsio	
-export PYSLALIB=/opt/pyslalib	
+export CFITSIO=/opt/src/cfitsio	
+export PYSLALIB=/opt/src/pyslalib	
 
 # export PRESTO=$PSR64/presto
-export PRESTO=/opt/presto
+export PRESTO=/opt/src/presto
 
 # export PATH=$PSR64/bin:$PRESTO/bin:$GUPPI_DIR/bin:$GUPPI/bin:$OPT64/bin:$PATH
 export PATH=$PRESTO/bin:$GUPPI_DIR/bin:/usr/local/cuda/bin:$PATH

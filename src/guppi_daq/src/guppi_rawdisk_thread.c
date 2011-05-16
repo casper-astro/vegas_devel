@@ -106,7 +106,7 @@ void guppi_rawdisk_thread(void *_args) {
     /* Pointers for quantization params */
     double *mean = NULL;
     double *std = NULL;
-
+    printf("casper: raw disk thread created and running\n");
     /* Loop */
     int packetidx=0, npacket=0, ndrop=0, packetsize=0, blocksize=0;
     int orig_blocksize=0;
@@ -126,6 +126,8 @@ void guppi_rawdisk_thread(void *_args) {
         /* Wait for buf to have data */
         rv = guppi_databuf_wait_filled(db, curblock);
         if (rv!=0) continue;
+
+	    printf("casper: raw disk thread rcvd data.\n");
 
         /* Read param struct for this block */
         ptr = guppi_databuf_header(db, curblock);
