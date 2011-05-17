@@ -200,7 +200,7 @@ if (opt.update == False):
     g.update("SCANLEN", 8 * 3600.)
     g.update("BACKEND", "GUPPI")
     g.update("PKTFMT", "1SFA")
-    g.update("DATAHOST", "bee2_10")
+    g.update("DATAHOST", "bee2-10")
     g.update("DATAPORT", 50000)
     g.update("POL_TYPE", "IQUV")
 

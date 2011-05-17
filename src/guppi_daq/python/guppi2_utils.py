@@ -1,6 +1,22 @@
 # guppi2_utils.py
 # Some useful funcs for coherent dedispersion setup
 
+def node(idx):
+    """
+    node(idx):
+        Return the hostname for the given processing node
+        based on its index number (0-7).
+    """
+    cfg = open('/opt/64bit/guppi/guppi_daq/gpu_nodes.cfg','r')
+    nodelist = []
+    for line in cfg:
+        line = line.rstrip(' \n')
+        nodelist.append(line)
+    cfg.close()
+    #nodelist = ('gpu1', 'gpu2', 'gpu3', 'gpu4', 
+    #        'gpu5', 'gpu6', 'gpu7', 'gpu8')
+    return nodelist[idx]
+
 def dm_from_parfile(parfile):
     """
     dm_from_parfile(parfile):

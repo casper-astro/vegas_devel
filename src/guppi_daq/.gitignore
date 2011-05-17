@@ -1,3 +1,4 @@
+*~
 *.o
 *.pyc
 .*.swp
@@ -16,8 +17,8 @@ bin/test_psrfits
 bin/test_psrfits_read
 bin/test_udp_recv
 bin/guppi_daq_dedisp
-bin/test_dedisp_thread
 bin/run_guppi_daq_server
+bin/test_dedisp_thread
 build/
 src/check_guppi_databuf
 src/check_guppi_status
@@ -35,3 +36,6 @@ src/test_psrfits_read
 src/test_udp_recv
 src/guppi_daq_dedisp
 src/test_dedisp_thread
+src/raw_quant
+src/raw_read
+src/raw_head

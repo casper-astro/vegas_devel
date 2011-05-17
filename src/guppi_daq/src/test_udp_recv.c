@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
     /* Default to bee2 if no hostname given */
     if (optind==argc) {
-        strcpy(p.sender, "bee2_10");
+        strcpy(p.sender, "bee2-10");
     } else {
         strcpy(p.sender, argv[optind]);
     }

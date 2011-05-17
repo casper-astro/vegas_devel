@@ -27,7 +27,7 @@ $guppi_bin_dir/check_guppi_databuf -c 2>/dev/null > /dev/null
 $python $guppi_python_dir/guppi_set_params_parspec.py $1 $2 $3 $4 $5
 
 # Start data flow
-$guppi_bin_dir/test_net_thread -p 4001 -s 2056 192.168.3.10 &
+$guppi_bin_dir/test_net_thread -p 4001 -s 2056 10.17.0.10 &
 
 # Start monitor
 $python $guppi_python_dir/guppi_simple_monitor.py
