@@ -8,4 +8,7 @@
 // Defining NEW_GBT enables the code for the upgraded GBT spectrometer system
 #define NEW_GBT		1
 
+// Defininf SPEAD enables the decoding of SPEAD packets
+#define SPEAD       1
+
 #endif

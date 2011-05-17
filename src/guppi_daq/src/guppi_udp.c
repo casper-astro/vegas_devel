@@ -104,7 +104,7 @@ int guppi_udp_recv(struct guppi_udp_params *p, struct guppi_udp_packet *b) {
     b->packet_size = rv;
     if (rv==-1) { return(GUPPI_ERR_SYS); }
     else if (p->packet_size) {
-#ifdef NEW_GBT
+#ifdef SPEAD
 
     	if (strncmp(p->packet_format, "SPEAD", 5) == 0)
             return guppi_chk_spead_pkt_size(b);
@@ -135,11 +135,13 @@ unsigned long long change_endian64(const unsigned long long *d) {
 unsigned long long guppi_udp_packet_seq_num(const struct guppi_udp_packet *p) {
     // XXX Temp for new baseband mode, blank out top 8 bits which 
     // contain channel info.
+
     unsigned long long tmp = change_endian64((unsigned long long *)p->data);
     tmp &= 0x00FFFFFFFFFFFFFF;
     return(tmp);
     //return(change_endian64((unsigned long long *)(p->data)));
 }
+
 
 #define PACKET_SIZE_ORIG ((size_t)8208)
 #define PACKET_SIZE_SHORT ((size_t)544)
@@ -304,7 +306,7 @@ void parkes_to_guppi(struct guppi_udp_packet *b, const int acc_len,
 }
 
 
-#ifdef NEW_GBT
+#ifdef SPEAD
 
 /* Check that the size of the received SPEAD packet is correct.
  * This is acheived by reading the size fields in the SPEAD packet header,

@@ -390,7 +390,7 @@ void *guppi_net_thread(void *_args) {
 
         /* Check seq num diff */
 
-#if !defined(NEW_GBT)
+#if !defined(SPEAD)
 
        seq_num = guppi_udp_packet_seq_num(&p);
 

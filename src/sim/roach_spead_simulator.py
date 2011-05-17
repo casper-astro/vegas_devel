@@ -64,9 +64,9 @@ spead_packet = {
 	'header_upr'	        : 0x53040305,
     'header_lwr'            : 0x0000000A,
 	heap_cntr_id		    : 0,
-	heap_size_id		    : 5*8 + WAVEFORM_SZ*4,	# size of total heap
+	heap_size_id		    : 6*8 + WAVEFORM_SZ*4,	# size of total heap
 	heap_offset_id		    : 0,
-	packet_payload_len_id	: WAVEFORM_SZ*4,	# length of this pkt's payload
+	packet_payload_len_id	: WAVEFORM_SZ*4,	    # length of this pkt's payload
 	time_cntr_id		    : 0,
 	spectrum_cntr_id	    : 0,
 	integ_size_id		    : 256,
@@ -77,12 +77,15 @@ spead_packet = {
 }
 
 # Send 10 packets
-for heap_cntr in range(8000):
+for heap_cntr in range(1500, 12000):
 
-	spead_packet[heap_cntr_id] = heap_cntr
+    if heap_cntr < 2000:	
+        spead_packet[heap_cntr_id] = heap_cntr
+    else:	
+        spead_packet[heap_cntr_id] = heap_cntr - 2000
  	
-	# Send the packet
-	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	sock.sendto(packet_to_bytes(spead_packet), (UDP_IP, UDP_PORT))
+    # Send the packet
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.sendto(packet_to_bytes(spead_packet), (UDP_IP, UDP_PORT))
 
-	time.sleep(0.001)
+    time.sleep(0.001)
