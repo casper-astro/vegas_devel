@@ -25,8 +25,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "chenhong"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu May 19 14:42:57 2011"
-  RTWModifiedTimeStamp	  227716953
+  LastModifiedDate	  "Fri May 20 00:07:29 2011"
+  RTWModifiedTimeStamp	  227750784
   ModelVersionFormat	  "1.%<AutoIncrement:1>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
@@ -883,9 +883,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -893,11 +893,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -923,9 +923,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -933,11 +933,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -963,9 +963,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -973,11 +973,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1004,11 +1004,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "2"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1177,9 +1177,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1187,11 +1187,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1217,9 +1217,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1227,11 +1227,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1257,9 +1257,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1267,11 +1267,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1298,11 +1298,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "2"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1471,9 +1471,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1481,11 +1481,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1511,9 +1511,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1521,11 +1521,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1551,9 +1551,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1561,11 +1561,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1592,11 +1592,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "2"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1765,9 +1765,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1775,11 +1775,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1805,9 +1805,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1815,11 +1815,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1845,9 +1845,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "1"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -1855,11 +1855,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -1886,11 +1886,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "2"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2043,9 +2043,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -2053,11 +2053,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2083,9 +2083,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -2093,11 +2093,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2123,9 +2123,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -2133,11 +2133,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2162,9 +2162,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -2172,11 +2172,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2202,9 +2202,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -2212,11 +2212,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2241,9 +2241,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -2251,11 +2251,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2281,11 +2281,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "1"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2311,11 +2311,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "1"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -2379,9 +2379,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -2409,9 +2409,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -2438,13 +2438,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -2470,13 +2470,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -2595,9 +2595,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -2625,9 +2625,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -2654,13 +2654,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -2686,13 +2686,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -2811,9 +2811,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -2841,9 +2841,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -2870,13 +2870,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -2902,13 +2902,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -3045,9 +3045,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -3078,9 +3078,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -3105,11 +3105,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -3246,7 +3246,7 @@ Model {
 		    const		    "0"
 		    n_bits		    "25"
 		    bin_pt		    "24"
-		    explicit_period	    on
+		    explicit_period	    "on"
 		    period		    "1"
 		    dsp48_infoedit	    "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 		    equ			    "P=C"
@@ -3255,7 +3255,7 @@ Model {
 		    opr			    "+"
 		    inp1		    "P"
 		    carry		    "CIN"
-		    dbl_ovrd		    off
+		    dbl_ovrd		    "off"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
 		    block_type		    "constant"
@@ -3288,14 +3288,14 @@ Model {
 		    bin_pt		    "17"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    on
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "on"
 		    opt			    "Speed"
-		    use_embedded	    on
-		    optimum_pipeline	    off
-		    xl_use_area		    off
+		    use_embedded	    "on"
+		    optimum_pipeline	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    pipeline		    "on"
 		    use_rpm		    "off"
@@ -3333,14 +3333,14 @@ Model {
 		    bin_pt		    "17"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    on
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "on"
 		    opt			    "Speed"
-		    use_embedded	    on
-		    optimum_pipeline	    off
-		    xl_use_area		    off
+		    use_embedded	    "on"
+		    optimum_pipeline	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    pipeline		    "on"
 		    use_rpm		    "off"
@@ -3369,10 +3369,10 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Register"
 		    SourceType		    "Xilinx Register Block"
 		    init		    "0"
-		    rst			    off
-		    en			    off
-		    dbl_ovrd		    off
-		    xl_use_area		    off
+		    rst			    "off"
+		    en			    "off"
+		    dbl_ovrd		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -3397,10 +3397,10 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Register"
 		    SourceType		    "Xilinx Register Block"
 		    init		    "0"
-		    rst			    off
-		    en			    off
-		    dbl_ovrd		    off
-		    xl_use_area		    off
+		    rst			    "off"
+		    en			    "off"
+		    dbl_ovrd		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -3657,9 +3657,9 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/AddSub"
 		    SourceType		    "Xilinx Adder/Subtracter Block"
 		    mode		    "Addition"
-		    use_carryin		    off
-		    use_carryout	    off
-		    en			    off
+		    use_carryin		    "off"
+		    use_carryout	    "off"
+		    en			    "off"
 		    latency		    "1"
 		    precision		    "Full"
 		    arith_type		    "Unsigned"
@@ -3667,11 +3667,11 @@ Model {
 		    bin_pt		    "14"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    off
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "off"
 		    hw_selection	    "Fabric"
-		    pipelined		    off
-		    xl_use_area		    off
+		    pipelined		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -3697,11 +3697,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -3825,9 +3825,9 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/AddSub"
 		    SourceType		    "Xilinx Adder/Subtracter Block"
 		    mode		    "Addition"
-		    use_carryin		    off
-		    use_carryout	    off
-		    en			    off
+		    use_carryin		    "off"
+		    use_carryout	    "off"
+		    en			    "off"
 		    latency		    "1"
 		    precision		    "Full"
 		    arith_type		    "Unsigned"
@@ -3835,11 +3835,11 @@ Model {
 		    bin_pt		    "14"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    off
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "off"
 		    hw_selection	    "Fabric"
-		    pipelined		    off
-		    xl_use_area		    off
+		    pipelined		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -3865,11 +3865,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -3945,7 +3945,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -3964,7 +3964,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -3972,8 +3972,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4000,7 +4000,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -4008,8 +4008,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4214,9 +4214,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4247,9 +4247,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4274,11 +4274,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4345,11 +4345,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -4373,11 +4373,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -4485,11 +4485,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -4513,11 +4513,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -4585,7 +4585,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -4604,7 +4604,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -4612,8 +4612,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4640,7 +4640,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -4648,8 +4648,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4824,9 +4824,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4857,9 +4857,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4884,11 +4884,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -4955,11 +4955,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -4983,11 +4983,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -5095,11 +5095,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -5123,11 +5123,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -5195,7 +5195,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -5214,7 +5214,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -5222,8 +5222,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -5250,7 +5250,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -5258,8 +5258,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -5678,9 +5678,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -5688,11 +5688,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -5718,9 +5718,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -5728,11 +5728,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -5758,9 +5758,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -5768,11 +5768,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -5797,9 +5797,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -5807,11 +5807,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -5837,9 +5837,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -5847,11 +5847,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -5876,9 +5876,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -5886,11 +5886,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -5916,11 +5916,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "1"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -5946,11 +5946,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "1"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -6014,9 +6014,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6044,9 +6044,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6073,13 +6073,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -6105,13 +6105,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -6230,9 +6230,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6260,9 +6260,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6289,13 +6289,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -6321,13 +6321,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -6446,9 +6446,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6476,9 +6476,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6505,13 +6505,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -6537,13 +6537,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -6680,9 +6680,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6713,9 +6713,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6740,11 +6740,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -6881,7 +6881,7 @@ Model {
 		    const		    "0"
 		    n_bits		    "25"
 		    bin_pt		    "24"
-		    explicit_period	    on
+		    explicit_period	    "on"
 		    period		    "1"
 		    dsp48_infoedit	    "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 		    equ			    "P=C"
@@ -6890,7 +6890,7 @@ Model {
 		    opr			    "+"
 		    inp1		    "P"
 		    carry		    "CIN"
-		    dbl_ovrd		    off
+		    dbl_ovrd		    "off"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
 		    block_type		    "constant"
@@ -6923,14 +6923,14 @@ Model {
 		    bin_pt		    "17"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    on
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "on"
 		    opt			    "Speed"
-		    use_embedded	    on
-		    optimum_pipeline	    off
-		    xl_use_area		    off
+		    use_embedded	    "on"
+		    optimum_pipeline	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    pipeline		    "on"
 		    use_rpm		    "off"
@@ -6968,14 +6968,14 @@ Model {
 		    bin_pt		    "17"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    on
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "on"
 		    opt			    "Speed"
-		    use_embedded	    on
-		    optimum_pipeline	    off
-		    xl_use_area		    off
+		    use_embedded	    "on"
+		    optimum_pipeline	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    pipeline		    "on"
 		    use_rpm		    "off"
@@ -7004,10 +7004,10 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Register"
 		    SourceType		    "Xilinx Register Block"
 		    init		    "0"
-		    rst			    off
-		    en			    off
-		    dbl_ovrd		    off
-		    xl_use_area		    off
+		    rst			    "off"
+		    en			    "off"
+		    dbl_ovrd		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -7032,10 +7032,10 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Register"
 		    SourceType		    "Xilinx Register Block"
 		    init		    "0"
-		    rst			    off
-		    en			    off
-		    dbl_ovrd		    off
-		    xl_use_area		    off
+		    rst			    "off"
+		    en			    "off"
+		    dbl_ovrd		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -7292,9 +7292,9 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/AddSub"
 		    SourceType		    "Xilinx Adder/Subtracter Block"
 		    mode		    "Addition"
-		    use_carryin		    off
-		    use_carryout	    off
-		    en			    off
+		    use_carryin		    "off"
+		    use_carryout	    "off"
+		    en			    "off"
 		    latency		    "1"
 		    precision		    "Full"
 		    arith_type		    "Unsigned"
@@ -7302,11 +7302,11 @@ Model {
 		    bin_pt		    "14"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    off
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "off"
 		    hw_selection	    "Fabric"
-		    pipelined		    off
-		    xl_use_area		    off
+		    pipelined		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -7332,11 +7332,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -7460,9 +7460,9 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/AddSub"
 		    SourceType		    "Xilinx Adder/Subtracter Block"
 		    mode		    "Addition"
-		    use_carryin		    off
-		    use_carryout	    off
-		    en			    off
+		    use_carryin		    "off"
+		    use_carryout	    "off"
+		    en			    "off"
 		    latency		    "1"
 		    precision		    "Full"
 		    arith_type		    "Unsigned"
@@ -7470,11 +7470,11 @@ Model {
 		    bin_pt		    "14"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    off
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "off"
 		    hw_selection	    "Fabric"
-		    pipelined		    off
-		    xl_use_area		    off
+		    pipelined		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -7500,11 +7500,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -7580,7 +7580,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -7599,7 +7599,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -7607,8 +7607,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -7635,7 +7635,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -7643,8 +7643,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -7849,9 +7849,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -7882,9 +7882,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -7909,11 +7909,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -7980,11 +7980,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -8008,11 +8008,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -8120,11 +8120,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -8148,11 +8148,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -8220,7 +8220,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -8239,7 +8239,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -8247,8 +8247,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -8275,7 +8275,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -8283,8 +8283,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -8459,9 +8459,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -8492,9 +8492,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -8519,11 +8519,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -8590,11 +8590,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -8618,11 +8618,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -8730,11 +8730,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -8758,11 +8758,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -8830,7 +8830,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -8849,7 +8849,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -8857,8 +8857,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -8885,7 +8885,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -8893,8 +8893,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -9313,9 +9313,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -9323,11 +9323,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -9353,9 +9353,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -9363,11 +9363,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -9393,9 +9393,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -9403,11 +9403,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -9432,9 +9432,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -9442,11 +9442,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -9472,9 +9472,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -9482,11 +9482,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -9511,9 +9511,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -9521,11 +9521,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -9551,11 +9551,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "1"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -9581,11 +9581,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "1"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -9649,9 +9649,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -9679,9 +9679,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -9708,13 +9708,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -9740,13 +9740,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -9865,9 +9865,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -9895,9 +9895,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -9924,13 +9924,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -9956,13 +9956,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -10081,9 +10081,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -10111,9 +10111,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -10140,13 +10140,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -10172,13 +10172,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -10315,9 +10315,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -10348,9 +10348,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -10375,11 +10375,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -10516,7 +10516,7 @@ Model {
 		    const		    "0"
 		    n_bits		    "25"
 		    bin_pt		    "24"
-		    explicit_period	    on
+		    explicit_period	    "on"
 		    period		    "1"
 		    dsp48_infoedit	    "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 		    equ			    "P=C"
@@ -10525,7 +10525,7 @@ Model {
 		    opr			    "+"
 		    inp1		    "P"
 		    carry		    "CIN"
-		    dbl_ovrd		    off
+		    dbl_ovrd		    "off"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
 		    block_type		    "constant"
@@ -10558,14 +10558,14 @@ Model {
 		    bin_pt		    "17"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    on
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "on"
 		    opt			    "Speed"
-		    use_embedded	    on
-		    optimum_pipeline	    off
-		    xl_use_area		    off
+		    use_embedded	    "on"
+		    optimum_pipeline	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    pipeline		    "on"
 		    use_rpm		    "off"
@@ -10603,14 +10603,14 @@ Model {
 		    bin_pt		    "17"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    on
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "on"
 		    opt			    "Speed"
-		    use_embedded	    on
-		    optimum_pipeline	    off
-		    xl_use_area		    off
+		    use_embedded	    "on"
+		    optimum_pipeline	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    pipeline		    "on"
 		    use_rpm		    "off"
@@ -10639,10 +10639,10 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Register"
 		    SourceType		    "Xilinx Register Block"
 		    init		    "0"
-		    rst			    off
-		    en			    off
-		    dbl_ovrd		    off
-		    xl_use_area		    off
+		    rst			    "off"
+		    en			    "off"
+		    dbl_ovrd		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -10667,10 +10667,10 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Register"
 		    SourceType		    "Xilinx Register Block"
 		    init		    "0"
-		    rst			    off
-		    en			    off
-		    dbl_ovrd		    off
-		    xl_use_area		    off
+		    rst			    "off"
+		    en			    "off"
+		    dbl_ovrd		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -10927,9 +10927,9 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/AddSub"
 		    SourceType		    "Xilinx Adder/Subtracter Block"
 		    mode		    "Addition"
-		    use_carryin		    off
-		    use_carryout	    off
-		    en			    off
+		    use_carryin		    "off"
+		    use_carryout	    "off"
+		    en			    "off"
 		    latency		    "1"
 		    precision		    "Full"
 		    arith_type		    "Unsigned"
@@ -10937,11 +10937,11 @@ Model {
 		    bin_pt		    "14"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    off
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "off"
 		    hw_selection	    "Fabric"
-		    pipelined		    off
-		    xl_use_area		    off
+		    pipelined		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -10967,11 +10967,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -11095,9 +11095,9 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/AddSub"
 		    SourceType		    "Xilinx Adder/Subtracter Block"
 		    mode		    "Addition"
-		    use_carryin		    off
-		    use_carryout	    off
-		    en			    off
+		    use_carryin		    "off"
+		    use_carryout	    "off"
+		    en			    "off"
 		    latency		    "1"
 		    precision		    "Full"
 		    arith_type		    "Unsigned"
@@ -11105,11 +11105,11 @@ Model {
 		    bin_pt		    "14"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    off
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "off"
 		    hw_selection	    "Fabric"
-		    pipelined		    off
-		    xl_use_area		    off
+		    pipelined		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -11135,11 +11135,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -11215,7 +11215,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -11234,7 +11234,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -11242,8 +11242,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -11270,7 +11270,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -11278,8 +11278,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -11484,9 +11484,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -11517,9 +11517,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -11544,11 +11544,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -11615,11 +11615,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -11643,11 +11643,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -11755,11 +11755,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -11783,11 +11783,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -11855,7 +11855,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -11874,7 +11874,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -11882,8 +11882,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -11910,7 +11910,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -11918,8 +11918,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -12094,9 +12094,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -12127,9 +12127,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -12154,11 +12154,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -12225,11 +12225,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -12253,11 +12253,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -12365,11 +12365,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -12393,11 +12393,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -12465,7 +12465,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -12484,7 +12484,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -12492,8 +12492,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -12520,7 +12520,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -12528,8 +12528,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -12948,9 +12948,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -12958,11 +12958,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -12988,9 +12988,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -12998,11 +12998,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -13028,9 +13028,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -13038,11 +13038,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -13067,9 +13067,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Addition"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -13077,11 +13077,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -13107,9 +13107,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -13117,11 +13117,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -13146,9 +13146,9 @@ Model {
 	      SourceBlock	      "xbsIndex_r4/AddSub"
 	      SourceType	      "Xilinx Adder/Subtracter Block"
 	      mode		      "Subtraction"
-	      use_carryin	      off
-	      use_carryout	      off
-	      en		      off
+	      use_carryin	      "off"
+	      use_carryout	      "off"
+	      en		      "off"
 	      latency		      "0"
 	      precision		      "Full"
 	      arith_type	      "Unsigned"
@@ -13156,11 +13156,11 @@ Model {
 	      bin_pt		      "14"
 	      quantization	      "Truncate"
 	      overflow		      "Wrap"
-	      dbl_ovrd		      off
-	      use_behavioral_HDL      off
+	      dbl_ovrd		      "off"
+	      use_behavioral_HDL      "off"
 	      hw_selection	      "Fabric"
-	      pipelined		      off
-	      xl_use_area	      off
+	      pipelined		      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -13186,11 +13186,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "1"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -13216,11 +13216,11 @@ Model {
 	      SourceType	      "Xilinx Delay Block"
 	      infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flo"
 	      "p."
-	      en		      off
+	      en		      "off"
 	      latency		      "1"
-	      dbl_ovrd		      off
-	      reg_retiming	      off
-	      xl_use_area	      off
+	      dbl_ovrd		      "off"
+	      reg_retiming	      "off"
+	      xl_use_area	      "off"
 	      xl_area		      "[0,0,0,0,0,0,0]"
 	      has_advanced_control    "0"
 	      sggui_pos		      "-1,-1,-1,-1"
@@ -13284,9 +13284,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -13314,9 +13314,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -13343,13 +13343,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -13375,13 +13375,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -13500,9 +13500,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -13530,9 +13530,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -13559,13 +13559,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -13591,13 +13591,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -13716,9 +13716,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -13746,9 +13746,9 @@ Model {
 		  "r><br>Example:  Suppose the input is 6 bits wide, signed, with 2 fractional bits, and the output is forced to unsi"
 		  "gned with 0 fractional bits.  Then an input of -2.0 (1110.00 in binary 2's complement) becomes an output of 56 (11"
 		  "1000 in binary)."
-		  force_arith_type	  on
+		  force_arith_type	  "on"
 		  arith_type		  "Signed  (2's comp)"
-		  force_bin_pt		  on
+		  force_bin_pt		  "on"
 		  bin_pt		  "7"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -13775,13 +13775,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Lower Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -13807,13 +13807,13 @@ Model {
 		  " is ordinarily unsigned with binary point at zero, but can be Boolean when the slice is one bit wide.<br><br>Hardw"
 		  "are notes: In hardware this block costs nothing."
 		  nbits			  "8"
-		  boolean_output	  off
+		  boolean_output	  "off"
 		  mode			  "Upper Bit Location + Width"
 		  bit1			  "0"
 		  base1			  "MSB of Input"
 		  bit0			  "0"
 		  base0			  "LSB of Input"
-		  dbl_ovrd		  off
+		  dbl_ovrd		  "off"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
 		  block_type		  "slice"
@@ -13950,9 +13950,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -13983,9 +13983,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -14010,11 +14010,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -14151,7 +14151,7 @@ Model {
 		    const		    "0"
 		    n_bits		    "25"
 		    bin_pt		    "24"
-		    explicit_period	    on
+		    explicit_period	    "on"
 		    period		    "1"
 		    dsp48_infoedit	    "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 		    equ			    "P=C"
@@ -14160,7 +14160,7 @@ Model {
 		    opr			    "+"
 		    inp1		    "P"
 		    carry		    "CIN"
-		    dbl_ovrd		    off
+		    dbl_ovrd		    "off"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
 		    block_type		    "constant"
@@ -14193,14 +14193,14 @@ Model {
 		    bin_pt		    "17"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    on
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "on"
 		    opt			    "Speed"
-		    use_embedded	    on
-		    optimum_pipeline	    off
-		    xl_use_area		    off
+		    use_embedded	    "on"
+		    optimum_pipeline	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    pipeline		    "on"
 		    use_rpm		    "off"
@@ -14238,14 +14238,14 @@ Model {
 		    bin_pt		    "17"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    on
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "on"
 		    opt			    "Speed"
-		    use_embedded	    on
-		    optimum_pipeline	    off
-		    xl_use_area		    off
+		    use_embedded	    "on"
+		    optimum_pipeline	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    pipeline		    "on"
 		    use_rpm		    "off"
@@ -14274,10 +14274,10 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Register"
 		    SourceType		    "Xilinx Register Block"
 		    init		    "0"
-		    rst			    off
-		    en			    off
-		    dbl_ovrd		    off
-		    xl_use_area		    off
+		    rst			    "off"
+		    en			    "off"
+		    dbl_ovrd		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -14302,10 +14302,10 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Register"
 		    SourceType		    "Xilinx Register Block"
 		    init		    "0"
-		    rst			    off
-		    en			    off
-		    dbl_ovrd		    off
-		    xl_use_area		    off
+		    rst			    "off"
+		    en			    "off"
+		    dbl_ovrd		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -14562,9 +14562,9 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/AddSub"
 		    SourceType		    "Xilinx Adder/Subtracter Block"
 		    mode		    "Addition"
-		    use_carryin		    off
-		    use_carryout	    off
-		    en			    off
+		    use_carryin		    "off"
+		    use_carryout	    "off"
+		    en			    "off"
 		    latency		    "1"
 		    precision		    "Full"
 		    arith_type		    "Unsigned"
@@ -14572,11 +14572,11 @@ Model {
 		    bin_pt		    "14"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    off
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "off"
 		    hw_selection	    "Fabric"
-		    pipelined		    off
-		    xl_use_area		    off
+		    pipelined		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -14602,11 +14602,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -14730,9 +14730,9 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/AddSub"
 		    SourceType		    "Xilinx Adder/Subtracter Block"
 		    mode		    "Addition"
-		    use_carryin		    off
-		    use_carryout	    off
-		    en			    off
+		    use_carryin		    "off"
+		    use_carryout	    "off"
+		    en			    "off"
 		    latency		    "1"
 		    precision		    "Full"
 		    arith_type		    "Unsigned"
@@ -14740,11 +14740,11 @@ Model {
 		    bin_pt		    "14"
 		    quantization	    "Truncate"
 		    overflow		    "Wrap"
-		    dbl_ovrd		    off
-		    use_behavioral_HDL	    off
+		    dbl_ovrd		    "off"
+		    use_behavioral_HDL	    "off"
 		    hw_selection	    "Fabric"
-		    pipelined		    off
-		    xl_use_area		    off
+		    pipelined		    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -14770,11 +14770,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "1"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -14850,7 +14850,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -14869,7 +14869,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -14877,8 +14877,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -14905,7 +14905,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -14913,8 +14913,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15119,9 +15119,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15152,9 +15152,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15179,11 +15179,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15250,11 +15250,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -15278,11 +15278,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -15390,11 +15390,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -15418,11 +15418,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -15490,7 +15490,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -15509,7 +15509,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -15517,8 +15517,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15545,7 +15545,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -15553,8 +15553,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15729,9 +15729,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15762,9 +15762,9 @@ Model {
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
 		  latency		  "1"
-		  dbl_ovrd		  off
-		  pipeline		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  pipeline		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15789,11 +15789,11 @@ Model {
 		  SourceBlock		  "xbsIndex_r4/Delay"
 		  SourceType		  "Xilinx Delay Block"
 		  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		  en			  off
+		  en			  "off"
 		  latency		  "3"
-		  dbl_ovrd		  off
-		  reg_retiming		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  reg_retiming		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -15860,11 +15860,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -15888,11 +15888,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -16000,11 +16000,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -16028,11 +16028,11 @@ Model {
 		    SourceBlock		    "xbsIndex_r4/Delay"
 		    SourceType		    "Xilinx Delay Block"
 		    infoedit		    "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-		    en			    off
+		    en			    "off"
 		    latency		    "0"
-		    dbl_ovrd		    off
-		    reg_retiming	    off
-		    xl_use_area		    off
+		    dbl_ovrd		    "off"
+		    reg_retiming	    "off"
+		    xl_use_area		    "off"
 		    xl_area		    "[0,0,0,0,0,0,0]"
 		    has_advanced_control    "0"
 		    sggui_pos		    "-1,-1,-1,-1"
@@ -16100,7 +16100,7 @@ Model {
 		  SourceType		  "ri_to_c"
 		  ShowPortLabels	  "FromPortIcon"
 		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
+		  FunctionWithSeparateData "off"
 		  RTWMemSecFuncInitTerm	  "Inherit from model"
 		  RTWMemSecFuncExecute	  "Inherit from model"
 		  RTWMemSecDataConstants  "Inherit from model"
@@ -16119,7 +16119,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -16127,8 +16127,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
@@ -16155,7 +16155,7 @@ Model {
 		  infoedit		  "Hardware notes: In hardware this block costs nothing if full output precision is used."
 		  shift_dir		  "Left"
 		  shift_bits		  "1"
-		  en			  off
+		  en			  "off"
 		  latency		  "0"
 		  precision		  "Full"
 		  arith_type		  "Signed  (2's comp)"
@@ -16163,8 +16163,8 @@ Model {
 		  bin_pt		  "14"
 		  quantization		  "Truncate"
 		  overflow		  "Wrap"
-		  dbl_ovrd		  off
-		  xl_use_area		  off
+		  dbl_ovrd		  "off"
+		  xl_use_area		  "off"
 		  xl_area		  "[0,0,0,0,0,0,0]"
 		  has_advanced_control	  "0"
 		  sggui_pos		  "-1,-1,-1,-1"
