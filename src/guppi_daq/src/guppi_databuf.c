@@ -65,6 +65,7 @@ struct guppi_databuf *guppi_databuf_create(int n_block, size_t block_size,
     d->n_block = n_block;
     d->struct_size = struct_size;
     d->block_size = block_size;
+    printf("Block size=%d\n", d->block_size);
     d->header_size = header_size;
     sprintf(d->data_type, "unknown");
     for (i=0; i<n_block; i++) { 

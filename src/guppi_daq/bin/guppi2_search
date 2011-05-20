@@ -1,0 +1,20 @@
+#! /usr/bin/perl
+
+#@run = (1..8);
+$user = "gpu";
+
+open (NODES, "$ENV{GUPPI_DIR}/gpu_nodes.cfg") or 
+    die "Error opening gpu node config file.\n";
+
+#foreach $i (@run) {
+while (<NODES>) {
+    if (/^#/) { next; }
+    chomp;
+    #$node = sprintf("gpu%d", $i);
+    $node = $_;
+    $cmd = "ssh -nfxT -l $user $node 'source .bash_profile; guppi_daq_dedisp -D >> logs/$node.daq.log 2>&1'";
+    system($cmd);
+    #print($cmd);
+    #print "\n";
+}
+close NODES;

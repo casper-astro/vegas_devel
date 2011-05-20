@@ -30,7 +30,7 @@
 #define get_dbl(key, param, def) {                                      \
         if (hgetr8(buf, (key), &(param))==0) {                          \
             if (DEBUGOUT)                                               \
-                printf("Warning:%s not in status shm\n ", (key));       \
+                printf("Warning:  %s not in status shm!\n", (key));     \
             (param) = (def);                                            \
         }                                                               \
     }
@@ -124,7 +124,7 @@ void set_obs_params_gb(char *buf,
 
 // Read networking parameters
 void guppi_read_net_params(char *buf, struct guppi_udp_params *u) {
-    get_str("DATAHOST", u->sender, 80, "bee2_10");
+    get_str("DATAHOST", u->sender, 80, "bee2-10");
     get_int("DATAPORT", u->port, 50000);
     get_str("PKTFMT", u->packet_format, 32, "GUPPI");
     if (strncmp(u->packet_format, "PARKES", 6)==0)
@@ -135,8 +135,8 @@ void guppi_read_net_params(char *buf, struct guppi_udp_params *u) {
         u->packet_size = 4128;
     else if (strncmp(u->packet_format, "SHORT", 5)==0)
         u->packet_size = 544;
-	else if (strncmp(u->packet_format, "SPEAD", 5)==0)
-		u->packet_size = 8248;
+    else if (strncmp(u->packet_format, "SPEAD", 5)==0)
+        u->packet_size = 8280;  //8K data + 11 * 8bytes
     else
         u->packet_size = 8208;
 }

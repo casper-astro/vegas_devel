@@ -16,6 +16,12 @@
 #include "guppi_udp.h"
 #include "guppi_databuf.h"
 #include "guppi_error.h"
+#include "guppi_defines.h"
+
+#ifdef NEW_GBT
+#define BYTE_ARR_TO_UINT(array, idx) (ntohl(((unsigned int*)(array))[idx]))
+#endif
+
 
 int guppi_udp_init(struct guppi_udp_params *p) {
 
@@ -98,8 +104,18 @@ int guppi_udp_recv(struct guppi_udp_params *p, struct guppi_udp_packet *b) {
     b->packet_size = rv;
     if (rv==-1) { return(GUPPI_ERR_SYS); }
     else if (p->packet_size) {
+#ifdef SPEAD
+
+    	if (strncmp(p->packet_format, "SPEAD", 5) == 0)
+            return guppi_chk_spead_pkt_size(b);
+		else if (rv!=p->packet_size)
+			return(GUPPI_ERR_PACKET);
+		else
+            return(GUPPI_OK);
+#else
         if (rv!=p->packet_size) { return(GUPPI_ERR_PACKET); }
         else { return(GUPPI_OK); }
+#endif
     } else { 
         p->packet_size = rv;
         return(GUPPI_OK); 
@@ -119,11 +135,13 @@ unsigned long long change_endian64(const unsigned long long *d) {
 unsigned long long guppi_udp_packet_seq_num(const struct guppi_udp_packet *p) {
     // XXX Temp for new baseband mode, blank out top 8 bits which 
     // contain channel info.
+
     unsigned long long tmp = change_endian64((unsigned long long *)p->data);
     tmp &= 0x00FFFFFFFFFFFFFF;
     return(tmp);
     //return(change_endian64((unsigned long long *)(p->data)));
 }
+
 
 #define PACKET_SIZE_ORIG ((size_t)8208)
 #define PACKET_SIZE_SHORT ((size_t)544)
@@ -145,8 +163,8 @@ size_t guppi_udp_packet_datasize(size_t packet_size) {
     else if (packet_size==PACKET_SIZE_SHORT) 
         //return((size_t)256);
         return((size_t)512);
-	else if (packet_size=PACTET_SIZE_SPEAD)
-		return(packet_size -4*sizeof(unsigned long long)); // 8248-8*8
+	else if (packet_size=PACKET_SIZE_SPEAD)
+		return(packet_size - 6*8); // 8248-6*8
     else              
         return(packet_size - 2*sizeof(unsigned long long));
 }
@@ -216,6 +234,7 @@ void guppi_udp_packet_data_copy_transpose(char *databuf, int nchan,
     char *iptr, *optr;
     unsigned isamp,ichan;
     iptr = guppi_udp_packet_data(p);
+
     for (isamp=0; isamp<samp_per_packet; isamp++) {
         optr = databuf + bytes_per_sample * (block_pkt_idx*samp_per_packet 
                 + isamp);
@@ -285,6 +304,55 @@ void parkes_to_guppi(struct guppi_udp_packet *b, const int acc_len,
     }
     memcpy(b->data + sizeof(long long), tmp, sizeof(char) * npol * nchan);
 }
+
+
+#ifdef SPEAD
+
+/* Check that the size of the received SPEAD packet is correct.
+ * This is acheived by reading the size fields in the SPEAD packet header,
+ * and comparing them to the actual size of the received packet. */
+int guppi_chk_spead_pkt_size(const struct guppi_udp_packet *p)
+{
+	unsigned int spead_hdr_upr = 0x53040305;
+	int num_items, payload_size;
+    int i;
+
+    //Confirm we have enough bytes for header + 3 fields
+    if(p->packet_size < 8*4)
+        return (GUPPI_ERR_PACKET);
+    
+    //Check that the header is valid
+    if( BYTE_ARR_TO_UINT(p->data, 0) != spead_hdr_upr )
+        return (GUPPI_ERR_PACKET);
+
+    //Get number of items (from last 2 bytes of header)
+    num_items = p->data[6]<<8 | p->data[7];
+
+    payload_size = -1;
+
+    //Get packet payload length, by searching through the fields
+    for(i = 8; i < (8 + num_items*8); i+=8)
+    {
+        //If we found the packet payload length item
+        if( (p->data[i+1]<<8 | p->data[i+2]) == 4 )
+        {
+            payload_size = BYTE_ARR_TO_UINT(p->data, i/4 + 1);
+            break;
+        }
+    }
+    
+    if(payload_size == -1)
+        return (GUPPI_ERR_PACKET);
+
+    //Confirm that packet size is correct
+    if(p->packet_size != 8 + num_items*8 + payload_size)
+       return (GUPPI_ERR_PACKET);
+
+    return (GUPPI_OK);
+}
+
+#endif
+
 
 int guppi_udp_close(struct guppi_udp_params *p) {
     close(p->sock);

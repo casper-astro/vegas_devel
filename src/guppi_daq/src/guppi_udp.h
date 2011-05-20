@@ -10,7 +10,7 @@
 #include <netdb.h>
 #include <poll.h>
 
-#define GUPPI_MAX_PACKET_SIZE 9000
+#define GUPPI_MAX_PACKET_SIZE 9600
 
 /* Struct to hold connection parameters */
 struct guppi_udp_params {
@@ -42,7 +42,7 @@ struct guppi_udp_params {
  */
 struct guppi_udp_packet {
     size_t packet_size;  /* packet size, bytes */
-    char data[GUPPI_MAX_PACKET_SIZE]; /* packet data */
+    char data[GUPPI_MAX_PACKET_SIZE] __attribute__ ((aligned(32))); /* packet data */
 };
 unsigned long long guppi_udp_packet_seq_num(const struct guppi_udp_packet *p);
 char *guppi_udp_packet_data(const struct guppi_udp_packet *p);
@@ -74,6 +74,9 @@ void guppi_udp_packet_data_copy(char *out, const struct guppi_udp_packet *p);
 void guppi_udp_packet_data_copy_transpose(char *databuf, int nchan,
         unsigned block_pkt_idx, unsigned packets_per_block,
         const struct guppi_udp_packet *p);
+
+/* Check that the size of the received SPEAD packet is correct */
+int guppi_chk_spead_pkt_size(const struct guppi_udp_packet *p);
 
 /* Close out socket, etc */
 int guppi_udp_close(struct guppi_udp_params *p);

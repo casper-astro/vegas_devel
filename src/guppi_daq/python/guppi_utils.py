@@ -1,6 +1,6 @@
 import shm_wrapper as shm
 from GBTStatus import GBTStatus
-import time, pyfits, possem
+import time, pyfits, guppi_daq.possem as possem
 import numpy as n
 #import psr_utils as psr
 import astro_utils as astro
