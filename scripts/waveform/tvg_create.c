@@ -3,7 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include <time.h>
-
+// used in modes for 8 sub IFs
 //argument 1 is the function to be written into tvg (sin,cos,rand,zeros,ones,step,pulse) 
 //argument 2 is frequency
 //argument 3 is period (if there is one, otherwise omit)
