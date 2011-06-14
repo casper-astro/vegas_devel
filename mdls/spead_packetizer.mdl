@@ -1,12 +1,12 @@
 Model {
-  Name			  "SPEAD_packetizer"
+  Name			  "spead_packetizer"
   Version		  7.4
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.53"
+    ComputedModelVersion    "1.54"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -23,11 +23,11 @@ Model {
   Creator		  "gmolera"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "gmolera"
+  LastModifiedBy	  "gofrito"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Mar 17 14:50:13 2011"
-  RTWModifiedTimeStamp	  222274186
-  ModelVersionFormat	  "1.%<AutoIncrement:53>"
+  LastModifiedDate	  "Thu May 26 17:55:39 2011"
+  RTWModifiedTimeStamp	  228333330
+  ModelVersionFormat	  "1.%<AutoIncrement:54>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -670,8 +670,8 @@ Model {
     }
   }
   System {
-    Name		    "SPEAD_packetizer"
-    Location		    [40, 143, 981, 708]
+    Name		    "spead_packetizer"
+    Location		    [40, 144, 981, 709]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1159,8 +1159,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"spead_packet"
-	Location		[73, 206, 841, 667]
-	Open			off
+	Location		[52, 89, 1003, 646]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1183,7 +1183,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "pkt_rdy"
 	  SID			  295
-	  Position		  [495, 1075, 515, 1095]
+	  Position		  [795, 750, 815, 770]
 	  Port			  "2"
 	  IconDisplay		  "Port number"
 	}
@@ -1464,7 +1464,7 @@ Model {
 	  Name			  "Assert8"
 	  SID			  309
 	  Ports			  [1, 1]
-	  Position		  [560, 1069, 620, 1101]
+	  Position		  [860, 744, 920, 776]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Assert"
 	  SourceType		  "Xilinx Assert Block"
@@ -1906,7 +1906,7 @@ Model {
 	  Name			  "Constant15"
 	  SID			  324
 	  Ports			  [0, 1]
-	  Position		  [395, 1502, 450, 1528]
+	  Position		  [695, 1177, 750, 1203]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
@@ -2258,7 +2258,7 @@ Model {
 	  Name			  "Counter1"
 	  SID			  334
 	  Ports			  [2, 1]
-	  Position		  [395, 1415, 455, 1475]
+	  Position		  [695, 1090, 755, 1150]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Counter"
 	  SourceType		  "Xilinx Counter Block"
@@ -2344,7 +2344,7 @@ Model {
 	  Name			  "Delay"
 	  SID			  336
 	  Ports			  [1, 1]
-	  Position		  [560, 1497, 620, 1553]
+	  Position		  [860, 1172, 920, 1228]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Delay"
 	  SourceType		  "Xilinx Delay Block"
@@ -2372,7 +2372,7 @@ Model {
 	  Name			  "Delay1"
 	  SID			  337
 	  Ports			  [1, 1]
-	  Position		  [560, 1412, 620, 1468]
+	  Position		  [860, 1087, 920, 1143]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Delay"
 	  SourceType		  "Xilinx Delay Block"
@@ -2400,7 +2400,7 @@ Model {
 	  Name			  "Inverter1"
 	  SID			  338
 	  Ports			  [1, 1]
-	  Position		  [895, 1260, 950, 1320]
+	  Position		  [1195, 935, 1250, 995]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Inverter"
 	  SourceType		  "Xilinx Inverter Block"
@@ -2427,7 +2427,7 @@ Model {
 	  Name			  "Inverter5"
 	  SID			  339
 	  Ports			  [1, 1]
-	  Position		  [395, 1260, 450, 1320]
+	  Position		  [695, 935, 750, 995]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Inverter"
 	  SourceType		  "Xilinx Inverter Block"
@@ -2454,7 +2454,7 @@ Model {
 	  Name			  "Inverter6"
 	  SID			  340
 	  Ports			  [1, 1]
-	  Position		  [565, 1320, 620, 1380]
+	  Position		  [865, 995, 920, 1055]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Inverter"
 	  SourceType		  "Xilinx Inverter Block"
@@ -2481,7 +2481,7 @@ Model {
 	  Name			  "Logical2"
 	  SID			  341
 	  Ports			  [4, 1]
-	  Position		  [655, 1266, 710, 1329]
+	  Position		  [955, 941, 1010, 1004]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Logical"
 	  SourceType		  "Xilinx Logical Block Block"
@@ -2515,7 +2515,7 @@ Model {
 	  Name			  "Logical3"
 	  SID			  342
 	  Ports			  [2, 1]
-	  Position		  [655, 1375, 710, 1435]
+	  Position		  [955, 1050, 1010, 1110]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Logical"
 	  SourceType		  "Xilinx Logical Block Block"
@@ -2549,7 +2549,7 @@ Model {
 	  Name			  "Mux2"
 	  SID			  343
 	  Ports			  [10, 1]
-	  Position		  [250, 693, 295, 797]
+	  Position		  [750, 358, 795, 462]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Mux"
 	  SourceType		  "Xilinx Bus Multiplexer Block"
@@ -2587,7 +2587,7 @@ Model {
 	  Name			  "Register"
 	  SID			  344
 	  Ports			  [3, 1]
-	  Position		  [805, 1227, 865, 1283]
+	  Position		  [1105, 902, 1165, 958]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Register"
 	  SourceType		  "Xilinx Register Block"
@@ -2616,7 +2616,7 @@ Model {
 	  Name			  "Relational2"
 	  SID			  345
 	  Ports			  [2, 1]
-	  Position		  [245, 1222, 300, 1278]
+	  Position		  [545, 897, 600, 953]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Relational"
 	  SourceType		  "Xilinx Arithmetic Relational Operator Block"
@@ -2645,7 +2645,7 @@ Model {
 	  Name			  "Relational3"
 	  SID			  346
 	  Ports			  [2, 1]
-	  Position		  [485, 1452, 530, 1508]
+	  Position		  [785, 1127, 830, 1183]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Relational"
 	  SourceType		  "Xilinx Arithmetic Relational Operator Block"
@@ -2675,7 +2675,7 @@ Model {
 	  SID			  347
 	  Tag			  "Rising Edge Detector"
 	  Ports			  [1, 1]
-	  Position		  [330, 1405, 365, 1425]
+	  Position		  [630, 1080, 665, 1100]
 	  LibraryVersion	  "1.1"
 	  LinkData {
 	    BlockName		    "Delay"
@@ -2728,7 +2728,7 @@ Model {
 	  SID			  348
 	  Tag			  "Rising Edge Detector"
 	  Ports			  [1, 1]
-	  Position		  [665, 1515, 700, 1535]
+	  Position		  [965, 1190, 1000, 1210]
 	  LibraryVersion	  "1.1"
 	  LinkData {
 	    BlockName		    "Delay"
@@ -2781,7 +2781,7 @@ Model {
 	  SID			  349
 	  Tag			  "Rising Edge Detector"
 	  Ports			  [1, 1]
-	  Position		  [665, 1585, 700, 1605]
+	  Position		  [965, 1260, 1000, 1280]
 	  LibraryVersion	  "1.1"
 	  LinkData {
 	    BlockName		    "Delay"
@@ -2834,7 +2834,7 @@ Model {
 	  SID			  350
 	  Tag			  "Rising Edge Detector"
 	  Ports			  [1, 1]
-	  Position		  [740, 1245, 775, 1265]
+	  Position		  [1040, 920, 1075, 940]
 	  LibraryVersion	  "1.1"
 	  LinkData {
 	    BlockName		    "Delay"
@@ -2885,14 +2885,14 @@ Model {
 	  BlockType		  Outport
 	  Name			  "data_out"
 	  SID			  351
-	  Position		  [335, 735, 355, 755]
+	  Position		  [860, 400, 880, 420]
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "data_valid1"
 	  SID			  352
-	  Position		  [745, 1395, 765, 1415]
+	  Position		  [1045, 1070, 1065, 1090]
 	  Port			  "2"
 	  IconDisplay		  "Port number"
 	}
@@ -2900,7 +2900,7 @@ Model {
 	  BlockType		  Outport
 	  Name			  "eof"
 	  SID			  353
-	  Position		  [745, 1515, 765, 1535]
+	  Position		  [1045, 1190, 1065, 1210]
 	  Port			  "3"
 	  IconDisplay		  "Port number"
 	}
@@ -2908,7 +2908,7 @@ Model {
 	  BlockType		  Outport
 	  Name			  "ack_out"
 	  SID			  354
-	  Position		  [580, 1645, 600, 1665]
+	  Position		  [935, 1325, 955, 1345]
 	  Port			  "4"
 	  IconDisplay		  "Port number"
 	}
@@ -2917,12 +2917,12 @@ Model {
 	  SrcPort		  1
 	  Points		  [0, 0]
 	  Branch {
-	    Points		    [5, 0; 0, 25]
+	    Points		    [5, 0; 0, -300]
 	    DstBlock		    "Relational2"
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [10, 0; 0, -510]
+	    Points		    [10, 0; 0, -845]
 	    DstBlock		    "Mux2"
 	    DstPort		    1
 	  }
@@ -2947,7 +2947,7 @@ Model {
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [0, -35; -85, 0; 0, 40; -85, 0]
+	    Points		    [0, -35; -85, 0; 0, 40; -85, 0; 0, -30]
 	    DstBlock		    "Counter2"
 	    DstPort		    2
 	  }
@@ -2957,7 +2957,7 @@ Model {
 	  SrcPort		  1
 	  Points		  [0, 0]
 	  Branch {
-	    Points		    [5, 0; 0, 175]
+	    Points		    [5, 0; 0, 180]
 	    DstBlock		    "ack_out"
 	    DstPort		    1
 	  }
@@ -3002,7 +3002,7 @@ Model {
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [0, -80; -645, 0]
+	    Points		    [0, -80; -645, 0; 0, 20]
 	    DstBlock		    "Counter2"
 	    DstPort		    1
 	  }
@@ -3036,28 +3036,28 @@ Model {
 	Line {
 	  SrcBlock		  "Concat7"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, -340]
+	  Points		  [15, 0; 0, -675]
 	  DstBlock		  "Mux2"
 	  DstPort		  9
 	}
 	Line {
 	  SrcBlock		  "Concat5"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, -140]
+	  Points		  [15, 0; 0, -475]
 	  DstBlock		  "Mux2"
 	  DstPort		  7
 	}
 	Line {
 	  SrcBlock		  "Concat1"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, 280]
+	  Points		  [15, 0; 0, -55]
 	  DstBlock		  "Mux2"
 	  DstPort		  5
 	}
 	Line {
 	  SrcBlock		  "Concat2"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, 140]
+	  Points		  [15, 0; 0, -195]
 	  DstBlock		  "Mux2"
 	  DstPort		  3
 	}
@@ -3290,42 +3290,42 @@ Model {
 	Line {
 	  SrcBlock		  "Concat"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, 460]
+	  Points		  [15, 0; 0, 125]
 	  DstBlock		  "Mux2"
 	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "Concat3"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, 35]
+	  Points		  [15, 0; 0, -300]
 	  DstBlock		  "Mux2"
 	  DstPort		  4
 	}
 	Line {
 	  SrcBlock		  "Concat4"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, -35]
+	  Points		  [15, 0; 0, -370]
 	  DstBlock		  "Mux2"
 	  DstPort		  6
 	}
 	Line {
 	  SrcBlock		  "Concat6"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, -250]
+	  Points		  [15, 0; 0, -585]
 	  DstBlock		  "Mux2"
 	  DstPort		  8
 	}
 	Line {
 	  SrcBlock		  "Assert6"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, 680]
+	  Points		  [15, 0; 0, 345]
 	  DstBlock		  "Mux2"
 	  DstPort		  10
 	}
 	Line {
 	  SrcBlock		  "Constant16"
 	  SrcPort		  1
-	  Points		  [0, 5; 15, 0]
+	  Points		  [0, 5; 315, 0]
 	  DstBlock		  "Relational2"
 	  DstPort		  2
 	}
