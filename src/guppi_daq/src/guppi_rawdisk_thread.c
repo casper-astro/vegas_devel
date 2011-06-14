@@ -14,17 +14,23 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/types.h>
-
 #include "fitshead.h"
-#include "psrfits.h"
-#include "quantization.h"
 #include "guppi_error.h"
 #include "guppi_status.h"
 #include "guppi_databuf.h"
 
 #define STATUS_KEY "DISKSTAT"
 #include "guppi_threads.h"
+#include "guppi_defines.h"
 
+#if FITS_TYPE == PSRFITS
+#include "psrfits.h"
+#include "quantization.h"
+#else
+#include "sdfits.h"
+#endif
+
+#if FITS_TYPE == PSRFITS
 // Read a status buffer all of the key observation paramters
 extern void guppi_read_obs_params(char *buf, 
                                   struct guppi_params *g, 
@@ -34,6 +40,17 @@ extern void guppi_read_obs_params(char *buf,
 extern void guppi_read_subint_params(char *buf, 
                                      struct guppi_params *g,
                                      struct psrfits *p);
+#else
+// Read a status buffer all of the key observation paramters
+extern void guppi_read_obs_params(char *buf, 
+                                  struct guppi_params *g, 
+                                  struct sdfits *p);
+
+/* Parse info from buffer into param struct */
+extern void guppi_read_subint_params(char *buf, 
+                                     struct guppi_params *g,
+                                     struct sdfits *p);
+#endif
 
 int safe_fclose(FILE *f) {
     if (f==NULL) return 0;
@@ -82,12 +99,17 @@ void guppi_rawdisk_thread(void *_args) {
 
     /* Read in general parameters */
     struct guppi_params gp;
-    struct psrfits pf;
+#if FITS_TYPE == PSRFITS
+    struct sdfits pf;
     pf.sub.dat_freqs = NULL;
     pf.sub.dat_weights = NULL;
     pf.sub.dat_offsets = NULL;
     pf.sub.dat_scales = NULL;
     pthread_cleanup_push((void *)guppi_free_psrfits, &pf);
+#else
+    struct sdfits pf;
+    pthread_cleanup_push((void *)guppi_free_sdfits, &pf);
+#endif
 
     /* Attach to databuf shared mem */
     struct guppi_databuf *db;
@@ -144,6 +166,7 @@ void guppi_rawdisk_thread(void *_args) {
         hgeti4(ptr, "NPKT", &npacket);
         hgeti4(ptr, "NDROP", &ndrop);
 
+#if FITS_TYPE == PSR_FITS
         /* Check for re-quantization flag */
         int nbits_req = 0;
         if (hgeti4(ptr, "NBITSREQ", &nbits_req) == 0) {
@@ -161,15 +184,22 @@ void guppi_rawdisk_thread(void *_args) {
                  */
                 requantize = 0;
         }
+#endif
 
         /* Set up data ptr for quant routines */
+#if FITS_TYPE == PSR_FITS
         pf.sub.data = (unsigned char *)guppi_databuf_data(db, curblock);
+#else
+        pf.data_columns.data = (unsigned char *)guppi_databuf_data(db, curblock);
+#endif
 
         /* Wait for packet 0 before starting write */
         if (got_packet_0==0 && packetidx==0 && gp.stt_valid==1) {
             got_packet_0 = 1;
             guppi_read_obs_params(ptr, &gp, &pf);
+#if FITS_TYPE == PSR_FITS
             orig_blocksize = pf.sub.bytes_per_subint;
+#endif
             char fname[256];
             sprintf(fname, "%s.%4.4d.raw", pf.basefilename, filenum);
             fprintf(stderr, "Opening raw file '%s'\n", fname);
@@ -179,6 +209,8 @@ void guppi_rawdisk_thread(void *_args) {
                 guppi_error("guppi_rawdisk_thread", "Error opening file.");
                 pthread_exit(NULL);
             }
+
+#if FITS_TYPE == PSR_FITS
             /* Determine scaling factors for quantization if appropriate */
             if (requantize) {
                 mean = (double *)realloc(mean, 
@@ -188,6 +220,7 @@ void guppi_rawdisk_thread(void *_args) {
                 compute_stat(&pf, mean, std);
                 fprintf(stderr, "Computed 2-bit stats\n");
             }
+#endif
         }
         
         /* See if we need to open next file */
@@ -211,6 +244,7 @@ void guppi_rawdisk_thread(void *_args) {
         /* Requantize from 8 bits to 2 bits if necessary.
          * See raw_quant.c for more usage examples.
          */
+#if FITS_TYPE == PSR_FITS
         if (requantize && got_packet_0) {
             pf.sub.bytes_per_subint = orig_blocksize;
             /* Does the quantization in-place */
@@ -219,6 +253,7 @@ void guppi_rawdisk_thread(void *_args) {
             hputi4(ptr, "BLOCSIZE", pf.sub.bytes_per_subint);
             hputi4(ptr, "NBITS", pf.hdr.nbits);
         }
+#endif
 
         /* Get full data block size */
         hgeti4(ptr, "BLOCSIZE", &blocksize);
@@ -238,6 +273,7 @@ void guppi_rawdisk_thread(void *_args) {
             }
 
             /* Write data */
+            printf("block size: %d\n", blocksize);
             ptr = guppi_databuf_data(db, curblock);
             rv = fwrite(ptr, 1, (size_t)blocksize, fraw);
             if (rv != blocksize) { 

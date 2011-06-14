@@ -8,12 +8,18 @@
 #include <math.h>
 #include <ctype.h>
 #include "fitshead.h"
-#include "psrfits.h"
 #include "guppi_params.h"
 #include "guppi_time.h"
 #include "guppi_error.h"
 #include "guppi_udp.h"
 #include "slalib.h"
+
+#include "guppi_defines.h"
+#if FITS_TYPE == PSRFITS
+#include "psrfits.h"
+#else
+#include "sdfits.h"
+#endif
 
 #ifndef DEGTORAD
 #define DEGTORAD 0.017453292519943295769236907684886127134428718885417
@@ -29,6 +35,14 @@
 
 #define get_dbl(key, param, def) {                                      \
         if (hgetr8(buf, (key), &(param))==0) {                          \
+            if (DEBUGOUT)                                               \
+                printf("Warning:  %s not in status shm!\n", (key));     \
+            (param) = (def);                                            \
+        }                                                               \
+    }
+
+#define get_flt(key, param, def) {                                      \
+        if (hgetr4(buf, (key), &(param))==0) {                          \
             if (DEBUGOUT)                                               \
                 printf("Warning:  %s not in status shm!\n", (key));     \
             (param) = (def);                                            \
@@ -82,7 +96,7 @@ double beam_FWHM(double obs_freq, double dish_diam)
     return 1.2 * lambda / dish_diam * RADTODEG;
 }
 
-
+#if FITS_TYPE == PSRFITS
 // Any GB-specific derived parameters go here
 void set_obs_params_gb(char *buf, 
                        struct guppi_params *g, 
@@ -121,6 +135,7 @@ void set_obs_params_gb(char *buf,
         p->hdr.be_phase = -1;
     
 }
+#endif
 
 // Read networking parameters
 void guppi_read_net_params(char *buf, struct guppi_udp_params *u) {
@@ -145,6 +160,8 @@ void guppi_read_net_params(char *buf, struct guppi_udp_params *u) {
 void guppi_read_obs_mode(const char *buf, char *mode) {
     get_str("OBS_MODE", mode, 24, "Unknown");
 }
+
+#if FITS_TYPE == PSRFIT
 
 // Read a status buffer all of the key observation paramters
 void guppi_read_subint_params(char *buf, 
@@ -220,6 +237,58 @@ void guppi_read_subint_params(char *buf,
     p->sub.glat *= RADTODEG;
 }
 
+#elif FITS_TYPE == SDFITS
+
+// Read a status buffer all of the key observation paramters
+void guppi_read_subint_params(char *buf, 
+                              struct guppi_params *g, 
+                              struct sdfits *sf)
+{
+    // Parse packet size, # of packets, etc.
+    get_lon("PKTIDX", g->packetindex, -1L);
+    get_int("PKTSIZE", g->packetsize, 0);
+    get_int("NPKT", g->n_packets, 0);
+    get_int("NDROP", g->n_dropped, 0);
+    get_dbl("DROPAVG", g->drop_frac_avg, 0.0);
+    get_dbl("DROPTOT", g->drop_frac_tot, 0.0);
+    get_int("BLOCSIZE", g->packets_per_block, 0);
+    if (g->packetsize>0)
+        g->packets_per_block /= g->packetsize;
+    if (g->n_packets>0)
+        g->drop_frac = (double) g->n_dropped / (double) g->n_packets;
+    else
+        g->drop_frac = 0.0;
+
+    // Valid obs start time
+    get_int("STTVALID", g->stt_valid, 0);
+
+    // Observation params
+    get_flt("TSUBINT", sf->data_columns.exposure, 1.0)
+    get_str("OBJECT", sf->data_columns.object, 16, "Unknown");
+    get_flt("AZ", sf->data_columns.azimuth, 0.0);
+    if (sf->data_columns.azimuth < 0.0) sf->data_columns.azimuth += 360.0;
+    get_flt("ELEV", sf->data_columns.elevation, 0.0);
+    get_dbl("RA", sf->data_columns.ra, 0.0);
+    get_dbl("DEC", sf->data_columns.dec, 0.0);
+    get_flt("BMAJ", sf->data_columns.bmaj, 0.0)
+    get_flt("BMIN", sf->data_columns.bmin, 0.0)
+    get_flt("BPA", sf->data_columns.bpa, 0.0)
+
+    { // MJD and LST calcs
+        int imjd, smjd, lst_secs;
+        double offs, mjd;
+        get_current_mjd(&imjd, &smjd, &offs);
+        mjd = (double) imjd + ((double) smjd + offs) / 86400.0;
+        get_current_lst(mjd, &lst_secs);
+        sf->data_columns.time = (double) lst_secs;
+    }
+
+}
+
+#endif
+
+
+#if FITS_TYPE == PSRFITS
 
 // Read a status buffer all of the key observation paramters
 void guppi_read_obs_params(char *buf, 
@@ -414,6 +483,103 @@ void guppi_read_obs_params(char *buf,
     p->hdr.feed_angle = p->sub.feed_ang;
 }
 
+#elif FITS_TYPE == SDFITS
+
+// Read a status buffer all of the key observation paramters
+void guppi_read_obs_params(char *buf, 
+                           struct guppi_params *g, 
+                           struct sdfits *sf)
+{
+    char base[200], dir[200];
+    double temp_double;
+    int temp_int;
+
+    /* Header information */
+
+    get_str("TELESCOP", sf->hdr.telescope, 16, "GBT");
+    get_dbl("OBSBW", sf->hdr.bandwidth, 1e9);
+    exit_on_missing("OBSBW", sf->hdr.bandwidth, 0.0);
+    get_dbl("OBSNCHAN", temp_double, 1024);
+    if(temp_double) sf->hdr.freqres = sf->hdr.bandwidth/temp_double;
+    get_dbl("TSYS", sf->hdr.tsys, 0.0);
+
+    get_str("OBSERVER", sf->hdr.observer, 16, "Unknown");
+    get_str("PROJID", sf->hdr.projid, 16, "Unknown");
+    get_str("OBS_MODE", sf->hdr.obs_mode, 16, "Unknown");
+    get_str("FRONTEND", sf->hdr.frontend, 16, "Unknown");
+    get_dbl("OBSFREQ", sf->hdr.obsfreq, 0.0);
+    get_dbl("LST", sf->hdr.lst, 0.0);
+    get_int("SCANNUM", temp_int, 1);
+    sf->hdr.scan = (double)(temp_int);
+
+    get_str("BACKEND", sf->hdr.backend, 16, "GUPPI");
+    get_str("CAL_MODE", sf->hdr.cal_mode, 16, "Unknown");
+    if (!(strcmp(sf->hdr.cal_mode, "OFF")==0))
+    {
+        get_dbl("CAL_FREQ", sf->hdr.cal_freq, 25.0);
+        get_dbl("CAL_DCYC", sf->hdr.cal_dcyc, 0.5);
+        get_dbl("CAL_PHS", sf->hdr.cal_phs, 0.0);
+    }
+    get_int("NPOL", sf->hdr.npol, 2);
+    get_int("NCHAN", sf->hdr.nchan, 1024);
+    get_dbl("CHAN_BW", sf->hdr.chan_bw, 1e6);
+
+    get_int("SPECMODE", sf->hdr.specmode, 1);
+    get_int("NSUBBAND", sf->hdr.nsubband, 1);
+
+    get_str("DATADIR", dir, 200, ".");
+
+    /* Start day and time */
+
+    int mjd_d, mjd_s, YYYY, MM, DD, h, m;
+    double mjd_fs, s;
+    long double MJD_epoch;
+
+    get_int("STT_IMJD", mjd_d, 0);
+    get_int("STT_SMJD", mjd_s, 0);
+    get_dbl("STT_OFFS", mjd_fs, 0.0);
+    MJD_epoch = (long double) mjd_d;
+    MJD_epoch += ((long double) mjd_s + mjd_fs) / 86400.0;
+
+    datetime_from_mjd(MJD_epoch, &YYYY, &MM, &DD, &h, &m, &s);
+    sprintf(sf->hdr.date_obs, "%02d/%02d/%02d", DD, MM, YYYY%1000);
+   
+    /* Set the base filename */
+
+    int i;
+    char backend[24];
+    strncpy(backend, sf->hdr.backend, 24);
+    for (i=0; i<24; i++) { 
+        if (backend[i]=='\0') break;
+        backend[i] = tolower(backend[i]); 
+    }
+    sprintf(base, "%s_%02d%02d%02d_%04f", backend, DD, MM, YYYY%1000, sf->hdr.scan);
+    sprintf(sf->basefilename, "%s/%s", dir, base);
+
+    // We do not set telescope-specific settings
+    /* set_obs_params_gb(buf, g, p); */
+    
+    // Now bookkeeping information
+    {
+        int bytes_per_dt = sf->hdr.nsubband * sf->hdr.nchan * 4 * 4;
+        long long max_bytes_per_file;
+
+        max_bytes_per_file = SDFITS_MAXFILELEN * 1073741824L;
+
+        sf->rows_per_file = max_bytes_per_file / (96 + bytes_per_dt); 
+
+        // Free the old arrays in case we've changed the params
+        guppi_free_sdfits(sf);
+    }
+    
+    // Read information that is appropriate for the subints
+    guppi_read_subint_params(buf, g, sf);
+}
+
+#endif
+
+#if FITS_TYPE == PSRFITS
+
 void guppi_free_psrfits(struct psrfits *p) {
     // Free any memory allocated in to the psrfits struct
     if (p->sub.dat_freqs) free(p->sub.dat_freqs);
@@ -421,3 +587,11 @@ void guppi_free_psrfits(struct psrfits *p) {
     if (p->sub.dat_offsets) free(p->sub.dat_offsets);
     if (p->sub.dat_scales) free(p->sub.dat_scales);
 }
+
+#elif FITS_TYPE == SDFITS
+
+void guppi_free_sdfits(struct sdfits *sd) {
+    // Free any memory allocated in to the psrfits struct
+}
+
+#endif

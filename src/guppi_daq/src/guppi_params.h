@@ -27,6 +27,10 @@ struct guppi_params {
 };
 
 #include "guppi_udp.h"
+#include "guppi_defines.h"
+
+#if FITS_TYPE == PSRFITS
+
 #include "psrfits.h"
 void guppi_read_obs_mode(const char *buf, char *mode);
 void guppi_read_net_params(char *buf, struct guppi_udp_params *u);
@@ -37,4 +41,20 @@ void guppi_read_obs_params(char *buf,
                            struct guppi_params *g, 
                            struct psrfits *p);
 void guppi_free_psrfits(struct psrfits *p);
+
+#else
+
+#include "sdfits.h"
+void guppi_read_obs_mode(const char *buf, char *mode);
+void guppi_read_net_params(char *buf, struct guppi_udp_params *u);
+void guppi_read_subint_params(char *buf, 
+                              struct guppi_params *g, 
+                              struct sdfits *p);
+void guppi_read_obs_params(char *buf, 
+                           struct guppi_params *g, 
+                           struct sdfits *p);
+void guppi_free_sdfits(struct sdfits *p);
+
+#endif
+
 #endif

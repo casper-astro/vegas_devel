@@ -15,7 +15,6 @@
 #include <sys/types.h>
 
 #include "fitshead.h"
-#include "psrfits.h"
 #include "guppi_error.h"
 #include "guppi_status.h"
 #include "guppi_databuf.h"
@@ -24,13 +23,34 @@
 #define STATUS_KEY "NULLSTAT"
 #include "guppi_threads.h"
 
+#if FITS_TYPE == PSRFITS
+#include "psrfits.h"
+#else
+#include "sdfits.h"
+#endif
+
+
+#if FITS_TYPE == PSRFITS
+// Read a status buffer all of the key observation paramters
+extern void guppi_read_obs_params(char *buf, 
+                                  struct guppi_params *g, 
+                                  struct psrfits *p);
+
 /* Parse info from buffer into param struct */
 extern void guppi_read_subint_params(char *buf, 
                                      struct guppi_params *g,
                                      struct psrfits *p);
+#else
+// Read a status buffer all of the key observation paramters
 extern void guppi_read_obs_params(char *buf, 
+                                  struct guppi_params *g, 
+                                  struct sdfits *p);
+
+/* Parse info from buffer into param struct */
+extern void guppi_read_subint_params(char *buf, 
                                      struct guppi_params *g,
-                                     struct psrfits *p);
+                                     struct sdfits *p);
+#endif
 
 
 void guppi_null_thread(void *_args) {
@@ -88,12 +108,17 @@ void guppi_null_thread(void *_args) {
     /* Loop */
     char *ptr;
     struct guppi_params gp;
+#if FITS_TYPE == PSRFITS
     struct psrfits pf;
     pf.sub.dat_freqs = NULL;
     pf.sub.dat_weights = NULL;
     pf.sub.dat_offsets = NULL;
     pf.sub.dat_scales = NULL;
     pthread_cleanup_push((void *)guppi_free_psrfits, &pf);
+#else
+    struct sdfits pf;
+    pthread_cleanup_push((void *)guppi_free_sdfits, &pf);
+#endif
     int curblock=0;
     signal(SIGINT,cc);
     while (run) {
@@ -121,8 +146,12 @@ void guppi_null_thread(void *_args) {
         guppi_read_obs_params(ptr, &gp, &pf);
 
         /* Output if data was lost */
+#if FITS_TYPE == PSRFITS
         if (gp.n_dropped!=0 && 
                 (gp.packetindex==0 || strcmp(pf.hdr.obs_mode,"SEARCH"))) {
+#else
+        if (gp.n_dropped!=0 && gp.packetindex==0) {
+#endif
             printf("Block beginning with pktidx=%lld dropped %d packets\n",
                     gp.packetindex, gp.n_dropped);
             fflush(stdout);
