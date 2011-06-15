@@ -19,7 +19,6 @@
 
 #include "fitshead.h"
 #include "guppi_params.h"
-#include "psrfits.h"
 #include "guppi_error.h"
 #include "guppi_status.h"
 #include "guppi_databuf.h"
@@ -30,10 +29,22 @@
 #include "guppi_threads.h"
 #include "guppi_defines.h"
 
+#if FITS_TYPE == PSRFITS
+#include "psrfits.h"
+#else
+#include "sdfits.h"
+#endif
+
 // Read a status buffer all of the key observation paramters
+#if FITS_TYPE == PSRFITS
 extern void guppi_read_obs_params(char *buf, 
                                   struct guppi_params *g, 
                                   struct psrfits *p);
+#else
+extern void guppi_read_obs_params(char *buf, 
+                                  struct guppi_params *g, 
+                                  struct sdfits *p);
+#endif
 
 /* It's easier to just make these global ... */
 static unsigned long long npacket_total=0, ndropped_total=0, nbogus_total=0;
@@ -217,17 +228,25 @@ void *guppi_net_thread(void *_args) {
 
     /* Read in general parameters */
     struct guppi_params gp;
+#if FITS_TYPE == PSRFITS
     struct psrfits pf;
     pf.sub.dat_freqs = NULL;
     pf.sub.dat_weights = NULL;
     pf.sub.dat_offsets = NULL;
     pf.sub.dat_scales = NULL;
+#else
+    struct sdfits pf;
+#endif
     char status_buf[GUPPI_STATUS_SIZE];
     guppi_status_lock_safe(&st);
     memcpy(status_buf, st.buf, GUPPI_STATUS_SIZE);
     guppi_status_unlock_safe(&st);
     guppi_read_obs_params(status_buf, &gp, &pf);
+#if FITS_TYPE == PSRFITS
     pthread_cleanup_push((void *)guppi_free_psrfits, &pf);
+#else
+    pthread_cleanup_push((void *)guppi_free_sdfits, &pf);
+#endif
 
     /* Read network params */
     struct guppi_udp_params up;

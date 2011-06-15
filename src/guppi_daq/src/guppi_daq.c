@@ -1,6 +1,6 @@
-/* test_net_thread.c
+/* guppi_daq.c
  *
- * Test run net thread.
+ * The main GUPPI program.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,10 +19,33 @@
 #include "guppi_databuf.h"
 #include "guppi_params.h"
 #include "guppi_thread_main.h"
+#include "guppi_defines.h"
+
+/* Define to enable raw_disk_thread. */
+// #define     RAW_DISK    1
+/* Or undefine to revert to writing of FITS files */
+
+//FAKE_NET is defined in guppi_defines.h
+
+// To Do
+// Create heap index whenever new block is created
+// Test writing fake data to raw file
+// Write accumulation thread (converts heaps to integrated spectra)
+// Test writing accumulated spectra to raw file
+// Modify guppi_psrfits_thread to write integrated spectra correctly (not floating point)
 
 /* Thread declarations */
 void *guppi_net_thread(void *args);
 void *guppi_psrfits_thread(void *args);
+
+#ifdef RAW_DISK
+void *guppi_rawdisk_thread(void *args);
+#endif
+
+#ifdef FAKE_NET
+void *guppi_fake_net_thread(void *args);
+#endif
+
 
 int main(int argc, char *argv[]) {
 
@@ -50,26 +73,37 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Error connecting to guppi_databuf\n");
         exit(1);
     }
+
     guppi_databuf_clear(dbuf);
 
     signal(SIGINT, cc);
 
     /* Launch net thread */
     pthread_t net_thread_id;
+#ifdef FAKE_NET
+    rv = pthread_create(&net_thread_id, NULL, guppi_fake_net_thread,
+            (void *)&net_args);
+#else
     rv = pthread_create(&net_thread_id, NULL, guppi_net_thread,
             (void *)&net_args);
+#endif
     if (rv) { 
         fprintf(stderr, "Error creating net thread.\n");
         perror("pthread_create");
         exit(1);
     }
 
-    /* Launch PSRFITS disk thread */
+    /* Launch RAW_DISK thread, SDFITS disk thread, or PSRFITS disk thread */
     pthread_t disk_thread_id;
+#ifdef RAW_DISK
+    rv = pthread_create(&disk_thread_id, NULL, guppi_rawdisk_thread, 
+        (void *)&disk_args);
+#else
     rv = pthread_create(&disk_thread_id, NULL, guppi_psrfits_thread, 
-            (void *)&disk_args);
+        (void *)&disk_args);
+#endif
     if (rv) { 
-        fprintf(stderr, "Error creating PSRFITS thread.\n");
+        fprintf(stderr, "Error creating disk thread.\n");
         perror("pthread_create");
         exit(1);
     }

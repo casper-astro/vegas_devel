@@ -212,7 +212,7 @@ void guppi_psrfits_thread(void *_args) {
             /* into those two bins.                               */
             // XXX why are we doing this? we should just set weight to 0
             //zero_end_chans(&pf);
-
+#if 0
             /* Output only Stokes I (in place) */
             if (pf.hdr.onlyI && pf.hdr.npol==4)
                 get_stokes_I(&pf);
@@ -228,7 +228,7 @@ void guppi_psrfits_thread(void *_args) {
             /* Folded data needs a transpose */
             if (mode==FOLD_MODE)
                 normalize_transpose_folds(fold_output_array, &fb);
-
+#endif
             /* Write the data */
             int last_filenum = pf.filenum;
             psrfits_write_subint(&pf);
@@ -260,8 +260,8 @@ void guppi_psrfits_thread(void *_args) {
                     pf.fold.pc[i].used = 0; // Already have this one
                 }
             }
-            if (write_pc) 
-                psrfits_write_polycos(&pf, pf.fold.pc, pf.fold.n_polyco_sets);
+ //           if (write_pc) 
+ //               psrfits_write_polycos(&pf, pf.fold.pc, pf.fold.n_polyco_sets);
 
             /* Is the scan complete? */
             if ((pf.hdr.scanlen > 0.0) && 
