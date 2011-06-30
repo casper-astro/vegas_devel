@@ -6,7 +6,7 @@ t=0:clocks;
 t=t'/8;
 
 % freq in terms of FPGA clocks
-din = .8*sin(2*pi*t);
+din = .7*sin(2*pi*t/5);
 
 adc_sim_in = [t,din];
 
