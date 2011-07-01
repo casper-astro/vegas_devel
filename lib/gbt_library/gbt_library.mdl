@@ -15,9 +15,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "gofrito"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jun 30 20:02:56 2011"
-  RTWModifiedTimeStamp	  231364970
-  ModelVersionFormat	  "1.%<AutoIncrement:14>"
+  LastModifiedDate	  "Thu Jun 30 20:55:54 2011"
+  RTWModifiedTimeStamp	  231368146
+  ModelVersionFormat	  "1.%<AutoIncrement:15>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -659,7 +659,7 @@ Library {
   }
   System {
     Name		    "gbt_library"
-    Location		    [15, 253, 689, 907]
+    Location		    [15, 254, 689, 908]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -673,13 +673,13 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    244
+    SIDHighWatermark	    245
     Block {
       BlockType		      SubSystem
       Name		      "spead_packet"
-      SID		      244
+      SID		      245
       Ports		      [10, 4]
-      Position		      [260, 41, 365, 229]
+      Position		      [245, 26, 350, 214]
       BackgroundColor	      "lightBlue"
       AncestorBlock	      "gbt_library/spead_packet"
       LibraryVersion	      "*1.12"
@@ -706,7 +706,7 @@ Library {
       MaskValueString	      "64|40|7|4"
       System {
 	Name			"spead_packet"
-	Location		[285, 105, 1391, 777]
+	Location		[285, 106, 1391, 778]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1434,7 +1434,7 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "(2^(pkt_bits))-8"
+	  const			  "(2^(pkt_bits))-10"
 	  n_bits		  "pkt_bits+1"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -1451,13 +1451,13 @@ Library {
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "50,26,0,1,white,blue,0,576f855e,right,"
+	  sg_icon_stat		  "50,26,0,1,white,blue,0,f7d4e942,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.36 0.28 0.4 0.28 0.36 0.5 0.54 0.58 0.72 0.6 0.48 0.4 0.52 0.4 0.48 0.6 0.72 0.58 0.54 0.5 0.36 ],[0.115385 0"
 	  ".269231 0.5 0.730769 0.884615 0.884615 0.807692 0.884615 0.884615 0.653846 0.884615 0.730769 0.5 0.269231 0.115385 "
 	  "0.346154 0.115385 0.115385 0.192308 0.115385 0.115385 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprin"
 	  "tf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',1"
-	  ",'120');\nfprintf('','COMMENT: end icon text');\n"
+	  ",'118');\nfprintf('','COMMENT: end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B))','inp"
 	  "1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*B|PCIN + A"
 	  "*B|P + A*B|A * B|C + A:B|C - A:B|C|Custom)','userSelections'=>{'carry'=>'CIN','inp1'=>'P','inp2'=>'PCIN>>17','opsel"
