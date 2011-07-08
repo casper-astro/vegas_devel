@@ -15,9 +15,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "gofrito"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jul  7 12:31:33 2011"
-  RTWModifiedTimeStamp	  231942678
-  ModelVersionFormat	  "1.%<AutoIncrement:16>"
+  LastModifiedDate	  "Fri Jul  8 14:57:08 2011"
+  RTWModifiedTimeStamp	  232037824
+  ModelVersionFormat	  "1.%<AutoIncrement:17>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -659,7 +659,7 @@ Library {
   }
   System {
     Name		    "gbt_library"
-    Location		    [15, 255, 689, 909]
+    Location		    [15, 256, 689, 910]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -673,13 +673,13 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    246
+    SIDHighWatermark	    247
     Block {
       BlockType		      SubSystem
       Name		      "spead_packet"
-      SID		      246
+      SID		      247
       Ports		      [10, 4]
-      Position		      [240, 31, 345, 219]
+      Position		      [250, 21, 355, 209]
       BackgroundColor	      "lightBlue"
       AncestorBlock	      "gbt_library/spead_packet"
       LibraryVersion	      "*1.12"
@@ -690,6 +690,8 @@ Library {
       Opaque		      off
       RequestExecContextInheritance off
       MaskHideContents	      off
+      MaskDescription	      "Data_in  : Input data\nvalid_in : Valid data\nheap_cnt : Heap counter\nheap_size: Heap si"
+      "ze\nheap_ofset: Heap offset\nHeap_pay_length: Payload length Heap"
       MaskPromptString	      "spead_msw|spead_lsw|pkt_bits|fifo_latency"
       MaskStyleString	      "edit,edit,edit,edit"
       MaskTunableValueString  "on,on,on,on"
@@ -706,7 +708,7 @@ Library {
       MaskValueString	      "64|40|7|4"
       System {
 	Name			"spead_packet"
-	Location		[285, 110, 1391, 782]
+	Location		[60, 79, 1285, 847]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -718,7 +720,7 @@ Library {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"100"
+	ZoomFactor		"64"
 	SIDHighWatermark	290
 	SIDPrevWatermark	290
 	Block {
@@ -730,7 +732,7 @@ Library {
 	}
 	Block {
 	  BlockType		  Inport
-	  Name			  "pkt_rdy"
+	  Name			  "valid_in"
 	  SID			  170
 	  Position		  [245, 1060, 265, 1080]
 	  Port			  "2"
@@ -764,7 +766,7 @@ Library {
 	  BlockType		  Inport
 	  Name			  "heap_pay_length"
 	  SID			  174
-	  Position		  [45, 545, 65, 565]
+	  Position		  [40, 545, 60, 565]
 	  Port			  "6"
 	  IconDisplay		  "Port number"
 	}
@@ -772,7 +774,7 @@ Library {
 	  BlockType		  Inport
 	  Name			  "time_stamp"
 	  SID			  175
-	  Position		  [40, 665, 60, 685]
+	  Position		  [35, 665, 55, 685]
 	  Port			  "7"
 	  IconDisplay		  "Port number"
 	}
@@ -788,7 +790,7 @@ Library {
 	  BlockType		  Inport
 	  Name			  "status_bits"
 	  SID			  179
-	  Position		  [55, 850, 75, 870]
+	  Position		  [40, 850, 60, 870]
 	  Port			  "9"
 	  IconDisplay		  "Port number"
 	}
@@ -796,7 +798,7 @@ Library {
 	  BlockType		  Inport
 	  Name			  "payload_offset"
 	  SID			  180
-	  Position		  [55, 945, 75, 965]
+	  Position		  [40, 945, 60, 965]
 	  Port			  "10"
 	  IconDisplay		  "Port number"
 	}
@@ -2018,7 +2020,7 @@ Library {
 	  SourceType		  "Xilinx Delay Block"
 	  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
 	  en			  off
-	  latency		  "0"
+	  latency		  "2"
 	  dbl_ovrd		  off
 	  reg_retiming		  on
 	  xl_use_area		  off
@@ -2027,13 +2029,13 @@ Library {
 	  sggui_pos		  "20,20,432,336"
 	  block_type		  "delay"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "60,56,1,1,white,blue,0,24450e6f,right,"
+	  sg_icon_stat		  "60,56,1,1,white,blue,0,85ce9542,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.25 0.1 0.316667 0.1 0.25 0.5 0.566667 0.633333 0.9 0.683333 0.483333 0.333333 0.533333 0.333333 0.483333 0.68"
 	  "3333 0.9 0.633333 0.566667 0.5 0.25 ],[0.107143 0.267857 0.5 0.732143 0.892857 0.892857 0.821429 0.892857 0.892857 "
 	  "0.660714 0.875 0.714286 0.5 0.285714 0.125 0.339286 0.107143 0.107143 0.178571 0.107143 0.107143 ],[0.98 0.96 0.92]"
 	  ");\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon te"
-	  "xt');\ncolor('black');disp('z^{-0}','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
+	  "xt');\ncolor('black');disp('z^{-2}','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
 	}
 	Block {
 	  BlockType		  Reference
@@ -2131,7 +2133,7 @@ Library {
 	  BlockType		  From
 	  Name			  "From16"
 	  SID			  277
-	  Position		  [840, 978, 925, 992]
+	  Position		  [745, 253, 830, 267]
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "pkt_start"
@@ -2140,7 +2142,7 @@ Library {
 	  BlockType		  From
 	  Name			  "From17"
 	  SID			  278
-	  Position		  [840, 993, 925, 1007]
+	  Position		  [745, 268, 830, 282]
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "valid_data"
@@ -2149,7 +2151,7 @@ Library {
 	  BlockType		  From
 	  Name			  "From18"
 	  SID			  279
-	  Position		  [840, 1008, 925, 1022]
+	  Position		  [745, 283, 830, 297]
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "out_sel"
@@ -2158,7 +2160,7 @@ Library {
 	  BlockType		  From
 	  Name			  "From19"
 	  SID			  285
-	  Position		  [840, 1038, 925, 1052]
+	  Position		  [745, 313, 830, 327]
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "data_valid"
@@ -2176,7 +2178,7 @@ Library {
 	  BlockType		  From
 	  Name			  "From20"
 	  SID			  281
-	  Position		  [840, 1023, 925, 1037]
+	  Position		  [745, 298, 830, 312]
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "wrt_payload"
@@ -2657,7 +2659,7 @@ Library {
 	  Name			  "Scope1"
 	  SID			  271
 	  Ports			  [6]
-	  Position		  [1000, 979, 1055, 1066]
+	  Position		  [905, 254, 960, 341]
 	  Floating		  off
 	  Location		  [-6, 120, 885, 827]
 	  Open			  off
@@ -3165,7 +3167,7 @@ Library {
 	  SrcPort		  1
 	  Points		  [5, 0]
 	  Branch {
-	    Points		    [260, 0; 0, 905]
+	    Points		    [165, 0; 0, 180]
 	    DstBlock		    "Scope1"
 	    DstPort		    6
 	  }
@@ -3309,7 +3311,7 @@ Library {
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "pkt_rdy"
+	  SrcBlock		  "valid_in"
 	  SrcPort		  1
 	  DstBlock		  "Assert8"
 	  DstPort		  1
