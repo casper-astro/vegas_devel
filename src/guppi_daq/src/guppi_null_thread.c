@@ -149,13 +149,17 @@ void guppi_null_thread(void *_args) {
 #if FITS_TYPE == PSRFITS
         if (gp.n_dropped!=0 && 
                 (gp.packetindex==0 || strcmp(pf.hdr.obs_mode,"SEARCH"))) {
-#else
-        if (gp.n_dropped!=0 && gp.packetindex==0) {
-#endif
             printf("Block beginning with pktidx=%lld dropped %d packets\n",
                     gp.packetindex, gp.n_dropped);
             fflush(stdout);
         }
+#else
+        if (gp.num_pkts_dropped!=0 && gp.num_pkts_rcvd!=0) {
+            printf("Block received %d packets and dropped %d packets\n",
+                    gp.num_pkts_rcvd, gp.num_pkts_dropped);
+            fflush(stdout);
+        }
+#endif
 
         /* Mark as free */
         guppi_databuf_set_free(db, curblock);

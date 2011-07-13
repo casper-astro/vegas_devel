@@ -19,6 +19,8 @@ bin/test_udp_recv
 bin/guppi_daq_dedisp
 bin/run_guppi_daq_server
 bin/test_dedisp_thread
+bin/vegas_hpc_hbw
+bin/vegas_hpc_lbw
 build/
 src/check_guppi_databuf
 src/check_guppi_status
@@ -39,3 +41,4 @@ src/test_dedisp_thread
 src/raw_quant
 src/raw_read
 src/raw_head
+src/vegas_hpc_hbw

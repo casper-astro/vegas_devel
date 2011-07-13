@@ -163,7 +163,7 @@ size_t guppi_udp_packet_datasize(size_t packet_size) {
     else if (packet_size==PACKET_SIZE_SHORT) 
         //return((size_t)256);
         return((size_t)512);
-	else if (packet_size=PACKET_SIZE_SPEAD)
+	else if (packet_size==PACKET_SIZE_SPEAD)
 		return(packet_size - 6*8); // 8248-6*8
     else              
         return(packet_size - 2*sizeof(unsigned long long));
@@ -346,9 +346,125 @@ int guppi_chk_spead_pkt_size(const struct guppi_udp_packet *p)
 
     //Confirm that packet size is correct
     if(p->packet_size != 8 + num_items*8 + payload_size)
-       return (GUPPI_ERR_PACKET);
+        return (GUPPI_ERR_PACKET);
 
     return (GUPPI_OK);
+}
+
+unsigned int guppi_spead_packet_heap_cntr(const struct guppi_udp_packet *p)
+{
+    int i;
+
+    //Get heap counter, by searching through the fields
+    for(i = 8; i < (8 + 4*8); i+=8)
+    {
+        //If we found the heap counter item
+        if( (p->data[i+1]<<8 | p->data[i+2]) == 1 )
+        {
+            return BYTE_ARR_TO_UINT(p->data, i/4 + 1);
+        }
+    }
+    
+    return (GUPPI_ERR_PACKET);
+}
+
+
+unsigned int guppi_spead_packet_heap_offset(const struct guppi_udp_packet *p)
+{
+    int i;
+
+    //Get heap offset, by searching through the fields
+    for(i = 8; i < (8 + 4*8); i+=8)
+    {
+        //If we found the heap offset item
+        if( (p->data[i+1]<<8 | p->data[i+2]) == 3 )
+        {
+            return BYTE_ARR_TO_UINT(p->data, i/4 + 1);
+        }
+    }
+    
+    return (GUPPI_ERR_PACKET);
+}
+
+
+unsigned int guppi_spead_packet_seq_num(int heap_cntr, int heap_offset, int packets_per_heap)
+{
+    return (heap_cntr * packets_per_heap) + (heap_offset / 8128);
+}
+
+
+char* guppi_spead_packet_data(const struct guppi_udp_packet *p)
+{
+    return (char*)(p->data + 5*8);
+}
+
+
+unsigned int guppi_spead_packet_datasize(const struct guppi_udp_packet *p)
+{
+    return p->packet_size - 5*8;
+}
+
+
+int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *dest_addr, char bw_mode[])
+{
+    int i, num_items;
+    char* payload_addr;
+    int payload_size, offset;
+
+    num_items = p->data[6]<<8 | p->data[7];
+
+    /* Copy header, reversing both the ID and value of each field */
+    for(i = 0; i < num_items - 4; i++)
+    {
+        dest_addr[0]
+                = guppi_spead_packet_data(p)[i*8];                                  //mode byte
+        *((unsigned short *)(dest_addr + 1))
+                = ntohs(*(unsigned short *)(guppi_spead_packet_data(p) + i*8 + 1)); //ID (16 bits)
+        dest_addr[3]
+                = guppi_spead_packet_data(p)[i*8 + 3];                              //pad byte
+        *((unsigned int *)(dest_addr + 4))
+                = ntohl(*(unsigned int *)(guppi_spead_packet_data(p) + i*8 + 4));   //value (32 bits)
+
+        dest_addr = (char*)(dest_addr + 8);
+    }
+
+    /* Copy payload */
+    
+    payload_addr = guppi_spead_packet_data(p) + (num_items - 4) * 8;
+    payload_size = guppi_spead_packet_datasize(p) - (num_items - 4) * 8;
+
+    /* If high-bandwidth mode */
+    if(strncmp(bw_mode, "high", 4) == 0)
+    {
+        for(offset = 0; offset < payload_size; offset += 4)
+        {
+            dest_addr[offset + 0] = payload_addr[offset + 3];
+            dest_addr[offset + 1] = payload_addr[offset + 2];
+            dest_addr[offset + 2] = payload_addr[offset + 1];
+            dest_addr[offset + 3] = payload_addr[offset + 0];
+        }
+            //*(float*)(dest_addr + offset) = float_swap(*(float*)(payload_addr + offset));
+    }
+    
+    /* Else if low-bandwidth mode */
+    else if(strncmp(bw_mode, "low", 3) == 0)
+        memcpy(dest_addr, payload_addr, payload_size);
+
+    return 0;
+}
+
+float float_swap(float a)
+{
+    float b;
+    unsigned char *src = (unsigned char*)&a;
+    unsigned char *dst = (unsigned char*)&b;
+
+    dst[0] = src[3];
+    dst[1] = src[2];
+    dst[2] = src[1];
+    dst[3] = src[0];
+
+    return b;
 }
 
 #endif

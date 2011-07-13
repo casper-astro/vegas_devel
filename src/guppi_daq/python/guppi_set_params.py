@@ -96,12 +96,18 @@ add_param_option("--freq",
 add_param_option("--bw", 
         name="OBSBW", type="float",
         help="Hardware total bandwidth (MHz)")
-add_param_option("--nchan", 
+add_param_option("--obsnchan", 
         name="OBSNCHAN", type="int",
         help="Number of hardware channels")
 add_param_option("--npol", 
         name="NPOL", type="int",
         help="Number of hardware polarizations")
+add_param_option("--nchan", 
+        name="NCHAN", type="float",
+        help="Number of spectral channels per sub-band")
+add_param_option("--chan_bw", 
+        name="CHAN_BW", type="float",
+        help="Width of each spectral bin (resolution)")
 add_param_option("--feed_pol", 
         name="FD_POLN", type="string",
         help="Feed polarization type (LIN/CIRC)")
@@ -117,6 +123,63 @@ add_param_option("--host",
 add_param_option("--datadir", 
         name="DATADIR", type="string",
         help="Data output directory (default: current dir)")
+add_param_option("--tsys", 
+        name="TSYS", type="float",
+        help="System temperature")
+add_param_option("--nsubband", 
+        name="NSUBBAND", type="int",
+        help="Number of sub-bands (1-8)")
+add_param_option("--exposure", 
+        name="EXPOSURE", type="float",
+        help="Required integration time (in seconds)")
+add_param_option("--pfbrate", 
+        name="PFBRATE", type="float",
+        help="Rate at which spectra are produced by the PFB (Hz)")
+add_param_option("--projid", 
+        name="PROJID", type="string",
+        help="Project ID string")
+add_param_option("--elev", 
+        name="ELEV", type="float",
+        help="Current antenna elevation, above horizon")
+add_param_option("--object", 
+        name="OBJECT", type="string",
+        help="The object currently being viewed")
+add_param_option("--bmaj", 
+        name="BMAJ", type="float",
+        help="Beam major axis length")
+add_param_option("--bmin", 
+        name="BMIN", type="float",
+        help="Beam minor axis length")
+add_param_option("--bpa", 
+        name="BPA", type="float",
+        help="Beam position angle")
+add_param_option("--sub0freq", 
+        name="SUB0FREQ", type="float",
+        help="Centre frequency of sub-band 0")
+add_param_option("--sub1freq", 
+        name="SUB1FREQ", type="float",
+        help="Centre frequency of sub-band 1")
+add_param_option("--sub2freq", 
+        name="SUB2FREQ", type="float",
+        help="Centre frequency of sub-band 2")
+add_param_option("--sub3freq", 
+        name="SUB3FREQ", type="float",
+        help="Centre frequency of sub-band 3")
+add_param_option("--sub4freq", 
+        name="SUB4FREQ", type="float",
+        help="Centre frequency of sub-band 4")
+add_param_option("--sub5freq", 
+        name="SUB5FREQ", type="float",
+        help="Centre frequency of sub-band 5")
+add_param_option("--sub6freq", 
+        name="SUB6FREQ", type="float",
+        help="Centre frequency of sub-band 6")
+add_param_option("--sub7freq", 
+        name="SUB7FREQ", type="float",
+        help="Centre frequency of sub-band 7")
+add_param_option("--filenum", 
+        name="FILENUM", type="int",
+        help="Current file number, in a multifile scan")
 
 
 # non-parameter options
@@ -209,6 +272,8 @@ if (opt.update == False):
     g.update("CAL_PHS", 0.0)
 
     g.update("OBSNCHAN", 2048)
+    g.update("NCHAN", 1024)
+    g.update("CHAN_BW", 1000)
     g.update("NPOL", 4)
     g.update("NBITS", 8)
     g.update("PFB_OVER", 4)
@@ -237,6 +302,26 @@ if (opt.update == False):
 
     g.update("DATADIR", ".")
 
+    #Default settings for VEGAS specific variables
+    g.update("TSYS", 0)
+    g.update("NSUBBAND", 1)
+    g.update("ELEV", 0)
+    g.update("OBJECT", "unknown_obj")
+    g.update("BMAJ", 0)
+    g.update("BMIN", 0)
+    g.update("BPA", 0)
+    g.update("EXPOSURE", 1e0)
+    g.update("PFBRATE", 10e6)
+    g.update("SUB0FREQ", 1e9)
+    g.update("SUB1FREQ", 1e9)
+    g.update("SUB2FREQ", 1e9)
+    g.update("SUB3FREQ", 1e9)
+    g.update("SUB4FREQ", 1e9)
+    g.update("SUB5FREQ", 1e9)
+    g.update("SUB6FREQ", 1e9)
+    g.update("SUB7FREQ", 1e9)
+    g.update("FILENUM", 0)
+
     # Pull from gbtstatus if needed
     if (opt.gbt):
         g.update_with_gbtstatus()
@@ -254,8 +339,6 @@ if (opt.update == False):
 
     # Misc
     g.update("LST", 0)
-    g.update("BMAJ", 0.0)
-    g.update("BMIN", 0.0)
 
 
 # Any 43m-specific settings
@@ -324,7 +407,7 @@ g.update("BASENAME", base)
 
 # Time res, channel bw
 g.update("TBIN", abs(g['ACC_LEN']*g['OBSNCHAN']/g['OBSBW']*1e-6))
-g.update("CHAN_BW", g['OBSBW']/g['OBSNCHAN'])
+# g.update("CHAN_BW", g['OBSBW']/g['OBSNCHAN'])
 
 # Az/el
 g.update_azza()

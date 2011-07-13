@@ -244,18 +244,18 @@ void guppi_read_subint_params(char *buf,
                               struct guppi_params *g, 
                               struct sdfits *sf)
 {
+    int i;
+    char subxfreq_str[16];
+
     // Parse packet size, # of packets, etc.
-    get_lon("PKTIDX", g->packetindex, -1L);
-    get_int("PKTSIZE", g->packetsize, 0);
-    get_int("NPKT", g->n_packets, 0);
-    get_int("NDROP", g->n_dropped, 0);
+    get_int("NPKT", g->num_pkts_rcvd, 0);
+    get_int("NDROP", g->num_pkts_dropped, 0);
     get_dbl("DROPAVG", g->drop_frac_avg, 0.0);
     get_dbl("DROPTOT", g->drop_frac_tot, 0.0);
-    get_int("BLOCSIZE", g->packets_per_block, 0);
-    if (g->packetsize>0)
-        g->packets_per_block /= g->packetsize;
-    if (g->n_packets>0)
-        g->drop_frac = (double) g->n_dropped / (double) g->n_packets;
+    //g->num_heaps = 0;
+
+    if (g->num_pkts_rcvd > 0)
+        g->drop_frac = (double) g->num_pkts_dropped / (double) g->num_pkts_rcvd;
     else
         g->drop_frac = 0.0;
 
@@ -263,16 +263,25 @@ void guppi_read_subint_params(char *buf,
     get_int("STTVALID", g->stt_valid, 0);
 
     // Observation params
-    get_flt("TSUBINT", sf->data_columns.exposure, 1.0)
+    get_flt("EXPOSURE", sf->data_columns.exposure, 1.0);
     get_str("OBJECT", sf->data_columns.object, 16, "Unknown");
     get_flt("AZ", sf->data_columns.azimuth, 0.0);
     if (sf->data_columns.azimuth < 0.0) sf->data_columns.azimuth += 360.0;
     get_flt("ELEV", sf->data_columns.elevation, 0.0);
+    get_flt("BMAJ", sf->data_columns.bmaj, 0.0);
+    get_flt("BMIN", sf->data_columns.bmin, 0.0);
+    get_flt("BPA", sf->data_columns.bpa, 0.0);
     get_dbl("RA", sf->data_columns.ra, 0.0);
     get_dbl("DEC", sf->data_columns.dec, 0.0);
-    get_flt("BMAJ", sf->data_columns.bmaj, 0.0)
-    get_flt("BMIN", sf->data_columns.bmin, 0.0)
-    get_flt("BPA", sf->data_columns.bpa, 0.0)
+
+    // Frequency axis parameters
+    sf->data_columns.centre_freq_idx = sf->hdr.nchan/2;
+
+    for(i = 0; i < sf->hdr.nsubband; i++)
+    {
+        sprintf(subxfreq_str, "SUB%dFREQ", i);
+        get_dbl(subxfreq_str, sf->data_columns.centre_freq[i], 0.0);    
+    }
 
     { // MJD and LST calcs
         int imjd, smjd, lst_secs;
@@ -283,6 +292,14 @@ void guppi_read_subint_params(char *buf,
         sf->data_columns.time = (double) lst_secs;
     }
 
+}
+
+
+/* Some code just needs a simple way to get the obs mode string */
+void guppi_read_pfbrate(char *buf, float *pfb_rate) {
+    float temp;
+    get_flt("PFBRATE", temp, 0);
+    *pfb_rate = temp;
 }
 
 #endif
@@ -499,13 +516,12 @@ void guppi_read_obs_params(char *buf,
     get_str("TELESCOP", sf->hdr.telescope, 16, "GBT");
     get_dbl("OBSBW", sf->hdr.bandwidth, 1e9);
     exit_on_missing("OBSBW", sf->hdr.bandwidth, 0.0);
-    get_dbl("OBSNCHAN", temp_double, 1024);
+    get_dbl("OBSNCHAN", temp_double, 2048);
     if(temp_double) sf->hdr.freqres = sf->hdr.bandwidth/temp_double;
     get_dbl("TSYS", sf->hdr.tsys, 0.0);
 
     get_str("OBSERVER", sf->hdr.observer, 16, "Unknown");
     get_str("PROJID", sf->hdr.projid, 16, "Unknown");
-    get_str("OBS_MODE", sf->hdr.obs_mode, 16, "Unknown");
     get_str("FRONTEND", sf->hdr.frontend, 16, "Unknown");
     get_dbl("OBSFREQ", sf->hdr.obsfreq, 0.0);
     get_dbl("LST", sf->hdr.lst, 0.0);
@@ -524,10 +540,10 @@ void guppi_read_obs_params(char *buf,
     get_int("NCHAN", sf->hdr.nchan, 1024);
     get_dbl("CHAN_BW", sf->hdr.chan_bw, 1e6);
 
-    get_int("SPECMODE", sf->hdr.specmode, 1);
     get_int("NSUBBAND", sf->hdr.nsubband, 1);
 
     get_str("DATADIR", dir, 200, ".");
+    get_int("FILENUM", sf->filenum, 0);
 
     /* Start day and time */
 
@@ -553,7 +569,7 @@ void guppi_read_obs_params(char *buf,
         if (backend[i]=='\0') break;
         backend[i] = tolower(backend[i]); 
     }
-    sprintf(base, "%s_%02d%02d%02d_%04f", backend, DD, MM, YYYY%1000, sf->hdr.scan);
+    sprintf(base, "%s_%02d%02d%02d_%04.2f", backend, DD, MM, YYYY%1000, sf->hdr.scan);
     sprintf(sf->basefilename, "%s/%s", dir, base);
 
     // We do not set telescope-specific settings

@@ -7,6 +7,11 @@
 #ifndef _GUPPI_PARAMS_H
 #define _GUPPI_PARAMS_H
 
+#include "guppi_udp.h"
+#include "guppi_defines.h"
+
+#ifndef NEW_GBT
+
 struct guppi_params {
     /* Packet information for the current block */
     long long packetindex;      // Index of first packet in raw data block
@@ -26,8 +31,21 @@ struct guppi_params {
     float offset[16*1024];      // Per-channel offset
 };
 
-#include "guppi_udp.h"
-#include "guppi_defines.h"
+#else
+
+struct guppi_params
+{
+    /* Packet information for the current block */
+    int num_pkts_rcvd;          // Number of packets received in current block
+    int num_pkts_dropped;       // Number of packets dropped in current block
+    double drop_frac;           // Fraction of dropped packets in this block
+    double drop_frac_avg;       // Running average of the fract of dropped packets
+    double drop_frac_tot;       // Total fraction of dropped packets
+
+    int stt_valid;              // Has an accurate start time been measured
+};
+
+#endif
 
 #if FITS_TYPE == PSRFITS
 

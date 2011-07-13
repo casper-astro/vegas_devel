@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <netdb.h>
 #include <poll.h>
+#include "guppi_defines.h"
 
 #define GUPPI_MAX_PACKET_SIZE 9600
 
@@ -75,8 +76,19 @@ void guppi_udp_packet_data_copy_transpose(char *databuf, int nchan,
         unsigned block_pkt_idx, unsigned packets_per_block,
         const struct guppi_udp_packet *p);
 
+#ifdef SPEAD
+
 /* Check that the size of the received SPEAD packet is correct */
 int guppi_chk_spead_pkt_size(const struct guppi_udp_packet *p);
+
+unsigned int guppi_spead_packet_heap_cntr(const struct guppi_udp_packet *p);
+unsigned int guppi_spead_packet_heap_offset(const struct guppi_udp_packet *p);
+unsigned int guppi_spead_packet_seq_num(int heap_cntr, int heap_offset, int packets_per_heap);
+char* guppi_spead_packet_data(const struct guppi_udp_packet *p);
+unsigned int guppi_spead_packet_datasize(const struct guppi_udp_packet *p);
+int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *dest_addr, char bw_mode[]);
+
+#endif
 
 /* Close out socket, etc */
 int guppi_udp_close(struct guppi_udp_params *p);

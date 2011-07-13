@@ -20,6 +20,7 @@
 #include "guppi_error.h"
 #include "guppi_status.h"
 #include "guppi_databuf.h"
+#include "spead_heap.h"
 
 #define STATUS_KEY "DISKSTAT"
 #include "guppi_threads.h"
@@ -35,7 +36,7 @@ extern void guppi_read_subint_params(char *buf,
                                      struct sdfits *sf);
 
 
-void guppi_psrfits_thread(void *_args) {
+void guppi_sdfits_thread(void *_args) {
     
     /* Get args */
     struct guppi_thread_args *args = (struct guppi_thread_args *)_args;
@@ -79,7 +80,8 @@ void guppi_psrfits_thread(void *_args) {
     struct guppi_params gp;
     struct sdfits sf;
     sf.data_columns.data = NULL;
-    sf.filenum = 0; // This is crucial
+    sf.filenum = 0;
+    sf.new_file = 1; // This is crucial
     pthread_cleanup_push((void *)guppi_free_sdfits, &sf);
     pthread_cleanup_push((void *)sdfits_close, &sf);
     //pf.multifile = 0;  // Use a single file for fold mode
@@ -97,10 +99,10 @@ void guppi_psrfits_thread(void *_args) {
     pthread_cleanup_push((void *)guppi_databuf_detach, db);
     
     /* Loop */
-    int curblock=0, total_status=0, firsttime=1, run=1, got_packet_0=0;
+    int curblock=0, total_status=0, firsttime=1, run=1, got_packet_0=0, dataset=0;
     char *ptr;
     char tmpstr[256];
-    int scan_finished=0;
+    int scan_finished=0, first_heap_in_blk, old_filenum;
     signal(SIGINT, cc);
     do {
         /* Note waiting status */
@@ -141,36 +143,51 @@ void guppi_psrfits_thread(void *_args) {
         /* Check if we got both packet 0 and a valid observation
          * start time.  If so, flag writing to start.
          */
-        if (got_packet_0==0 && gp.packetindex==0 && gp.stt_valid==1) {
+/*        first_heap_in_blk = ((struct databuf_index*)guppi_databuf_index(db, curblock))
+                                ->cpu_gpu_buf[0].heap_cntr;
+        if (got_packet_0==0 && first_heap_in_blk==0 && gp.stt_valid==1) {
             got_packet_0 = 1;
             guppi_read_obs_params(ptr, &gp, &sf);
         }
-
+*/
         /* If actual observation has started, write the data */
-        if (got_packet_0) { 
+        //if (got_packet_0) { 
 
-            /* Note waiting status */
-            guppi_status_lock_safe(&st);
-            hputs(st.buf, STATUS_KEY, "writing");
-            guppi_status_unlock_safe(&st);
-            
-            /* TODO: extract the column values for sub integration */
+        /* Note waiting status */
+        guppi_status_lock_safe(&st);
+        hputs(st.buf, STATUS_KEY, "writing");
+        guppi_status_unlock_safe(&st);
 
-            /* TODO: extract the data correctly from the block*/
-            sf.data_columns.data = (unsigned char *)
-                    (guppi_databuf_data(db, curblock) + 8 + 2048*16);
+        struct sdfits_data_columns* data_cols;
+        struct databuf_index* db_index;
+
+        db_index = (struct databuf_index*)(guppi_databuf_index(db, curblock));
+        
+        /* Read the block index, writing each dataset to a SDFITS file */
+        for(dataset = 0; dataset < db_index->num_datasets; dataset++)
+        {
+            data_cols = (struct sdfits_data_columns*)(guppi_databuf_data(db, curblock) +
+                        db_index->disk_buf[dataset].struct_offset);
+
+            sf.data_columns = *data_cols;
             
             /* Write the data */
-            //int last_filenum = sf.filenum;
+            old_filenum = sf.filenum;
             sdfits_write_subint(&sf);
 
-            /* For debugging... */
-            if (gp.drop_frac > 0.0) {
-               printf("Block %d dropped %.3g%% of the packets\n", 
-                      sf.tot_rows, gp.drop_frac*100.0);
-            }
+            /*Write new file number to shared memory*/
+            if(sf.filenum != old_filenum)
+                hputi4(st.buf, "FILENUM", sf.filenum);
 
         }
+
+        /* For debugging... */
+        if (gp.drop_frac > 0.0) {
+            printf("Block %d dropped %.3g%% of the packets\n", 
+                    sf.tot_rows, gp.drop_frac*100.0);
+        }
+
+        //}
 
         /* Mark as free */
         guppi_databuf_set_free(db, curblock);

@@ -25,7 +25,6 @@ struct hdrinfo
 
     char observer[16];      // Observer's name
     char projid[16];        // The project ID
-    char obs_mode[16];      // Observing mode (SEARCH, PSR, CAL)
     char frontend[16];      // Frontend used
     double obsfreq;         // Centre frequency for observation
     double lst;             // LST (seconds after 0h) at start of scan
@@ -40,7 +39,6 @@ struct hdrinfo
     int nchan;              // Number of spectral bins per sub-band
     double chan_bw;         // Width of each spectral bin
 
-    int specmode;           // The GBT spectrometer mode (1 to 17)
     int nsubband;           // Number of sub-bands
 };
     
@@ -60,8 +58,7 @@ struct sdfits_data_columns
     int stpspec;            // SPECTRUM_COUNT of the last spectrum in the integration
 
     float centre_freq_idx;  // Index of centre frequency bin
-    double centre_freq;     // Frequency at centre of sub-band
-    double spec_bin_width;  // Width of each spectral bin
+    double centre_freq[8];  // Frequency at centre of each sub-band
     double ra;              // RA mid-integration
     double dec;             // DEC mid-integration
 
@@ -77,6 +74,7 @@ struct sdfits
     long long N;            // Current number of spectra written
     double T;               // Current duration of the observation written
     int filenum;            // The current number of the file in the scan (1-offset)
+    int new_file;           // Indicates that a new file must be created.    
     int rownum;             // The current data row number to be written (1-offset)
     int tot_rows;           // The total number of data rows written so far
     int rows_per_file;      // The maximum number of data rows per file

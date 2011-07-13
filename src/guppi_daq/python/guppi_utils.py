@@ -8,6 +8,7 @@ import slalib as s
 
 DEGTORAD = 0.017453292519943295769236907684
 RADTODEG = 57.29577951308232087679815481410
+NEW_GBT  = 1
 
 def header_from_string(str):
     """
@@ -153,13 +154,27 @@ class guppi_databuf:
     def __init__(self,databuf_id=1):
         self.buf = shm.SharedMemoryHandle(GUPPI_DATABUF_KEY+databuf_id-1)
         self.data_type = self.buf.read(NumberOfBytes=64, offset=0)
-        packed = self.buf.read(NumberOfBytes=3*8+3*4, offset=64)
-        self.struct_size, self.block_size, self.header_size = \
-                n.fromstring(packed[0:24], dtype=n.int64)
-        self.shmid, self.semid, self.n_block= \
-                n.fromstring(packed[24:36], dtype=n.int32)
+        
+        if NEW_GBT:
+            packed = self.buf.read(NumberOfBytes=8+4*8+3*4, offset=64)
+            self.buf_type = n.fromstring(packed[0:8], dtype=n.int64)
+            self.struct_size, self.block_size, self.header_size, self.index_size = \
+                    n.fromstring(packed[8:40], dtype=n.int64)
+            self.shmid, self.semid, self.n_block= \
+                    n.fromstring(packed[40:52], dtype=n.int32)
+        else:
+            packed = self.buf.read(NumberOfBytes=3*8+3*4, offset=64)
+            self.struct_size, self.block_size, self.header_size = \
+                    n.fromstring(packed[0:24], dtype=n.int64)
+            self.shmid, self.semid, self.n_block= \
+                    n.fromstring(packed[24:36], dtype=n.int32)
+
         self.header_offset = self.struct_size 
-        self.data_offset = self.struct_size + self.n_block*self.header_size
+        if NEW_GBT:
+            self.data_offset = self.struct_size + \
+                                self.n_block*(self.header_size + self.index_size)
+        else:
+            self.data_offset = self.struct_size + self.n_block*self.header_size
         self.dtype = n.int8
         self.read_size = self.block_size
         self.read_all_hdr()

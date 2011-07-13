@@ -20,6 +20,7 @@
 #include "guppi_params.h"
 
 #include "guppi_thread_main.h"
+#include "guppi_defines.h"
 
 void usage() {
     fprintf(stderr,
@@ -79,7 +80,11 @@ int main(int argc, char *argv[]) {
     dbuf = guppi_databuf_attach(net_args.output_buffer);
     /* If attach fails, first try to create the databuf */
     if (dbuf==NULL) 
+#ifdef NEW_GBT
+        dbuf = guppi_databuf_create(24, 32*1024*1024, net_args.output_buffer, CPU_INPUT_BUF);
+#else
         dbuf = guppi_databuf_create(24, 32*1024*1024, net_args.output_buffer);
+#endif
      /* If that also fails, exit */
     if (dbuf==NULL) {
         fprintf(stderr, "Error connecting to guppi_databuf\n");

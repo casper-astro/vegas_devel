@@ -280,6 +280,7 @@ void *guppi_net_thread(void *_args) {
     int nchan=0, npol=0, acclen=0;
     nchan = pf.hdr.nchan;
     npol = pf.hdr.npol;
+#ifndef NEW_GBT
     if (strncmp(up.packet_format, "PARKES", 6)==0) { use_parkes_packets=1; }
     if (use_parkes_packets) {
         printf("guppi_net_thread: Using Parkes UDP packet format.\n");
@@ -290,6 +291,7 @@ void *guppi_net_thread(void *_args) {
             pthread_exit(NULL);
         }
     }
+#endif
 
     /* Figure out size of data in each packet, number of packets
      * per block, etc.  Changing packet size during an obs is not

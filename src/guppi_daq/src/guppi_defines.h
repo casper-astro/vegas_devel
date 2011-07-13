@@ -13,7 +13,7 @@
 
 // Defining FAKE_NET enables the generation of fake network data
 // and hence disables the network portion of GUPPI.
-#define FAKE_NET    1
+// #define FAKE_NET    1
 
 // Types of FITS files
 #define PSRFITS     1

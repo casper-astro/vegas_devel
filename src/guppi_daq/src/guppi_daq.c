@@ -21,22 +21,13 @@
 #include "guppi_thread_main.h"
 #include "guppi_defines.h"
 
-/* Define to enable raw_disk_thread. */
-// #define     RAW_DISK    1
-/* Or undefine to revert to writing of FITS files */
-
-//FAKE_NET is defined in guppi_defines.h
-
-// To Do
-// Create heap index whenever new block is created
-// Test writing fake data to raw file
-// Write accumulation thread (converts heaps to integrated spectra)
-// Test writing accumulated spectra to raw file
-// Modify guppi_psrfits_thread to write integrated spectra correctly (not floating point)
-
 /* Thread declarations */
 void *guppi_net_thread(void *args);
+#if FITS_TYPE == PSRFITS
 void *guppi_psrfits_thread(void *args);
+#else
+void *guppi_sdfits_thread(void *args);
+#endif
 
 #ifdef RAW_DISK
 void *guppi_rawdisk_thread(void *args);
@@ -67,7 +58,11 @@ int main(int argc, char *argv[]) {
     dbuf = guppi_databuf_attach(net_args.output_buffer);
     /* If attach fails, first try to create the databuf */
     if (dbuf==NULL) 
+#ifdef NEW_GBT
+        dbuf = guppi_databuf_create(24, 32*1024*1024, net_args.output_buffer, CPU_INPUT_BUF);
+#else
         dbuf = guppi_databuf_create(24, 32*1024*1024, net_args.output_buffer);
+#endif
     /* If that also fails, exit */
     if (dbuf==NULL) {
         fprintf(stderr, "Error connecting to guppi_databuf\n");
@@ -98,8 +93,11 @@ int main(int argc, char *argv[]) {
 #ifdef RAW_DISK
     rv = pthread_create(&disk_thread_id, NULL, guppi_rawdisk_thread, 
         (void *)&disk_args);
-#else
+#elif FITS_TYPE == PSRFITS
     rv = pthread_create(&disk_thread_id, NULL, guppi_psrfits_thread, 
+        (void *)&disk_args);
+#elif FITS_TYPE == SDFITS
+    rv = pthread_create(&disk_thread_id, NULL, guppi_sdfits_thread, 
         (void *)&disk_args);
 #endif
     if (rv) { 

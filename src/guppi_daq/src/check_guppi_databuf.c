@@ -11,6 +11,7 @@
 #include "guppi_error.h"
 #include "guppi_status.h"
 #include "guppi_databuf.h"
+#include "guppi_defines.h"
 
 void usage() { 
     fprintf(stderr, 
@@ -35,6 +36,9 @@ int main(int argc, char *argv[]) {
         {"id",     1, NULL, 'i'},
         {"size",   1, NULL, 's'},
         {"nblock", 1, NULL, 'n'},
+#ifdef NEW_GBT
+        {"type", 1, NULL, 't'},
+#endif
         {0,0,0,0}
     };
     int opt,opti;
@@ -43,7 +47,8 @@ int main(int argc, char *argv[]) {
     int db_id=1;
     int blocksize = 32;
     int nblock = 24;
-    while ((opt=getopt_long(argc,argv,"hqci:s:n:",long_opts,&opti))!=-1) {
+    int type = 1;
+    while ((opt=getopt_long(argc,argv,"hqci:s:n:t:",long_opts,&opti))!=-1) {
         switch (opt) {
             case 'c':
                 create=1;
@@ -60,6 +65,11 @@ int main(int argc, char *argv[]) {
             case 'n':
                 nblock = atoi(optarg);
                 break;
+#ifdef NEW_GBT
+            case 't':
+                type = atoi(optarg);
+                break;
+#endif
             case 'h':
             default:
                 usage();
@@ -71,7 +81,11 @@ int main(int argc, char *argv[]) {
     /* Create mem if asked, otherwise attach */
     struct guppi_databuf *db=NULL;
     if (create) { 
+#ifndef NEW_GBT
         db = guppi_databuf_create(nblock, blocksize*1024*1024, db_id);
+#else
+        db = guppi_databuf_create(nblock, blocksize*1024*1024, db_id, type);
+#endif
         if (db==NULL) {
             fprintf(stderr, "Error creating databuf %d (may already exist).\n",
                     db_id);
