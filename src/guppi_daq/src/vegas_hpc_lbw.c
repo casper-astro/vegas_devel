@@ -30,6 +30,7 @@ void *guppi_psrfits_thread(void *args);
 void *guppi_sdfits_thread(void *args);
 #endif
 
+void *vegas_pfb_thread(void *args);
 void *guppi_accum_thread(void *args);
 
 #ifdef RAW_DISK
@@ -44,13 +45,16 @@ void *guppi_fake_net_thread(void *args);
 int main(int argc, char *argv[]) {
 
     /* thread args */
-    struct guppi_thread_args net_args, accum_args, disk_args;
+    struct guppi_thread_args net_args, pfb_args, accum_args, disk_args;
     guppi_thread_args_init(&net_args);
+    guppi_thread_args_init(&pfb_args);
     guppi_thread_args_init(&accum_args);
     guppi_thread_args_init(&disk_args);
     net_args.output_buffer = 1;
-    accum_args.input_buffer = net_args.output_buffer;
-    accum_args.output_buffer = 2;
+    pfb_args.input_buffer = net_args.output_buffer;
+    pfb_args.output_buffer = 2;
+    accum_args.input_buffer = pfb_args.output_buffer;
+    accum_args.output_buffer = 3;
     disk_args.input_buffer = accum_args.output_buffer;
 
     /* Init status shared mem */
@@ -61,16 +65,33 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    hputs(stat.buf, "BW_MODE", "high");
+    hputs(stat.buf, "BW_MODE", "low");
 
     /* Init first shared data buffer */
+    struct guppi_databuf *gpu_input_dbuf=NULL;
+    gpu_input_dbuf = guppi_databuf_attach(pfb_args.input_buffer);
+
+    /* If attach fails, first try to create the databuf */
+    if (gpu_input_dbuf==NULL) 
+        gpu_input_dbuf = guppi_databuf_create(24, 32*1024*1024,
+                            pfb_args.input_buffer, GPU_INPUT_BUF);
+
+    /* If that also fails, exit */
+    if (gpu_input_dbuf==NULL) {
+        fprintf(stderr, "Error connecting to gpu_input_dbuf\n");
+        exit(1);
+    }
+
+    guppi_databuf_clear(gpu_input_dbuf);
+
+    /* Init second shared data buffer */
     struct guppi_databuf *cpu_input_dbuf=NULL;
-    cpu_input_dbuf = guppi_databuf_attach(net_args.output_buffer);
+    cpu_input_dbuf = guppi_databuf_attach(accum_args.input_buffer);
 
     /* If attach fails, first try to create the databuf */
     if (cpu_input_dbuf==NULL) 
         cpu_input_dbuf = guppi_databuf_create(24, 32*1024*1024,
-                            net_args.output_buffer, CPU_INPUT_BUF);
+                            accum_args.input_buffer, CPU_INPUT_BUF);
 
     /* If that also fails, exit */
     if (cpu_input_dbuf==NULL) {
@@ -80,14 +101,14 @@ int main(int argc, char *argv[]) {
 
     guppi_databuf_clear(cpu_input_dbuf);
 
-    /* Init second shared data buffer */
+    /* Init third shared data buffer */
     struct guppi_databuf *disk_input_dbuf=NULL;
-    disk_input_dbuf = guppi_databuf_attach(accum_args.output_buffer);
+    disk_input_dbuf = guppi_databuf_attach(disk_args.input_buffer);
 
     /* If attach fails, first try to create the databuf */
     if (disk_input_dbuf==NULL) 
         disk_input_dbuf = guppi_databuf_create(16, 32*1024*1024,
-                            accum_args.output_buffer, DISK_INPUT_BUF);
+                            disk_args.input_buffer, DISK_INPUT_BUF);
 
     /* If that also fails, exit */
     if (disk_input_dbuf==NULL) {
@@ -110,6 +131,17 @@ int main(int argc, char *argv[]) {
 #endif
     if (rv) { 
         fprintf(stderr, "Error creating net thread.\n");
+        perror("pthread_create");
+        exit(1);
+    }
+
+    /* Launch PFB thread */
+    pthread_t pfb_thread_id;
+
+    rv = pthread_create(&pfb_thread_id, NULL, vegas_pfb_thread, (void *)&pfb_args);
+
+    if (rv) { 
+        fprintf(stderr, "Error creating PFB thread.\n");
         perror("pthread_create");
         exit(1);
     }
@@ -151,19 +183,24 @@ int main(int argc, char *argv[]) {
     }
  
     pthread_cancel(disk_thread_id);
+    pthread_cancel(pfb_thread_id);
     pthread_cancel(accum_thread_id);
     pthread_cancel(net_thread_id);
     pthread_kill(disk_thread_id,SIGINT);
     pthread_kill(accum_thread_id,SIGINT);
+    pthread_kill(pfb_thread_id,SIGINT);
     pthread_kill(net_thread_id,SIGINT);
     pthread_join(net_thread_id,NULL);
     printf("Joined net thread\n"); fflush(stdout);
+    pthread_join(pfb_thread_id,NULL);
+    printf("Joined PFB thread\n"); fflush(stdout);
     pthread_join(accum_thread_id,NULL);
     printf("Joined accumulator thread\n"); fflush(stdout);
     pthread_join(disk_thread_id,NULL);
     printf("Joined disk thread\n"); fflush(stdout);
 
     guppi_thread_args_destroy(&net_args);
+    guppi_thread_args_destroy(&pfb_args);
     guppi_thread_args_destroy(&accum_args);
     guppi_thread_args_destroy(&disk_args);
 

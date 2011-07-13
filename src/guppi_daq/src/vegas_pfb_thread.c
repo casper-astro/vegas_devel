@@ -14,19 +14,13 @@
 #include <sys/resource.h>
 #include <sys/types.h>
 
-#include <math.h>
-#include <complex.h>
-#include <fftw3.h>
-
 #include "fitshead.h"
 #include "sdfits.h"
 #include "guppi_error.h"
 #include "guppi_status.h"
 #include "guppi_databuf.h"
 #include "guppi_params.h"
-
-#include <cuda.h>
-#include <cuda_runtime.h>
+#include "pfb_gpu.h"
 
 #define STATUS_KEY "GPUSTAT"
 #include "guppi_threads.h"
@@ -99,11 +93,9 @@ void vegas_pfb_thread(void *_args) {
     /* Loop */
     char *hdr_in=NULL, *hdr_out=NULL;
     char *curdata_in, *curdata_out;
-    struct databuf_index* curindex_in, curindex_out;
-    int curblock_in=0, curblock_out=0, got_packet_0=0;
+    struct databuf_index *curindex_in, *curindex_out;
+    int curblock_in=0, curblock_out=0;
     int first=1;
-    int nblock_int=0, npacket=0, ndrop=0;
-    double tsubint=0.0, suboffs=0.0;
     signal(SIGINT,cc);
     while (run) {
 
@@ -142,7 +134,7 @@ void vegas_pfb_thread(void *_args) {
         /* Setup input and output data block stuff */
         hdr_out = guppi_databuf_header(db_out, curblock_out);
         curdata_out = (char *)guppi_databuf_data(db_out, curblock_out);
-        curindex_out = (struct databuf_index*)guppi_databuf_index(db_in, curblock_in);
+        curindex_out = (struct databuf_index*)guppi_databuf_index(db_out, curblock_out);
 
         curdata_in = (char *)guppi_databuf_data(db_in, curblock_in);
         curindex_in = (struct databuf_index*)guppi_databuf_index(db_in, curblock_in);

@@ -17,31 +17,32 @@ OBJS  = guppi_status.o guppi_databuf.o guppi_udp.o guppi_error.o \
 	hget.o hput.o sla.o
 THREAD_PROGS = test_net_thread guppi_daq vegas_hpc_hbw
 THREAD_OBJS  = vegas_net_thread.o guppi_rawdisk_thread.o \
-	       guppi_sdfits_thread.o guppi_accum_thread.o \
-	       guppi_null_thread.o guppi_fake_net_thread.o
-CUDA_OBJS = 
+	        guppi_sdfits_thread.o guppi_accum_thread.o \
+	        guppi_null_thread.o guppi_fake_net_thread.o
+CUDA_OBJS = pfb_gpu.o pfb_gpu_kernels.o vegas_pfb_thread.o
 # LIBS = -L$(OPT64)/lib -lcfitsio -L$(PRESTO)/lib -lsla -lm -lpthread
 LIBS = -L$(CFITSIO)/lib -lcfitsio -L$(PRESTO)/lib -L$(PYSLALIB) -lsla -lm -lpthread
 CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm
-all: $(PROGS) $(THREAD_PROGS) guppi_daq vegas_hpc_hbw
+all: $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw 
 clean:
-	rm -f $(PROGS) $(THREAD_PROGS) psrfits.tgz *~ *.o test_psrfits_0*.fits *.ptx
+	rm -f $(PROGS) $(THREAD_PROGS) *~ *.o sdfits.tgz test_psrfits_0*.fits *.ptx
 INSTALL_DIR = ../bin
-install: $(PROGS) $(THREAD_PROGS)
+install: $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw
 	mkdir -p $(INSTALL_DIR) && \
-	cp -f $(PROGS) $(THREAD_PROGS) $(INSTALL_DIR)
-psrfits.tgz: sdfits.h read_sdfits.c \
-	guppi_PSRFITS_v3.4_fold_template.txt \
-	guppi_PSRFITS_v3.4_search_template.txt \
+	cp -f $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw $(INSTALL_DIR)
+sdfits.tgz: sdfits.h read_sdfits.c \
     guppi_SDFITS_template.txt \
 	tar cvzf $@ $^
 find_dropped_blocks: find_dropped_blocks.o 
 #	$(CC) $(CFLAGS) $< -o $@ -L$(OPT64)/lib -lcfitsio -lm
 	$(CC) $(CFLAGS) $< -o $@ -lcfitsio -lm
-psrfits_subband: 
-test_dedisp_thread: 
-guppi_daq_dedisp:
-guppi_daq_server:
+%.o : %.cu
+	nvcc -c $(NVCCFLAGS) $< -o $@
+
+vegas_hpc_lbw: vegas_hpc_lbw.c $(THREAD_OBJS) $(OBJS) $(CUDA_OBJS)
+	$(CC) $(CFLAGS) $(CUDA_CFLAGS) $< -o $@ $(THREAD_OBJS) \
+		$(CUDA_OBJS) $(OBJS) $(LIBS) $(CUDA_LIBS)
+
 .SECONDEXPANSION:
 $(PROGS): $$@.c $(OBJS)
 	$(CC) $(CFLAGS) $< -o $@ $(OBJS) $(LIBS) $(THREAD_LIBS)
