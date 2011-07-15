@@ -7,8 +7,6 @@
 
 /* TODO:
  * Read in hour,min,sec from PC, and combine with time cntr to get actual time, to write out to disk
- * Consider monitoring number of invalid heaps.
- * Confirm updating of status buffer stats (npkt, etc)
  */
 
 #define _GNU_SOURCE 1
@@ -171,8 +169,7 @@ void guppi_accum_thread(void *_args) {
     char *hdr_in=NULL, *hdr_out=NULL;
     struct databuf_index *index_in, *index_out;
 
-    int nblock_int=0, npacket=0, ndrop=0;
-    double tsubint=0.0, offset=0.0, suboffs=0.0;
+    int nblock_int=0, npacket=0, n_pkt_drop=0, n_heap_drop=0;
 
     signal(SIGINT,cc);
     while (run) {
@@ -239,7 +236,7 @@ void guppi_accum_thread(void *_args) {
             /* If invalid, record it and move to next heap */
             if(!index_in->cpu_gpu_buf[heap].heap_valid)
             {
-                //TODO: Maybe have heap loss counter?
+                n_heap_drop++;
                 continue;
             }
 
@@ -247,7 +244,9 @@ void guppi_accum_thread(void *_args) {
             char* heap_addr = (char*)(guppi_databuf_data(db_in, curblock_in) +
                                 (index_in->heap_size)*heap);
             struct freq_spead_heap* freq_heap = (struct freq_spead_heap*)(heap_addr);
-            float *payload = (float*)(heap_addr + sizeof(struct freq_spead_heap));
+
+            unsigned int *u_payload = (unsigned int*)(heap_addr + sizeof(struct freq_spead_heap));
+            int *s_payload = (int*)(heap_addr + sizeof(struct freq_spead_heap));
 
             accumid = freq_heap->status_bits & 0x7;         
 
@@ -273,6 +272,12 @@ void guppi_accum_thread(void *_args) {
                         {
                             printf("Accumulator finished with output block %d\n", curblock_out);
 
+                            /* Update packet count and loss fields in output header */
+                            hputi4(hdr_out, "NBLOCK", nblock_int);
+                            hputi4(hdr_out, "NPKT", npacket);
+                            hputi4(hdr_out, "NPKTDROP", n_pkt_drop);
+                            hputi4(hdr_out, "NHPDROP", n_heap_drop);
+
                             /* Close out current integration */
                             guppi_databuf_set_filled(db_out, curblock_out);
 
@@ -288,12 +293,10 @@ void guppi_accum_thread(void *_args) {
                             index_out->num_datasets = 0;
                             index_out->array_size = sf.hdr.nsubband * sf.hdr.nchan * NUM_STOKES * 4;
                             
-                            /*TODO: are these params needed?*/
                             nblock_int=0;
                             npacket=0;
-                            ndrop=0;
-                            tsubint=0.0;
-                            suboffs=0.0;
+                            n_pkt_drop=0;
+                            n_heap_drop=0;
                         }            
 
                         /*Update index for output buffer*/
@@ -370,33 +373,32 @@ void guppi_accum_thread(void *_args) {
                 {
                     for(j = 0; j < sf.hdr.nchan; j++)
                     {
-                        for(k = 0; k < NUM_STOKES; k++)
-                        {
-                            accumulator[accumid][i][j][k] +=
-                                payload[i*sf.hdr.nchan + j*NUM_STOKES + k];
-                        }
+                        /* X power */
+                        accumulator[accumid][i][j][0] +=
+                            (float)u_payload[i*sf.hdr.nchan + j*NUM_STOKES + 0];
+                        /* Y power */
+                        accumulator[accumid][i][j][1] +=
+                            (float)u_payload[i*sf.hdr.nchan + j*NUM_STOKES + 1];
+                        /* Re(XY) */
+                        accumulator[accumid][i][j][2] +=
+                            (float)s_payload[i*sf.hdr.nchan + j*NUM_STOKES + 2];
+                        /* Im(XY) */
+                        accumulator[accumid][i][j][3] +=
+                            (float)s_payload[i*sf.hdr.nchan + j*NUM_STOKES + 3];
                     }
                 }
             }
             
         }
 
+        /* Update packet count and loss fields from input header */
+        nblock_int++;
+        npacket += gp.num_pkts_rcvd;
+        n_pkt_drop += gp.num_pkts_dropped;
+
         /* Done with current input block */
         guppi_databuf_set_free(db_in, curblock_in);
         curblock_in = (curblock_in + 1) % db_in->n_block;
-
-        /*Update status buffer stats: TODO */
-        nblock_int++;
-        /*npacket += gp.n_packets;*/
-        /*ndrop += gp.n_dropped;*/
-        /*tsubint = sf.hdr.dt * (npacket - ndrop) * gp.packetsize 
-            / sf.hdr.nchan / sf.hdr.npol;*/
-        suboffs += offset;
-        hputi4(hdr_out, "NBLOCK", nblock_int);
-        hputi4(hdr_out, "NPKT", npacket);
-        hputi4(hdr_out, "NDROP", ndrop);
-        hputr8(hdr_out, "TSUBINT", tsubint);
-        hputr8(hdr_out, "OFFS_SUB", suboffs / (double)nblock_int);
 
         /* Check for cancel */
         pthread_testcancel();

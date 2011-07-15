@@ -37,6 +37,8 @@
 #include "sdfits.h"
 #include "spead_heap.h"
 
+#define PAYLOAD_SIZE    256
+
 // Read a status buffer all of the key observation paramters
 extern void guppi_read_obs_params(char *buf, 
                                   struct guppi_params *g, 
@@ -171,7 +173,7 @@ void write_spead_packet_to_block(struct datablock_stats *d, struct guppi_udp_pac
     }
 
     //If this is the last packet of the heap, write valid bit to index
-    if(heap_offset + 8192 + 6*8 >= d->heap_size)
+    if(heap_offset + PAYLOAD_SIZE + 6*8 >= d->heap_size)
     {
 		index->cpu_gpu_buf[block_heap_idx].heap_valid = 1 - pkts_dropped_in_heap;
     }
@@ -283,11 +285,11 @@ void *guppi_net_thread(void *_args) {
         if(strncmp(bw_mode, "high", 4) == 0)
         {
             heap_size = sizeof(struct freq_spead_heap) + nchan*4*sizeof(float);
-            packets_per_heap = nchan*4*sizeof(float) / 8192;
+            packets_per_heap = nchan*4*sizeof(float) / PAYLOAD_SIZE;
         }
         else if(strncmp(bw_mode, "low", 3) == 0)
         {
-            heap_size = sizeof(struct time_spead_heap) + 8192;
+            heap_size = sizeof(struct time_spead_heap) + PAYLOAD_SIZE;
             packets_per_heap = 1;
         }
         else
@@ -411,7 +413,7 @@ printf("Error: out of order packet\n");
             npacket_total += seq_num_diff;
             ndropped_total += seq_num_diff - 1;
             fblock->pkts_dropped += seq_num_diff - 1;
-if(seq_num_diff > 1) printf("Error: missing packet\n");
+if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d\n", seq_num_diff);
         }
         last_seq_num = seq_num;
         last_heap_cntr = heap_cntr;
@@ -433,6 +435,7 @@ if(seq_num_diff > 1) printf("Error: missing packet\n");
                     (double)(fblock->nheaps * packets_per_heap);
 
             guppi_status_lock_safe(&st);
+            hputr8(st.buf, "NPKT", npacket_total);
             hputr8(st.buf, "DROPAVG", drop_frac_avg);
             hputr8(st.buf, "DROPTOT", 
                     npacket_total ? 

@@ -180,6 +180,9 @@ add_param_option("--sub7freq",
 add_param_option("--filenum", 
         name="FILENUM", type="int",
         help="Current file number, in a multifile scan")
+add_param_option("--port", 
+        name="DATAPORT", type="int",
+        help="Port on which to receive packets")
 
 
 # non-parameter options

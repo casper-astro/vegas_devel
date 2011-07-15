@@ -22,6 +22,7 @@
 #define BYTE_ARR_TO_UINT(array, idx) (ntohl(((unsigned int*)(array))[idx]))
 #endif
 
+#define PAYLOAD_SIZE    256
 
 int guppi_udp_init(struct guppi_udp_params *p) {
 
@@ -389,7 +390,7 @@ unsigned int guppi_spead_packet_heap_offset(const struct guppi_udp_packet *p)
 
 unsigned int guppi_spead_packet_seq_num(int heap_cntr, int heap_offset, int packets_per_heap)
 {
-    return (heap_cntr * packets_per_heap) + (heap_offset / 8128);
+    return (heap_cntr * packets_per_heap) + (heap_offset / PAYLOAD_SIZE);
 }
 
 
@@ -438,12 +439,9 @@ int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *dest_addr, char bw
     {
         for(offset = 0; offset < payload_size; offset += 4)
         {
-            dest_addr[offset + 0] = payload_addr[offset + 3];
-            dest_addr[offset + 1] = payload_addr[offset + 2];
-            dest_addr[offset + 2] = payload_addr[offset + 1];
-            dest_addr[offset + 3] = payload_addr[offset + 0];
+            *(unsigned int *)(dest_addr + offset) =
+                ntohl(*(unsigned int *)(payload_addr + offset));
         }
-            //*(float*)(dest_addr + offset) = float_swap(*(float*)(payload_addr + offset));
     }
     
     /* Else if low-bandwidth mode */
@@ -451,20 +449,6 @@ int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *dest_addr, char bw
         memcpy(dest_addr, payload_addr, payload_size);
 
     return 0;
-}
-
-float float_swap(float a)
-{
-    float b;
-    unsigned char *src = (unsigned char*)&a;
-    unsigned char *dst = (unsigned char*)&b;
-
-    dst[0] = src[3];
-    dst[1] = src[2];
-    dst[2] = src[1];
-    dst[3] = src[0];
-
-    return b;
 }
 
 #endif
