@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.407"
+    ComputedModelVersion    "1.408"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -25,9 +25,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "mwagner"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Jul 13 14:04:05 2011"
-  RTWModifiedTimeStamp	  232466634
-  ModelVersionFormat	  "1.%<AutoIncrement:407>"
+  LastModifiedDate	  "Wed Jul 13 15:19:49 2011"
+  RTWModifiedTimeStamp	  232471182
+  ModelVersionFormat	  "1.%<AutoIncrement:408>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -725,7 +725,7 @@ Model {
   }
   System {
     Name		    "gbtspec_mode13"
-    Location		    [51, 78, 1842, 1136]
+    Location		    [55, 68, 1846, 1126]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -739,7 +739,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    2589
+    SIDHighWatermark	    2593
     Block {
       BlockType		      Reference
       Name		      " System Generator"
@@ -4784,6 +4784,96 @@ Model {
       ");port_label('output',1,'\\fontsize{11pt}\\bf Out ','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
     }
     Block {
+      BlockType		      Reference
+      Name		      "Gateway Out3"
+      SID		      2590
+      Ports		      [1, 1]
+      Position		      [2690, 550, 2750, 570]
+      LibraryVersion	      "1.2"
+      SourceBlock	      "xbsIndex_r4/Gateway Out"
+      SourceType	      "Xilinx Gateway Out Block"
+      infoedit		      "Gateway out block.  Converts Xilinx fixed point inputs into ouputs of type Simulink integer, do"
+      "uble, or fixed point.<br><br>Hardware notes:  In hardware these blocks become top level output ports or are disc"
+      "arded, depending on how they are configured."
+      hdl_port		      on
+      timing_constraint	      "None"
+      locs_specified	      off
+      LOCs		      "{}"
+      xl_use_area	      off
+      xl_area		      "[0,0,0,0,0,0,0]"
+      has_advanced_control    "0"
+      sggui_pos		      "-1,-1,-1,-1"
+      block_type	      "gatewayout"
+      block_version	      "11.4"
+      sg_icon_stat	      "60,20,1,1,white,yellow,0,cc31b7ac,right,"
+      sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.95 0.93 0.65]"
+      ");\npatch([0.4 0.35 0.433333 0.35 0.4 0.483333 0.5 0.516667 0.616667 0.55 0.483333 0.433333 0.516667 0.433333 0."
+      "483333 0.55 0.616667 0.516667 0.5 0.483333 0.4 ],[0.1 0.25 0.5 0.75 0.9 0.9 0.85 0.9 0.9 0.7 0.9 0.75 0.5 0.25 0"
+      ".1 0.3 0.1 0.1 0.15 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end ico"
+      "n graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,' ');\ncolor('black'"
+      ");port_label('output',1,'\\fontsize{11pt}\\bf Out ','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Gateway Out4"
+      SID		      2591
+      Ports		      [1, 1]
+      Position		      [2690, 590, 2750, 610]
+      LibraryVersion	      "1.2"
+      SourceBlock	      "xbsIndex_r4/Gateway Out"
+      SourceType	      "Xilinx Gateway Out Block"
+      infoedit		      "Gateway out block.  Converts Xilinx fixed point inputs into ouputs of type Simulink integer, do"
+      "uble, or fixed point.<br><br>Hardware notes:  In hardware these blocks become top level output ports or are disc"
+      "arded, depending on how they are configured."
+      hdl_port		      on
+      timing_constraint	      "None"
+      locs_specified	      off
+      LOCs		      "{}"
+      xl_use_area	      off
+      xl_area		      "[0,0,0,0,0,0,0]"
+      has_advanced_control    "0"
+      sggui_pos		      "-1,-1,-1,-1"
+      block_type	      "gatewayout"
+      block_version	      "11.4"
+      sg_icon_stat	      "60,20,1,1,white,yellow,0,cc31b7ac,right,"
+      sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.95 0.93 0.65]"
+      ");\npatch([0.4 0.35 0.433333 0.35 0.4 0.483333 0.5 0.516667 0.616667 0.55 0.483333 0.433333 0.516667 0.433333 0."
+      "483333 0.55 0.616667 0.516667 0.5 0.483333 0.4 ],[0.1 0.25 0.5 0.75 0.9 0.9 0.85 0.9 0.9 0.7 0.9 0.75 0.5 0.25 0"
+      ".1 0.3 0.1 0.1 0.15 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end ico"
+      "n graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,' ');\ncolor('black'"
+      ");port_label('output',1,'\\fontsize{11pt}\\bf Out ','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Gateway Out5"
+      SID		      2592
+      Ports		      [1, 1]
+      Position		      [2690, 630, 2750, 650]
+      LibraryVersion	      "1.2"
+      SourceBlock	      "xbsIndex_r4/Gateway Out"
+      SourceType	      "Xilinx Gateway Out Block"
+      infoedit		      "Gateway out block.  Converts Xilinx fixed point inputs into ouputs of type Simulink integer, do"
+      "uble, or fixed point.<br><br>Hardware notes:  In hardware these blocks become top level output ports or are disc"
+      "arded, depending on how they are configured."
+      hdl_port		      on
+      timing_constraint	      "None"
+      locs_specified	      off
+      LOCs		      "{}"
+      xl_use_area	      off
+      xl_area		      "[0,0,0,0,0,0,0]"
+      has_advanced_control    "0"
+      sggui_pos		      "-1,-1,-1,-1"
+      block_type	      "gatewayout"
+      block_version	      "11.4"
+      sg_icon_stat	      "60,20,1,1,white,yellow,0,cc31b7ac,right,"
+      sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.95 0.93 0.65]"
+      ");\npatch([0.4 0.35 0.433333 0.35 0.4 0.483333 0.5 0.516667 0.616667 0.55 0.483333 0.433333 0.516667 0.433333 0."
+      "483333 0.55 0.616667 0.516667 0.5 0.483333 0.4 ],[0.1 0.25 0.5 0.75 0.9 0.9 0.85 0.9 0.9 0.7 0.9 0.75 0.5 0.25 0"
+      ".1 0.3 0.1 0.1 0.15 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end ico"
+      "n graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,' ');\ncolor('black'"
+      ");port_label('output',1,'\\fontsize{11pt}\\bf Out ','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
+    }
+    Block {
       BlockType		      Goto
       Name		      "Goto1"
       SID		      174
@@ -8762,6 +8852,29 @@ Model {
       Ports		      [3]
       Position		      [2420, 850, 2450, 970]
       Floating		      off
+      Location		      [124, 96, 1628, 912]
+      Open		      off
+      NumInputPorts	      "3"
+      ZoomMode		      "xonly"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+	axes2			"%<SignalLabel>"
+	axes3			"%<SignalLabel>"
+      }
+      YMin		      "0~-1~0"
+      YMax		      "1~1~3e+14"
+      DataFormat	      "StructureWithTime"
+      MaxDataPoints	      "1000000"
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Scope1"
+      SID		      2593
+      Ports		      [3]
+      Position		      [2780, 540, 2810, 660]
+      Floating		      off
       Location		      [124, 95, 1628, 911]
       Open		      off
       NumInputPorts	      "3"
@@ -8774,6 +8887,7 @@ Model {
       }
       YMin		      "0~-1~0"
       YMax		      "1~1~3e+14"
+      SaveName		      "ScopeData1"
       DataFormat	      "StructureWithTime"
       MaxDataPoints	      "1000000"
       SampleTime	      "0"
@@ -10370,13 +10484,6 @@ Model {
     }
     Block {
       BlockType		      Terminator
-      Name		      "Terminator15"
-      SID		      736
-      Position		      [2560, 538, 2575, 552]
-      ShowName		      off
-    }
-    Block {
-      BlockType		      Terminator
       Name		      "Terminator16"
       SID		      737
       Position		      [2560, 518, 2575, 532]
@@ -10394,13 +10501,6 @@ Model {
       Name		      "Terminator18"
       SID		      796
       Position		      [665, 1788, 680, 1802]
-      ShowName		      off
-    }
-    Block {
-      BlockType		      Terminator
-      Name		      "Terminator19"
-      SID		      739
-      Position		      [2560, 718, 2575, 732]
       ShowName		      off
     }
     Block {
@@ -10471,20 +10571,6 @@ Model {
       Name		      "Terminator6"
       SID		      733
       Position		      [2560, 598, 2575, 612]
-      ShowName		      off
-    }
-    Block {
-      BlockType		      Terminator
-      Name		      "Terminator8"
-      SID		      734
-      Position		      [2560, 578, 2575, 592]
-      ShowName		      off
-    }
-    Block {
-      BlockType		      Terminator
-      Name		      "Terminator9"
-      SID		      735
-      Position		      [2560, 558, 2575, 572]
       ShowName		      off
     }
     Block {
@@ -11116,7 +11202,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -11128,7 +11214,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -11156,14 +11242,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -11178,7 +11264,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_acc_len_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -11295,7 +11381,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	717
+	SIDHighWatermark	719
 	SIDPrevWatermark	66
 	Block {
 	  BlockType		  Inport
@@ -17874,7 +17960,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -17886,7 +17972,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -17914,14 +18000,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -17936,7 +18022,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_arm_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -18734,7 +18820,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -18746,7 +18832,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -18774,14 +18860,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -18796,7 +18882,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_cnt_rst_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -18947,7 +19033,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -18959,7 +19045,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -18987,14 +19073,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -19009,7 +19095,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_dest_ip_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -19160,7 +19246,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -19172,7 +19258,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -19200,14 +19286,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -19222,7 +19308,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_dest_port_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -19372,7 +19458,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	79
+	SIDHighWatermark	81
 	SIDPrevWatermark	31
 	Block {
 	  BlockType		  Inport
@@ -19384,7 +19470,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "convert"
-	  SID			  78
+	  SID			  80
 	  Ports			  [1, 1]
 	  Position		  [60, 29, 105, 61]
 	  LibraryVersion	  "1.2"
@@ -19416,7 +19502,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_ext_sync_ctr_user_data_in"
-	  SID			  79
+	  SID			  81
 	  Ports			  [1, 1]
 	  Position		  [135, 35, 195, 55]
 	  LibraryVersion	  "1.2"
@@ -20193,7 +20279,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -20205,7 +20291,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -20233,14 +20319,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -20255,7 +20341,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_ip_select_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -20571,7 +20657,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -20583,7 +20669,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -20611,14 +20697,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -20633,7 +20719,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_port_select_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -21134,8 +21220,8 @@ Model {
       MaskValueString	      "64|40|6|4"
       System {
 	Name			"spead_packet"
-	Location		[311, 45, 1673, 1007]
-	Open			on
+	Location		[294, 99, 1656, 1061]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -21862,7 +21948,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "1024"
+	  const			  "1023"
 	  n_bits		  "11"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -21879,13 +21965,13 @@ Model {
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "75,26,0,1,white,blue,0,7448ee09,right,"
+	  sg_icon_stat		  "75,26,0,1,white,blue,0,3ed70023,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.4 0.346667 0.426667 0.346667 0.4 0.493333 0.52 0.546667 0.64 0.56 0.48 0.426667 0.506667 0.426667 0.48 0.56 0"
 	  ".64 0.546667 0.52 0.493333 0.4 ],[0.115385 0.269231 0.5 0.730769 0.884615 0.884615 0.807692 0.884615 0.884615 0.653"
 	  "846 0.884615 0.730769 0.5 0.269231 0.115385 0.346154 0.115385 0.115385 0.192308 0.115385 0.115385 ],[0.98 0.96 0.92"
 	  "]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon t"
-	  "ext');\ncolor('black');port_label('output',1,'1024');\nfprintf('','COMMENT: end icon text');\n"
+	  "ext');\ncolor('black');port_label('output',1,'1023');\nfprintf('','COMMENT: end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B))','inp"
 	  "1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*B|PCIN + A"
 	  "*B|P + A*B|A * B|C + A:B|C - A:B|C|Custom)','userSelections'=>{'carry'=>'CIN','inp1'=>'P','inp2'=>'PCIN>>17','opsel"
@@ -24036,7 +24122,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -24048,7 +24134,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -24076,14 +24162,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -24098,7 +24184,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_sync_en_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -24328,7 +24414,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -24340,7 +24426,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -24368,14 +24454,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -24390,7 +24476,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_sync_period_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -24620,7 +24706,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	119
+	SIDHighWatermark	123
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -24632,7 +24718,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  117
+	  SID			  121
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -24660,14 +24746,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      118
+	      SID		      122
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      119
+	      SID		      123
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -24682,7 +24768,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "gbtspec_mode13_sync_sel_user_data_out"
-	  SID			  116
+	  SID			  120
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -24920,19 +25006,22 @@ Model {
     Line {
       SrcBlock		      "gbe0"
       SrcPort		      3
-      DstBlock		      "Terminator15"
+      Points		      [60, 0; 0, 95]
+      DstBlock		      "Gateway Out5"
       DstPort		      1
     }
     Line {
       SrcBlock		      "gbe0"
       SrcPort		      4
-      DstBlock		      "Terminator9"
+      Points		      [140, 0]
+      DstBlock		      "Gateway Out3"
       DstPort		      1
     }
     Line {
       SrcBlock		      "gbe0"
       SrcPort		      5
-      DstBlock		      "Terminator8"
+      Points		      [140, 0]
+      DstBlock		      "Gateway Out4"
       DstPort		      1
     }
     Line {
@@ -24968,8 +25057,7 @@ Model {
     Line {
       SrcBlock		      "gbe0"
       SrcPort		      12
-      DstBlock		      "Terminator19"
-      DstPort		      1
+      Points		      [20, 0]
     }
     Line {
       SrcBlock		      "err_clear_sim1"
@@ -27513,6 +27601,24 @@ Model {
       SrcPort		      1
       DstBlock		      "Goto71"
       DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Gateway Out3"
+      SrcPort		      1
+      DstBlock		      "Scope1"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Gateway Out5"
+      SrcPort		      1
+      DstBlock		      "Scope1"
+      DstPort		      3
+    }
+    Line {
+      SrcBlock		      "Gateway Out4"
+      SrcPort		      1
+      DstBlock		      "Scope1"
+      DstPort		      2
     }
     Annotation {
       Name		      "GBT Spectrometer\nMode: 13\nBandwidth: 30\nChannels/IF: 4096\nInt. Time: 10 msec\nRepo: git://caspe"
