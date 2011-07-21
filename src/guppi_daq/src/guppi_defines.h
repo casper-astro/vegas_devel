@@ -24,7 +24,7 @@
 
 // Set SPEAD packet payload size (can be set via cmd line)
 #ifndef PAYLOAD_SIZE
-    #define PAYLOAD_SIZE    8192
+    #define PAYLOAD_SIZE    256
 #endif
 
 #endif

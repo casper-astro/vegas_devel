@@ -245,8 +245,7 @@ void guppi_accum_thread(void *_args) {
                                 (index_in->heap_size)*heap);
             struct freq_spead_heap* freq_heap = (struct freq_spead_heap*)(heap_addr);
 
-            unsigned int *u_payload = (unsigned int*)(heap_addr + sizeof(struct freq_spead_heap));
-            int *s_payload = (int*)(heap_addr + sizeof(struct freq_spead_heap));
+            int *payload = (int*)(heap_addr + sizeof(struct freq_spead_heap));
 
             accumid = freq_heap->status_bits & 0x7;         
 
@@ -374,18 +373,11 @@ void guppi_accum_thread(void *_args) {
                 {
                     for(j = 0; j < sf.hdr.nchan; j++)
                     {
-                        /* X power */
-                        accumulator[accumid][i][j][0] +=
-                            (float)u_payload[i*sf.hdr.nchan + j*NUM_STOKES + 0];
-                        /* Y power */
-                        accumulator[accumid][i][j][1] +=
-                            (float)u_payload[i*sf.hdr.nchan + j*NUM_STOKES + 1];
-                        /* Re(XY) */
-                        accumulator[accumid][i][j][2] +=
-                            (float)s_payload[i*sf.hdr.nchan + j*NUM_STOKES + 2];
-                        /* Im(XY) */
-                        accumulator[accumid][i][j][3] +=
-                            (float)s_payload[i*sf.hdr.nchan + j*NUM_STOKES + 3];
+                        for(k = 0; k < NUM_STOKES; k++)
+                        {
+                            accumulator[accumid][i][j][k] +=
+                                (float)payload[i*sf.hdr.nchan + j*NUM_STOKES + k];
+                        }
                     }
                 }
             }

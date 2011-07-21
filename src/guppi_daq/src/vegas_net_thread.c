@@ -411,7 +411,7 @@ printf("Error: out of order packet. Diff = %d\n", seq_num_diff);
             npacket_total += seq_num_diff;
             ndropped_total += seq_num_diff - 1;
             fblock->pkts_dropped += seq_num_diff - 1;
-if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d\n", seq_num_diff);
+if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d, heap_cntr_diff = %d, %d, %d\n", seq_num_diff, heap_cntr_diff, heap_cntr, last_heap_cntr);
         }
         last_seq_num = seq_num;
         last_heap_cntr = heap_cntr;

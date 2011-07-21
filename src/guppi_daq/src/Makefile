@@ -2,7 +2,7 @@
 # Commented lines are lines that were modified by Simon Scott to allow installation on otto.
 
 CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I$(CUDA)/include -I$(VEGAS_INCL) \
-		-I$(PYSLALIB) -I$(GUPPI_DIR)/src
+		-I$(PYSLALIB) -I$(GUPPI_DIR)/src -D$(PAYLOAD)
 NVCCFLAGS = -g -arch sm_13 -I$(CUDA)/include -I$(VEGAS_INCL)
 
 LIBS = -L$(PYSLALIB) -L$(VEGAS_LIB) -lcfitsio -lsla -lm -lpthread
