@@ -20,6 +20,11 @@
 #define SDFITS      2
 
 // Choose the required type of FITS files
-#define FITS_TYPE   SDFITS
+#define FITS_TYPE       SDFITS
+
+// Set SPEAD packet payload size (can be set via cmd line)
+#ifndef PAYLOAD_SIZE
+    #define PAYLOAD_SIZE    256
+#endif
 
 #endif

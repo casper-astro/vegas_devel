@@ -1,15 +1,13 @@
 # Makefile to install GUPPI C code
 # Commented lines are lines that were modified by Simon Scott to allow installation on otto.
 
-# OPT64 = /home/pulsar64
-# CUDA = /opt/gpu/cuda
-CUDA = /usr/local/cuda
-# CFLAGS = -g -O3 -Wall -DFOLD_USE_INTRINSICS -I$(OPT64)/include -I$(CUDA)/include
-# CFLAGS = -g -O3 -Wall -I$(OPT64)/include -I$(CUDA)/include
-CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I$(CUDA)/include -I$(CFITSIO)/include -I$(PYSLALIB)
-# NVCCFLAGS = -g -arch sm_13 -I$(CUDA)/include -I$(OPT64)/include
-NVCCFLAGS = -g -arch sm_13 -I$(CUDA)/include -I$(CFITSIO)/include
-# NVCCFLAGS = -g -ccbin $(CUDA)/gcc -I$(CUDA)/include -I$(OPT64)/include
+CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I$(CUDA)/include -I$(VEGAS_INCL) \
+		-I$(PYSLALIB) -I$(GUPPI_DIR)/src -D$(PAYLOAD)
+NVCCFLAGS = -g -arch sm_13 -I$(CUDA)/include -I$(VEGAS_INCL)
+
+LIBS = -L$(PYSLALIB) -L$(VEGAS_LIB) -lcfitsio -lsla -lm -lpthread
+CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm
+
 PROGS = check_guppi_databuf check_guppi_status clean_guppi_shmem
 OBJS  = guppi_status.o guppi_databuf.o guppi_udp.o guppi_error.o \
 	guppi_params.o guppi_time.o guppi_thread_args.o \
@@ -20,9 +18,7 @@ THREAD_OBJS  = vegas_net_thread.o guppi_rawdisk_thread.o \
 	        guppi_sdfits_thread.o guppi_accum_thread.o \
 	        guppi_null_thread.o guppi_fake_net_thread.o
 CUDA_OBJS = pfb_gpu.o pfb_gpu_kernels.o vegas_pfb_thread.o
-# LIBS = -L$(OPT64)/lib -lcfitsio -L$(PRESTO)/lib -lsla -lm -lpthread
-LIBS = -L$(CFITSIO)/lib -lcfitsio -L$(PRESTO)/lib -L$(PYSLALIB) -lsla -lm -lpthread
-CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm
+
 all: $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw 
 clean:
 	rm -f $(PROGS) $(THREAD_PROGS) *~ *.o sdfits.tgz test_psrfits_0*.fits *.ptx

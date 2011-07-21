@@ -6,7 +6,7 @@ import struct, socket, time
 
 # IP address and port for GUPPI receiver
 UDP_IP			        = "127.0.0.1"
-UDP_PORT		        = 50000
+UDP_PORT		        = 60000
 
 NCHAN                   = 1024
 
@@ -73,7 +73,7 @@ def send_spead_heap(header, heap):
             offset += 6*8
 
         # Now write the spectrum to the packet
-        packet += struct.pack('> 2048f',
+        packet += struct.pack('> 2048L',
                     *(heap['payload'][pkt_num*2048:(pkt_num+1)*2048]))
 
         offset += 8192
@@ -88,7 +88,7 @@ def send_spead_heap(header, heap):
 
 
 # Generate the sampled waveform to transmit
-spectrum_list = [[s*1.0]*4 for s in range(NCHAN)]
+spectrum_list = [[s]*4 for s in range(NCHAN)]
 spectrum = []
 for s in spectrum_list:
     spectrum.extend(s)
