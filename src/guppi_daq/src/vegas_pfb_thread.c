@@ -125,7 +125,7 @@ void vegas_pfb_thread(void *_args) {
         if (first) {
 
             /* Init PFB on GPU */
-            init_pfb(db_in->block_size, db_in->index_size);
+            init_pfb(db_in->block_size, db_out->block_size, db_in->index_size, sf.hdr.nchan);
 
             /* Clear first time flag */
             first=0;
@@ -152,6 +152,8 @@ void vegas_pfb_thread(void *_args) {
         /* Go to next input block */
         curblock_in = (curblock_in + 1) % db_in->n_block;
 
+        printf("Debug: vegas_pfb_thread going to next output block\n");
+
         /*  Wait for next output block */
         curblock_out = (curblock_out + 1) % db_out->n_block;
         while ((rv=guppi_databuf_wait_free(db_out, curblock_out)!=0) && run) {
@@ -168,6 +170,8 @@ void vegas_pfb_thread(void *_args) {
 
     //cudaThreadExit();
     pthread_exit(NULL);
+
+    destroy_pfb();
 
     pthread_cleanup_pop(0); /* Closes guppi_databuf_detach(out) */
     pthread_cleanup_pop(0); /* Closes guppi_databuf_detach(in) */

@@ -22,8 +22,6 @@
 #define BYTE_ARR_TO_UINT(array, idx) (ntohl(((unsigned int*)(array))[idx]))
 #endif
 
-#define PAYLOAD_SIZE    256
-
 int guppi_udp_init(struct guppi_udp_params *p) {
 
     /* Resolve sender hostname */

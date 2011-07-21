@@ -37,8 +37,6 @@
 #include "sdfits.h"
 #include "spead_heap.h"
 
-#define PAYLOAD_SIZE    256
-
 // Read a status buffer all of the key observation paramters
 extern void guppi_read_obs_params(char *buf, 
                                   struct guppi_params *g, 
@@ -326,7 +324,7 @@ void *guppi_net_thread(void *_args) {
     char *curdata=NULL, *curheader=NULL, *curindex=NULL;
     unsigned int heap_cntr=0, last_heap_cntr=2048, nextblock_heap_cntr=0;
     unsigned int heap_offset;
-    unsigned int seq_num=0, last_seq_num=2048;
+    unsigned int seq_num=0, last_seq_num=1050;
     int heap_cntr_diff, seq_num_diff;
     unsigned int obs_started = 0;
     unsigned long long npacket_total;
@@ -405,7 +403,7 @@ printf("Error: incorrect pkt size\n");
                 guppi_warn("guppi_net_thread", msg);
             }
             else  {
-printf("Error: out of order packet\n");
+printf("Error: out of order packet. Diff = %d\n", seq_num_diff);
                 continue;   /* No going backwards */
             }
         } else { 

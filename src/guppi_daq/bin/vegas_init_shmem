@@ -6,10 +6,10 @@ fi
 # Set up status buffer
 $GUPPI_DIR/bin/check_guppi_status >& /dev/null
 # Set up first (GPU) data buffer
-$GUPPI_DIR/bin/check_guppi_databuf -c -i1 -n24 -s1 -t1 >& /dev/null
+$GUPPI_DIR/bin/check_guppi_databuf -c -i1 -n24 -s8 -t1 >& /dev/null
 # Set up second (CPU_ACCUM) data buffer
-$GUPPI_DIR/bin/check_guppi_databuf -c -i1 -n24 -s1 -t2 >& /dev/null
+$GUPPI_DIR/bin/check_guppi_databuf -c -i2 -n24 -s32 -t2 >& /dev/null
 # Set up third (DISK) data buffer
-$GUPPI_DIR/bin/check_guppi_databuf -c -i2 -n16 -s1 -t3 >& /dev/null
+$GUPPI_DIR/bin/check_guppi_databuf -c -i3 -n16 -s32 -t3 >& /dev/null
 # Display status of buffers
 # $GUPPI_DIR/bin/check_guppi_status

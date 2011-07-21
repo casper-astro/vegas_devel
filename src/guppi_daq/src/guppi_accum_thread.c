@@ -255,6 +255,7 @@ void guppi_accum_thread(void *_args) {
                 freq_heap->integ_size, freq_heap->mode, freq_heap->status_bits,
                 freq_heap->payload_data_off);
 */
+
             /* If we have accumulated for long enough, write vectors to output block */
             if(freq_heap->spectrum_cntr >= accum_stop_time)
             {
