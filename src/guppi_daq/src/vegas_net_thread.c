@@ -506,7 +506,7 @@ if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d, heap_cntr
             }
             memcpy(status_buf, st.buf, GUPPI_STATUS_SIZE);
             guppi_status_unlock_safe(&st);
- 
+
             /* Wait for new block to be free, then clear it
              * if necessary and fill its header with new values.
              */

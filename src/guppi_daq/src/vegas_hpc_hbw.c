@@ -36,6 +36,10 @@ void *guppi_accum_thread(void *args);
 void *guppi_rawdisk_thread(void *args);
 #endif
 
+#ifdef NULL_DISK
+void *guppi_null_thread(void *args);
+#endif
+
 #ifdef FAKE_NET
 void *guppi_fake_net_thread(void *args);
 #endif
@@ -129,6 +133,9 @@ int main(int argc, char *argv[]) {
     pthread_t disk_thread_id;
 #ifdef RAW_DISK
     rv = pthread_create(&disk_thread_id, NULL, guppi_rawdisk_thread, 
+        (void *)&disk_args);
+#elif defined NULL_DISK
+    rv = pthread_create(&disk_thread_id, NULL, guppi_null_thread, 
         (void *)&disk_args);
 #elif FITS_TYPE == PSRFITS
     rv = pthread_create(&disk_thread_id, NULL, guppi_psrfits_thread, 
