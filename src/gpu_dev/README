@@ -1,0 +1,112 @@
+README
+-------------------------------------------------------------------------------
+
+Files: vegas_gpu_standalone.cu
+       vegas_gpu_standalone.h
+       Makefile
+
+-------------------------------------------------------------------------------
+
+Notation: A Hungarian-esque notation is used here. Example:
+
+#define DEF_NFFT    1024    /* 'DEF_' denotes default values */
+
+int g_iVar; /* global variable */
+
+<ret-type> Function(<args>)
+{
+    float fVar;
+    int iVar;
+    double dVar;
+
+    /* CUDA types */
+    char4 c4Var;
+    float2 f2Var;
+    dim3 dimVar;
+
+    /* pointers */
+    char *pcVar;
+    int *piVar;
+
+    /* arrays */
+    float afVarArray[10];
+
+    ...
+}
+
+-------------------------------------------------------------------------------
+
+Code:
+
+Usage: vegas_gpu_standalone [options] <data-file>
+    -h  --help                           Display this usage information
+    -n  --nfft <value>                   Number of points in FFT
+    -p  --pfb                            Enable PFB
+    -a  --nacc <value>                   Number of spectra to add
+    -s  --fsamp <value>                  Sampling frequency (used only in
+                                                             plots)
+
+This code reads 8-bit, complex, dual-polarisation data from a user-specified
+file, loads the entire contents of the file to memory (that restricts the
+max. file size), and does FFT or PFB+FFT on the data, depending on
+user-specified command-line flags, and accumulates spectra. Data is copied from
+host memory to device/GPU memory in blocks of 32MB. (This code fails for data
+file size < 32MB.) The number of spectra to accumulate is also user-specified.
+
+Data is two's-complement 8-bit values between -128 to 127 (that are actually
+fixed-point values between -1.0 and +1.0). It is read into a CUDA char4 array
+as follows:
+
+char4 c4Data;
+
+c4Data.x = Real(X-pol.)
+c4Data.y = Imag(X-pol.)
+c4Data.z = Real(Y-pol.)
+c4Data.w = Imag(Y-pol.)
+
+There are three compilation flags defined in vegas_gpu_standalone.h (starting
+on line 17):
+
+PLOT: If set to non-zero value, will use PGPLOT to plot spectra
+BENCHMARKING: If set to non-zero value, will calculate and print kernel
+              benchmarks.
+OUTFILE: If set to non-zero value, will write spectra to file. (Incomplete)
+
+The main logic, in pseudo-code, is as follows:
+
+Initialise stuff, including copying of first 32MB block to device memory
+while(Data-processing-not-done)
+{
+    if (PFB-is-enabled)
+    {
+        Do PFB on first P * N samples (P = number of taps,
+                                       N = number of points in FFT)
+    }
+    else    /* only FFT */
+    {
+        Copy char4 array to float4 array (CUFFT requires float input)
+    }
+
+    Do FFT
+
+    if (Blanking-not-set)
+    {
+        Accumulate spectra
+        if (Time == 0.5ms)  /*  measured in terms of number of accumulated
+                                spectra */
+        {
+            Copy accumulated vector back to host
+        }
+    }
+
+    if (32MB-data-is-processed)
+    {
+        Copy next 32MB block of data to device memory
+    }
+    else
+    {
+        continue;
+    }
+}
+
+-------------------------------------------------------------------------------
