@@ -15,9 +15,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "gofrito"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jul 21 16:26:17 2011"
-  RTWModifiedTimeStamp	  233166167
-  ModelVersionFormat	  "1.%<AutoIncrement:21>"
+  LastModifiedDate	  "Tue Jul 26 16:18:52 2011"
+  RTWModifiedTimeStamp	  233597928
+  ModelVersionFormat	  "1.%<AutoIncrement:22>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -659,7 +659,7 @@ Library {
   }
   System {
     Name		    "gbt_library"
-    Location		    [177, 74, 851, 728]
+    Location		    [177, 75, 851, 729]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -673,16 +673,16 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    251
+    SIDHighWatermark	    252
     Block {
       BlockType		      SubSystem
       Name		      "packetizer"
-      SID		      249
+      SID		      252
       Ports		      [4, 4]
-      Position		      [425, 95, 580, 185]
+      Position		      [420, 70, 575, 160]
       AttributesFormatString  "Parallel Input Width: 256\nSerial Output Width: 64"
-      AncestorBlock	      "casper_library/Flow_Control/packetizer"
-      LibraryVersion	      "*1.1264"
+      AncestorBlock	      "gbt_library/packetizer"
+      LibraryVersion	      "1.21"
       UserDataPersistent      on
       UserData		      "DataTag0"
       MinAlgLoopOccurrences   off
@@ -718,10 +718,10 @@ Library {
       MaskIconRotate	      "none"
       MaskPortRotate	      "default"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "256|64|128|32"
+      MaskValueString	      "256|64|2K|32"
       System {
 	Name			"packetizer"
-	Location		[19, 240, 1091, 994]
+	Location		[0, 25, 1024, 765]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -786,15 +786,15 @@ Library {
 	  arith_type		  "Unsigned"
 	  n_bits		  "11"
 	  bin_pt		  "0"
-	  load_pin		  "off"
-	  rst			  "on"
-	  en			  "on"
+	  load_pin		  off
+	  rst			  on
+	  en			  on
 	  explicit_period	  "on"
 	  period		  "1"
-	  dbl_ovrd		  "off"
-	  use_behavioral_HDL	  "off"
+	  dbl_ovrd		  off
+	  use_behavioral_HDL	  off
 	  implementation	  "Fabric"
-	  xl_use_area		  "off"
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  use_rpm		  "off"
 	  has_advanced_control	  "0"
@@ -821,10 +821,10 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Inverter"
 	  SourceType		  "Xilinx Inverter Block"
 	  infoedit		  "Bitwise logical negation (one's complement) operator."
-	  en			  "off"
+	  en			  off
 	  latency		  "0"
-	  dbl_ovrd		  "off"
-	  xl_use_area		  "off"
+	  dbl_ovrd		  off
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
@@ -850,15 +850,15 @@ Library {
 	  SourceType		  "Xilinx Logical Block Block"
 	  logical_function	  "AND"
 	  inputs		  "2"
-	  en			  "off"
+	  en			  off
 	  latency		  "0"
 	  precision		  "Full"
 	  arith_type		  "Unsigned"
 	  n_bits		  "16"
 	  bin_pt		  "0"
-	  align_bp		  "on"
-	  dbl_ovrd		  "off"
-	  xl_use_area		  "off"
+	  align_bp		  on
+	  dbl_ovrd		  off
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,309"
@@ -886,15 +886,15 @@ Library {
 	  SourceType		  "Xilinx Logical Block Block"
 	  logical_function	  "AND"
 	  inputs		  "2"
-	  en			  "off"
+	  en			  off
 	  latency		  "0"
 	  precision		  "Full"
 	  arith_type		  "Unsigned"
 	  n_bits		  "16"
 	  bin_pt		  "0"
-	  align_bp		  "on"
-	  dbl_ovrd		  "off"
-	  xl_use_area		  "off"
+	  align_bp		  on
+	  dbl_ovrd		  off
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,309"
@@ -922,20 +922,20 @@ Library {
 	  infoedit		  "Pass input values to a MATLAB function for evaluation in Xilinx fixed-point type. The input ports of t"
 	  "he block are input arguments of the function. The output ports of the block are output arguments of the function."
 	  mfname		  "packetizer_fsm"
-	  explicit_period	  "on"
+	  explicit_period	  on
 	  period		  "1"
 	  inputsTable		  "{'boundInpExpr'=>['','','3','',' 15 ','','',''],'inputs'=>['fifo_empty','shift_count','data_per_wor"
 	  "d','data_count','n_words','sync_reset','waste_count','waste_time']}"
 	  outputsTable		  "{'outputs'=>['fifo_re','bram_addr_en','bram_we','serializer_shift','serializer_ld','shift_count_en"
 	  "','shift_count_rst','bram_addr_rst','data_count_en','data_count_rst','done','waste_count_en','waste_count_rst'],'su"
 	  "ppressOut'=>['off','off','off','off','off','off','off','off','off','off','off','off','off']}"
-	  dbl_ovrd		  "off"
-	  enable_stdout		  "off"
-	  enable_debug		  "off"
-	  xl_use_area		  "off"
+	  dbl_ovrd		  off
+	  enable_stdout		  off
+	  enable_debug		  off
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  suppress_output	  "1"
-	  defparams		  "{'data_per_word',3,'n_words', 15 }"
+	  defparams		  "{'data_per_word',3, 'n_words', 31 }"
 	  hide_port_list	  "{}"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,610"
@@ -968,18 +968,18 @@ Library {
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/FIFO"
 	  SourceType		  "Xilinx FIFO Block Block"
-	  depth			  "128"
+	  depth			  "2K"
 	  percent_nbits		  "1"
-	  rst			  "off"
-	  en			  "off"
-	  use_dcount		  "off"
-	  use_almost_empty	  "off"
+	  rst			  off
+	  en			  off
+	  use_dcount		  off
+	  use_almost_empty	  off
 	  almost_empty_thresh	  "2"
-	  use_almost_full	  "off"
+	  use_almost_full	  off
 	  almost_full_thresh	  "14"
-	  dbl_ovrd		  "off"
+	  dbl_ovrd		  off
 	  mem_type		  "Block RAM"
-	  xl_use_area		  "off"
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  explicit_period	  "off"
 	  has_advanced_control	  "0"
@@ -997,7 +997,7 @@ Library {
 	  "color('black');port_label('output',3,'%full');\ncolor('black');port_label('output',4,'full');\nfprintf('','COMMENT:"
 	  " end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'depth'=>'popup(16|32|64|128|256|512|1K|2K|4K|8K|16K|32K|64K)','percent_nbits'=>'pop"
-	  "up(1|2|3|4|5)','userSelections'=>{'depth'=>'128','percent_nbits'=>'1'}}}"
+	  "up(1|2|3|4|5)','userSelections'=>{'depth'=>'2K','percent_nbits'=>'1'}}}"
 	}
 	Block {
 	  BlockType		  Reference
@@ -1018,15 +1018,15 @@ Library {
 	  arith_type		  "Unsigned"
 	  n_bits		  "6"
 	  bin_pt		  "0"
-	  load_pin		  "off"
-	  rst			  "on"
-	  en			  "on"
+	  load_pin		  off
+	  rst			  on
+	  en			  on
 	  explicit_period	  "on"
 	  period		  "1"
-	  dbl_ovrd		  "off"
-	  use_behavioral_HDL	  "off"
+	  dbl_ovrd		  off
+	  use_behavioral_HDL	  off
 	  implementation	  "Fabric"
-	  xl_use_area		  "off"
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  use_rpm		  "off"
 	  has_advanced_control	  "0"
@@ -1127,7 +1127,6 @@ Library {
 	      SID		      4
 	      Ports		      [2, 1]
 	      Position		      [90, 157, 115, 188]
-	      LibraryVersion	      "1.2"
 	      SourceBlock	      "xbsIndex_r4/Logical"
 	      SourceType	      "Xilinx Logical Block Block"
 	      logical_function	      "OR"
@@ -1160,7 +1159,6 @@ Library {
 	      SID		      5
 	      Ports		      [0, 1]
 	      Position		      [120, 32, 175, 58]
-	      LibraryVersion	      "1.2"
 	      SourceBlock	      "xbsIndex_r4/Constant"
 	      SourceType	      "Xilinx Constant Block Block"
 	      arith_type	      "Unsigned"
@@ -1197,7 +1195,6 @@ Library {
 	      Ports		      [4, 1]
 	      Position		      [220, 26, 280, 74]
 	      BackgroundColor	      "gray"
-	      LibraryVersion	      "1.1"
 	      LinkData {
 		BlockName		"Mux2"
 		DialogParameters {
@@ -1254,7 +1251,6 @@ Library {
 	      Ports		      [4, 1]
 	      Position		      [420, 26, 480, 74]
 	      BackgroundColor	      "gray"
-	      LibraryVersion	      "1.1"
 	      LinkData {
 		BlockName		"Mux2"
 		DialogParameters {
@@ -1311,7 +1307,6 @@ Library {
 	      Ports		      [4, 1]
 	      Position		      [620, 26, 680, 74]
 	      BackgroundColor	      "gray"
-	      LibraryVersion	      "1.1"
 	      LinkData {
 		BlockName		"Mux2"
 		DialogParameters {
@@ -1368,7 +1363,6 @@ Library {
 	      Ports		      [4, 1]
 	      Position		      [820, 26, 880, 74]
 	      BackgroundColor	      "gray"
-	      LibraryVersion	      "1.1"
 	      LinkData {
 		BlockName		"Mux2"
 		DialogParameters {
@@ -1554,15 +1548,15 @@ Library {
 	  arith_type		  "Unsigned"
 	  n_bits		  "3"
 	  bin_pt		  "0"
-	  load_pin		  "off"
-	  rst			  "on"
-	  en			  "on"
+	  load_pin		  off
+	  rst			  on
+	  en			  on
 	  explicit_period	  "on"
 	  period		  "1"
-	  dbl_ovrd		  "off"
-	  use_behavioral_HDL	  "off"
+	  dbl_ovrd		  off
+	  use_behavioral_HDL	  off
 	  implementation	  "Fabric"
-	  xl_use_area		  "off"
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  use_rpm		  "off"
 	  has_advanced_control	  "0"
@@ -1597,15 +1591,15 @@ Library {
 	  arith_type		  "Unsigned"
 	  n_bits		  "5"
 	  bin_pt		  "0"
-	  load_pin		  "off"
-	  rst			  "on"
-	  en			  "on"
+	  load_pin		  off
+	  rst			  on
+	  en			  on
 	  explicit_period	  "on"
 	  period		  "1"
-	  dbl_ovrd		  "off"
-	  use_behavioral_HDL	  "off"
+	  dbl_ovrd		  off
+	  use_behavioral_HDL	  off
 	  implementation	  "Fabric"
-	  xl_use_area		  "off"
+	  xl_use_area		  off
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  use_rpm		  "off"
 	  has_advanced_control	  "0"
@@ -2002,15 +1996,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2035,15 +2029,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2068,15 +2062,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2101,15 +2095,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2133,15 +2127,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2166,15 +2160,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2199,15 +2193,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2231,15 +2225,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "64"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2264,15 +2258,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2296,15 +2290,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Boolean"
 	  n_bits		  "64"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "484,33,353,563"
 	  block_type		  "assert"
@@ -2330,15 +2324,15 @@ Library {
 	  SourceType		  "Xilinx Assert Block"
 	  infoedit		  "Asserts a user-defined sample rate and/or type on a signal.<br><br>Hardware notes: In hardware this bl"
 	  "ock costs nothing."
-	  assert_type		  on
+	  assert_type		  "on"
 	  type_source		  "Explicitly"
 	  arith_type		  "Unsigned"
 	  n_bits		  "spead_lsw"
 	  bin_pt		  "0"
-	  assert_rate		  off
+	  assert_rate		  "off"
 	  rate_source		  "Explicitly"
 	  period		  "1"
-	  output_port		  on
+	  output_port		  "on"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,353,563"
 	  block_type		  "assert"
@@ -2363,7 +2357,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "6"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,328,231"
 	  block_type		  "concat"
@@ -2388,7 +2382,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,328,231"
 	  block_type		  "concat"
@@ -2414,7 +2408,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "concat"
@@ -2440,7 +2434,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "concat"
@@ -2465,7 +2459,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,328,231"
 	  block_type		  "concat"
@@ -2490,7 +2484,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "concat"
@@ -2515,7 +2509,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "concat"
@@ -2540,7 +2534,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "concat"
@@ -2565,7 +2559,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,328,231"
 	  block_type		  "concat"
@@ -2591,7 +2585,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "concat"
@@ -2616,7 +2610,7 @@ Library {
 	  infoedit		  "Concatenates two or more inputs.  Output will be cast to an unsigned value with the binary point at ze"
 	  "ro."
 	  num_inputs		  "2"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "concat"
@@ -2643,7 +2637,7 @@ Library {
 	  const			  "8388611"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2652,7 +2646,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2682,7 +2676,7 @@ Library {
 	  const			  "8388628"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2691,7 +2685,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2722,7 +2716,7 @@ Library {
 	  const			  "8388629"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2731,7 +2725,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2761,7 +2755,7 @@ Library {
 	  const			  "26"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2770,7 +2764,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2799,7 +2793,7 @@ Library {
 	  const			  "8388609"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2808,7 +2802,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2839,7 +2833,7 @@ Library {
 	  const			  "8388630"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2848,7 +2842,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2877,7 +2871,7 @@ Library {
 	  const			  "0"
 	  n_bits		  "4"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2886,7 +2880,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2915,7 +2909,7 @@ Library {
 	  const			  "11"
 	  n_bits		  "4"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2924,7 +2918,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2956,7 +2950,7 @@ Library {
 	  const			  "8388631"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -2965,7 +2959,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -2995,7 +2989,7 @@ Library {
 	  const			  "8388632"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3004,7 +2998,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -3034,7 +3028,7 @@ Library {
 	  const			  "8388610"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3043,7 +3037,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -3074,7 +3068,7 @@ Library {
 	  const			  "83"
 	  n_bits		  "8"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3083,7 +3077,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "constant"
@@ -3110,7 +3104,7 @@ Library {
 	  const			  "4"
 	  n_bits		  "8"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3119,7 +3113,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "constant"
@@ -3147,7 +3141,7 @@ Library {
 	  const			  "3"
 	  n_bits		  "8"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3156,7 +3150,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "constant"
@@ -3184,7 +3178,7 @@ Library {
 	  const			  "5"
 	  n_bits		  "8"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3193,7 +3187,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -3224,7 +3218,7 @@ Library {
 	  const			  "0"
 	  n_bits		  "16"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3233,7 +3227,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
 	  block_type		  "constant"
@@ -3261,7 +3255,7 @@ Library {
 	  const			  "10"
 	  n_bits		  "16"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3270,7 +3264,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -3301,7 +3295,7 @@ Library {
 	  const			  "8388612"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
 	  dsp48_infoedit	  "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
 	  equ			  "P=C"
@@ -3310,7 +3304,7 @@ Library {
 	  opr			  "+"
 	  inp1			  "P"
 	  carry			  "CIN"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
@@ -3342,9 +3336,9 @@ Library {
 	  quantization		  "Truncate"
 	  overflow		  "Wrap"
 	  latency		  "0"
-	  dbl_ovrd		  off
-	  pipeline		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  pipeline		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,562,443"
@@ -3377,15 +3371,15 @@ Library {
 	  arith_type		  "Unsigned"
 	  n_bits		  "pkt_bits+1"
 	  bin_pt		  "0"
-	  load_pin		  off
-	  rst			  on
-	  en			  on
+	  load_pin		  "off"
+	  rst			  "on"
+	  en			  "on"
 	  explicit_period	  "on"
 	  period		  "1"
-	  dbl_ovrd		  off
-	  use_behavioral_HDL	  off
+	  dbl_ovrd		  "off"
+	  use_behavioral_HDL	  "off"
 	  implementation	  "Fabric"
-	  xl_use_area		  off
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  use_rpm		  "on"
 	  has_advanced_control	  "0"
@@ -3420,15 +3414,15 @@ Library {
 	  arith_type		  "Unsigned"
 	  n_bits		  "4"
 	  bin_pt		  "0"
-	  load_pin		  off
-	  rst			  on
-	  en			  on
+	  load_pin		  "off"
+	  rst			  "on"
+	  en			  "on"
 	  explicit_period	  "on"
 	  period		  "1"
-	  dbl_ovrd		  off
-	  use_behavioral_HDL	  off
+	  dbl_ovrd		  "off"
+	  use_behavioral_HDL	  "off"
 	  implementation	  "Fabric"
-	  xl_use_area		  off
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  use_rpm		  "on"
 	  has_advanced_control	  "0"
@@ -3454,11 +3448,11 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Delay"
 	  SourceType		  "Xilinx Delay Block"
 	  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
-	  dbl_ovrd		  off
-	  reg_retiming		  on
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  reg_retiming		  "on"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "588,284,432,336"
@@ -3844,10 +3838,10 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Inverter"
 	  SourceType		  "Xilinx Inverter Block"
 	  infoedit		  "Bitwise logical negation (one's complement) operator."
-	  en			  off
+	  en			  "off"
 	  latency		  "1"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,344"
@@ -3872,10 +3866,10 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Inverter"
 	  SourceType		  "Xilinx Inverter Block"
 	  infoedit		  "Bitwise logical negation (one's complement) operator."
-	  en			  off
+	  en			  "off"
 	  latency		  "1"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,344"
@@ -3901,10 +3895,10 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Inverter"
 	  SourceType		  "Xilinx Inverter Block"
 	  infoedit		  "Bitwise logical negation (one's complement) operator."
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,344"
@@ -3928,15 +3922,15 @@ Library {
 	  SourceType		  "Xilinx Logical Block Block"
 	  logical_function	  "AND"
 	  inputs		  "2"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
 	  precision		  "Full"
 	  arith_type		  "Unsigned"
 	  n_bits		  "8"
 	  bin_pt		  "2"
-	  align_bp		  on
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  align_bp		  "on"
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,309"
@@ -3963,15 +3957,15 @@ Library {
 	  SourceType		  "Xilinx Logical Block Block"
 	  logical_function	  "AND"
 	  inputs		  "4"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
 	  precision		  "Full"
 	  arith_type		  "Unsigned"
 	  n_bits		  "8"
 	  bin_pt		  "2"
-	  align_bp		  on
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  align_bp		  "on"
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
@@ -3996,15 +3990,15 @@ Library {
 	  SourceType		  "Xilinx Logical Block Block"
 	  logical_function	  "OR"
 	  inputs		  "2"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
 	  precision		  "Full"
 	  arith_type		  "Unsigned"
 	  n_bits		  "8"
 	  bin_pt		  "2"
-	  align_bp		  on
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  align_bp		  "on"
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,309"
@@ -4033,14 +4027,14 @@ Library {
 	  infoedit		  "Pass input values to a MATLAB function for evaluation in Xilinx fixed-point type. The input ports of t"
 	  "he block are input arguments of the function. The output ports of the block are output arguments of the function."
 	  mfname		  "heap_number"
-	  explicit_period	  off
+	  explicit_period	  "off"
 	  period		  "1"
 	  inputsTable		  "{'boundInpExpr'=>['','',''],'inputs'=>['heap_length','pld_length','eof']}"
 	  outputsTable		  "{'outputs'=>['heap_offset'],'suppressOut'=>['off']}"
-	  dbl_ovrd		  off
-	  enable_stdout		  off
-	  enable_debug		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  enable_stdout		  "off"
+	  enable_debug		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  suppress_output	  "on"
 	  defparams		  "{}"
@@ -4070,7 +4064,7 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Mux"
 	  SourceType		  "Xilinx Bus Multiplexer Block"
 	  inputs		  "2"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
 	  precision		  "Full"
 	  arith_type		  "Signed  (2's comp)"
@@ -4078,8 +4072,8 @@ Library {
 	  bin_pt		  "2"
 	  quantization		  "Truncate"
 	  overflow		  "Wrap"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,368"
@@ -4107,7 +4101,7 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Mux"
 	  SourceType		  "Xilinx Bus Multiplexer Block"
 	  inputs		  "12"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
 	  precision		  "Full"
 	  arith_type		  "Signed  (2's comp)"
@@ -4115,8 +4109,8 @@ Library {
 	  bin_pt		  "2"
 	  quantization		  "Truncate"
 	  overflow		  "Wrap"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,368"
@@ -4150,17 +4144,17 @@ Library {
 	  depth			  "12"
 	  initVector		  "[0 1 2 3 4 5 11 11 11 11 11 11]"
 	  distributed_mem	  "Distributed memory"
-	  rst			  off
+	  rst			  "off"
 	  init_reg		  "0"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
 	  arith_type		  "Unsigned"
 	  n_bits		  "4"
 	  bin_pt		  "0"
-	  dbl_ovrd		  off
+	  dbl_ovrd		  "off"
 	  optimize		  "Area"
-	  use_rpm		  on
-	  xl_use_area		  off
+	  use_rpm		  "on"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "767,148,432,360"
@@ -4183,10 +4177,10 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Register"
 	  SourceType		  "Xilinx Register Block"
 	  init			  "0"
-	  rst			  on
-	  en			  on
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  rst			  "on"
+	  en			  "on"
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "-1,-1,-1,-1"
@@ -4212,10 +4206,10 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Relational"
 	  SourceType		  "Xilinx Arithmetic Relational Operator Block"
 	  mode			  "a!=b"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,219"
@@ -4241,10 +4235,10 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Relational"
 	  SourceType		  "Xilinx Arithmetic Relational Operator Block"
 	  mode			  "a<b"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,219"
@@ -4271,10 +4265,10 @@ Library {
 	  SourceBlock		  "xbsIndex_r4/Relational"
 	  SourceType		  "Xilinx Arithmetic Relational Operator Block"
 	  mode			  "a<=b"
-	  en			  off
+	  en			  "off"
 	  latency		  "0"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  has_advanced_control	  "0"
 	  sggui_pos		  "20,20,432,219"
@@ -4363,7 +4357,7 @@ Library {
 	  SourceType		  "negedge"
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -4416,7 +4410,7 @@ Library {
 	  SourceType		  "negedge"
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -4469,7 +4463,7 @@ Library {
 	  SourceType		  "negedge"
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -4522,7 +4516,7 @@ Library {
 	  SourceType		  "posedge"
 	  ShowPortLabels	  "FromPortIcon"
 	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
+	  FunctionWithSeparateData "off"
 	  RTWMemSecFuncInitTerm	  "Inherit from model"
 	  RTWMemSecFuncExecute	  "Inherit from model"
 	  RTWMemSecDataConstants  "Inherit from model"
@@ -31828,11 +31822,11 @@ MatData {
   DataRecord {
     Tag			    DataTag0
     Data		    "  %)30     .    , (   8    (     @         %    \"     $    !     0         %  0 \"P    $    6    <W1A="
-    "&4       !P87)A;65T97)S    #@   #     &    \"     T         !0    @    !     0    $         !@ $ -7T3@(.    H $   "
+    "&4       !P87)A;65T97)S    #@   #     &    \"     T         !0    @    !     0    $         !@ $ /N#X0$.    H $   "
     "8    (     @         %    \"     $    !     0         %  0 #     $    \\    9&5F875L=',     <&EN7W=I9'1H    <V]U=%"
     "]W:61T:   =&]T86Q?=V]R9', 9FEF;U]D97!T:         X    H    !@    @    !          4    (               !          X "
     "   X    !@    @    &          4    (     0    $    !          D    (            <$ .    .     8    (    !@        "
     " %    \"     $    !     0         )    \"            %! #@   #@    &    \"     8         !0    @    !     0    $  "
-    "       \"0    @           ! 0 X    P    !@    @    $          4    (     0    ,    !         !   P Q,C@ "
+    "       \"0    @           ! 0 X    P    !@    @    $          4    (     0    (    !         !   @ R2P  "
   }
 }
