@@ -8,19 +8,17 @@ dest_port = 60000
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
 
-acc_len=1023
+acc_len=255
 fft_size=2**5
 simul_inputs=4
 lcm=6
 pfb_taps=4
-sync_period = acc_len*lcm*pfb_taps*fft_size/simul_inputs
+sync_period = (acc_len+1)*lcm*pfb_taps*fft_size/simul_inputs
 
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
-#boffile='mode01_mini_2011_Jun_30_1029.bof'
-#boffile='mode01_mini_r101_2011_Jul_11_1556.bof'
-boffile='mode01_mini_r102_2011_Jul_14_1529.bof'
+boffile='mode01_mini_r103_2011_Jul_20_1830.bof'
 
 #boffile='gbtspec_mode13_2011_Jul_13_1553.bof'
 
@@ -50,6 +48,7 @@ time.sleep(1)
 
 # Set sync period
 fpga.write_int('sync_period',sync_period)
+fpga.write_int('sync_period_sel',1)
 fpga.write_int('rst',1)
 fpga.write_int('rst',0)
 fpga.write_int('sync_gen_sel',0)
