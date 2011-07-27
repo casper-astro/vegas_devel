@@ -19,48 +19,26 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parallel_integrator_init_xblock(n_inputs,output_bitwidth, add_latency)
+function parallel_polynomial_dec_stage_init_xblock(m,n,n_inputs,polyphase,add_latency,dec2_halfout, n_bits, bin_pt,recursive)
 
-in = cell(1,n_inputs);
-for i = 1:n_inputs,
-    in{i} = xInport(['in', num2str(i)]);
-end
-enable = xInport('en');
-sync = xInport('sync');
-
-out = cell(1, n_inputs);
-for i = 1:n_inputs,
-    out{i} = xOutport(['out',num2str(i)]);
+if ~isprime(n)
+    disp('Only supports decimation rate that is a prime number');
+    return;
 end
 
-Im = cell(1,n_inputs);
-for i = 1:n_inputs,
-    Im{i} = xSignal(['Im',num2str(i)]);
-    xlsub2_acc{i} = xBlock(struct('source','xbsIndex/Accumulator','name',['Accumulator',num2str(i)]),...
-                        struct('n_bits', output_bitwidth, ...
-                                'en', 'on', ...
-                                'rst', 'off'), ...
-                                {in{i}, enable},{Im{i}});
+if n==2 
+    %parallel_polynomial_dec2_stage_init_xblock(m,n_inputs,polyphase,add_latency,0, n_bits, bin_pt,strcmp(dec2_halfout,'on'));
+    if strcmp(dec2_halfout,'off')
+        disp('to be implemented');
+    else
+        parallel_polynomial_dec2_stage_init_xblock(m,n_inputs,polyphase,add_latency,0, n_bits, bin_pt,dec2_halfout, recursive);
+    end
+elseif n==3
+    parallel_polynomial_dec3_stage_init_xblock(m,n_inputs,polyphase,add_latency,0, n_bits, bin_pt, recursive)
+else
+    parallel_polynomial_decN_stage_init_xblock(m,n,n_inputs,polyphase,add_latency,0, n_bits, bin_pt, recursive)
 end
 
-dIm = cell(1,n_inputs-1);
-xlsub3_Delay = cell(1,n_inputs-1);
-for i = 2:n_inputs,
-    dIm{i-1} = xSignal(['dIm', num2str(i)]);
-    xlsub3_Delay{i-1} = xBlock(struct('source', 'Delay', 'name', ['Delay',num2str(i)]), ...
-                          struct('latency', 1), ...
-                          {Im{i}}, ...
-                          {dIm{i-1}});
-    
-end
-
-xlsub3_addertree = cell(1,n_inputs);
-for i=1:n_inputs,
-    xlsub3_addertree{i} = xBlock(struct('source', str2func('adder_tree_init_xblock'),'name', ['adder_tree', num2str(i)]), ...
-                                 {n_inputs, add_latency, 'Round  (unbiased: +/- Inf)', 'Saturate', 'Behavioral'}, ...
-                                 {sync,Im{1:i}, dIm{i:end}}, ...
-                                 {{},out{i}});
-end
 
 
 end

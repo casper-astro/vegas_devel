@@ -1,30 +1,27 @@
-%% May 18, 2011 modified to make compatible with old blocks
-%%              temporarily abandon the DSP48E functionality
-%%  n_inputs, latency, first_stage_hdl, behavioral
-%%  function adder_tree_init_xblock(n_inputs, add_latency, quantization, overflow, mode)
-function adder_tree_init_xblock(n_inputs, latency, first_stage_hdl, behavioral)
-add_latency = latency;
-quantization = 'Truncate';
-overflow = 'Wrap';
-if strcmp(behavioral,'on') 
-    mode = 'Behavioral';
-else
-    mode = 'Fabric';
-end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%   Center for Astronomy Signal Processing and Electronics Research           %
+%   http://casper.berkeley.edu                                                %      
+%   Copyright (C) 2011 Suraj Gowda    Hong Chen                               %
+%                                                                             %
+%   This program is free software; you can redistribute it and/or modify      %
+%   it under the terms of the GNU General Public License as published by      %
+%   the Free Software Foundation; either version 2 of the License, or         %
+%   (at your option) any later version.                                       %
+%                                                                             %
+%   This program is distributed in the hope that it will be useful,           %
+%   but WITHOUT ANY WARRANTY; without even the implied warranty of            %
+%   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             %
+%   GNU General Public License for more details.                              %
+%                                                                             %
+%   You should have received a copy of the GNU General Public License along   %
+%   with this program; if not, write to the Free Software Foundation, Inc.,   %
+%   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function adder_tree_init_xblock(n_inputs, add_latency, quantization, overflow, mode)
 
 
-
-
-
-% 	% dummy 0 input
- 	dummy_input = xSignal;
-% 	dummy_const = xBlock(struct('source', 'Constant', 'name', 'zero_in'), ...
-% 							struct('arith_type', 'Unsigned', ...
-% 								   'const', 0, ...
-% 								   'n_bits', 18, ...
-% 								   'bin_pt', 17), ...
-% 							{}, ...
-% 							{dummy_input});
 	
 	% Inports
 	sync_in = xInport('sync');
@@ -47,8 +44,17 @@ end
 	sync_delay_block = xBlock( sync_delay_config, struct('latency', n_stages*add_latency), ...
 								{sync_in}, {sync_out});
 
-
-
+    if n_stages~=0
+        % dummy 0 input
+        dummy_input = xSignal;
+        dummy_const = xBlock(struct('source', 'Constant', 'name', 'zero_in'), ...
+                                struct('arith_type', 'Unsigned', ...
+                                       'const', 0, ...
+                                       'n_bits', 18, ...
+                                       'bin_pt', 17), ...
+                                {}, ...
+                                {dummy_input});
+    end
 % If nothing to add, connect in to out
 if n_stages==0
 	dummy_delay_config.source = 'Delay';
@@ -130,16 +136,10 @@ elseif strcmp(mode, 'Behavioral') || strcmp(mode, 'Fabric')
         adder_config = struct('mode', 'Addition', 'latency', add_latency, 'precision', 'Full', ...
 								 		'quantization', quantization, 'overflow', overflow, ...
                                         'use_behavioral_HDL', 'on');
-        adder_1st_config = struct('mode','Addition', 'latency', add_latency, 'precision', 'Full', ...
-								 		'quantization', quantization, 'overflow', overflow, ...
-                                        'use_behavioral_HDL', 'on');
     else
         adder_config = struct('mode', 'Addition', 'latency', add_latency, 'precision', 'Full', ...
 								 		'quantization', quantization, 'overflow', overflow, ...
-                                        'use_behavioral_HDL', 'off', 'hw_selection', 'Fabric'); 
-        adder_1st_config = struct('mode','Addition', 'latency', add_latency, 'precision', 'Full', ...
-								 		'quantization', quantization, 'overflow', overflow, ...
-                                        'use_behavioral_HDL', first_stage_hdl);
+                                        'use_behavioral_HDL', 'off', 'hw_selection', 'Fabric');        
     end
     
 	while (1)
@@ -165,15 +165,9 @@ elseif strcmp(mode, 'Behavioral') || strcmp(mode, 'Fabric')
 					stage_outports{k} = sum_out;
 					
 				else % instantiate an adder
-                    if stage_ind == 1 
-                        adder = xBlock( struct('source', 'AddSub', 'name', ['adder_', num2str(n_simd_adders)] ), ...
-									  adder_1st_config, ...
-									 data_inports{k}, {sum_out} );
-                    else       
-                        adder = xBlock( struct('source', 'AddSub', 'name', ['adder_', num2str(n_simd_adders)] ), ...
+					adder = xBlock( struct('source', 'AddSub', 'name', ['adder_', num2str(n_simd_adders)] ), ...
 									  adder_config, ...
 									 data_inports{k}, {sum_out} );
-                    end
 					stage_outports{k} = sum_out;
 				end
 				n_simd_adders = n_simd_adders + 1;				
