@@ -15,9 +15,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "gofrito"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Jul 26 16:21:51 2011"
-  RTWModifiedTimeStamp	  233597928
-  ModelVersionFormat	  "1.%<AutoIncrement:22>"
+  LastModifiedDate	  "Tue Jul 26 16:59:15 2011"
+  RTWModifiedTimeStamp	  233600352
+  ModelVersionFormat	  "1.%<AutoIncrement:25>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -659,7 +659,7 @@ Library {
   }
   System {
     Name		    "gbt_library"
-    Location		    [177, 75, 851, 729]
+    Location		    [177, 77, 851, 731]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -673,274 +673,37 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    252
+    SIDHighWatermark	    283
     Block {
-      BlockType		      SubSystem
+      BlockType		      Reference
       Name		      "packetizer"
-      SID		      252
+      SID		      283
       Ports		      [4, 4]
-      Position		      [420, 70, 575, 160]
+      Position		      [410, 60, 565, 150]
       AttributesFormatString  "Parallel Input Width: 256\nSerial Output Width: 64"
-      AncestorBlock	      "gbt_library/packetizer"
-      LibraryVersion	      "1.21"
-      UserDataPersistent      on
-      UserData		      "DataTag0"
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      MaskType		      "packetizer"
-      MaskDescription	      "This block is intended to serialize data that is 'bursty', that is,\nthe average data rat"
-      "e is small but per cycle the data is highly\nparallel and can contain many points simultaneously.  This situatio"
-      "n\nis common with the streaming CASPER FFTs and related blocks. \n\nThe serialization buffers the data when vali"
-      "d and independently \nserializes the data when the buffer is non-empty.  For convenience, the\ndata is counted a"
-      "s it is serialized and signals exist to indicate\nthat the serial output is valid or that a buffer overflow has "
-      "occured.  The\nblock will not stop in the case of an overflow, and the overflow\nsignal is not held high after i"
-      "t occurs.\n\nFor example usage, see 'roach_spec_2adc_borph' in 'SVNROOT/trunk/projects/roach_spec/'\nor the test"
-      " case in 'SVNROOT/trunk/mlib_devel_10_1/Tests/packetizer_test.mdl'\n\nFor extended documentation, please see the"
-      " CASPER wiki"
-      MaskPromptString	      "Parallel Input Width|Serial Output Width|FIFO depth|Total number of data points"
-      MaskStyleString	      "edit,edit,popup(16|32|64|128|256|512|1K|2K|4K|8K|16K|32K|64K),edit"
-      MaskTunableValueString  "on,on,on,on"
-      MaskCallbackString      "|||"
-      MaskEnableString	      "on,on,on,on"
-      MaskVisibilityString    "on,on,on,on"
-      MaskToolTipString	      "on,on,on,on"
-      MaskVariables	      "pin_width=@1;sout_width=@2;fifo_depth=&3;total_words=@4;"
-      MaskInitialization      "packetizer_init(gcb, 'pin_width', pin_width, 'sout_width', sout_width, 'total_words', t"
-      "otal_words, 'fifo_depth', fifo_depth)\n% packetizer_init(gcb, ...\n%     'pin_width', pin_width, ...\n%     'sou"
-      "t_width', sout_width, ...\n%   %  'fifo_depth', fifo_depth, ...\n%     'total_words', total_words);"
-      MaskIconFrame	      on
-      MaskIconOpaque	      on
-      MaskIconRotate	      "none"
-      MaskPortRotate	      "default"
-      MaskIconUnits	      "autoscale"
-      MaskValueString	      "256|64|2K|32"
-      System {
-	Name			"packetizer"
-	Location		[0, 25, 1024, 765]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	SIDHighWatermark	2320
-	SIDPrevWatermark	2320
-	Block {
-	  BlockType		  Inport
-	  Name			  "din_valid"
-	  SID			  2301
-	  Position		  [365, 443, 395, 457]
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Inport
-	  Name			  "din"
-	  SID			  2302
-	  Position		  [365, 408, 395, 422]
-	  Port			  "2"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Inport
-	  Name			  "sync_reset"
-	  SID			  2303
-	  Position		  [90, 143, 120, 157]
-	  Port			  "3"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Inport
-	  Name			  "waste_time"
-	  SID			  2320
-	  Position		  [90, 178, 120, 192]
-	  Port			  "4"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Counter"
-	  SID			  2304
-	  Ports			  [2, 1]
-	  Position		  [870, 15, 930, 75]
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Counter"
-	  SourceType		  "Xilinx Counter Block"
-	  infoedit		  "Hardware notes: Free running counters are the least expensive in hardware.  A count limited counter is"
-	  " implemented by combining a counter with a comparator."
-	  cnt_type		  "Free Running"
-	  cnt_to		  "Inf"
-	  operation		  "Up"
-	  start_count		  "0"
-	  cnt_by_val		  "1"
-	  arith_type		  "Unsigned"
-	  n_bits		  "11"
-	  bin_pt		  "0"
-	  load_pin		  off
-	  rst			  on
-	  en			  on
-	  explicit_period	  "on"
-	  period		  "1"
-	  dbl_ovrd		  off
-	  use_behavioral_HDL	  off
-	  implementation	  "Fabric"
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  use_rpm		  "off"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,799"
-	  block_type		  "counter"
-	  block_version		  "10.1.3"
-	  sg_icon_stat		  "60,60,2,1,white,blue,0,d605779c,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.916667 0.7 0.483333 0.333333 0.583333 0.33333"
-	  "3 0.483333 0.7 0.916667 0.633333 0.566667 0.5 0.233333 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.6833"
-	  "33 0.9 0.75 0.5 0.25 0.1 0.316667 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\n"
-	  "fprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('inpu"
-	  "t',1,'rst');\ncolor('black');port_label('input',2,'en');\ncolor('black');port_label('output',1,'out');\nfprintf('',"
-	  "'COMMENT: end icon text');\n"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Inverter"
-	  SID			  2305
-	  Ports			  [1, 1]
-	  Position		  [420, 463, 440, 487]
-	  ShowName		  off
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Inverter"
-	  SourceType		  "Xilinx Inverter Block"
-	  infoedit		  "Bitwise logical negation (one's complement) operator."
-	  en			  off
-	  latency		  "0"
-	  dbl_ovrd		  off
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "-1,-1,-1,-1"
-	  block_type		  "inv"
-	  block_version		  "10.1.3"
-	  sg_icon_stat		  "20,24,1,1,white,blue,0,267846e5,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.2 0.05 0.3 0.05 0.2 0.45 0.5 0.55 0.85 0.65 0.45 0.3 0.55 0.3 0.45 0.65 0.85 0.55 0.5 0.45 0.2 ],[0.166667 0."
-	  "291667 0.5 0.708333 0.833333 0.833333 0.791667 0.833333 0.833333 0.666667 0.833333 0.708333 0.5 0.291667 0.166667 0"
-	  ".333333 0.166667 0.166667 0.208333 0.166667 0.166667 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprint"
-	  "f('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');disp('not');\nfprintf("
-	  "'','COMMENT: end icon text');\n"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Logical"
-	  SID			  2306
-	  Ports			  [2, 1]
-	  Position		  [475, 432, 500, 483]
-	  ShowName		  off
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Logical"
-	  SourceType		  "Xilinx Logical Block Block"
-	  logical_function	  "AND"
-	  inputs		  "2"
-	  en			  off
-	  latency		  "0"
-	  precision		  "Full"
-	  arith_type		  "Unsigned"
-	  n_bits		  "16"
-	  bin_pt		  "0"
-	  align_bp		  on
-	  dbl_ovrd		  off
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,309"
-	  block_type		  "logical"
-	  block_version		  "10.1.3"
-	  sg_icon_stat		  "25,51,2,1,white,blue,0,0a851f85,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.24 0.08 0.32 0.08 0.24 0.52 0.6 0.68 0.96 0.72 0.52 0.36 0.56 0.36 0.52 0.72 0.96 0.68 0.6 0.52 0.24 ],[0.313"
-	  "725 0.392157 0.509804 0.627451 0.705882 0.705882 0.666667 0.705882 0.705882 0.588235 0.686275 0.607843 0.509804 0.4"
-	  "11765 0.333333 0.431373 0.313725 0.313725 0.352941 0.313725 0.313725 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1"
-	  " 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');disp('"
-	  "\\newlineand\\newlinez^{-0}','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
-	  sg_list_contents	  "{'table'=>{'logical_function'=>'popup(AND|NAND|OR|NOR|XOR|XNOR)','userSelections'=>{'logical_fu"
-	  "nction'=>'AND'}}}"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Logical1"
-	  SID			  2307
-	  Ports			  [2, 1]
-	  Position		  [700, 569, 725, 596]
-	  ShowName		  off
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Logical"
-	  SourceType		  "Xilinx Logical Block Block"
-	  logical_function	  "AND"
-	  inputs		  "2"
-	  en			  off
-	  latency		  "0"
-	  precision		  "Full"
-	  arith_type		  "Unsigned"
-	  n_bits		  "16"
-	  bin_pt		  "0"
-	  align_bp		  on
-	  dbl_ovrd		  off
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,309"
-	  block_type		  "logical"
-	  block_version		  "10.1.3"
-	  sg_icon_stat		  "25,27,2,1,white,blue,0,0a851f85,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.24 0.08 0.32 0.08 0.24 0.52 0.6 0.68 0.96 0.72 0.52 0.36 0.56 0.36 0.52 0.72 0.96 0.68 0.6 0.52 0.24 ],[0.148"
-	  "148 0.296296 0.518519 0.740741 0.888889 0.888889 0.814815 0.888889 0.888889 0.666667 0.851852 0.703704 0.518519 0.3"
-	  "33333 0.185185 0.37037 0.148148 0.148148 0.222222 0.148148 0.148148 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 "
-	  "1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');disp('\\"
-	  "newlineand\\newlinez^{-0}','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
-	  sg_list_contents	  "{'table'=>{'logical_function'=>'popup(AND|NAND|OR|NOR|XOR|XNOR)','userSelections'=>{'logical_fu"
-	  "nction'=>'AND'}}}"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "control_fsm"
-	  SID			  2308
-	  Ports			  [6, 13]
-	  Position		  [205, 38, 505, 202]
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/MCode"
-	  SourceType		  "Xilinx MCode Block Block"
+      LibraryVersion	      "1.24"
+      LinkData {
+	BlockName		"control_fsm"
+	DialogParameters {
 	  infoedit		  "Pass input values to a MATLAB function for evaluation in Xilinx fixed-point type. The input ports of t"
 	  "he block are input arguments of the function. The output ports of the block are output arguments of the function."
 	  mfname		  "packetizer_fsm"
-	  explicit_period	  on
+	  explicit_period	  "on"
 	  period		  "1"
-	  inputsTable		  "{'boundInpExpr'=>['','','3','',' 15 ','','',''],'inputs'=>['fifo_empty','shift_count','data_per_wor"
+	  inputsTable		  "{'boundInpExpr'=>['','','3','',' 31 ','','',''],'inputs'=>['fifo_empty','shift_count','data_per_wor"
 	  "d','data_count','n_words','sync_reset','waste_count','waste_time']}"
 	  outputsTable		  "{'outputs'=>['fifo_re','bram_addr_en','bram_we','serializer_shift','serializer_ld','shift_count_en"
 	  "','shift_count_rst','bram_addr_rst','data_count_en','data_count_rst','done','waste_count_en','waste_count_rst'],'su"
 	  "ppressOut'=>['off','off','off','off','off','off','off','off','off','off','off','off','off']}"
-	  dbl_ovrd		  off
-	  enable_stdout		  off
-	  enable_debug		  off
-	  xl_use_area		  off
+	  dbl_ovrd		  "off"
+	  enable_stdout		  "off"
+	  enable_debug		  "off"
+	  xl_use_area		  "off"
 	  xl_area		  "[0,0,0,0,0,0,0]"
 	  suppress_output	  "1"
 	  defparams		  "{'data_per_word',3, 'n_words', 31 }"
 	  hide_port_list	  "{}"
 	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,610"
-	  block_type		  "mcode"
-	  block_version		  "10.1.3"
 	  sg_icon_stat		  "300,164,6,13,white,blue,0,f7fbbb7d,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.353333 0.263333 0.39 0.263333 0.353333 0.496667 0.536667 0.576667 0.73 0.606667 0.49 0.403333 0.526667 0.4033"
@@ -958,896 +721,25 @@ Library {
 	  "black');port_label('output',11,'done');\ncolor('black');port_label('output',12,'waste_count_en');\ncolor('black');p"
 	  "ort_label('output',13,'waste_count_rst');\ncolor('black');disp('\\bf{packetizer\\_fsm}','texmode','on');\nfprintf('"
 	  "','COMMENT: end icon text');\n"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "data_buffer"
-	  SID			  2309
-	  Ports			  [3, 4]
-	  Position		  [560, 398, 640, 512]
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/FIFO"
-	  SourceType		  "Xilinx FIFO Block Block"
-	  depth			  "2K"
-	  percent_nbits		  "1"
-	  rst			  off
-	  en			  off
-	  use_dcount		  off
-	  use_almost_empty	  off
-	  almost_empty_thresh	  "2"
-	  use_almost_full	  off
-	  almost_full_thresh	  "14"
-	  dbl_ovrd		  off
-	  mem_type		  "Block RAM"
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  explicit_period	  "off"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,485"
-	  block_type		  "fifo"
-	  block_version		  "10.1.3"
-	  sg_icon_stat		  "80,114,3,4,white,blue,0,2152acb9,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.225 0.0625 0.3 0.0625 0.225 0.4875 0.5625 0.6375 0.925 0.7 0.4875 0.3375 0.575 0.3375 0.4875 0.7 0.925 0.6375"
-	  " 0.5625 0.4875 0.225 ],[0.22807 0.342105 0.508772 0.675439 0.789474 0.789474 0.736842 0.789474 0.789474 0.631579 0."
-	  "780702 0.675439 0.508772 0.342105 0.236842 0.385965 0.22807 0.22807 0.280702 0.22807 0.22807 ],[0.98 0.96 0.92]);\n"
-	  "plot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text')"
-	  ";\ncolor('black');port_label('input',1,'din');\ncolor('black');port_label('input',2,'we');\ncolor('black');port_lab"
-	  "el('input',3,'re');\ncolor('black');port_label('output',1,'dout');\ncolor('black');port_label('output',2,'empty');\n"
-	  "color('black');port_label('output',3,'%full');\ncolor('black');port_label('output',4,'full');\nfprintf('','COMMENT:"
-	  " end icon text');\n"
-	  sg_list_contents	  "{'table'=>{'depth'=>'popup(16|32|64|128|256|512|1K|2K|4K|8K|16K|32K|64K)','percent_nbits'=>'pop"
-	  "up(1|2|3|4|5)','userSelections'=>{'depth'=>'2K','percent_nbits'=>'1'}}}"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "data_counter"
-	  SID			  2310
-	  Ports			  [2, 1]
-	  Position		  [320, 300, 380, 360]
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Counter"
-	  SourceType		  "Xilinx Counter Block"
-	  infoedit		  "Hardware notes: Free running counters are the least expensive in hardware.  A count limited counter is"
-	  " implemented by combining a counter with a comparator."
-	  cnt_type		  "Free Running"
-	  cnt_to		  "Inf"
-	  operation		  "Up"
-	  start_count		  "0"
-	  cnt_by_val		  "1"
-	  arith_type		  "Unsigned"
-	  n_bits		  "6"
-	  bin_pt		  "0"
-	  load_pin		  off
-	  rst			  on
-	  en			  on
-	  explicit_period	  "on"
-	  period		  "1"
-	  dbl_ovrd		  off
-	  use_behavioral_HDL	  off
-	  implementation	  "Fabric"
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  use_rpm		  "off"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,799"
-	  block_type		  "counter"
-	  block_version		  "10.1.3"
-	  sg_icon_stat		  "60,60,2,1,white,blue,0,d605779c,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.916667 0.7 0.483333 0.333333 0.583333 0.33333"
-	  "3 0.483333 0.7 0.916667 0.633333 0.566667 0.5 0.233333 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.6833"
-	  "33 0.9 0.75 0.5 0.25 0.1 0.316667 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\n"
-	  "fprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('inpu"
-	  "t',1,'rst');\ncolor('black');port_label('input',2,'en');\ncolor('black');port_label('output',1,'out');\nfprintf('',"
-	  "'COMMENT: end icon text');\n"
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "parallel_to_serial_converter"
-	  SID			  2311
-	  Ports			  [3, 1]
-	  Position		  [730, 403, 780, 437]
-	  AncestorBlock		  "casper_library/Flow_Control/parallel_to_serial_converter"
-	  UserDataPersistent	  on
-	  UserData		  "DataTag1"
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  MaskType		  "parallel_to_serial_converter"
-	  MaskDescription	  "This block takes as input a parallel bus of specified width. \nWhen the load signal 'ld' is asse"
-	  "rted, this data is broken into \npieces of width specified by the serial output width and \nstored into different r"
-	  "egisters chained to form a shift register.\nIf the 'shift' input is subsequently asserted, the shift register\nretu"
-	  "rns as output a new piece of data of width sout_width.  This data\nis the next least significant piece of the origi"
-	  "nal bus.  The converter\nserializes SMALL ENDIAN.\n\nNote that the load operation automatically loads the least sig"
-	  "nificant\nbits into the register closest to the output, so the first 'shift' \nassertion changes the data output fr"
-	  "om bits [sout_width-1:0] to\nbits [2*sout_width-1:sout_width]."
-	  MaskPromptString	  "Parallel Input Width|Serial Output Width"
-	  MaskStyleString	  "edit,edit"
-	  MaskTunableValueString  "on,on"
-	  MaskCallbackString	  "|"
-	  MaskEnableString	  "on,on"
-	  MaskVisibilityString	  "on,on"
-	  MaskToolTipString	  "on,on"
-	  MaskVariables		  "pin_width=@1;sout_width=@2;"
-	  MaskInitialization	  "parallel_to_serial_converter_init(gcb, ...\n    'pin_width', pin_width, ...\n    'sout_width'"
-	  ", sout_width);"
-	  MaskIconFrame		  on
-	  MaskIconOpaque	  on
-	  MaskIconRotate	  "none"
-	  MaskPortRotate	  "default"
-	  MaskIconUnits		  "autoscale"
-	  MaskValueString	  "256|64"
-	  System {
-	    Name		    "parallel_to_serial_converter"
-	    Location		    [2, 74, 1270, 693]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    14
-	    Block {
-	      BlockType		      Inport
-	      Name		      "pin"
-	      SID		      1
-	      Position		      [25, 243, 55, 257]
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "ld"
-	      SID		      2
-	      Position		      [25, 28, 55, 42]
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "shift"
-	      SID		      3
-	      Position		      [25, 198, 55, 212]
-	      Port		      "3"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Logical"
-	      SID		      4
-	      Ports		      [2, 1]
-	      Position		      [90, 157, 115, 188]
-	      SourceBlock	      "xbsIndex_r4/Logical"
-	      SourceType	      "Xilinx Logical Block Block"
-	      logical_function	      "OR"
-	      inputs		      "2"
-	      en		      "off"
-	      latency		      "0"
-	      precision		      "Full"
-	      arith_type	      "Unsigned"
-	      n_bits		      "16"
-	      bin_pt		      "0"
-	      align_bp		      "on"
-	      dbl_ovrd		      "off"
-	      xl_use_area	      "off"
-	      xl_area		      "[0,0,0,0,0,0,0]"
-	      has_advanced_control    "0"
-	      sggui_pos		      "20,20,348,261"
-	      block_type	      "logical"
-	      block_version	      "10.1.3"
-	      sg_icon_stat	      "25,31,2,1,white,blue,0,fc354646,right,"
-	      sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91"
-	      "]);\npatch([0.24 0.08 0.32 0.08 0.24 0.52 0.6 0.68 0.96 0.72 0.52 0.36 0.56 0.36 0.52 0.72 0.96 0.68 0.6 0.52 0"
-	      ".24 ],[0.193548 0.322581 0.516129 0.709677 0.83871 0.83871 0.774194 0.83871 0.83871 0.645161 0.806452 0.677419 "
-	      "0.516129 0.354839 0.225806 0.387097 0.193548 0.193548 0.258065 0.193548 0.193548 ],[0.98 0.96 0.92]);\nplot([0 "
-	      "1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\nc"
-	      "olor('black');disp('\\newlineor\\newlinez^{-0}','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "filler"
-	      SID		      5
-	      Ports		      [0, 1]
-	      Position		      [120, 32, 175, 58]
-	      SourceBlock	      "xbsIndex_r4/Constant"
-	      SourceType	      "Xilinx Constant Block Block"
-	      arith_type	      "Unsigned"
-	      const		      "0"
-	      n_bits		      "sout_width"
-	      bin_pt		      "0"
-	      explicit_period	      "on"
-	      period		      "1"
-	      dsp48_infoedit	      "The use of this block for DSP48 instructions is deprecated.  Please use the Opmode block."
-	      equ		      "P=C"
-	      opselect		      "C"
-	      inp2		      "PCIN>>17"
-	      opr		      "+"
-	      inp1		      "P"
-	      carry		      "CIN"
-	      dbl_ovrd		      "off"
-	      has_advanced_control    "0"
-	      sggui_pos		      "20,20,400,346"
-	      block_type	      "constant"
-	      block_version	      "10.1.3"
-	      sg_icon_stat	      "55,26,0,1,white,blue,0,bf4ddd8b,right,"
-	      sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91"
-	      "]);\npatch([0.363636 0.290909 0.4 0.290909 0.363636 0.490909 0.527273 0.563636 0.690909 0.581818 0.472727 0.4 0"
-	      ".509091 0.4 0.472727 0.581818 0.690909 0.563636 0.527273 0.490909 0.363636 ],[0.115385 0.269231 0.5 0.730769 0."
-	      "884615 0.884615 0.807692 0.884615 0.884615 0.653846 0.884615 0.730769 0.5 0.269231 0.115385 0.346154 0.115385 0"
-	      ".115385 0.192308 0.115385 0.115385 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT:"
-	      " end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',1,'0');\nfpr"
-	      "intf('','COMMENT: end icon text');\n"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "shifter_unit1"
-	      SID		      6
-	      Ports		      [4, 1]
-	      Position		      [220, 26, 280, 74]
-	      BackgroundColor	      "gray"
-	      LinkData {
-		BlockName		"Mux2"
-		DialogParameters {
-		  sg_icon_stat		  "30,94,3,1,white,blue,3,eb98d690,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0.142857 0.857143 1 ],[0.77 0."
-		  "82 0.91]);\npatch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.9 0.666667 0.466667 0.3 0.5 0"
-		  ".3 0.466667 0.666667 0.9 0.633333 0.566667 0.5 0.233333 ],[0.37234 0.425532 0.5 0.574468 0.62766 0.62766 0.606383 "
-		  "0.62766 0.62766 0.553191 0.617021 0.56383 0.5 0.43617 0.382979 0.446809 0.37234 0.37234 0.393617 0.37234 0.37234 ]"
-		  ",[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0.142857 0.857143 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfp"
-		  "rintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,'sel');\ncolor('black');port_label('inp"
-		  "ut',2,'d0');\ncolor('black');port_label('input',3,'d1');\ncolor('black');disp('\\bf{}','texmode','on');\nfprintf('"
-		  "','COMMENT: end icon text');\n"
-		}
-		BlockName		"Register1"
-		DialogParameters {
-		  sg_icon_stat		  "60,56,2,1,white,blue,0,01f465d5,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.25 0.1 0.316667 0.1 0.25 0.5 0.566667 0.633333 0.9 0.683333 0.483333 0.333333 0.533333 0.333333 0.483333 0."
-		  "683333 0.9 0.633333 0.566667 0.5 0.25 ],[0.107143 0.267857 0.5 0.732143 0.892857 0.892857 0.821429 0.892857 0.8928"
-		  "57 0.660714 0.875 0.714286 0.5 0.285714 0.125 0.339286 0.107143 0.107143 0.178571 0.107143 0.107143 ],[0.98 0.96 0"
-		  ".92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin ic"
-		  "on text');\ncolor('black');port_label('input',1,'d');\ncolor('black');port_label('input',2,'en');\ncolor('black');"
-		  "port_label('output',1,'q');\ncolor('black');disp('\\bf{z^{-1}}','texmode','on');\nfprintf('','COMMENT: end icon te"
-		  "xt');\n"
-		}
-		BlockName		"Slice"
-		DialogParameters {
-		  sg_icon_stat		  "60,30,1,1,white,blue,0,1fd851a7,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.366667 0.283333 0.4 0.283333 0.366667 0.5 0.533333 0.566667 0.7 0.583333 0.483333 0.4 0.5 0.4 0.483333 0.58"
-		  "3333 0.7 0.566667 0.533333 0.5 0.366667 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.666667 0.866667 0."
-		  "7 0.5 0.3 0.133333 0.333333 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprin"
-		  "tf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',"
-		  "1,'[a:b]');\nfprintf('','COMMENT: end icon text');\n"
-		}
-	      }
-	      SourceBlock	      "casper_library_flow_control/shifter_unit"
-	      SourceType	      "shifter_unit"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData "off"
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      data_width	      "64"
-	      pin_offset	      "0"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "shifter_unit2"
-	      SID		      7
-	      Ports		      [4, 1]
-	      Position		      [420, 26, 480, 74]
-	      BackgroundColor	      "gray"
-	      LinkData {
-		BlockName		"Mux2"
-		DialogParameters {
-		  sg_icon_stat		  "30,94,3,1,white,blue,3,eb98d690,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0.142857 0.857143 1 ],[0.77 0."
-		  "82 0.91]);\npatch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.9 0.666667 0.466667 0.3 0.5 0"
-		  ".3 0.466667 0.666667 0.9 0.633333 0.566667 0.5 0.233333 ],[0.37234 0.425532 0.5 0.574468 0.62766 0.62766 0.606383 "
-		  "0.62766 0.62766 0.553191 0.617021 0.56383 0.5 0.43617 0.382979 0.446809 0.37234 0.37234 0.393617 0.37234 0.37234 ]"
-		  ",[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0.142857 0.857143 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfp"
-		  "rintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,'sel');\ncolor('black');port_label('inp"
-		  "ut',2,'d0');\ncolor('black');port_label('input',3,'d1');\ncolor('black');disp('\\bf{}','texmode','on');\nfprintf('"
-		  "','COMMENT: end icon text');\n"
-		}
-		BlockName		"Register1"
-		DialogParameters {
-		  sg_icon_stat		  "60,56,2,1,white,blue,0,01f465d5,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.25 0.1 0.316667 0.1 0.25 0.5 0.566667 0.633333 0.9 0.683333 0.483333 0.333333 0.533333 0.333333 0.483333 0."
-		  "683333 0.9 0.633333 0.566667 0.5 0.25 ],[0.107143 0.267857 0.5 0.732143 0.892857 0.892857 0.821429 0.892857 0.8928"
-		  "57 0.660714 0.875 0.714286 0.5 0.285714 0.125 0.339286 0.107143 0.107143 0.178571 0.107143 0.107143 ],[0.98 0.96 0"
-		  ".92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin ic"
-		  "on text');\ncolor('black');port_label('input',1,'d');\ncolor('black');port_label('input',2,'en');\ncolor('black');"
-		  "port_label('output',1,'q');\ncolor('black');disp('\\bf{z^{-1}}','texmode','on');\nfprintf('','COMMENT: end icon te"
-		  "xt');\n"
-		}
-		BlockName		"Slice"
-		DialogParameters {
-		  sg_icon_stat		  "60,30,1,1,white,blue,0,1fd851a7,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.366667 0.283333 0.4 0.283333 0.366667 0.5 0.533333 0.566667 0.7 0.583333 0.483333 0.4 0.5 0.4 0.483333 0.58"
-		  "3333 0.7 0.566667 0.533333 0.5 0.366667 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.666667 0.866667 0."
-		  "7 0.5 0.3 0.133333 0.333333 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprin"
-		  "tf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',"
-		  "1,'[a:b]');\nfprintf('','COMMENT: end icon text');\n"
-		}
-	      }
-	      SourceBlock	      "casper_library_flow_control/shifter_unit"
-	      SourceType	      "shifter_unit"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData "off"
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      data_width	      "64"
-	      pin_offset	      "64"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "shifter_unit3"
-	      SID		      8
-	      Ports		      [4, 1]
-	      Position		      [620, 26, 680, 74]
-	      BackgroundColor	      "gray"
-	      LinkData {
-		BlockName		"Mux2"
-		DialogParameters {
-		  sg_icon_stat		  "30,94,3,1,white,blue,3,eb98d690,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0.142857 0.857143 1 ],[0.77 0."
-		  "82 0.91]);\npatch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.9 0.666667 0.466667 0.3 0.5 0"
-		  ".3 0.466667 0.666667 0.9 0.633333 0.566667 0.5 0.233333 ],[0.37234 0.425532 0.5 0.574468 0.62766 0.62766 0.606383 "
-		  "0.62766 0.62766 0.553191 0.617021 0.56383 0.5 0.43617 0.382979 0.446809 0.37234 0.37234 0.393617 0.37234 0.37234 ]"
-		  ",[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0.142857 0.857143 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfp"
-		  "rintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,'sel');\ncolor('black');port_label('inp"
-		  "ut',2,'d0');\ncolor('black');port_label('input',3,'d1');\ncolor('black');disp('\\bf{}','texmode','on');\nfprintf('"
-		  "','COMMENT: end icon text');\n"
-		}
-		BlockName		"Register1"
-		DialogParameters {
-		  sg_icon_stat		  "60,56,2,1,white,blue,0,01f465d5,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.25 0.1 0.316667 0.1 0.25 0.5 0.566667 0.633333 0.9 0.683333 0.483333 0.333333 0.533333 0.333333 0.483333 0."
-		  "683333 0.9 0.633333 0.566667 0.5 0.25 ],[0.107143 0.267857 0.5 0.732143 0.892857 0.892857 0.821429 0.892857 0.8928"
-		  "57 0.660714 0.875 0.714286 0.5 0.285714 0.125 0.339286 0.107143 0.107143 0.178571 0.107143 0.107143 ],[0.98 0.96 0"
-		  ".92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin ic"
-		  "on text');\ncolor('black');port_label('input',1,'d');\ncolor('black');port_label('input',2,'en');\ncolor('black');"
-		  "port_label('output',1,'q');\ncolor('black');disp('\\bf{z^{-1}}','texmode','on');\nfprintf('','COMMENT: end icon te"
-		  "xt');\n"
-		}
-		BlockName		"Slice"
-		DialogParameters {
-		  sg_icon_stat		  "60,30,1,1,white,blue,0,1fd851a7,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.366667 0.283333 0.4 0.283333 0.366667 0.5 0.533333 0.566667 0.7 0.583333 0.483333 0.4 0.5 0.4 0.483333 0.58"
-		  "3333 0.7 0.566667 0.533333 0.5 0.366667 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.666667 0.866667 0."
-		  "7 0.5 0.3 0.133333 0.333333 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprin"
-		  "tf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',"
-		  "1,'[a:b]');\nfprintf('','COMMENT: end icon text');\n"
-		}
-	      }
-	      SourceBlock	      "casper_library_flow_control/shifter_unit"
-	      SourceType	      "shifter_unit"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData "off"
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      data_width	      "64"
-	      pin_offset	      "128"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "shifter_unit4"
-	      SID		      9
-	      Ports		      [4, 1]
-	      Position		      [820, 26, 880, 74]
-	      BackgroundColor	      "gray"
-	      LinkData {
-		BlockName		"Mux2"
-		DialogParameters {
-		  sg_icon_stat		  "30,94,3,1,white,blue,3,eb98d690,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0.142857 0.857143 1 ],[0.77 0."
-		  "82 0.91]);\npatch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.9 0.666667 0.466667 0.3 0.5 0"
-		  ".3 0.466667 0.666667 0.9 0.633333 0.566667 0.5 0.233333 ],[0.37234 0.425532 0.5 0.574468 0.62766 0.62766 0.606383 "
-		  "0.62766 0.62766 0.553191 0.617021 0.56383 0.5 0.43617 0.382979 0.446809 0.37234 0.37234 0.393617 0.37234 0.37234 ]"
-		  ",[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0.142857 0.857143 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfp"
-		  "rintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,'sel');\ncolor('black');port_label('inp"
-		  "ut',2,'d0');\ncolor('black');port_label('input',3,'d1');\ncolor('black');disp('\\bf{}','texmode','on');\nfprintf('"
-		  "','COMMENT: end icon text');\n"
-		}
-		BlockName		"Register1"
-		DialogParameters {
-		  sg_icon_stat		  "60,56,2,1,white,blue,0,01f465d5,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.25 0.1 0.316667 0.1 0.25 0.5 0.566667 0.633333 0.9 0.683333 0.483333 0.333333 0.533333 0.333333 0.483333 0."
-		  "683333 0.9 0.633333 0.566667 0.5 0.25 ],[0.107143 0.267857 0.5 0.732143 0.892857 0.892857 0.821429 0.892857 0.8928"
-		  "57 0.660714 0.875 0.714286 0.5 0.285714 0.125 0.339286 0.107143 0.107143 0.178571 0.107143 0.107143 ],[0.98 0.96 0"
-		  ".92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin ic"
-		  "on text');\ncolor('black');port_label('input',1,'d');\ncolor('black');port_label('input',2,'en');\ncolor('black');"
-		  "port_label('output',1,'q');\ncolor('black');disp('\\bf{z^{-1}}','texmode','on');\nfprintf('','COMMENT: end icon te"
-		  "xt');\n"
-		}
-		BlockName		"Slice"
-		DialogParameters {
-		  sg_icon_stat		  "60,30,1,1,white,blue,0,1fd851a7,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.366667 0.283333 0.4 0.283333 0.366667 0.5 0.533333 0.566667 0.7 0.583333 0.483333 0.4 0.5 0.4 0.483333 0.58"
-		  "3333 0.7 0.566667 0.533333 0.5 0.366667 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.666667 0.866667 0."
-		  "7 0.5 0.3 0.133333 0.333333 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprin"
-		  "tf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',"
-		  "1,'[a:b]');\nfprintf('','COMMENT: end icon text');\n"
-		}
-	      }
-	      SourceBlock	      "casper_library_flow_control/shifter_unit"
-	      SourceType	      "shifter_unit"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData "off"
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      data_width	      "64"
-	      pin_offset	      "192"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "sout"
-	      SID		      14
-	      Position		      [1020, 26, 1080, 74]
-	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Line {
-	      SrcBlock		      "shifter_unit4"
-	      SrcPort		      1
-	      DstBlock		      "sout"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "shifter_unit3"
-	      SrcPort		      1
-	      DstBlock		      "shifter_unit4"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "shifter_unit2"
-	      SrcPort		      1
-	      DstBlock		      "shifter_unit3"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "shifter_unit1"
-	      SrcPort		      1
-	      DstBlock		      "shifter_unit2"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "Logical"
-	      SrcPort		      1
-	      Points		      [0, 0]
-	      Branch {
-		DstBlock		"shifter_unit4"
-		DstPort			4
-	      }
-	      Branch {
-		DstBlock		"shifter_unit3"
-		DstPort			4
-	      }
-	      Branch {
-		DstBlock		"shifter_unit2"
-		DstPort			4
-	      }
-	      Branch {
-		DstBlock		"shifter_unit1"
-		DstPort			4
-	      }
-	    }
-	    Line {
-	      SrcBlock		      "pin"
-	      SrcPort		      1
-	      Points		      [0, 0]
-	      Branch {
-		DstBlock		"shifter_unit4"
-		DstPort			3
-	      }
-	      Branch {
-		DstBlock		"shifter_unit3"
-		DstPort			3
-	      }
-	      Branch {
-		DstBlock		"shifter_unit2"
-		DstPort			3
-	      }
-	      Branch {
-		DstBlock		"shifter_unit1"
-		DstPort			3
-	      }
-	    }
-	    Line {
-	      SrcBlock		      "filler"
-	      SrcPort		      1
-	      DstBlock		      "shifter_unit1"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "shift"
-	      SrcPort		      1
-	      DstBlock		      "Logical"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "ld"
-	      SrcPort		      1
-	      Points		      [0, 0]
-	      Branch {
-		DstBlock		"shifter_unit4"
-		DstPort			1
-	      }
-	      Branch {
-		DstBlock		"shifter_unit3"
-		DstPort			1
-	      }
-	      Branch {
-		DstBlock		"shifter_unit2"
-		DstPort			1
-	      }
-	      Branch {
-		DstBlock		"shifter_unit1"
-		DstPort			1
-	      }
-	      Branch {
-		DstBlock		"Logical"
-		DstPort			1
-	      }
-	    }
-	    Annotation {
-	      Position		      [747, 444]
-	    }
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "shift_counter"
-	  SID			  2312
-	  Ports			  [2, 1]
-	  Position		  [320, 210, 380, 270]
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Counter"
-	  SourceType		  "Xilinx Counter Block"
-	  infoedit		  "Hardware notes: Free running counters are the least expensive in hardware.  A count limited counter is"
-	  " implemented by combining a counter with a comparator."
-	  cnt_type		  "Free Running"
-	  cnt_to		  "Inf"
-	  operation		  "Up"
-	  start_count		  "0"
-	  cnt_by_val		  "1"
-	  arith_type		  "Unsigned"
-	  n_bits		  "3"
-	  bin_pt		  "0"
-	  load_pin		  off
-	  rst			  on
-	  en			  on
-	  explicit_period	  "on"
-	  period		  "1"
-	  dbl_ovrd		  off
-	  use_behavioral_HDL	  off
-	  implementation	  "Fabric"
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  use_rpm		  "off"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,799"
-	  block_type		  "counter"
-	  block_version		  "10.1.3"
-	  sg_icon_stat		  "60,60,2,1,white,blue,0,d605779c,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.916667 0.7 0.483333 0.333333 0.583333 0.33333"
-	  "3 0.483333 0.7 0.916667 0.633333 0.566667 0.5 0.233333 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.6833"
-	  "33 0.9 0.75 0.5 0.25 0.1 0.316667 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\n"
-	  "fprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('inpu"
-	  "t',1,'rst');\ncolor('black');port_label('input',2,'en');\ncolor('black');port_label('output',1,'out');\nfprintf('',"
-	  "'COMMENT: end icon text');\n"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "waste_counter"
-	  SID			  2318
-	  Ports			  [2, 1]
-	  Position		  [195, 320, 255, 380]
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Counter"
-	  SourceType		  "Xilinx Counter Block"
-	  infoedit		  "Hardware notes: Free running counters are the least expensive in hardware.  A count limited counter is"
-	  " implemented by combining a counter with a comparator."
-	  cnt_type		  "Free Running"
-	  cnt_to		  "Inf"
-	  operation		  "Up"
-	  start_count		  "0"
-	  cnt_by_val		  "1"
-	  arith_type		  "Unsigned"
-	  n_bits		  "5"
-	  bin_pt		  "0"
-	  load_pin		  off
-	  rst			  on
-	  en			  on
-	  explicit_period	  "on"
-	  period		  "1"
-	  dbl_ovrd		  off
-	  use_behavioral_HDL	  off
-	  implementation	  "Fabric"
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  use_rpm		  "off"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,799"
-	  block_type		  "counter"
-	  block_version		  "10.1.3"
-	  sg_icon_stat		  "60,60,2,1,white,blue,0,d605779c,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.916667 0.7 0.483333 0.333333 0.583333 0.33333"
-	  "3 0.483333 0.7 0.916667 0.633333 0.566667 0.5 0.233333 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.6833"
-	  "33 0.9 0.75 0.5 0.25 0.1 0.316667 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\n"
-	  "fprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('inpu"
-	  "t',1,'rst');\ncolor('black');port_label('input',2,'en');\ncolor('black');port_label('output',1,'out');\nfprintf('',"
-	  "'COMMENT: end icon text');\n"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "data_addr"
-	  SID			  2313
-	  Position		  [950, 38, 980, 52]
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "data_sout"
-	  SID			  2314
-	  Position		  [855, 413, 885, 427]
-	  Port			  "2"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "data_valid"
-	  SID			  2315
-	  Position		  [795, 68, 825, 82]
-	  Port			  "3"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "buffer_overflow"
-	  SID			  2316
-	  Position		  [755, 578, 785, 592]
-	  Port			  "4"
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  SrcBlock		  "waste_time"
-	  SrcPort		  1
-	  DstBlock		  "control_fsm"
-	  DstPort		  6
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  13
-	  Points		  [0, 115; -330, 0]
-	  DstBlock		  "waste_counter"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  12
-	  Points		  [5, 0; 0, 125; -335, 0]
-	  DstBlock		  "waste_counter"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "waste_counter"
-	  SrcPort		  1
-	  Points		  [0, -140; -70, 0]
-	  DstBlock		  "control_fsm"
-	  DstPort		  5
-	}
-	Line {
-	  SrcBlock		  "sync_reset"
-	  SrcPort		  1
-	  Points		  [65, 0]
-	  DstBlock		  "control_fsm"
-	  DstPort		  4
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  10
-	  Points		  [50, 0; 0, 145; -255, 0]
-	  DstBlock		  "data_counter"
-	  DstPort		  1
-	}
-	Line {
-	  Labels		  [0, 0]
-	  SrcBlock		  "data_counter"
-	  SrcPort		  1
-	  Points		  [0, -40; -200, 0; 0, -180]
-	  DstBlock		  "control_fsm"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  9
-	  Points		  [60, 0; 0, 240; -265, 0]
-	  DstBlock		  "data_counter"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  8
-	  Points		  [235, 0; 0, -100]
-	  DstBlock		  "Counter"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  2
-	  Points		  [0, -10]
-	  DstBlock		  "Counter"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Counter"
-	  SrcPort		  1
-	  DstBlock		  "data_addr"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "data_buffer"
-	  SrcPort		  2
-	  Points		  [10, 0; 0, 110; -500, 0; 0, -490]
-	  DstBlock		  "control_fsm"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  7
-	  Points		  [40, 0; 0, 85; -245, 0]
-	  DstBlock		  "shift_counter"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "shift_counter"
-	  SrcPort		  1
-	  Points		  [0, 40; -220, 0; 0, -195]
-	  DstBlock		  "control_fsm"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  6
-	  Points		  [10, 0; 0, 165; -215, 0]
-	  DstBlock		  "shift_counter"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "parallel_to_serial_converter"
-	  SrcPort		  1
-	  DstBlock		  "data_sout"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "din"
-	  SrcPort		  1
-	  DstBlock		  "data_buffer"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  3
-	  Points		  [0, -5]
-	  DstBlock		  "data_valid"
-	  DstPort		  1
-	}
-	Line {
-	  Labels		  [0, 0]
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  5
-	  Points		  [185, 0; 0, 320]
-	  DstBlock		  "parallel_to_serial_converter"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  4
-	  Points		  [195, 0; 0, 340]
-	  DstBlock		  "parallel_to_serial_converter"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "control_fsm"
-	  SrcPort		  1
-	  Points		  [25, 0; 0, 435]
-	  DstBlock		  "data_buffer"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "data_buffer"
-	  SrcPort		  1
-	  DstBlock		  "parallel_to_serial_converter"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Logical"
-	  SrcPort		  1
-	  Points		  [0, -5]
-	  DstBlock		  "data_buffer"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "din_valid"
-	  SrcPort		  1
-	  Points		  [55, 0]
-	  Branch {
-	    Points		    [5, 0]
-	    DstBlock		    "Logical"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 125]
-	    DstBlock		    "Logical1"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  SrcBlock		  "Inverter"
-	  SrcPort		  1
-	  Points		  [0, -15]
-	  DstBlock		  "Logical"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "data_buffer"
-	  SrcPort		  4
-	  Points		  [20, 0; 0, 40]
-	  Branch {
-	    Points		    [-260, 0]
-	    DstBlock		    "Inverter"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 50]
-	    DstBlock		    "Logical1"
-	    DstPort		    2
-	  }
-	}
-	Line {
-	  SrcBlock		  "Logical1"
-	  SrcPort		  1
-	  DstBlock		  "buffer_overflow"
-	  DstPort		  1
+	  sggui_pos		  "20,20,432,610"
 	}
       }
+      UserDataPersistent      on
+      UserData		      "DataTag0"
+      SourceBlock	      "gbt_library/packetizer"
+      SourceType	      "packetizer"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      pin_width		      "256"
+      sout_width	      "64"
+      fifo_depth	      "256"
+      total_words	      "32"
     }
     Block {
       BlockType		      SubSystem
@@ -5277,7 +4169,7 @@ Library {
       Position		      [40, 19, 165, 511]
       BackgroundColor	      "lightBlue"
       UserDataPersistent      on
-      UserData		      "DataTag2"
+      UserData		      "DataTag1"
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -5745,7 +4637,7 @@ Library {
 	    }
 	  }
 	  UserDataPersistent	  on
-	  UserData		  "DataTag3"
+	  UserData		  "DataTag2"
 	  SourceBlock		  "casper_library_misc/c_to_ri"
 	  SourceType		  "c_to_ri"
 	  ShowPortLabels	  "FromPortIcon"
@@ -5812,7 +4704,7 @@ Library {
 	    }
 	  }
 	  UserDataPersistent	  on
-	  UserData		  "DataTag4"
+	  UserData		  "DataTag3"
 	  SourceBlock		  "casper_library_misc/c_to_ri"
 	  SourceType		  "c_to_ri"
 	  ShowPortLabels	  "FromPortIcon"
@@ -5879,7 +4771,7 @@ Library {
 	    }
 	  }
 	  UserDataPersistent	  on
-	  UserData		  "DataTag5"
+	  UserData		  "DataTag4"
 	  SourceBlock		  "casper_library_misc/c_to_ri"
 	  SourceType		  "c_to_ri"
 	  ShowPortLabels	  "FromPortIcon"
@@ -5946,7 +4838,7 @@ Library {
 	    }
 	  }
 	  UserDataPersistent	  on
-	  UserData		  "DataTag6"
+	  UserData		  "DataTag5"
 	  SourceBlock		  "casper_library_misc/c_to_ri"
 	  SourceType		  "c_to_ri"
 	  ShowPortLabels	  "FromPortIcon"
@@ -6013,7 +4905,7 @@ Library {
 	    }
 	  }
 	  UserDataPersistent	  on
-	  UserData		  "DataTag7"
+	  UserData		  "DataTag6"
 	  SourceBlock		  "casper_library_misc/c_to_ri"
 	  SourceType		  "c_to_ri"
 	  ShowPortLabels	  "FromPortIcon"
@@ -6080,7 +4972,7 @@ Library {
 	    }
 	  }
 	  UserDataPersistent	  on
-	  UserData		  "DataTag8"
+	  UserData		  "DataTag7"
 	  SourceBlock		  "casper_library_misc/c_to_ri"
 	  SourceType		  "c_to_ri"
 	  ShowPortLabels	  "FromPortIcon"
@@ -6147,7 +5039,7 @@ Library {
 	    }
 	  }
 	  UserDataPersistent	  on
-	  UserData		  "DataTag9"
+	  UserData		  "DataTag8"
 	  SourceBlock		  "casper_library_misc/c_to_ri"
 	  SourceType		  "c_to_ri"
 	  ShowPortLabels	  "FromPortIcon"
@@ -6214,7 +5106,7 @@ Library {
 	    }
 	  }
 	  UserDataPersistent	  on
-	  UserData		  "DataTag10"
+	  UserData		  "DataTag9"
 	  SourceBlock		  "casper_library_misc/c_to_ri"
 	  SourceType		  "c_to_ri"
 	  ShowPortLabels	  "FromPortIcon"
@@ -6239,7 +5131,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag11"
+	  UserData		  "DataTag10"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -8273,7 +7165,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag12"
+	  UserData		  "DataTag11"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -10307,7 +9199,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag13"
+	  UserData		  "DataTag12"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -12341,7 +11233,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag14"
+	  UserData		  "DataTag13"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -14375,7 +13267,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag15"
+	  UserData		  "DataTag14"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -16409,7 +15301,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag16"
+	  UserData		  "DataTag15"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -18443,7 +17335,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag17"
+	  UserData		  "DataTag16"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -20477,7 +19369,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag18"
+	  UserData		  "DataTag17"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -22511,7 +21403,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag19"
+	  UserData		  "DataTag18"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -24545,7 +23437,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag20"
+	  UserData		  "DataTag19"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -26579,7 +25471,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag21"
+	  UserData		  "DataTag20"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -28613,7 +27505,7 @@ Library {
 	  AncestorBlock		  "casper_library_multipliers/cmult_dsp48e"
 	  LibraryVersion	  "1.9"
 	  UserDataPersistent	  on
-	  UserData		  "DataTag22"
+	  UserData		  "DataTag21"
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
 	  RTWSystemCode		  "Auto"
@@ -31339,41 +30231,7 @@ Library {
   }
 }
 MatData {
-  NumRecords		  23
-  DataRecord {
-    Tag			    DataTag22
-    Data		    "  %)30     .    X D   8    (     @         %    \"     $    !     0         %  0 \"P    $    6    <W1A="
-    "&4       !P87)A;65T97)S    #@   #     &    \"     T         !0    @    !     0    $         !@ $ .P@;  .    4 D   "
-    "8    (     @         %    \"     $    !     0         %  0 #P    $   \"T    9&5F875L=',         ;E]B:71S7V$       "
-    "  8FEN7W!T7V$         ;E]B:71S7V(         8FEN7W!T7V(         8V]N:G5G871E9       9G5L;%]P<F5C:7-I;VX ;E]B:71S7V, "
-    "        8FEN7W!T7V,         <75A;G1I>F%T:6]N    ;W9E<F9L;W<         8V%S=%]L871E;F-Y          X   \"P!0  !@    @  "
-    "  !          4    (     0   !8    !          X    X    !@    @    $          4    (     0    @    !         !     "
-    "(    ;E]B:71S7V$.    .     8    (    !@         %    \"     $    !     0         )    \"            #) #@   #@    "
-    "&    \"     0         !0    @    !    \"     $         $     @   !B:6Y?<'1?80X    X    !@    @    &          4    "
-    "(     0    $    !          D    (            ,4 .    .     8    (    !          %    \"     $    (     0         0"
-    "    \"    &Y?8FET<U]B#@   #@    &    \"     8         !0    @    !     0    $         \"0    @            R0 X    "
-    "X    !@    @    $          4    (     0    @    !         !     (    8FEN7W!T7V(.    .     8    (    !@         % "
-    "   \"     $    !     0         )    \"            #% #@   $     &    \"     0         !0    @    !    \"@    $    "
-    "     $     H   !C;VYJ=6=A=&5D        #@   #     &    \"     0         !0    @    !     P    $         $  # &]F9@ ."
-    "    0     8    (    !          %    \"     $    .     0         0    #@   &9U;&Q?<')E8VES:6]N   .    ,     8    ( "
-    "   !          %    \"     $    \"     0         0  ( ;VX   X    X    !@    @    $          4    (     0    @    ! "
-    "        !     (    ;E]B:71S7V,.    .     8    (    !@         %    \"     $    !     0         )    \"           @"
-    "$) #@   #@    &    \"     0         !0    @    !    \"     $         $     @   !B:6Y?<'1?8PX    X    !@    @    & "
-    "         4    (     0    $    !          D    (            04 .    0     8    (    !          %    \"     $    ,  "
-    "   0         0    #    '%U86YT:7IA=&EO;@     .    .     8    (    !          %    \"     $    (     0         0   "
-    " \"    %1R=6YC871E#@   #@    &    \"     0         !0    @    !    \"     $         $     @   !O=F5R9FQO=PX    P  "
-    "  !@    @    $          4    (     0    0    !         !  ! !7<F%P#@   $     &    \"     0         !0    @    !   "
-    " #     $         $     P   !C87-T7VQA=&5N8WD     #@   #@    &    \"     8         !0    @    !     0    $         "
-    "\"0    @               X    X    !@    @    &          4    (     0    $    !          D    (            ,D .    ."
-    "     8    (    !@         %    \"     $    !     0         )    \"               #@   #@    &    \"     8         "
-    "!0    @    !     0    $         \"0    @            R0 X    X    !@    @    &          4    (     0    $    !     "
-    "     D    (               .    ,     8    (    !          %    \"     $    \"     0         0  ( ;VX   X    P    !"
-    "@    @    $          4    (     0    (    !         !   @!O;@  #@   #@    &    \"     8         !0    @    !     0"
-    "    $         \"0    @          (!\"0 X    X    !@    @    &          4    (     0    $    !          D    (      "
-    "      04 .    .     8    (    !          %    \"     $    (     0         0    \"    %1R=6YC871E#@   #     &    \""
-    "     0         !0    @    !    !     $         $  $ %=R87 .    .     8    (    !@         %    \"     $    !     0"
-    "         )    \"               "
-  }
+  NumRecords		  22
   DataRecord {
     Tag			    DataTag21
     Data		    "  %)30     .    X D   8    (     @         %    \"     $    !     0         %  0 \"P    $    6    <W1A="
@@ -31750,10 +30608,37 @@ MatData {
   }
   DataRecord {
     Tag			    DataTag10
-    Data		    "  %)30     .    \\     8    (     0         %    \"     $    #     0         .    0     8    (    !    "
-    "      %    \"     $    ,     0         0    #    &-?=&]?<FE?:6YI=      .    .     8    (    !@         %    \"    "
-    " $    !     0         )    \"            \"! #@   #@    &    \"     8         !0    @    !     0    $         \"0 "
-    "   @            <0 "
+    Data		    "  %)30     .    X D   8    (     @         %    \"     $    !     0         %  0 \"P    $    6    <W1A="
+    "&4       !P87)A;65T97)S    #@   #     &    \"     T         !0    @    !     0    $         !@ $ .P@;  .    4 D   "
+    "8    (     @         %    \"     $    !     0         %  0 #P    $   \"T    9&5F875L=',         ;E]B:71S7V$       "
+    "  8FEN7W!T7V$         ;E]B:71S7V(         8FEN7W!T7V(         8V]N:G5G871E9       9G5L;%]P<F5C:7-I;VX ;E]B:71S7V, "
+    "        8FEN7W!T7V,         <75A;G1I>F%T:6]N    ;W9E<F9L;W<         8V%S=%]L871E;F-Y          X   \"P!0  !@    @  "
+    "  !          4    (     0   !8    !          X    X    !@    @    $          4    (     0    @    !         !     "
+    "(    ;E]B:71S7V$.    .     8    (    !@         %    \"     $    !     0         )    \"            #) #@   #@    "
+    "&    \"     0         !0    @    !    \"     $         $     @   !B:6Y?<'1?80X    X    !@    @    &          4    "
+    "(     0    $    !          D    (            ,4 .    .     8    (    !          %    \"     $    (     0         0"
+    "    \"    &Y?8FET<U]B#@   #@    &    \"     8         !0    @    !     0    $         \"0    @            R0 X    "
+    "X    !@    @    $          4    (     0    @    !         !     (    8FEN7W!T7V(.    .     8    (    !@         % "
+    "   \"     $    !     0         )    \"            #% #@   $     &    \"     0         !0    @    !    \"@    $    "
+    "     $     H   !C;VYJ=6=A=&5D        #@   #     &    \"     0         !0    @    !     P    $         $  # &]F9@ ."
+    "    0     8    (    !          %    \"     $    .     0         0    #@   &9U;&Q?<')E8VES:6]N   .    ,     8    ( "
+    "   !          %    \"     $    \"     0         0  ( ;VX   X    X    !@    @    $          4    (     0    @    ! "
+    "        !     (    ;E]B:71S7V,.    .     8    (    !@         %    \"     $    !     0         )    \"           @"
+    "$) #@   #@    &    \"     0         !0    @    !    \"     $         $     @   !B:6Y?<'1?8PX    X    !@    @    & "
+    "         4    (     0    $    !          D    (            04 .    0     8    (    !          %    \"     $    ,  "
+    "   0         0    #    '%U86YT:7IA=&EO;@     .    .     8    (    !          %    \"     $    (     0         0   "
+    " \"    %1R=6YC871E#@   #@    &    \"     0         !0    @    !    \"     $         $     @   !O=F5R9FQO=PX    P  "
+    "  !@    @    $          4    (     0    0    !         !  ! !7<F%P#@   $     &    \"     0         !0    @    !   "
+    " #     $         $     P   !C87-T7VQA=&5N8WD     #@   #@    &    \"     8         !0    @    !     0    $         "
+    "\"0    @               X    X    !@    @    &          4    (     0    $    !          D    (            ,D .    ."
+    "     8    (    !@         %    \"     $    !     0         )    \"               #@   #@    &    \"     8         "
+    "!0    @    !     0    $         \"0    @            R0 X    X    !@    @    &          4    (     0    $    !     "
+    "     D    (               .    ,     8    (    !          %    \"     $    \"     0         0  ( ;VX   X    P    !"
+    "@    @    $          4    (     0    (    !         !   @!O;@  #@   #@    &    \"     8         !0    @    !     0"
+    "    $         \"0    @          (!\"0 X    X    !@    @    &          4    (     0    $    !          D    (      "
+    "      04 .    .     8    (    !          %    \"     $    (     0         0    \"    %1R=6YC871E#@   #     &    \""
+    "     0         !0    @    !    !     $         $  $ %=R87 .    .     8    (    !@         %    \"     $    !     0"
+    "         )    \"               "
   }
   DataRecord {
     Tag			    DataTag9
@@ -31806,27 +30691,25 @@ MatData {
   }
   DataRecord {
     Tag			    DataTag2
+    Data		    "  %)30     .    \\     8    (     0         %    \"     $    #     0         .    0     8    (    !    "
+    "      %    \"     $    ,     0         0    #    &-?=&]?<FE?:6YI=      .    .     8    (    !@         %    \"    "
+    " $    !     0         )    \"            \"! #@   #@    &    \"     8         !0    @    !     0    $         \"0 "
+    "   @            <0 "
+  }
+  DataRecord {
+    Tag			    DataTag1
     Data		    "  %)30     .    H     8    (     @         %    \"     $    !     0         %  0 \"@    $    *    :&%S:"
     "%]C;V1E          X   !0    !@    @    $          4    (     0   \"     !         !     @    860U9C X-F4Q8V9A-C1A8F"
     "(Q,6(V-#!E9F4U830U.34"
   }
   DataRecord {
-    Tag			    DataTag1
-    Data		    "  %)30     .    H $   8    (     @         %    \"     $    !     0         %  0 \"P    $    6    <W1A="
-    "&4       !P87)A;65T97)S    #@   #     &    \"     T         !0    @    !     0    $         !@ $ )MYD00.    $ $   "
-    "8    (     @         %    \"     $    !     0         %  0 \"P    $    A    9&5F875L=',   !P:6Y?=VED=&@  '-O=71?=V"
-    "ED=&@           X    H    !@    @    !          4    (               !          X    X    !@    @    &          4 "
-    "   (     0    $    !          D    (            <$ .    .     8    (    !@         %    \"     $    !     0       "
-    "  )    \"            %! "
-  }
-  DataRecord {
     Tag			    DataTag0
     Data		    "  %)30     .    , (   8    (     @         %    \"     $    !     0         %  0 \"P    $    6    <W1A="
-    "&4       !P87)A;65T97)S    #@   #     &    \"     T         !0    @    !     0    $         !@ $ /N#X0$.    H $   "
+    "&4       !P87)A;65T97)S    #@   #     &    \"     T         !0    @    !     0    $         !@ $ /'X3@(.    H $   "
     "8    (     @         %    \"     $    !     0         %  0 #     $    \\    9&5F875L=',     <&EN7W=I9'1H    <V]U=%"
     "]W:61T:   =&]T86Q?=V]R9', 9FEF;U]D97!T:         X    H    !@    @    !          4    (               !          X "
     "   X    !@    @    &          4    (     0    $    !          D    (            <$ .    .     8    (    !@        "
     " %    \"     $    !     0         )    \"            %! #@   #@    &    \"     8         !0    @    !     0    $  "
-    "       \"0    @           ! 0 X    P    !@    @    $          4    (     0    (    !         !   @ R2P  "
+    "       \"0    @           ! 0 X    P    !@    @    $          4    (     0    ,    !         !   P R-38 "
   }
 }
