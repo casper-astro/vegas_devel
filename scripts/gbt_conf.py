@@ -18,9 +18,9 @@ sync_period = (acc_len+1)*lcm*pfb_taps*fft_size/simul_inputs
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
-boffile='mode01_mini_r103_2011_Jul_20_1830.bof'
+#boffile='mode01_mini_r104_2011_Jul_27_1534.bof'
 
-#boffile='gbtspec_mode13_2011_Jul_13_1553.bof'
+boffile='gbtspec_mode13_2011_Jul_27_1723.bof'
 
 # Unprogram the device
 fpga.progdev('')
@@ -42,10 +42,10 @@ fpga.write_int('ip_select',1)
 fpga.write_int('dest_port',dest_port)
 fpga.write_int('port_select',1)
 
+'''
 # Set accumulation length
 fpga.write_int('acc_len',acc_len)
 time.sleep(1)
-
 # Set sync period
 fpga.write_int('sync_period',sync_period)
 fpga.write_int('sync_period_sel',1)
@@ -58,5 +58,5 @@ fpga.write_int('sync_gen_sel',0)
 #rst counter
 fpga.write_int('rst',1)
 fpga.write_int('rst',0)
-
+'''
 
