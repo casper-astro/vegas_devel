@@ -15,9 +15,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "gofrito"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Jul 27 17:18:03 2011"
-  RTWModifiedTimeStamp	  233687880
-  ModelVersionFormat	  "1.%<AutoIncrement:44>"
+  LastModifiedDate	  "Wed Jul 27 17:20:11 2011"
+  RTWModifiedTimeStamp	  233687886
+  ModelVersionFormat	  "1.%<AutoIncrement:45>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -54162,7 +54162,7 @@ Library {
       Name		      "spead_packet"
       SID		      6129
       Ports		      [11, 4]
-      Position		      [240, 21, 345, 239]
+      Position		      [250, 21, 355, 239]
       BackgroundColor	      "lightBlue"
       AncestorBlock	      "gbt_library/spead_packet"
       LibraryVersion	      "*1.12"
