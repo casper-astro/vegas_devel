@@ -32,7 +32,7 @@ if recursive
     else
     end
 else
-    if n_inputs==1 && strcmp(polyphase,'off') % only one input
+    if n_inputs == 1 && strcmp(polyphase,'off') % only one input
 
         % non-polyphase structure
         sync =xInport('sync');

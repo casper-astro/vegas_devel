@@ -19,7 +19,7 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parallel_cic_filter_init_xblock(m,n,n_inputs,polyphase,add_latency,dec2_halfout, half2first, n_bits, bin_pt, recursive)
+function parallel_cic_filter_init_xblock(blk,m,n,n_inputs,polyphase,add_latency,dec2_halfout, half2first, n_bits, bin_pt, recursive)
 
 f=factor(n);
 len = length(f);
@@ -35,6 +35,8 @@ end
 
 inports =cell(1,n_inputs);
 outports = cell(1,n_outputs);
+
+n_inputs
 for i =1:n_inputs
     inports{i}=xInport(['in',num2str(i)]);
 end
@@ -47,8 +49,12 @@ n_ins{1} = n_inputs;
 ninputs = n_inputs;
 for i = 1:len
     if f(i)==2
-        n_ins{i+1}=ninputs/2;
-        ninputs=ninputs/2;
+        if mod(ninputs/2,1) == 0
+            n_ins{i+1}=ninputs/2;
+            ninputs=ninputs/2;
+        else
+            n_ins{i+1} = ninputs;
+        end
     else
         n_ins{i+1}=ninputs;
     end
@@ -85,4 +91,9 @@ for i =1:len
                           {});
 end
 
+
+fmtstr =sprintf('dec_rate = %d\nOrder = %d\n',n,m);
+set_param(blk,'AttributesFormatString',fmtstr);
+
+clean_blocks(blk);
 end
