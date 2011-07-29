@@ -1,4 +1,0 @@
-clean_guppi_shmem
-check_guppi_status 
-check_guppi_databuf -c  
-python ../src/guppi_set_params.py

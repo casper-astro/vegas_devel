@@ -1,4 +1,0 @@
-#! /bin/bash
-
-# kill data flow
-pkill -INT test_net_thread
