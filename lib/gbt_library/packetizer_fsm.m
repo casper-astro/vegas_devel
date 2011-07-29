@@ -1,4 +1,4 @@
-function [fifo_re, bram_addr_en, bram_we, serializer_shift, serializer_ld, shift_count_en, shift_count_rst, bram_addr_rst, data_count_en, data_count_rst, done, waste_count_en, waste_count_rst] = pseudo_packetizer_fsm( fifo_empty, shift_count, data_per_word, data_count, n_words, sync_reset, waste_count, waste_time)
+function [ fifo_re, bram_addr_en, bram_we, serializer_shift, serializer_ld, shift_count_en, shift_count_rst, bram_addr_rst, data_count_en, data_count_rst, done, waste_count_en, waste_count_rst] = pseudo_packetizer_fsm( fifo_empty, shift_count, data_per_word, data_count, n_words, sync_reset, waste_count, waste_time)
 
 persistent state,
 state=xl_state(0,{xlUnsigned,3,0});
