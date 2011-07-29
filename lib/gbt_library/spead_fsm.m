@@ -105,7 +105,7 @@ switch double(state)
         head_count_en   = false;
         num_payload_rst = false;
         num_payload_en  = false;
-        tge_valid       = false; % ? or is it just false?
+        tge_valid       = false;
         words_sent_en   = false;
         words_sent_rst  = false;
         select_data     = false;
