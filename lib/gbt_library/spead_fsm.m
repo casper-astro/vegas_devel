@@ -79,14 +79,15 @@ switch double(state)
             words_sent_en = false;
         end
         if (num_words_sent == payload_len)
-            state = state_done;
+            num_payload_en = true;
+            state          = state_done;
         end
         
     case state_done
         head_count_rst  = true;
         head_count_en   = false;
         num_payload_rst = false;
-        num_payload_en  = true;
+        num_payload_en  = false;
         words_sent_rst  = false;
         words_sent_en   = false;
         tge_valid       = false;
@@ -110,6 +111,7 @@ switch double(state)
         words_sent_rst  = false;
         select_data     = false;
         heap_elements   = 0;
+
 if (rst == true)
     state = state_reset;
 end
