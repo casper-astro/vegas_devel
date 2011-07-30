@@ -5,6 +5,9 @@
 #ifndef _GUPPI_DEFINES_H
 #define _GUPPI_DEFINES_H
 
+// Increment version number whenever a new version is released
+#define SWVER       "1.0"
+
 // Defining NEW_GBT enables the code for the upgraded GBT spectrometer system
 #define NEW_GBT		1
 
@@ -16,7 +19,7 @@
 // #define FAKE_NET    1
 
 // Uncomment the following line to disable disk writing
-#define NULL_DISK
+//#define NULL_DISK
 
 // Types of FITS files
 #define PSRFITS     1
@@ -27,7 +30,7 @@
 
 // Set SPEAD packet payload size (can be set via cmd line)
 #ifndef PAYLOAD_SIZE
-    #define PAYLOAD_SIZE    256
+    #define PAYLOAD_SIZE    8192
 #endif
 
 #endif

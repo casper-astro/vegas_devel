@@ -38,7 +38,6 @@ TSYS    =                    * / System temperature
 #
 ### Shared (optional) SDFITS header fields ###
 #
-OBSERVER= '                '   / Observer name(s)
 PROJID  = '                '   / Project name
 FRONTEND= '                '   / Rx and feed ID
 OBSFREQ =                    * / [MHz] Centre frequency for observation
@@ -53,7 +52,7 @@ SCAN    =                    * / Scan number (float)
 #
 HDRVER  = '1.0             '   / Header version 
 FITSTYPE= 'SDFITS          '   / FITS definition for pulsar data files
-BACKEND = 'GUPPI'              / Backend ID
+INSTRUME= 'VEGAS'              / Backend ID
 COORD_MD= 'J2000'              / Coordinate mode (J2000, GAL, ECLIP, etc.)
 CAL_MODE= 'OFF'                / Cal mode (OFF, SYNC, EXT1, EXT2)
 CAL_FREQ= 0.0                  / [Hz] Cal modulation frequency (E)

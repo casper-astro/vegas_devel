@@ -327,8 +327,7 @@ void *guppi_net_thread(void *_args) {
     unsigned int seq_num=0, last_seq_num=1050;
     int heap_cntr_diff, seq_num_diff;
     unsigned int obs_started = 0;
-    unsigned long long npacket_total;
-    unsigned long long ndropped_total;
+    unsigned long long npacket_total, npacket_this_block=0, ndropped_total;
     double drop_frac_avg=0.0;
     const double drop_lpf = 0.25;
     prev_heap_cntr = 0;
@@ -410,15 +409,23 @@ printf("Error: out of order packet. Diff = %d\n", seq_num_diff);
             force_new_block=0; 
             npacket_total += seq_num_diff;
             ndropped_total += seq_num_diff - 1;
+            npacket_this_block += seq_num_diff;
             fblock->pkts_dropped += seq_num_diff - 1;
-if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d, heap_cntr_diff = %d, %d, %d\n", seq_num_diff, heap_cntr_diff, heap_cntr, last_heap_cntr);
+if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d\n", seq_num_diff);
         }
         last_seq_num = seq_num;
         last_heap_cntr = heap_cntr;
 
         /* If obs has not started, ignore this packet */
         if(!obs_started)
+        {
+            fblock->pkts_dropped = 0;
+            npacket_total = 0;
+            ndropped_total = 0;
+            npacket_this_block = 0;
+
             continue;
+        }
 
         /* Determine if we go to next block */
         if (heap_cntr>=nextblock_heap_cntr || force_new_block)
@@ -426,24 +433,20 @@ if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d, heap_cntr
             printf("Debug: vegas_net_thread writing to next output block\n");
 
             /* Update drop stats */
-            if (fblock->nheaps)  
+            if (npacket_this_block > 0)  
                 drop_frac_avg = (1.0-drop_lpf)*drop_frac_avg 
-                    + drop_lpf * 
-                    (double)fblock->pkts_dropped / 
-                    (double)(fblock->nheaps * packets_per_heap);
+                    + drop_lpf *
+                    (double)fblock->pkts_dropped / (double)npacket_this_block;
 
             guppi_status_lock_safe(&st);
-            hputr8(st.buf, "NPKT", npacket_total);
+            hputi8(st.buf, "NPKT", npacket_total);
+            hputi8(st.buf, "NDROP", ndropped_total);
             hputr8(st.buf, "DROPAVG", drop_frac_avg);
             hputr8(st.buf, "DROPTOT", 
                     npacket_total ? 
                     (double)ndropped_total/(double)npacket_total 
                     : 0.0);
-            hputr8(st.buf, "DROPBLK", 
-                    fblock->nheaps ? 
-                    (double)fblock->pkts_dropped/
-                    (double)(fblock->nheaps * packets_per_heap)
-                    : 0.0);
+            hputi4(st.buf, "NETBLKOU", fblock->block_idx);
             guppi_status_unlock_safe(&st);
             
             /* Finalize first block, and push it off the list.
@@ -456,6 +459,7 @@ if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d, heap_cntr
             curheader = guppi_databuf_header(db, lblock->block_idx);
             curindex = guppi_databuf_index(db, lblock->block_idx);
             nextblock_heap_cntr = lblock->heap_idx + heaps_per_block;
+            npacket_this_block = 0;
 
             /* If new obs started, reset total counters, get start
              * time.  Start time is rounded to nearest integer
@@ -467,6 +471,7 @@ if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d, heap_cntr
                 /* Reset stats */
                 npacket_total=0;
                 ndropped_total=0;
+                npacket_this_block = 0;
 
                 /* Get obs start time */
                 get_current_mjd(&stt_imjd, &stt_smjd, &stt_offs);

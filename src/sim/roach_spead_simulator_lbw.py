@@ -37,19 +37,27 @@ def send_spead_heap(header, heap):
     header[packet_payload_len_id] = NSAMPS * 4
 
     # Write the packet header always
-    packet += struct.pack('> 2I xHxL xHxL xHxL xHxL',
-	            header['header_upr'],
-	            header['header_lwr'],
-	            heap_cntr_id, header[heap_cntr_id],
-	            heap_size_id, header[heap_size_id], 
-	            heap_offset_id, header[heap_offset_id], 
-	            packet_payload_len_id, header[packet_payload_len_id]) 
+    packet += struct.pack('> 2I BHxL BHxL BHxL BHxL',
+            header['header_upr'],
+            header['header_lwr'],
+            (heap_cntr_id >> 16) & 0xFF, heap_cntr_id & 0xFFFF,
+                header[heap_cntr_id],
+            (heap_size_id >> 16) & 0xFF, heap_size_id & 0xFFFF,
+                header[heap_size_id],
+            (heap_offset_id >> 16) & 0xFF, heap_offset_id & 0xFFFF,
+                header[heap_offset_id],
+            (packet_payload_len_id >> 16) & 0xFF, packet_payload_len_id & 0xFFFF,
+                header[packet_payload_len_id])
 
-    packet += struct.pack('> xHxL xHxL xHxL xHxL',
-	        time_cntr_id , heap[time_cntr_id],
-	        mode_id, heap[mode_id], 
-	        status_bits_id, heap[status_bits_id],
-	        payload_data_off_id, heap[payload_data_off_id])
+    packet += struct.pack('> BHxL BHxL BHxL BHxL',
+            (time_cntr_id >> 16) & 0xFF, time_cntr_id & 0xFFFF,
+                heap[time_cntr_id],
+            (mode_id >> 16) & 0xFF, mode_id & 0xFFFF,
+                heap[mode_id],
+            (status_bits_id >> 16) & 0xFF, status_bits_id & 0xFFFF,
+                heap[status_bits_id],
+            (payload_data_off_id >> 16) & 0xFF, payload_data_off_id & 0xFFFF,
+                heap[payload_data_off_id])
 
     # Now write the spectrum to the packet
     packet += struct.pack('> %dB' % (NSAMPS*4), *(heap['payload']))

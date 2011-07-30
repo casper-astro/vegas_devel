@@ -125,7 +125,7 @@ void guppi_sdfits_thread(void *_args) {
 
         /* Note current block */
         guppi_status_lock_safe(&st);
-        hputi4(st.buf, "CURBLOCK", curblock);
+        hputi4(st.buf, "DSKBLKIN", curblock);
         guppi_status_unlock_safe(&st);
 
         /* See how full databuf is */
@@ -162,7 +162,7 @@ void guppi_sdfits_thread(void *_args) {
         struct databuf_index* db_index;
 
         db_index = (struct databuf_index*)(guppi_databuf_index(db, curblock));
-        
+
         /* Read the block index, writing each dataset to a SDFITS file */
         for(dataset = 0; dataset < db_index->num_datasets; dataset++)
         {

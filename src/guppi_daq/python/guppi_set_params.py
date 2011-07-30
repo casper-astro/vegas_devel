@@ -103,7 +103,7 @@ add_param_option("--npol",
         name="NPOL", type="int",
         help="Number of hardware polarizations")
 add_param_option("--nchan", 
-        name="NCHAN", type="float",
+        name="NCHAN", type="int",
         help="Number of spectral channels per sub-band")
 add_param_option("--chan_bw", 
         name="CHAN_BW", type="float",

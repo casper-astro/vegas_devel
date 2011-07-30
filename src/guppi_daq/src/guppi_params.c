@@ -520,7 +520,6 @@ void guppi_read_obs_params(char *buf,
     if(temp_double) sf->hdr.freqres = sf->hdr.bandwidth/temp_double;
     get_dbl("TSYS", sf->hdr.tsys, 0.0);
 
-    get_str("OBSERVER", sf->hdr.observer, 16, "Unknown");
     get_str("PROJID", sf->hdr.projid, 16, "Unknown");
     get_str("FRONTEND", sf->hdr.frontend, 16, "Unknown");
     get_dbl("OBSFREQ", sf->hdr.obsfreq, 0.0);
@@ -528,7 +527,7 @@ void guppi_read_obs_params(char *buf,
     get_int("SCANNUM", temp_int, 1);
     sf->hdr.scan = (double)(temp_int);
 
-    get_str("BACKEND", sf->hdr.backend, 16, "GUPPI");
+    get_str("INSTRUME", sf->hdr.instrument, 16, "VEGAS");
     get_str("CAL_MODE", sf->hdr.cal_mode, 16, "Unknown");
     if (!(strcmp(sf->hdr.cal_mode, "OFF")==0))
     {
@@ -563,13 +562,13 @@ void guppi_read_obs_params(char *buf,
     /* Set the base filename */
 
     int i;
-    char backend[24];
-    strncpy(backend, sf->hdr.backend, 24);
+    char instrument[24];
+    strncpy(instrument, sf->hdr.instrument, 24);
     for (i=0; i<24; i++) { 
-        if (backend[i]=='\0') break;
-        backend[i] = tolower(backend[i]); 
+        if (instrument[i]=='\0') break;
+        instrument[i] = tolower(instrument[i]); 
     }
-    sprintf(base, "%s_%02d%02d%02d_%04.2f", backend, DD, MM, YYYY%1000, sf->hdr.scan);
+    sprintf(base, "%s_%02d%02d%02d_%04.2f", instrument, DD, MM, YYYY%1000, sf->hdr.scan);
     sprintf(sf->basefilename, "%s/%s", dir, base);
 
     // We do not set telescope-specific settings

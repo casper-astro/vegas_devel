@@ -23,14 +23,13 @@ struct hdrinfo
     char date_obs[16];      // Date of observation (dd/mm/yy)
     double tsys;            // System temperature
 
-    char observer[16];      // Observer's name
     char projid[16];        // The project ID
     char frontend[16];      // Frontend used
     double obsfreq;         // Centre frequency for observation
     double lst;             // LST (seconds after 0h) at start of scan
     double scan;            // Scan number (float)
 
-    char backend[16];       // Backend or instrument used
+    char instrument[16];       // Backend or instrument used
     char cal_mode[16];      // Cal mode (OFF, SYNC, EXT1, EXT2
     double cal_freq;        // Cal modulation frequency (Hz)
     double cal_dcyc;        // Cal duty cycle (0-1)

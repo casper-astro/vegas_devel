@@ -70,6 +70,7 @@ int main(int argc, char *argv[]) {
     }
 
     hputs(stat.buf, "BW_MODE", "low");
+    hputs(stat.buf, "SWVER", SWVER);
 
     /* Init first shared data buffer */
     struct guppi_databuf *gpu_input_dbuf=NULL;

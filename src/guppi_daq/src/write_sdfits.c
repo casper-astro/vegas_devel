@@ -78,14 +78,13 @@ int sdfits_create(struct sdfits *sf) {
     fits_update_key(sf->fptr, TSTRING, "DATE-OBS", hdr->date_obs, NULL, status);
     fits_update_key(sf->fptr, TDOUBLE, "TSYS", &(hdr->tsys), NULL, status);
 
-    fits_update_key(sf->fptr, TSTRING, "OBSERVER", hdr->observer, NULL, status);
     fits_update_key(sf->fptr, TSTRING, "PROJID", hdr->projid, NULL, status);
     fits_update_key(sf->fptr, TSTRING, "FRONTEND", hdr->frontend, NULL, status);
     fits_update_key(sf->fptr, TDOUBLE, "OBSFREQ", &(hdr->obsfreq), NULL, status);
     fits_update_key(sf->fptr, TDOUBLE, "LST", &(hdr->lst), NULL, status);
     fits_update_key(sf->fptr, TDOUBLE, "SCAN", &(hdr->scan), NULL, status);
 
-    fits_update_key(sf->fptr, TSTRING, "BACKEND", hdr->backend, NULL, status);
+    fits_update_key(sf->fptr, TSTRING, "INSTRUME", hdr->instrument, NULL, status);
     fits_update_key(sf->fptr, TSTRING, "CAL_MODE", hdr->cal_mode, NULL, status);
     if (strcmp("OFF", hdr->cal_mode) != 0)
     {

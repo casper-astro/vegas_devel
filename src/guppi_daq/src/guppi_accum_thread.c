@@ -5,10 +5,6 @@
  * buffer, for writing to the disk.
  */
 
-/* TODO:
- * Read in hour,min,sec from PC, and combine with time cntr to get actual time, to write out to disk
- */
-
 #define _GNU_SOURCE 1
 #include <stdio.h>
 #include <stdlib.h>
@@ -185,7 +181,7 @@ void guppi_accum_thread(void *_args) {
 
         /* Note current block(s) */
         guppi_status_lock_safe(&st);
-        hputi4(st.buf, "CPUBLOCK", curblock_in);
+        hputi4(st.buf, "ACCBLKIN", curblock_in);
         guppi_status_unlock_safe(&st);
 
         /* Note waiting status */
@@ -271,6 +267,11 @@ void guppi_accum_thread(void *_args) {
                             db_out->block_size)
                         {
                             printf("Accumulator finished with output block %d\n", curblock_out);
+
+                            /* Write block number to status buffer */
+                            guppi_status_lock_safe(&st);
+                            hputi4(st.buf, "ACCBLKOU", curblock_out);
+                            guppi_status_unlock_safe(&st);
 
                             /* Update packet count and loss fields in output header */
                             hputi4(hdr_out, "NBLOCK", nblock_int);

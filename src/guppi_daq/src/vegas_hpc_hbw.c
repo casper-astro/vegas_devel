@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     guppi_thread_args_init(&disk_args);
     net_args.output_buffer = 1;
     accum_args.input_buffer = net_args.output_buffer;
-    accum_args.output_buffer = 2;
+    accum_args.output_buffer = 3;
     disk_args.input_buffer = accum_args.output_buffer;
 
     /* Init status shared mem */
@@ -66,6 +66,7 @@ int main(int argc, char *argv[]) {
     }
 
     hputs(stat.buf, "BW_MODE", "high");
+    hputs(stat.buf, "SWVER", SWVER);
 
     /* Init first shared data buffer */
     struct guppi_databuf *cpu_input_dbuf=NULL;
