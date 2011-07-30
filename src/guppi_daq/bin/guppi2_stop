@@ -1,0 +1,11 @@
+#! /usr/bin/perl
+
+@run = (1..9);
+$user = "gpu";
+
+foreach $i (@run) {
+    $node = sprintf("gpu%d", $i);
+    $cmd = "ssh -nx -l $user $node 'pkill -INT guppi_daq'";
+    print "$node:\n";
+    system($cmd);
+}
