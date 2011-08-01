@@ -42,3 +42,5 @@ src/raw_quant
 src/raw_read
 src/raw_head
 src/vegas_hpc_hbw
+src/vegas_hpc_lbw
+
