@@ -15,9 +15,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "gofrito"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 29 07:27:51 2011"
-  RTWModifiedTimeStamp	  233825262
-  ModelVersionFormat	  "1.%<AutoIncrement:48>"
+  LastModifiedDate	  "Tue Aug  2 16:13:22 2011"
+  RTWModifiedTimeStamp	  234202391
+  ModelVersionFormat	  "1.%<AutoIncrement:49>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -659,7 +659,7 @@ Library {
   }
   System {
     Name		    "gbt_library"
-    Location		    [177, 80, 851, 734]
+    Location		    [58, 67, 732, 721]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -673,7 +673,7 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    6131
+    SIDHighWatermark	    6132
     Block {
       BlockType		      SubSystem
       Name		      "Parallel_CIC_filter"
@@ -58111,9 +58111,9 @@ Library {
     Block {
       BlockType		      SubSystem
       Name		      "speader"
-      SID		      6131
+      SID		      6132
       Ports		      [12, 3]
-      Position		      [470, 13, 575, 232]
+      Position		      [455, 23, 590, 267]
       BackgroundColor	      "lightBlue"
       AncestorBlock	      "gbt_library/spead_packet"
       LibraryVersion	      "*1.12"
@@ -58155,8 +58155,8 @@ Library {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"80"
-	SIDHighWatermark	422
-	SIDPrevWatermark	422
+	SIDHighWatermark	428
+	SIDPrevWatermark	428
 	Block {
 	  BlockType		  Inport
 	  Name			  "data_in"
@@ -59767,38 +59767,6 @@ Library {
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "Convert2"
-	  SID			  421
-	  Ports			  [1, 1]
-	  Position		  [980, 1035, 1025, 1065]
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Convert"
-	  SourceType		  "Xilinx Type Converter Block"
-	  infoedit		  "Hardware notes: rounding and saturating require hardware resources; truncating and wrapping do not."
-	  arith_type		  "Unsigned"
-	  n_bits		  "16"
-	  bin_pt		  "0"
-	  quantization		  "Truncate"
-	  overflow		  "Wrap"
-	  latency		  "0"
-	  dbl_ovrd		  off
-	  pipeline		  off
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,562,443"
-	  block_type		  "convert"
-	  block_version		  "11.4"
-	  sg_icon_stat		  "45,30,1,1,white,blue,0,edca21da,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.333333 0.222222 0.377778 0.222222 0.333333 0.511111 0.555556 0.6 0.777778 0.622222 0.488889 0.377778 0.511111"
-	  " 0.377778 0.488889 0.622222 0.777778 0.6 0.555556 0.511111 0.333333 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0"
-	  ".9 0.9 0.666667 0.866667 0.7 0.5 0.3 0.133333 0.333333 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0"
-	  " 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('bla"
-	  "ck');port_label('output',1,'cast');\nfprintf('','COMMENT: end icon text');\n"
-	}
-	Block {
-	  BlockType		  Reference
 	  Name			  "Convert3"
 	  SID			  422
 	  Ports			  [1, 1]
@@ -59840,7 +59808,7 @@ Library {
 	  SourceType		  "Xilinx Delay Block"
 	  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
 	  en			  off
-	  latency		  "0"
+	  latency		  "1"
 	  dbl_ovrd		  off
 	  reg_retiming		  on
 	  xl_use_area		  off
@@ -59849,13 +59817,13 @@ Library {
 	  sggui_pos		  "588,284,432,336"
 	  block_type		  "delay"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "35,28,1,1,white,blue,0,24450e6f,right,"
+	  sg_icon_stat		  "35,28,1,1,white,blue,0,07b98262,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.285714 0.142857 0.342857 0.142857 0.285714 0.485714 0.542857 0.6 0.828571 0.657143 0.485714 0.371429 0.6 0.37"
 	  "1429 0.485714 0.657143 0.828571 0.6 0.542857 0.485714 0.285714 ],[0.107143 0.285714 0.535714 0.785714 0.964286 0.96"
 	  "4286 0.892857 0.964286 0.964286 0.75 0.964286 0.821429 0.535714 0.25 0.107143 0.321429 0.107143 0.107143 0.178571 0"
 	  ".107143 0.107143 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\n"
-	  "fprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-0}','texmode','on');\nfprintf('','COMMENT: end ic"
+	  "fprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-1}','texmode','on');\nfprintf('','COMMENT: end ic"
 	  "on text');\n"
 	}
 	Block {
@@ -59869,7 +59837,7 @@ Library {
 	  SourceType		  "Xilinx Delay Block"
 	  infoedit		  "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
 	  en			  off
-	  latency		  "0"
+	  latency		  "1"
 	  dbl_ovrd		  off
 	  reg_retiming		  on
 	  xl_use_area		  off
@@ -59878,61 +59846,14 @@ Library {
 	  sggui_pos		  "588,284,432,336"
 	  block_type		  "delay"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "35,28,1,1,white,blue,0,24450e6f,right,"
+	  sg_icon_stat		  "35,28,1,1,white,blue,0,07b98262,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.285714 0.142857 0.342857 0.142857 0.285714 0.485714 0.542857 0.6 0.828571 0.657143 0.485714 0.371429 0.6 0.37"
 	  "1429 0.485714 0.657143 0.828571 0.6 0.542857 0.485714 0.285714 ],[0.107143 0.285714 0.535714 0.785714 0.964286 0.96"
 	  "4286 0.892857 0.964286 0.964286 0.75 0.964286 0.821429 0.535714 0.25 0.107143 0.321429 0.107143 0.107143 0.178571 0"
 	  ".107143 0.107143 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\n"
-	  "fprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-0}','texmode','on');\nfprintf('','COMMENT: end ic"
+	  "fprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-1}','texmode','on');\nfprintf('','COMMENT: end ic"
 	  "on text');\n"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Divider Generator 3.0 "
-	  SID			  419
-	  Ports			  [2, 3]
-	  Position		  [1045, 976, 1125, 1074]
-	  LibraryVersion	  "1.2"
-	  SourceBlock		  "xbsIndex_r4/Divider Generator 3.0 "
-	  SourceType		  "Xilinx Divider Generator 3.0 Block"
-	  dividend_and_quotient_width "16"
-	  divisor_width		  "16"
-	  algorithm_type	  "Radix2"
-	  remainder_type	  "Remainder"
-	  fractional_width	  "16"
-	  clocks_per_division	  "1"
-	  divide_by_zero_detect	  off
-	  latency_configuration	  "Automatic"
-	  latency		  "20"
-	  ce			  off
-	  sclr			  off
-	  xl_use_area		  off
-	  xl_area		  "[0,0,0,0,0,0,0]"
-	  sclr_ce_priority	  "SCLR_overrides_CE"
-	  operand_sign		  "Signed"
-	  ip_name		  "Divider Generator"
-	  ip_version		  "3.0"
-	  dsptool_ready		  "true"
-	  wrapper_available	  "true"
-	  port_translation_map	  "{ 'ce' => 'en', 'sclr' => 'rst' }"
-	  ipcore_fpga_part	  "xlipgetpartsetting(gcb, {'virtex4', 'xc4vsx35', '-10', 'ff668'})"
-	  ipcore_verbose	  "false"
-	  has_advanced_control	  "0"
-	  sggui_pos		  "20,20,432,638"
-	  block_type		  "div_gen_v3_0"
-	  block_version		  "11.4"
-	  sg_icon_stat		  "80,98,2,3,white,blue,0,1fc55160,right,"
-	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
-	  "ch([0.225 0.0625 0.3 0.0625 0.225 0.4875 0.5625 0.6375 0.925 0.7 0.4875 0.3375 0.575 0.3375 0.4875 0.7 0.925 0.6375"
-	  " 0.5625 0.4875 0.225 ],[0.183673 0.316327 0.510204 0.704082 0.836735 0.836735 0.77551 0.836735 0.836735 0.653061 0."
-	  "826531 0.704082 0.510204 0.316327 0.193878 0.367347 0.183673 0.183673 0.244898 0.183673 0.183673 ],[0.98 0.96 0.92]"
-	  ");\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon te"
-	  "xt');\ncolor('black');port_label('input',1,'dividend');\ncolor('black');port_label('input',2,'divisor');\ncolor('bl"
-	  "ack');port_label('output',1,'rfd');\ncolor('black');port_label('output',2,'quotient');\ncolor('black');port_label('"
-	  "output',3,'fractional');\nfprintf('','COMMENT: end icon text');\n"
-	  sg_list_contents	  "{'table'=>{'clocks_per_division'=>'popup(1|2|4|8)','userSelections'=>{'clocks_per_division'=>'1"
-	  "'}}}"
 	}
 	Block {
 	  BlockType		  From
@@ -59964,8 +59885,8 @@ Library {
 	Block {
 	  BlockType		  From
 	  Name			  "From12"
-	  SID			  400
-	  Position		  [785, 318, 870, 332]
+	  SID			  425
+	  Position		  [885, 323, 970, 337]
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "num_payload"
@@ -59982,8 +59903,8 @@ Library {
 	Block {
 	  BlockType		  From
 	  Name			  "From14"
-	  SID			  402
-	  Position		  [785, 293, 870, 307]
+	  SID			  426
+	  Position		  [885, 298, 970, 312]
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "pld_len"
@@ -60005,15 +59926,6 @@ Library {
 	  ShowName		  off
 	  CloseFcn		  "tagdialog Close"
 	  GotoTag		  "heap_offset"
-	}
-	Block {
-	  BlockType		  From
-	  Name			  "From17"
-	  SID			  415
-	  Position		  [780, 1041, 865, 1059]
-	  ShowName		  off
-	  CloseFcn		  "tagdialog Close"
-	  GotoTag		  "pld_len"
 	}
 	Block {
 	  BlockType		  From
@@ -60343,8 +60255,8 @@ Library {
 	Block {
 	  BlockType		  Goto
 	  Name			  "Goto13"
-	  SID			  406
-	  Position		  [1010, 307, 1095, 323]
+	  SID			  427
+	  Position		  [1110, 312, 1195, 328]
 	  ShowName		  off
 	  GotoTag		  "heap_offset"
 	  TagVisibility		  "local"
@@ -60353,7 +60265,7 @@ Library {
 	  BlockType		  Goto
 	  Name			  "Goto14"
 	  SID			  414
-	  Position		  [1150, 1017, 1235, 1033]
+	  Position		  [1105, 987, 1190, 1003]
 	  ShowName		  off
 	  GotoTag		  "num_pld"
 	  TagVisibility		  "local"
@@ -60435,9 +60347,9 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Mult"
-	  SID			  394
+	  SID			  428
 	  Ports			  [2, 1]
-	  Position		  [895, 285, 950, 340]
+	  Position		  [995, 290, 1050, 345]
 	  LibraryVersion	  "1.2"
 	  SourceBlock		  "xbsIndex_r4/Mult"
 	  SourceType		  "Xilinx Multiplier Block"
@@ -60452,7 +60364,7 @@ Library {
 	  quantization		  "Truncate"
 	  overflow		  "Wrap"
 	  en			  off
-	  latency		  "1"
+	  latency		  "3"
 	  dbl_ovrd		  off
 	  use_behavioral_HDL	  off
 	  opt			  "Speed"
@@ -60467,7 +60379,7 @@ Library {
 	  sggui_pos		  "20,20,432,656"
 	  block_type		  "mult"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "55,55,2,1,white,blue,0,beae5990,right,"
+	  sg_icon_stat		  "55,55,2,1,white,blue,0,42380145,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.236364 0.0727273 0.309091 0.0727273 0.236364 0.509091 0.581818 0.654545 0.945455 0.727273 0.509091 0.345455 0"
 	  ".581818 0.345455 0.509091 0.727273 0.945455 0.654545 0.581818 0.509091 0.236364 ],[0.109091 0.272727 0.509091 0.745"
@@ -60475,7 +60387,7 @@ Library {
 	  "09091 0.109091 0.181818 0.109091 0.109091 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMME"
 	  "NT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,'a');\ncolor"
 	  "('black');port_label('input',2,'b');\ncolor('black');port_label('output',1,'(ab)');\ncolor('black');disp('\\newline"
-	  "\\bf{}\\newlinez^{-1}','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
+	  "\\bf{}\\newlinez^{-3}','texmode','on');\nfprintf('','COMMENT: end icon text');\n"
 	}
 	Block {
 	  BlockType		  Reference
@@ -60561,7 +60473,7 @@ Library {
 	  Ports			  [6]
 	  Position		  [1155, 52, 1220, 238]
 	  Floating		  off
-	  Location		  [50, 71, 941, 778]
+	  Location		  [52, 292, 943, 999]
 	  Open			  off
 	  NumInputPorts		  "6"
 	  ZoomMode		  "xonly"
@@ -60841,33 +60753,34 @@ Library {
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  SrcBlock		  "Convert3"
+	  SrcBlock		  "Mult"
 	  SrcPort		  1
-	  DstBlock		  "Mux1"
+	  DstBlock		  "Goto13"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "Convert2"
+	  SrcBlock		  "From14"
 	  SrcPort		  1
-	  DstBlock		  "Divider Generator 3.0 "
+	  DstBlock		  "Mult"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "From12"
+	  SrcPort		  1
+	  DstBlock		  "Mult"
 	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "Convert1"
 	  SrcPort		  1
-	  DstBlock		  "Divider Generator 3.0 "
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Divider Generator 3.0 "
-	  SrcPort		  2
+	  Points		  [30, 0; 0, -5]
 	  DstBlock		  "Goto14"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "From17"
+	  SrcBlock		  "Convert3"
 	  SrcPort		  1
-	  DstBlock		  "Convert2"
+	  DstBlock		  "Mux1"
 	  DstPort		  1
 	}
 	Line {
@@ -60953,24 +60866,6 @@ Library {
 	  SrcPort		  1
 	  DstBlock		  "Gateway Out5"
 	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Mult"
-	  SrcPort		  1
-	  DstBlock		  "Goto13"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "From14"
-	  SrcPort		  1
-	  DstBlock		  "Mult"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "From12"
-	  SrcPort		  1
-	  DstBlock		  "Mult"
-	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "From10"
