@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.575"
+    ComputedModelVersion    "1.581"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -25,9 +25,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "gofrito"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Aug  3 16:18:57 2011"
-  RTWModifiedTimeStamp	  234287966
-  ModelVersionFormat	  "1.%<AutoIncrement:575>"
+  LastModifiedDate	  "Thu Aug  4 12:52:19 2011"
+  RTWModifiedTimeStamp	  234363134
+  ModelVersionFormat	  "1.%<AutoIncrement:581>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -882,7 +882,7 @@ Model {
       SourceBlock	      "xbsIndex_r4/Constant"
       SourceType	      "Xilinx Constant Block Block"
       arith_type	      "Unsigned"
-      const		      "128*2+6*8"
+      const		      "256*2+6*8"
       n_bits		      "40"
       bin_pt		      "0"
       explicit_period	      on
@@ -899,13 +899,13 @@ Model {
       sggui_pos		      "20,43,489,466"
       block_type	      "constant"
       block_version	      "10.1.3"
-      sg_icon_stat	      "35,18,0,1,white,blue,0,d627f0ae,right,"
+      sg_icon_stat	      "35,18,0,1,white,blue,0,07f7b8ed,right,"
       sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]"
       ");\npatch([0.371429 0.285714 0.4 0.285714 0.371429 0.514286 0.542857 0.571429 0.714286 0.6 0.485714 0.4 0.514286"
       " 0.4 0.485714 0.6 0.714286 0.571429 0.542857 0.514286 0.371429 ],[0.111111 0.277778 0.5 0.722222 0.888889 0.8888"
       "89 0.833333 0.888889 0.888889 0.666667 0.888889 0.722222 0.5 0.277778 0.111111 0.333333 0.111111 0.111111 0.1666"
       "67 0.111111 0.111111 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graph"
-      "ics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',1,'304');\nfprintf('','COMME"
+      "ics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',1,'560');\nfprintf('','COMME"
       "NT: end icon text');\n"
       sg_list_contents	      "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B)"
       ")','inp1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*"
@@ -1044,7 +1044,7 @@ Model {
       SourceBlock	      "xbsIndex_r4/Constant"
       SourceType	      "Xilinx Constant Block Block"
       arith_type	      "Unsigned"
-      const		      "4"
+      const		      "7"
       n_bits		      "7"
       bin_pt		      "0"
       explicit_period	      on
@@ -1061,12 +1061,12 @@ Model {
       sggui_pos		      "20,43,489,466"
       block_type	      "constant"
       block_version	      "10.1.3"
-      sg_icon_stat	      "35,20,0,1,white,blue,0,85f36853,right,"
+      sg_icon_stat	      "35,20,0,1,white,blue,0,2a6960a5,right,"
       sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]"
       ");\npatch([0.342857 0.257143 0.4 0.257143 0.342857 0.485714 0.514286 0.542857 0.714286 0.6 0.485714 0.4 0.542857"
       " 0.4 0.485714 0.6 0.714286 0.542857 0.514286 0.485714 0.342857 ],[0.1 0.25 0.5 0.75 0.9 0.9 0.85 0.9 0.9 0.7 0.9"
       " 0.75 0.5 0.25 0.1 0.3 0.1 0.1 0.15 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','"
-      "COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',1,'4'"
+      "COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',1,'7'"
       ");\nfprintf('','COMMENT: end icon text');\n"
       sg_list_contents	      "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B)"
       ")','inp1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*"
@@ -1374,7 +1374,7 @@ Model {
       SourceType	      "Xilinx Delay Block"
       infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
       en		      off
-      latency		      "4"
+      latency		      "3"
       dbl_ovrd		      off
       reg_retiming	      off
       xl_use_area	      off
@@ -1383,13 +1383,13 @@ Model {
       sggui_pos		      "20,43,432,336"
       block_type	      "delay"
       block_version	      "11.4"
-      sg_icon_stat	      "15,18,1,1,white,blue,0,d390c2d8,right,"
+      sg_icon_stat	      "15,18,1,1,white,blue,0,83e6bb61,right,"
       sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]"
       ");\npatch([0.2 0.0666667 0.333333 0.0666667 0.2 0.466667 0.533333 0.6 0.866667 0.666667 0.466667 0.333333 0.6 0."
       "333333 0.466667 0.666667 0.866667 0.6 0.533333 0.466667 0.2 ],[0.166667 0.277778 0.5 0.722222 0.833333 0.833333 "
       "0.777778 0.833333 0.833333 0.666667 0.833333 0.722222 0.5 0.277778 0.166667 0.333333 0.166667 0.166667 0.222222 "
       "0.166667 0.166667 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics"
-      "');\nfprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-4}','texmode','on');\nfprintf('','COMMENT"
+      "');\nfprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-3}','texmode','on');\nfprintf('','COMMENT"
       ": end icon text');\n"
     }
     Block {
@@ -1404,7 +1404,7 @@ Model {
       SourceType	      "Xilinx Delay Block"
       infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
       en		      off
-      latency		      "4"
+      latency		      "3"
       dbl_ovrd		      off
       reg_retiming	      off
       xl_use_area	      off
@@ -1413,13 +1413,13 @@ Model {
       sggui_pos		      "20,43,432,336"
       block_type	      "delay"
       block_version	      "11.4"
-      sg_icon_stat	      "15,18,1,1,white,blue,0,d390c2d8,right,"
+      sg_icon_stat	      "15,18,1,1,white,blue,0,83e6bb61,right,"
       sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]"
       ");\npatch([0.2 0.0666667 0.333333 0.0666667 0.2 0.466667 0.533333 0.6 0.866667 0.666667 0.466667 0.333333 0.6 0."
       "333333 0.466667 0.666667 0.866667 0.6 0.533333 0.466667 0.2 ],[0.166667 0.277778 0.5 0.722222 0.833333 0.833333 "
       "0.777778 0.833333 0.833333 0.666667 0.833333 0.722222 0.5 0.277778 0.166667 0.333333 0.166667 0.166667 0.222222 "
       "0.166667 0.166667 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics"
-      "');\nfprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-4}','texmode','on');\nfprintf('','COMMENT"
+      "');\nfprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-3}','texmode','on');\nfprintf('','COMMENT"
       ": end icon text');\n"
     }
     Block {
@@ -1464,7 +1464,7 @@ Model {
       SourceType	      "Xilinx Delay Block"
       infoedit		      "Hardware notes: A delay line is a chain, each link of which is an SRL16 followed by a flip-flop."
       en		      off
-      latency		      "3"
+      latency		      "2"
       dbl_ovrd		      off
       reg_retiming	      off
       xl_use_area	      off
@@ -1473,14 +1473,14 @@ Model {
       sggui_pos		      "211,45,432,336"
       block_type	      "delay"
       block_version	      "11.4"
-      sg_icon_stat	      "15,18,1,1,white,blue,0,83e6bb61,right,"
+      sg_icon_stat	      "15,18,1,1,white,blue,0,83bb1afd,right,"
       sg_mask_display	      "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]"
       ");\npatch([0.2 0.0666667 0.333333 0.0666667 0.2 0.466667 0.533333 0.6 0.866667 0.666667 0.466667 0.333333 0.6 0."
       "333333 0.466667 0.666667 0.866667 0.6 0.533333 0.466667 0.2 ],[0.166667 0.277778 0.5 0.722222 0.833333 0.833333 "
       "0.777778 0.833333 0.833333 0.666667 0.833333 0.722222 0.5 0.277778 0.166667 0.333333 0.166667 0.166667 0.222222 "
       "0.166667 0.166667 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics"
-      "');\nfprintf('','COMMENT: begin icon text');\ncolor('black');disp('z^{-3}','texmode','on');\nfprintf('','COMMENT"
-      ": end icon text');\n"
+      "');\nfprintf('','COMMENT: begin icon text');\ncolor('red');disp('\\fontsize{11pt}\\bf(!)','texmode','on');\nfpri"
+      "ntf('','COMMENT: end icon text');\n"
     }
     Block {
       BlockType		      Reference
@@ -1668,7 +1668,7 @@ Model {
       SID		      142
       Position		      [480, 377, 565, 393]
       ShowName		      off
-      GotoTag		      "fifo_out"
+      GotoTag		      "din_pkt"
     }
     Block {
       BlockType		      From
@@ -1948,7 +1948,7 @@ Model {
       Ports		      [3]
       Position		      [1125, 80, 1155, 230]
       Floating		      off
-      Location		      [114, 204, 869, 679]
+      Location		      [5, 220, 760, 695]
       Open		      off
       NumInputPorts	      "3"
       ZoomMode		      "xonly"
@@ -2521,7 +2521,7 @@ Model {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
-	    SIDHighWatermark	    14
+	    SIDHighWatermark	    45
 	    Block {
 	      BlockType		      Inport
 	      Name		      "pin"
@@ -2674,47 +2674,11 @@ Model {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "shifter_unit2"
-	      SID		      7
+	      SID		      43
 	      Ports		      [4, 1]
 	      Position		      [420, 26, 480, 74]
 	      BackgroundColor	      "gray"
 	      LibraryVersion	      "1.1"
-	      LinkData {
-		BlockName		"Mux2"
-		DialogParameters {
-		  sg_icon_stat		  "30,94,3,1,white,blue,3,eb98d690,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0.142857 0.857143 1 ],[0.77 0."
-		  "82 0.91]);\npatch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.9 0.666667 0.466667 0.3 0.5 0"
-		  ".3 0.466667 0.666667 0.9 0.633333 0.566667 0.5 0.233333 ],[0.37234 0.425532 0.5 0.574468 0.62766 0.62766 0.606383 "
-		  "0.62766 0.62766 0.553191 0.617021 0.56383 0.5 0.43617 0.382979 0.446809 0.37234 0.37234 0.393617 0.37234 0.37234 ]"
-		  ",[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0.142857 0.857143 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfp"
-		  "rintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,'sel');\ncolor('black');port_label('inp"
-		  "ut',2,'d0');\ncolor('black');port_label('input',3,'d1');\ncolor('black');disp('\\bf{}','texmode','on');\nfprintf('"
-		  "','COMMENT: end icon text');\n"
-		}
-		BlockName		"Register1"
-		DialogParameters {
-		  sg_icon_stat		  "60,56,2,1,white,blue,0,01f465d5,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.25 0.1 0.316667 0.1 0.25 0.5 0.566667 0.633333 0.9 0.683333 0.483333 0.333333 0.533333 0.333333 0.483333 0."
-		  "683333 0.9 0.633333 0.566667 0.5 0.25 ],[0.107143 0.267857 0.5 0.732143 0.892857 0.892857 0.821429 0.892857 0.8928"
-		  "57 0.660714 0.875 0.714286 0.5 0.285714 0.125 0.339286 0.107143 0.107143 0.178571 0.107143 0.107143 ],[0.98 0.96 0"
-		  ".92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin ic"
-		  "on text');\ncolor('black');port_label('input',1,'d');\ncolor('black');port_label('input',2,'en');\ncolor('black');"
-		  "port_label('output',1,'q');\ncolor('black');disp('\\bf{z^{-1}}','texmode','on');\nfprintf('','COMMENT: end icon te"
-		  "xt');\n"
-		}
-		BlockName		"Slice"
-		DialogParameters {
-		  sg_icon_stat		  "60,30,1,1,white,blue,0,1fd851a7,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.366667 0.283333 0.4 0.283333 0.366667 0.5 0.533333 0.566667 0.7 0.583333 0.483333 0.4 0.5 0.4 0.483333 0.58"
-		  "3333 0.7 0.566667 0.533333 0.5 0.366667 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.666667 0.866667 0."
-		  "7 0.5 0.3 0.133333 0.333333 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprin"
-		  "tf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',"
-		  "1,'[a:b]');\nfprintf('','COMMENT: end icon text');\n"
-		}
-	      }
 	      SourceBlock	      "casper_library_flow_control/shifter_unit"
 	      SourceType	      "shifter_unit"
 	      ShowPortLabels	      "FromPortIcon"
@@ -2731,47 +2695,11 @@ Model {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "shifter_unit3"
-	      SID		      8
+	      SID		      44
 	      Ports		      [4, 1]
 	      Position		      [620, 26, 680, 74]
 	      BackgroundColor	      "gray"
 	      LibraryVersion	      "1.1"
-	      LinkData {
-		BlockName		"Mux2"
-		DialogParameters {
-		  sg_icon_stat		  "30,94,3,1,white,blue,3,eb98d690,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0.142857 0.857143 1 ],[0.77 0."
-		  "82 0.91]);\npatch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.9 0.666667 0.466667 0.3 0.5 0"
-		  ".3 0.466667 0.666667 0.9 0.633333 0.566667 0.5 0.233333 ],[0.37234 0.425532 0.5 0.574468 0.62766 0.62766 0.606383 "
-		  "0.62766 0.62766 0.553191 0.617021 0.56383 0.5 0.43617 0.382979 0.446809 0.37234 0.37234 0.393617 0.37234 0.37234 ]"
-		  ",[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0.142857 0.857143 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfp"
-		  "rintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,'sel');\ncolor('black');port_label('inp"
-		  "ut',2,'d0');\ncolor('black');port_label('input',3,'d1');\ncolor('black');disp('\\bf{}','texmode','on');\nfprintf('"
-		  "','COMMENT: end icon text');\n"
-		}
-		BlockName		"Register1"
-		DialogParameters {
-		  sg_icon_stat		  "60,56,2,1,white,blue,0,01f465d5,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.25 0.1 0.316667 0.1 0.25 0.5 0.566667 0.633333 0.9 0.683333 0.483333 0.333333 0.533333 0.333333 0.483333 0."
-		  "683333 0.9 0.633333 0.566667 0.5 0.25 ],[0.107143 0.267857 0.5 0.732143 0.892857 0.892857 0.821429 0.892857 0.8928"
-		  "57 0.660714 0.875 0.714286 0.5 0.285714 0.125 0.339286 0.107143 0.107143 0.178571 0.107143 0.107143 ],[0.98 0.96 0"
-		  ".92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin ic"
-		  "on text');\ncolor('black');port_label('input',1,'d');\ncolor('black');port_label('input',2,'en');\ncolor('black');"
-		  "port_label('output',1,'q');\ncolor('black');disp('\\bf{z^{-1}}','texmode','on');\nfprintf('','COMMENT: end icon te"
-		  "xt');\n"
-		}
-		BlockName		"Slice"
-		DialogParameters {
-		  sg_icon_stat		  "60,30,1,1,white,blue,0,1fd851a7,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.366667 0.283333 0.4 0.283333 0.366667 0.5 0.533333 0.566667 0.7 0.583333 0.483333 0.4 0.5 0.4 0.483333 0.58"
-		  "3333 0.7 0.566667 0.533333 0.5 0.366667 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.666667 0.866667 0."
-		  "7 0.5 0.3 0.133333 0.333333 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprin"
-		  "tf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',"
-		  "1,'[a:b]');\nfprintf('','COMMENT: end icon text');\n"
-		}
-	      }
 	      SourceBlock	      "casper_library_flow_control/shifter_unit"
 	      SourceType	      "shifter_unit"
 	      ShowPortLabels	      "FromPortIcon"
@@ -2788,47 +2716,11 @@ Model {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "shifter_unit4"
-	      SID		      9
+	      SID		      45
 	      Ports		      [4, 1]
 	      Position		      [820, 26, 880, 74]
 	      BackgroundColor	      "gray"
 	      LibraryVersion	      "1.1"
-	      LinkData {
-		BlockName		"Mux2"
-		DialogParameters {
-		  sg_icon_stat		  "30,94,3,1,white,blue,3,eb98d690,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0.142857 0.857143 1 ],[0.77 0."
-		  "82 0.91]);\npatch([0.233333 0.0666667 0.3 0.0666667 0.233333 0.5 0.566667 0.633333 0.9 0.666667 0.466667 0.3 0.5 0"
-		  ".3 0.466667 0.666667 0.9 0.633333 0.566667 0.5 0.233333 ],[0.37234 0.425532 0.5 0.574468 0.62766 0.62766 0.606383 "
-		  "0.62766 0.62766 0.553191 0.617021 0.56383 0.5 0.43617 0.382979 0.446809 0.37234 0.37234 0.393617 0.37234 0.37234 ]"
-		  ",[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0.142857 0.857143 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfp"
-		  "rintf('','COMMENT: begin icon text');\ncolor('black');port_label('input',1,'sel');\ncolor('black');port_label('inp"
-		  "ut',2,'d0');\ncolor('black');port_label('input',3,'d1');\ncolor('black');disp('\\bf{}','texmode','on');\nfprintf('"
-		  "','COMMENT: end icon text');\n"
-		}
-		BlockName		"Register1"
-		DialogParameters {
-		  sg_icon_stat		  "60,56,2,1,white,blue,0,01f465d5,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.25 0.1 0.316667 0.1 0.25 0.5 0.566667 0.633333 0.9 0.683333 0.483333 0.333333 0.533333 0.333333 0.483333 0."
-		  "683333 0.9 0.633333 0.566667 0.5 0.25 ],[0.107143 0.267857 0.5 0.732143 0.892857 0.892857 0.821429 0.892857 0.8928"
-		  "57 0.660714 0.875 0.714286 0.5 0.285714 0.125 0.339286 0.107143 0.107143 0.178571 0.107143 0.107143 ],[0.98 0.96 0"
-		  ".92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin ic"
-		  "on text');\ncolor('black');port_label('input',1,'d');\ncolor('black');port_label('input',2,'en');\ncolor('black');"
-		  "port_label('output',1,'q');\ncolor('black');disp('\\bf{z^{-1}}','texmode','on');\nfprintf('','COMMENT: end icon te"
-		  "xt');\n"
-		}
-		BlockName		"Slice"
-		DialogParameters {
-		  sg_icon_stat		  "60,30,1,1,white,blue,0,1fd851a7,right,"
-		  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npa"
-		  "tch([0.366667 0.283333 0.4 0.283333 0.366667 0.5 0.533333 0.566667 0.7 0.583333 0.483333 0.4 0.5 0.4 0.483333 0.58"
-		  "3333 0.7 0.566667 0.533333 0.5 0.366667 ],[0.1 0.266667 0.5 0.733333 0.9 0.9 0.833333 0.9 0.9 0.666667 0.866667 0."
-		  "7 0.5 0.3 0.133333 0.333333 0.1 0.1 0.166667 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprin"
-		  "tf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',"
-		  "1,'[a:b]');\nfprintf('','COMMENT: end icon text');\n"
-		}
-	      }
 	      SourceBlock	      "casper_library_flow_control/shifter_unit"
 	      SourceType	      "shifter_unit"
 	      ShowPortLabels	      "FromPortIcon"
@@ -4896,8 +4788,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"pkt_sim"
-	Location		[1, 54, 1023, 737]
-	Open			off
+	Location		[1, 55, 1023, 738]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -7197,7 +7089,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388611"
+	  const			  "8388608+3"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7236,7 +7128,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388628"
+	  const			  "8388608+32"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7253,13 +7145,13 @@ Model {
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "40,18,0,1,white,blue,0,263c7f4a,right,"
+	  sg_icon_stat		  "40,18,0,1,white,blue,0,3e57c924,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.375 0.3 0.4 0.3 0.375 0.5 0.525 0.55 0.675 0.575 0.475 0.4 0.5 0.4 0.475 0.575 0.675 0.55 0.525 0.5 0.375 ],["
 	  "0.111111 0.277778 0.5 0.722222 0.888889 0.888889 0.833333 0.888889 0.888889 0.666667 0.888889 0.722222 0.5 0.277778"
 	  " 0.111111 0.333333 0.111111 0.111111 0.166667 0.111111 0.111111 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 "
 	  "]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label("
-	  "'output',1,'8388628');\nfprintf('','COMMENT: end icon text');\n"
+	  "'output',1,'8388640');\nfprintf('','COMMENT: end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B))','inp"
 	  "1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*B|PCIN + A"
 	  "*B|P + A*B|A * B|C + A:B|C - A:B|C|Custom)','userSelections'=>{'carry'=>'CIN','inp1'=>'P','inp2'=>'PCIN>>17','opsel"
@@ -7276,7 +7168,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388629"
+	  const			  "8388608+33"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7293,12 +7185,12 @@ Model {
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "40,20,0,1,white,blue,0,be7d8659,right,"
+	  sg_icon_stat		  "40,20,0,1,white,blue,0,1105e7a5,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.35 0.275 0.4 0.275 0.35 0.475 0.5 0.525 0.675 0.575 0.475 0.4 0.525 0.4 0.475 0.575 0.675 0.525 0.5 0.475 0.3"
 	  "5 ],[0.1 0.25 0.5 0.75 0.9 0.9 0.85 0.9 0.9 0.7 0.9 0.75 0.5 0.25 0.1 0.3 0.1 0.1 0.15 0.1 0.1 ],[0.98 0.96 0.92]);"
 	  "\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text"
-	  "');\ncolor('black');port_label('output',1,'8388629');\nfprintf('','COMMENT: end icon text');\n"
+	  "');\ncolor('black');port_label('output',1,'8388641');\nfprintf('','COMMENT: end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B))','inp"
 	  "1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*B|PCIN + A"
 	  "*B|P + A*B|A * B|C + A:B|C - A:B|C|Custom)','userSelections'=>{'carry'=>'CIN','inp1'=>'P','inp2'=>'PCIN>>17','opsel"
@@ -7315,7 +7207,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "26"
+	  const			  "37"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7332,12 +7224,12 @@ Model {
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "50,20,0,1,white,blue,0,d7669ff4,right,"
+	  sg_icon_stat		  "50,20,0,1,white,blue,0,cd6148db,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.38 0.32 0.42 0.32 0.38 0.48 0.5 0.52 0.64 0.56 0.48 0.42 0.52 0.42 0.48 0.56 0.64 0.52 0.5 0.48 0.38 ],[0.1 0"
 	  ".25 0.5 0.75 0.9 0.9 0.85 0.9 0.9 0.7 0.9 0.75 0.5 0.25 0.1 0.3 0.1 0.1 0.15 0.1 0.1 ],[0.98 0.96 0.92]);\nplot([0 "
 	  "1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor"
-	  "('black');port_label('output',1,'26');\nfprintf('','COMMENT: end icon text');\n"
+	  "('black');port_label('output',1,'37');\nfprintf('','COMMENT: end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B))','inp"
 	  "1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*B|PCIN + A"
 	  "*B|P + A*B|A * B|C + A:B|C - A:B|C|Custom)','userSelections'=>{'carry'=>'CIN','inp1'=>'P','inp2'=>'PCIN>>17','opsel"
@@ -7353,7 +7245,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388609"
+	  const			  "8388608+1"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7393,7 +7285,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388630"
+	  const			  "8388608+34"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7410,12 +7302,12 @@ Model {
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "40,20,0,1,white,blue,0,59ec9a00,right,"
+	  sg_icon_stat		  "40,20,0,1,white,blue,0,8a0cc43c,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.35 0.275 0.4 0.275 0.35 0.475 0.5 0.525 0.675 0.575 0.475 0.4 0.525 0.4 0.475 0.575 0.675 0.525 0.5 0.475 0.3"
 	  "5 ],[0.1 0.25 0.5 0.75 0.9 0.9 0.85 0.9 0.9 0.7 0.9 0.75 0.5 0.25 0.1 0.3 0.1 0.1 0.15 0.1 0.1 ],[0.98 0.96 0.92]);"
 	  "\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text"
-	  "');\ncolor('black');port_label('output',1,'8388630');\nfprintf('','COMMENT: end icon text');\n"
+	  "');\ncolor('black');port_label('output',1,'8388642');\nfprintf('','COMMENT: end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B))','inp"
 	  "1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*B|PCIN + A"
 	  "*B|P + A*B|A * B|C + A:B|C - A:B|C|Custom)','userSelections'=>{'carry'=>'CIN','inp1'=>'P','inp2'=>'PCIN>>17','opsel"
@@ -7511,7 +7403,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388631"
+	  const			  "8388608+35"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7528,12 +7420,12 @@ Model {
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "40,20,0,1,white,blue,0,27dd447d,right,"
+	  sg_icon_stat		  "40,20,0,1,white,blue,0,f4a763c4,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.35 0.275 0.4 0.275 0.35 0.475 0.5 0.525 0.675 0.575 0.475 0.4 0.525 0.4 0.475 0.575 0.675 0.525 0.5 0.475 0.3"
 	  "5 ],[0.1 0.25 0.5 0.75 0.9 0.9 0.85 0.9 0.9 0.7 0.9 0.75 0.5 0.25 0.1 0.3 0.1 0.1 0.15 0.1 0.1 ],[0.98 0.96 0.92]);"
 	  "\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfprintf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text"
-	  "');\ncolor('black');port_label('output',1,'8388631');\nfprintf('','COMMENT: end icon text');\n"
+	  "');\ncolor('black');port_label('output',1,'8388643');\nfprintf('','COMMENT: end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B))','inp"
 	  "1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*B|PCIN + A"
 	  "*B|P + A*B|A * B|C + A:B|C - A:B|C|Custom)','userSelections'=>{'carry'=>'CIN','inp1'=>'P','inp2'=>'PCIN>>17','opsel"
@@ -7550,7 +7442,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388632"
+	  const			  "8388608+36"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7567,13 +7459,13 @@ Model {
 	  sggui_pos		  "20,20,489,466"
 	  block_type		  "constant"
 	  block_version		  "11.4"
-	  sg_icon_stat		  "50,18,0,1,white,blue,0,c6c1730f,right,"
+	  sg_icon_stat		  "50,18,0,1,white,blue,0,68830c9c,right,"
 	  sg_mask_display	  "fprintf('','COMMENT: begin icon graphics');\npatch([0 1 1 0 ],[0 0 1 1 ],[0.77 0.82 0.91]);\npat"
 	  "ch([0.4 0.34 0.42 0.34 0.4 0.5 0.52 0.54 0.64 0.56 0.48 0.42 0.5 0.42 0.48 0.56 0.64 0.54 0.52 0.5 0.4 ],[0.111111 "
 	  "0.277778 0.5 0.722222 0.888889 0.888889 0.833333 0.888889 0.888889 0.666667 0.888889 0.722222 0.5 0.277778 0.111111"
 	  " 0.333333 0.111111 0.111111 0.166667 0.111111 0.111111 ],[0.98 0.96 0.92]);\nplot([0 1 1 0 0 ],[0 0 1 1 0 ]);\nfpri"
 	  "ntf('','COMMENT: end icon graphics');\nfprintf('','COMMENT: begin icon text');\ncolor('black');port_label('output',"
-	  "1,'8388632');\nfprintf('','COMMENT: end icon text');\n"
+	  "1,'8388644');\nfprintf('','COMMENT: end icon text');\n"
 	  sg_list_contents	  "{'table'=>{'carry'=>'popup(0|1|CIN|~SIGN(P or PCIN)|~SIGN(A*B or A:B)|~SIGND(A*B or A:B))','inp"
 	  "1'=>'popup(0|P|A:B|A*B|C|P+C|A:B+C)','inp2'=>'popup(0|PCIN|P|C|PCIN>>17|P>>17)','opselect'=>'popup(C + A*B|PCIN + A"
 	  "*B|P + A*B|A * B|C + A:B|C - A:B|C|Custom)','userSelections'=>{'carry'=>'CIN','inp1'=>'P','inp2'=>'PCIN>>17','opsel"
@@ -7589,7 +7481,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388610"
+	  const			  "8388608+2"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
@@ -7896,7 +7788,7 @@ Model {
 	  SourceBlock		  "xbsIndex_r4/Constant"
 	  SourceType		  "Xilinx Constant Block Block"
 	  arith_type		  "Unsigned"
-	  const			  "8388612"
+	  const			  "8388608+4"
 	  n_bits		  "spead_msw-spead_lsw"
 	  bin_pt		  "0"
 	  explicit_period	  on
