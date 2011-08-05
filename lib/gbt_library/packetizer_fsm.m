@@ -62,9 +62,10 @@ switch double(state)
         data_count_rst = false;
         waste_count_en = true;
         waste_count_rst = false;        
-                done = false;
-                
-        if (waste_count == waste_time)        
+        
+        done = false;
+        
+        if (waste_count == waste_time)
            state = state_serialize;
            serializer_ld = true;
         end
