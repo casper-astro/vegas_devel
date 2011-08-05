@@ -46,7 +46,7 @@ n_ins=cell(1,len+1);
 n_ins{1} = n_inputs;
 ninputs = n_inputs;
 for i = 1:len
-    if f(i)==2
+    if f(i)==2 && ninputs>=2
         n_ins{i+1}=ninputs/2;
         ninputs=ninputs/2;
     else
