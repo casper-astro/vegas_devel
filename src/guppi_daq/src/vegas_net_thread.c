@@ -318,7 +318,8 @@ void *guppi_net_thread(void *_args) {
             hputi4(status_buf, "BLOCSIZE", block_size);
         }
     }
-    heaps_per_block = block_size / heap_size;
+    heaps_per_block =   (block_size - MAX_HEAPS_PER_BLK*spead_hdr_size) /
+                        (heap_size - spead_hdr_size);
 
     /* List of databuf blocks currently in use */
     unsigned i;
