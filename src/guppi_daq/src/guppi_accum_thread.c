@@ -32,6 +32,9 @@
 #define MAX_NUM_CH      32768
 #define NUM_STOKES      4
 
+#define INT_PAYLOAD     1
+#define FLOAT_PAYLOAD   2
+
 // Read a status buffer all of the key observation paramters
 extern void guppi_read_obs_params(char *buf, 
                                   struct guppi_params *g, 
@@ -85,6 +88,7 @@ void guppi_accum_thread(void *_args) {
 
     char accum_dirty[NUM_SW_STATES];
     struct sdfits_data_columns data_cols[NUM_SW_STATES];
+    int payload_type;
 
     /* Get arguments */
     struct guppi_thread_args *args = (struct guppi_thread_args *)_args;
@@ -150,6 +154,21 @@ void guppi_accum_thread(void *_args) {
         pthread_exit(NULL);
     }
     pthread_cleanup_push((void *)guppi_databuf_detach, db_out);
+
+    /* Determine high/low bandwidth mode */
+    char bw_mode[16];
+    if (hgets(st.buf, "BW_MODE", 16, bw_mode))
+    {
+        if(strncmp(bw_mode, "high", 4) == 0)
+            payload_type = INT_PAYLOAD;
+        else if(strncmp(bw_mode, "low", 3) == 0)
+            payload_type = FLOAT_PAYLOAD;
+        else
+            guppi_error("guppi_net_thread", "Unsupported bandwidth mode");
+    }
+    else
+        guppi_error("guppi_net_thread", "BW_MODE not set");
+
 
     /* Loop */
     int curblock_in=0, curblock_out=0;
@@ -231,7 +250,8 @@ void guppi_accum_thread(void *_args) {
                                 (index_in->heap_size)*heap);
             struct freq_spead_heap* freq_heap = (struct freq_spead_heap*)(heap_addr);
 
-            int *payload = (int*)(heap_addr + sizeof(struct freq_spead_heap));
+            int *i_payload = (int*)(heap_addr + sizeof(struct freq_spead_heap));
+            float *f_payload = (float*)(heap_addr + sizeof(struct freq_spead_heap));
 
             accumid = freq_heap->status_bits & 0x7;         
 
@@ -360,18 +380,38 @@ void guppi_accum_thread(void *_args) {
                 data_cols[accumid].exposure += (float)(freq_heap->integ_size)/pfb_rate;
                 data_cols[accumid].stpspec = freq_heap->spectrum_cntr;
 
-                /* Add spectrum to appropriate vector accumulator */
-                for(i = 0; i < sf.hdr.nsubband; i++)
+                /* Add spectrum to appropriate vector accumulator (high-bw mode) */
+                if(payload_type == INT_PAYLOAD)
                 {
-                    for(j = 0; j < sf.hdr.nchan; j++)
+                    for(i = 0; i < sf.hdr.nsubband; i++)
                     {
-                        for(k = 0; k < NUM_STOKES; k++)
+                        for(j = 0; j < sf.hdr.nchan; j++)
                         {
-                            accumulator[accumid][i][j][k] +=
-                                (float)payload[i*sf.hdr.nchan + j*NUM_STOKES + k];
+                            for(k = 0; k < NUM_STOKES; k++)
+                            {
+                                accumulator[accumid][i][j][k] +=
+                                    (float)i_payload[i*sf.hdr.nchan + j*NUM_STOKES + k];
+                            }
                         }
                     }
                 }
+
+                /* Add spectrum to appropriate vector accumulator (low-bw mode) */
+                else
+                {
+                    for(i = 0; i < sf.hdr.nsubband; i++)
+                    {
+                        for(j = 0; j < sf.hdr.nchan; j++)
+                        {
+                            for(k = 0; k < NUM_STOKES; k++)
+                            {
+                                accumulator[accumid][i][j][k] +=
+                                    f_payload[i*sf.hdr.nchan + j*NUM_STOKES + k];
+                            }
+                        }
+                    }
+                }
+
             }
             
             accum_time += (double)freq_heap->integ_size / pfb_rate;
