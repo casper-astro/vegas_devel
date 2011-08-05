@@ -81,7 +81,6 @@ int sdfits_create(struct sdfits *sf) {
     fits_update_key(sf->fptr, TSTRING, "PROJID", hdr->projid, NULL, status);
     fits_update_key(sf->fptr, TSTRING, "FRONTEND", hdr->frontend, NULL, status);
     fits_update_key(sf->fptr, TDOUBLE, "OBSFREQ", &(hdr->obsfreq), NULL, status);
-    fits_update_key(sf->fptr, TDOUBLE, "LST", &(hdr->lst), NULL, status);
     fits_update_key(sf->fptr, TDOUBLE, "SCAN", &(hdr->scan), NULL, status);
 
     fits_update_key(sf->fptr, TSTRING, "INSTRUME", hdr->instrument, NULL, status);
@@ -96,15 +95,20 @@ int sdfits_create(struct sdfits *sf) {
     fits_update_key(sf->fptr, TINT,    "NCHAN", &(hdr->nchan), NULL, status);
     fits_update_key(sf->fptr, TDOUBLE, "CHAN_BW", &(hdr->chan_bw), NULL, status);
     fits_update_key(sf->fptr, TINT,    "NSUBBAND", &(hdr->nsubband), NULL, status);
+    fits_update_key(sf->fptr, TDOUBLE, "EFSAMPFR", &(hdr->efsampfr), NULL, status);
+    fits_update_key(sf->fptr, TDOUBLE, "FPGACLK", &(hdr->fpgaclk), NULL, status);
+    fits_update_key(sf->fptr, TDOUBLE, "HWEXPOSR", &(hdr->hwexposr), NULL, status);
+    fits_update_key(sf->fptr, TDOUBLE, "FILTNEP", &(hdr->filtnep), NULL, status);
+    fits_update_key(sf->fptr, TDOUBLE, "STTMJD", &(hdr->sttmjd), NULL, status);
 
     // Update the column sizes for the colums containing arrays
     itmp = hdr->nsubband * hdr->nchan * 4;                          //num elements, not bytes
-    fits_modify_vector_len(sf->fptr, 18, itmp, status);             // DATA
-    fits_modify_vector_len(sf->fptr, 12, hdr->nsubband, status);    // SUBFREQ
+    fits_modify_vector_len(sf->fptr, 19, itmp, status);             // DATA
+    fits_modify_vector_len(sf->fptr, 13, hdr->nsubband, status);    // SUBFREQ
 
     // Update the TDIM field for the data column
     sprintf(ctmp, "(%d,%d,4,1,1)", hdr->nsubband, hdr->nchan);
-    fits_update_key(sf->fptr, TSTRING, "TDIM17", ctmp, NULL, status);
+    fits_update_key(sf->fptr, TSTRING, "TDIM19", ctmp, NULL, status);
 
     fits_flush_file(sf->fptr, status);
    
@@ -139,26 +143,28 @@ int sdfits_write_subint(struct sdfits *sf) {
     row = sf->rownum;
     temp_str = dcols->object;
     temp_dbl = 0.0;
+    dcols->centre_freq_idx++;
 
     fits_write_col(sf->fptr, TDOUBLE, 1,  row, 1, 1, &(dcols->time), status);
-    fits_write_col(sf->fptr, TFLOAT,  2,  row, 1, 1, &(dcols->exposure), status);
-    fits_write_col(sf->fptr, TSTRING, 3,  row, 1, 1, &temp_str, status);
-    fits_write_col(sf->fptr, TFLOAT,  4,  row, 1, 1, &(dcols->azimuth), status);
-    fits_write_col(sf->fptr, TFLOAT,  5,  row, 1, 1, &(dcols->elevation), status);
-    fits_write_col(sf->fptr, TFLOAT,  6,  row, 1, 1, &(dcols->bmaj), status);
-    fits_write_col(sf->fptr, TFLOAT,  7,  row, 1, 1, &(dcols->bmin), status);
-    fits_write_col(sf->fptr, TFLOAT,  8,  row, 1, 1, &(dcols->bpa), status);
-    fits_write_col(sf->fptr, TINT,    9,  row, 1, 1, &(dcols->accumid), status);
-    fits_write_col(sf->fptr, TINT,    10, row, 1, 1, &(dcols->sttspec), status);
-    fits_write_col(sf->fptr, TINT,    11, row, 1, 1, &(dcols->stpspec), status);
-    fits_write_col(sf->fptr, TDOUBLE, 12, row, 1, nsubband, dcols->centre_freq, status);
+    fits_write_col(sf->fptr, TINT,    2,  row, 1, 1, &(dcols->time_counter), status);
+    fits_write_col(sf->fptr, TFLOAT,  3,  row, 1, 1, &(dcols->exposure), status);
+    fits_write_col(sf->fptr, TSTRING, 4,  row, 1, 1, &temp_str, status);
+    fits_write_col(sf->fptr, TFLOAT,  5,  row, 1, 1, &(dcols->azimuth), status);
+    fits_write_col(sf->fptr, TFLOAT,  6,  row, 1, 1, &(dcols->elevation), status);
+    fits_write_col(sf->fptr, TFLOAT,  7,  row, 1, 1, &(dcols->bmaj), status);
+    fits_write_col(sf->fptr, TFLOAT,  8,  row, 1, 1, &(dcols->bmin), status);
+    fits_write_col(sf->fptr, TFLOAT,  9,  row, 1, 1, &(dcols->bpa), status);
+    fits_write_col(sf->fptr, TINT,    10,  row, 1, 1, &(dcols->accumid), status);
+    fits_write_col(sf->fptr, TINT,    11, row, 1, 1, &(dcols->sttspec), status);
+    fits_write_col(sf->fptr, TINT,    12, row, 1, 1, &(dcols->stpspec), status);
+    fits_write_col(sf->fptr, TDOUBLE, 13, row, 1, nsubband, dcols->centre_freq, status);
 
-    fits_write_col(sf->fptr, TFLOAT,  13, row, 1, 1, &(dcols->centre_freq_idx), status);
-    fits_write_col(sf->fptr, TDOUBLE, 14, row, 1, 1, &temp_dbl, status);
-    fits_write_col(sf->fptr, TDOUBLE, 15, row, 1, 1, &(sf->hdr.chan_bw), status);
-    fits_write_col(sf->fptr, TDOUBLE, 16, row, 1, 1, &(dcols->ra), status);
-    fits_write_col(sf->fptr, TDOUBLE, 17, row, 1, 1, &(dcols->dec), status);
-    fits_write_col(sf->fptr, TFLOAT,  18, row, 1, nivals, dcols->data, status);
+    fits_write_col(sf->fptr, TFLOAT,  14, row, 1, 1, &(dcols->centre_freq_idx), status);
+    fits_write_col(sf->fptr, TDOUBLE, 15, row, 1, 1, &temp_dbl, status);
+    fits_write_col(sf->fptr, TDOUBLE, 16, row, 1, 1, &(sf->hdr.chan_bw), status);
+    fits_write_col(sf->fptr, TDOUBLE, 17, row, 1, 1, &(dcols->ra), status);
+    fits_write_col(sf->fptr, TDOUBLE, 18, row, 1, 1, &(dcols->dec), status);
+    fits_write_col(sf->fptr, TFLOAT,  19, row, 1, nivals, dcols->data, status);
 
     // Flush the buffers if not finished with the file
     // Note:  this use is not entirely in keeping with the CFITSIO

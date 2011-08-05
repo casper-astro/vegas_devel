@@ -109,10 +109,10 @@ void vegas_pfb_thread(void *_args) {
         rv = guppi_databuf_wait_filled(db_in, curblock_in);
         if (rv!=0) continue;
 
-        /* Note waiting status, current block */
+        /* Note waiting status, current input block */
         guppi_status_lock_safe(&st);
         hputs(st.buf, STATUS_KEY, "processing");
-        hputi4(st.buf, "CURBLOCK", curblock_in);
+        hputi4(st.buf, "PFBBLKIN", curblock_in);
         guppi_status_unlock_safe(&st);
 
         /* Get params */
@@ -147,6 +147,11 @@ void vegas_pfb_thread(void *_args) {
         curblock_in = (curblock_in + 1) % db_in->n_block;
 
         printf("Debug: vegas_pfb_thread going to next output block\n");
+
+        /* Note current output block */
+        guppi_status_lock_safe(&st);
+        hputi4(st.buf, "PFBBLKOU", curblock_out);
+        guppi_status_unlock_safe(&st);
 
         /*  Wait for next output block */
         curblock_out = (curblock_out + 1) % db_out->n_block;

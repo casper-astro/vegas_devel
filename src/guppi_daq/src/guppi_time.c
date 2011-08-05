@@ -7,6 +7,7 @@
 #include <sys/time.h>
 #include "slalib.h"
 #include "guppi_error.h"
+#include "guppi_defines.h"
 
 int get_current_mjd(int *stt_imjd, int *stt_smjd, double *stt_offs) {
     int rv;
@@ -29,6 +30,36 @@ int get_current_mjd(int *stt_imjd, int *stt_smjd, double *stt_offs) {
 
     return(GUPPI_OK);
 }
+
+#ifdef NEW_GBT
+
+int get_current_mjd_double(double *mjd) {
+    int rv;
+    struct timeval tv;
+    struct tm gmt;
+    double day_usecs;
+
+    if (mjd==NULL)
+        return(GUPPI_ERR_SYS);
+
+    rv = gettimeofday(&tv,NULL);
+    if (rv) { return(GUPPI_ERR_SYS); }
+
+    if (gmtime_r(&tv.tv_sec, &gmt)==NULL)
+        return(GUPPI_ERR_SYS);
+
+    /* Get integer portion of MJD */
+    slaCaldj(gmt.tm_year+1900, gmt.tm_mon+1, gmt.tm_mday, mjd, &rv);
+    if (rv!=0) { return(GUPPI_ERR_GEN); }
+
+    /* Now calculate fractional day offset (to microsecond resolution) */
+    day_usecs = gmt.tm_hour*3600*1e6 + gmt.tm_min*60*1e6 + gmt.tm_sec*1e6 + tv.tv_usec;
+    *mjd += day_usecs / (double)(24*60*60*1e6);
+
+    return(GUPPI_OK);
+}
+
+#endif
 
 int datetime_from_mjd(long double MJD, int *YYYY, int *MM, int *DD, 
                       int *h, int *m, double *s) {

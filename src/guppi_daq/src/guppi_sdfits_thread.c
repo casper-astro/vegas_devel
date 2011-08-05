@@ -140,19 +140,6 @@ void guppi_sdfits_thread(void *_args) {
             guppi_read_subint_params(ptr, &gp, &sf);
         }
 
-        /* Check if we got both packet 0 and a valid observation
-         * start time.  If so, flag writing to start.
-         */
-/*        first_heap_in_blk = ((struct databuf_index*)guppi_databuf_index(db, curblock))
-                                ->cpu_gpu_buf[0].heap_cntr;
-        if (got_packet_0==0 && first_heap_in_blk==0 && gp.stt_valid==1) {
-            got_packet_0 = 1;
-            guppi_read_obs_params(ptr, &gp, &sf);
-        }
-*/
-        /* If actual observation has started, write the data */
-        //if (got_packet_0) { 
-
         /* Note waiting status */
         guppi_status_lock_safe(&st);
         hputs(st.buf, STATUS_KEY, "writing");
@@ -170,7 +157,7 @@ void guppi_sdfits_thread(void *_args) {
                         db_index->disk_buf[dataset].struct_offset);
 
             sf.data_columns = *data_cols;
-            
+
             /* Write the data */
             old_filenum = sf.filenum;
             sdfits_write_subint(&sf);
@@ -186,8 +173,6 @@ void guppi_sdfits_thread(void *_args) {
             printf("Block %d dropped %.3g%% of the packets\n", 
                     sf.tot_rows, gp.drop_frac*100.0);
         }
-
-        //}
 
         /* Mark as free */
         guppi_databuf_set_free(db, curblock);

@@ -38,13 +38,12 @@ union semun {
 #define CPU_INPUT_BUF   2
 #define DISK_INPUT_BUF  3
 
-#define GPU_HEAP_SIZE   8224
-
 // Single element of the index for the GPU or CPU input buffer
 struct cpu_gpu_buf_index
 {
     unsigned int heap_cntr;
     unsigned int heap_valid;
+    double heap_rcvd_mjd;
 };
 
 // Single element of the index for the disk input buffer
@@ -70,7 +69,7 @@ struct databuf_index
     // The actual index
     union {
         struct cpu_gpu_buf_index cpu_gpu_buf[4096];
-        struct disk_buf_index disk_buf[4096];
+        struct disk_buf_index disk_buf[8192];
     };
 };
 

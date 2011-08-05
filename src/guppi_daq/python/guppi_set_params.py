@@ -132,9 +132,18 @@ add_param_option("--nsubband",
 add_param_option("--exposure", 
         name="EXPOSURE", type="float",
         help="Required integration time (in seconds)")
-add_param_option("--pfbrate", 
-        name="PFBRATE", type="float",
-        help="Rate at which spectra are produced by the PFB (Hz)")
+add_param_option("--efsampfr", 
+        name="EFSAMPFR", type="float",
+        help="Effective sampling frequency (after decimation), in Hz")
+add_param_option("--fpgaclk", 
+        name="FPGACLK", type="float",
+        help="FPGA clock rate (in Hz)")
+add_param_option("--hwexposr", 
+        name="HWEXPOSR", type="float",
+        help="Duration of fixed integration on FPGA/GPU [s]")
+add_param_option("--filtnep", 
+        name="FILTNEP", type="float",
+        help="PFB filter noise-equivalent parameters")
 add_param_option("--projid", 
         name="PROJID", type="string",
         help="Project ID string")
@@ -329,16 +338,9 @@ if (opt.update == False):
     if (opt.gbt):
         g.update_with_gbtstatus()
 
-    # Current time
+    # Current time (updated for VEGAS)
     MJD = current_MJD()
-    MJDd = int(MJD)
-    MJDf = MJD - MJDd
-    MJDs = int(MJDf * 86400 + 1e-6)
-    offs = (MJD - MJDd - MJDs/86400.0) * 86400.0
-    g.update("STT_IMJD", MJDd)
-    g.update("STT_SMJD", MJDs)
-    if offs < 2e-6: offs = 0.0
-    g.update("STT_OFFS", offs)
+    g.update("STTMJD", MJD)
 
     # Misc
     g.update("LST", 0)
@@ -401,10 +403,10 @@ g.write()
 
 # Base file name
 if (opt.cal):
-    base = "guppi_%5d_%s_%04d_cal" % (g['STT_IMJD'], 
+    base = "guppi_%5d_%s_%04d_cal" % (g['STTMJD'], 
             g['SRC_NAME'], g['SCANNUM'])
 else:
-    base = "guppi_%5d_%s_%04d" % (g['STT_IMJD'], 
+    base = "vegas_%5d_%s_%04d" % (g['STTMJD'], 
             g['SRC_NAME'], g['SCANNUM'])
 g.update("BASENAME", base)
 

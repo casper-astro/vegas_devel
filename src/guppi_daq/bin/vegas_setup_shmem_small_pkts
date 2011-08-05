@@ -11,5 +11,7 @@ python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -U --nogbt \
     --nsubband=1        \
     --sub0freq=2.4e9    \
     --exposure=256e-3   \
-    --pfbrate=32e5      \
+    --fpgaclk=150e6     \
+    --efsampfr=600e6    \
+    --hwexposr=0.5e-3   \
  

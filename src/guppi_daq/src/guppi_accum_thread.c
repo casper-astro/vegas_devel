@@ -42,10 +42,6 @@ extern void guppi_read_subint_params(char *buf,
                                      struct guppi_params *g,
                                      struct sdfits *p);
 
-/* Read the PFB rate */
-void guppi_read_pfbrate(char *buf, float *pfb_rate);
-
-
 /* Resets the vector accumulators */
 void reset_accumulators(float accumulator[][MAX_NUM_SUB][MAX_NUM_CH][NUM_STOKES],
                         struct sdfits_data_columns* data_cols, char* accum_dirty,
@@ -159,7 +155,7 @@ void guppi_accum_thread(void *_args) {
     int curblock_in=0, curblock_out=0;
     int first=1;
     float reqd_exposure=0;
-    unsigned int accum_stop_time=0;
+    double accum_time=0;
     float pfb_rate;
     int heap, accumid, i, j,k, struct_offset, array_offset;
     char *hdr_in=NULL, *hdr_out=NULL;
@@ -179,14 +175,10 @@ void guppi_accum_thread(void *_args) {
         rv = guppi_databuf_wait_filled(db_in, curblock_in);
         if (rv!=0) continue;
 
-        /* Note current block(s) */
-        guppi_status_lock_safe(&st);
-        hputi4(st.buf, "ACCBLKIN", curblock_in);
-        guppi_status_unlock_safe(&st);
-
-        /* Note waiting status */
+        /* Note waiting status and current block*/
         guppi_status_lock_safe(&st);
         hputs(st.buf, STATUS_KEY, "accumulating");
+        hputi4(st.buf, "ACCBLKIN", curblock_in);
         guppi_status_unlock_safe(&st);
 
         /* Read param struct for this block */
@@ -207,9 +199,7 @@ void guppi_accum_thread(void *_args) {
 
             /* Read required exposure and PFB rate from status shared memory */
             reqd_exposure = sf.data_columns.exposure;
-            guppi_read_pfbrate(st.buf, &pfb_rate);
-
-            accum_stop_time = (unsigned int)(reqd_exposure/1e-3);
+            pfb_rate = sf.hdr.efsampfr / (2 * sf.hdr.nchan);
 
             /* Initialise the index in the output block */
             index_out = (struct databuf_index*)guppi_databuf_index(db_out, curblock_out);
@@ -252,7 +242,7 @@ void guppi_accum_thread(void *_args) {
 */
 
             /* If we have accumulated for long enough, write vectors to output block */
-            if(freq_heap->spectrum_cntr >= accum_stop_time)
+            if(accum_time >= reqd_exposure)
             {
                 for(i = 0; i < NUM_SW_STATES; i++)
                 {
@@ -327,12 +317,11 @@ void guppi_accum_thread(void *_args) {
                         (unsigned char*)(guppi_databuf_data(db_out, curblock_out) + array_offset);
 
                         index_out->num_datasets = index_out->num_datasets + 1;
-
                     }
                 
                 }
 
-                accum_stop_time += (unsigned int)(reqd_exposure/1e-3);
+                accum_time = 0;
 
                 reset_accumulators(accumulator, data_cols, accum_dirty,
                                 sf.hdr.nsubband, sf.hdr.nchan);
@@ -345,7 +334,8 @@ void guppi_accum_thread(void *_args) {
                 if(!accum_dirty[accumid])
                 {
                     /*Record SPEAD header fields*/
-                    data_cols[accumid].time = (double)(freq_heap->time_cntr);
+                    data_cols[accumid].time = index_in->cpu_gpu_buf[heap].heap_rcvd_mjd;
+                    data_cols[accumid].time_counter = freq_heap->time_cntr;
                     data_cols[accumid].sttspec = freq_heap->spectrum_cntr;
                     data_cols[accumid].accumid = accumid;
 
@@ -359,6 +349,7 @@ void guppi_accum_thread(void *_args) {
                     data_cols[accumid].centre_freq_idx = sf.data_columns.centre_freq_idx;
                     data_cols[accumid].ra = sf.data_columns.ra;
                     data_cols[accumid].dec = sf.data_columns.dec;
+                    data_cols[accumid].exposure = 0.0;
 
                     for(i = 0; i < NUM_SW_STATES; i++)
                         data_cols[accumid].centre_freq[i] = sf.data_columns.centre_freq[i];
@@ -383,6 +374,7 @@ void guppi_accum_thread(void *_args) {
                 }
             }
             
+            accum_time += (double)freq_heap->integ_size / pfb_rate;
         }
 
         /* Update packet count and loss fields from input header */
