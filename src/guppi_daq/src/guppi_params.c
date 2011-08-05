@@ -294,14 +294,6 @@ void guppi_read_subint_params(char *buf,
 
 }
 
-
-/* Some code just needs a simple way to get the obs mode string */
-void guppi_read_pfbrate(char *buf, float *pfb_rate) {
-    float temp;
-    get_flt("PFBRATE", temp, 0);
-    *pfb_rate = temp;
-}
-
 #endif
 
 
@@ -523,7 +515,6 @@ void guppi_read_obs_params(char *buf,
     get_str("PROJID", sf->hdr.projid, 16, "Unknown");
     get_str("FRONTEND", sf->hdr.frontend, 16, "Unknown");
     get_dbl("OBSFREQ", sf->hdr.obsfreq, 0.0);
-    get_dbl("LST", sf->hdr.lst, 0.0);
     get_int("SCANNUM", temp_int, 1);
     sf->hdr.scan = (double)(temp_int);
 
@@ -540,23 +531,22 @@ void guppi_read_obs_params(char *buf,
     get_dbl("CHAN_BW", sf->hdr.chan_bw, 1e6);
 
     get_int("NSUBBAND", sf->hdr.nsubband, 1);
+    get_dbl("EFSAMPFR", sf->hdr.efsampfr, 3e9);
+    get_dbl("FPGACLK", sf->hdr.fpgaclk, 325e6);
+    get_dbl("HWEXPOSR", sf->hdr.hwexposr, 0.5e-3);
+    get_dbl("FILTNEP", sf->hdr.filtnep, 0);
 
     get_str("DATADIR", dir, 200, ".");
     get_int("FILENUM", sf->filenum, 0);
 
     /* Start day and time */
 
-    int mjd_d, mjd_s, YYYY, MM, DD, h, m;
-    double mjd_fs, s;
-    long double MJD_epoch;
+    int YYYY, MM, DD, h, m;
+    double s;
 
-    get_int("STT_IMJD", mjd_d, 0);
-    get_int("STT_SMJD", mjd_s, 0);
-    get_dbl("STT_OFFS", mjd_fs, 0.0);
-    MJD_epoch = (long double) mjd_d;
-    MJD_epoch += ((long double) mjd_s + mjd_fs) / 86400.0;
+    get_dbl("STTMJD", sf->hdr.sttmjd, 0.0);
 
-    datetime_from_mjd(MJD_epoch, &YYYY, &MM, &DD, &h, &m, &s);
+    datetime_from_mjd(sf->hdr.sttmjd, &YYYY, &MM, &DD, &h, &m, &s);
     sprintf(sf->hdr.date_obs, "%02d/%02d/%02d", DD, MM, YYYY%1000);
    
     /* Set the base filename */

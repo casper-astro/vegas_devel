@@ -133,10 +133,17 @@ void write_spead_packet_to_block(struct datablock_stats *d, struct guppi_udp_pac
                                 unsigned int pkts_per_heap, char bw_mode[])
 {
     int block_heap_idx;
-    char *pkt_addr;
+    char *spead_header_addr, *spead_payload_addr;
+    char * pkt_addr;
+    double mjd;
 
     /*Determine packet's address within block */
     block_heap_idx = heap_cntr - d->heap_idx;
+/*Simon is HERE*/
+    spead_header_addr = guppi_databuf_data(d->db, d->block_idx) + 
+                block_heap_idx*d->heap_size + heap_offset;
+    spead_payload_addr = guppi_databuf_data(d->db, d->block_idx) + 
+                block_heap_idx*d->heap_size + heap_offset;
     pkt_addr = guppi_databuf_data(d->db, d->block_idx) + 
                 block_heap_idx*d->heap_size + heap_offset;
 
@@ -170,10 +177,12 @@ void write_spead_packet_to_block(struct datablock_stats *d, struct guppi_udp_pac
             pkts_dropped_in_heap = 1;
     }
 
-    //If this is the last packet of the heap, write valid bit to index
+    //If this is the last packet of the heap, write valid bit and MJD to index
     if(heap_offset + PAYLOAD_SIZE + 6*8 >= d->heap_size)
     {
 		index->cpu_gpu_buf[block_heap_idx].heap_valid = 1 - pkts_dropped_in_heap;
+        get_current_mjd_double(&mjd);
+        index->cpu_gpu_buf[block_heap_idx].heap_rcvd_mjd = mjd;
     }
 
     prev_heap_cntr = heap_cntr;
@@ -260,8 +269,8 @@ void *guppi_net_thread(void *_args) {
     pthread_cleanup_push((void *)guppi_udp_close, &up);
 
     /* Time parameters */
-    int stt_imjd=0, stt_smjd=0;
-    double stt_offs=0.0;
+    double meas_stt_mjd=0.0;
+    double meas_stt_offs=0.0;
 
     /* See which packet format to use */
     int nchan=0, npol=0;
@@ -474,16 +483,22 @@ if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d\n", seq_nu
                 npacket_this_block = 0;
 
                 /* Get obs start time */
-                get_current_mjd(&stt_imjd, &stt_smjd, &stt_offs);
-                if (stt_offs>0.5) { stt_smjd+=1; stt_offs-=1.0; }
-                if (fabs(stt_offs)>0.1) { 
+                get_current_mjd_double(&meas_stt_mjd);
+                meas_stt_offs = meas_stt_mjd*24*60*60 - floor(meas_stt_mjd*24*60*60);
+
+                if(meas_stt_offs > 0.1 && meas_stt_offs < 0.9)
+                { 
                     char msg[256];
                     sprintf(msg, 
                             "Second fraction = %3.1f ms > +/-100 ms",
-                            stt_offs*1e3);
+                            meas_stt_offs*1e3);
                     guppi_warn("guppi_net_thread", msg);
                 }
-                stt_offs = 0.0;
+
+                guppi_status_lock_safe(&st);
+                hputnr8(st.buf, "M_STTMJD", 8, meas_stt_mjd);
+                hputr8(st.buf, "M_STTOFF", meas_stt_offs);
+                guppi_status_unlock_safe(&st);
 
                 /* Warn if 1st packet number is not zero */
                 if (seq_num!=0) {
@@ -501,14 +516,8 @@ if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d\n", seq_nu
 
             }
             
-            /* Read/update current status shared mem */
+            /* Read current status shared mem */
             guppi_status_lock_safe(&st);
-            if (stt_imjd!=0) {
-
-                hputi4(st.buf, "STT_IMJD", stt_imjd);
-                hputi4(st.buf, "STT_SMJD", stt_smjd);
-                hputr8(st.buf, "STT_OFFS", stt_offs);
-            }
             memcpy(status_buf, st.buf, GUPPI_STATUS_SIZE);
             guppi_status_unlock_safe(&st);
 

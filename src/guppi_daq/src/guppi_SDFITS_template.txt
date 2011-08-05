@@ -41,7 +41,6 @@ TSYS    =                    * / System temperature
 PROJID  = '                '   / Project name
 FRONTEND= '                '   / Rx and feed ID
 OBSFREQ =                    * / [MHz] Centre frequency for observation
-LST     =                    * / LST (seconds) at start of scan
 SITELONG= 38.432842            / Antenna longitude (degrees, float)
 SITELAT = -79.839411           / Antenna latitude (degrees, float)
 SITEELEV= 807.43               / Antenna elevation (metres, float)
@@ -65,6 +64,11 @@ CHAN_BW =                    * / bandwidth of each spectral bin (resolution)
 ### New fields that have been added to support the GBT spectrometer ###
 #
 NSUBBAND=                    * / Number of sub-bands
+FPGACLK =                    * / FPGA clock rate [Hz]
+EFSAMPFR=                    * / Effective sampling frequency [Hz]
+HWEXPOSR=                    * / Duration of integration on FPGA/GPU [s]
+FILTNEP =                    * / PFB filter noise-equivalent parameter
+STTMJD  =                    * / Observation start time [double MJD]
 #
 #
 ##################################################################
@@ -73,8 +77,10 @@ NSUBBAND=                    * / Number of sub-bands
 #
 ### Standard SDFITS columns ###
 #
-TTYPE#  = 'TIME    '           / UT seconds since 0h UT (at start of integration)
+TTYPE#  = 'TIME    '           / MJD at start of integration (usec resolution)
 TFORM#  = '1D      '           / 8-byte real 
+TTYPE#  = 'TIMECNTR'           / FPGA time counter at start of integration
+TFORM#  = '1J      '           / 32-bit integer 
 TTYPE#  = 'EXPOSURE'           / Effective integration time (seconds)
 TFORM#  = '1E      '           / 4-byte real 
 TTYPE#  = 'OBJECT  '           / Object being viewed

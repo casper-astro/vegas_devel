@@ -1,4 +1,4 @@
-function [ fifo_re, bram_addr_en, bram_we, serializer_shift, serializer_ld, shift_count_en, shift_count_rst, bram_addr_rst, data_count_en, data_count_rst, done, waste_count_en, waste_count_rst] = pseudo_packetizer_fsm( fifo_empty, shift_count, data_per_word, data_count, n_words, sync_reset, waste_count, waste_time)
+function [ fifo_re, bram_addr_en, bram_we, serializer_shift, serializer_ld, shift_count_en, shift_count_rst, bram_addr_rst, data_count_en, data_count_rst, done, waste_count_en, waste_count_rst] = shpacketizer_fsm( fifo_empty, shift_count, data_per_word, data_count, n_words, sync_reset, waste_count, waste_time,wr_heap)
 
 persistent state,
 state=xl_state(0,{xlUnsigned,3,0});
@@ -65,7 +65,10 @@ switch double(state)
         
         done = false;
         
-        if (waste_count == waste_time)
+        if (wr_heap == false)
+            state = state_serialize;
+            serializer_ld = true;
+        elseif (waste_count == waste_time && wr_heap == true)        
            state = state_serialize;
            serializer_ld = true;
         end

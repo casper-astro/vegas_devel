@@ -10,6 +10,8 @@ python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -U --nogbt \
     --chan_bw=1465      \
     --nsubband=1        \
     --sub0freq=2.4e9    \
-    --exposure=2e-3     \
-    --pfbrate=32e5      \
+    --exposure=1e-3     \
+    --fpgaclk=375e6     \
+    --efsampfr=3e9      \
+    --hwexposr=0.5e-3   \
  

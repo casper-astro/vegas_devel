@@ -119,7 +119,7 @@ spead_header = {
 spead_heap = {
 	time_cntr_id		    : 0,
 	spectrum_cntr_id	    : 0,
-	integ_size_id		    : 100,
+	integ_size_id		    : 733,
 	mode_id			        : 1,
 	status_bits_id		    : 0,
 	payload_data_off_id	    : 0,
