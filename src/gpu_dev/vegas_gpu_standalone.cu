@@ -1,6 +1,6 @@
 /** 
  * @file vegas_gpu_standalone.cu
- * VEGAS GPU Modes - Stand-Alone Implementation
+ * VEGAS Low-Bandwidth Modes - Stand-Alone GPU Implementation
  *
  * @author Jayanth Chennamangalam
  * @date 2011.07.08
@@ -32,10 +32,13 @@ float4* g_pf4SumStokes_d = NULL;
 int g_iIsPFBOn = DEF_PFB_ON;
 int g_iNTaps = 1;                       /* 1 if no PFB, NUM_TAPS if PFB */
 char g_acFileData[256] = {0};
-/* TODO: crash if file size is less than 32MB */
+/* BUG: crash if file size is less than 32MB */
 int g_iSizeRead = DEF_SIZE_READ;
 int g_iNumSubBands = DEF_NUM_SUBBANDS;
-int g_iUsePlanMany = FALSE;
+int g_iFileCoeff = 0;
+char g_acFileCoeff[256] = {0};
+signed char *g_pcPFBCoeff = NULL;
+signed char *g_pcPFBCoeff_d = NULL;
 
 #if PLOT
 float* g_pfSumPowX = NULL;
@@ -57,8 +60,8 @@ cudaEvent_t g_cuStop;
 int main(int argc, char *argv[])
 {
     int iRet = EXIT_SUCCESS;
-    int iTime = 0;
-    int iAcc = DEF_ACC;
+    int iSpecCount = 0;
+    int iNumAcc = DEF_ACC;
     int iProcData = 0;
     cudaError_t iCUDARet = cudaSuccess;
 #if BENCHMARKING
@@ -136,7 +139,7 @@ int main(int argc, char *argv[])
 
             case 'a':   /* -a or --nacc */
                 /* set option */
-                iAcc = (int) atoi(optarg);
+                iNumAcc = (int) atoi(optarg);
                 break;
 
 #if PLOT
@@ -188,7 +191,7 @@ int main(int argc, char *argv[])
     iFileSpec = open("spec.dat",
                  O_CREAT | O_TRUNC | O_WRONLY,
                  S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-    if (EXIT_FAILURE == iFileSpec)
+    if (iFileSpec < EXIT_SUCCESS)
     {
         (void) fprintf(stderr, "ERROR! Opening spectrum file failed!\n");
         CleanUp();
@@ -199,7 +202,7 @@ int main(int argc, char *argv[])
 #if (!BENCHMARKING)
     (void) gettimeofday(&stStart, NULL);
 #endif
-    while (IsRunning())
+    while (!g_iIsProcDone)
     {
         if (g_iIsPFBOn)
         {
@@ -209,7 +212,8 @@ int main(int argc, char *argv[])
             CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStart));
 #endif
             DoPFB<<<g_dimGPFB, g_dimBPFB>>>(g_pc4DataRead_d,
-                                            g_pf4FFTIn_d);
+                                            g_pf4FFTIn_d,
+                                            g_pcPFBCoeff_d);
             CUDASafeCallWithCleanUp(cudaThreadSynchronize());
             iCUDARet = cudaGetLastError();
             if (iCUDARet != cudaSuccess)
@@ -257,7 +261,9 @@ int main(int argc, char *argv[])
 #if BENCHMARKING
             CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStop, 0));
             CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStop));
-            CUDASafeCallWithCleanUp(cudaEventElapsedTime(&fTimeCpInFFT, g_cuStart, g_cuStop));
+            CUDASafeCallWithCleanUp(cudaEventElapsedTime(&fTimeCpInFFT,
+                                                         g_cuStart,
+                                                         g_cuStop));
             fTotCpInFFT += fTimeCpInFFT;
             ++iCountCpInFFT;
 #endif
@@ -284,124 +290,86 @@ int main(int argc, char *argv[])
         CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStop, 0));
         CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStop));
         CUDASafeCallWithCleanUp(cudaEventElapsedTime(&fTimeFFT,
-                                               g_cuStart,
-                                               g_cuStop));
+                                                     g_cuStart,
+                                                     g_cuStop));
         fTotFFT += fTimeFFT;
         ++iCountFFT;
 #endif
 
         /* accumulate power x, power y, stokes, if the blanking bit is
            not set */
-        if (!IsBlankingSet())
+#if BENCHMARKING
+        CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStart, 0));
+        CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStart));
+#endif
+        Accumulate<<<g_dimGAccum, g_dimBAccum>>>(g_pf4FFTOut_d,
+                                                 g_pf4SumStokes_d);
+        CUDASafeCallWithCleanUp(cudaThreadSynchronize());
+        iCUDARet = cudaGetLastError();
+        if (iCUDARet != cudaSuccess)
         {
-            if (0/* blanking to non-blanking */)
-            {
-                /* TODO: when blanking is unset, start accumulating */
-                /* reset time */
-                iTime = 0;
-                /* zero accumulators */
-                CUDASafeCallWithCleanUp(cudaMemset(g_pf4SumStokes_d,
-                                             '\0',
-                                             (g_iNumSubBands
-                                              * g_iNFFT
-                                              * sizeof(float4))));
-            }
-            else
-            {
+            (void) fprintf(stderr,
+                           "ERROR: File <%s>, Line %d: %s\n",
+                           __FILE__,
+                           __LINE__,
+                           cudaGetErrorString(iCUDARet));
+            /* free resources */
+            CleanUp();
+            return EXIT_FAILURE;
+        }
 #if BENCHMARKING
-                CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStart, 0));
-                CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStart));
+        CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStop, 0));
+        CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStop));
+        CUDASafeCallWithCleanUp(cudaEventElapsedTime(&fTimeAccum,
+                                                     g_cuStart,
+                                                     g_cuStop));
+        fTotAccum += fTimeAccum;
+        ++iCountAccum;
 #endif
-                Accumulate<<<g_dimGAccum, g_dimBAccum>>>(g_pf4FFTOut_d,
-                                                         g_pf4SumStokes_d);
-                CUDASafeCallWithCleanUp(cudaThreadSynchronize());
-                iCUDARet = cudaGetLastError();
-                if (iCUDARet != cudaSuccess)
-                {
-                    (void) fprintf(stderr,
-                                   "ERROR: File <%s>, Line %d: %s\n",
-                                   __FILE__,
-                                   __LINE__,
-                                   cudaGetErrorString(iCUDARet));
-                    /* free resources */
-                    CleanUp();
-                    return EXIT_FAILURE;
-                }
+        ++iSpecCount;
+        if (iSpecCount == iNumAcc)
+        {
+            /* dump to buffer */
 #if BENCHMARKING
-                CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStop, 0));
-                CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStop));
-                CUDASafeCallWithCleanUp(cudaEventElapsedTime(&fTimeAccum,
-                                                       g_cuStart,
-                                                       g_cuStop));
-                fTotAccum += fTimeAccum;
-                ++iCountAccum;
+            CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStart, 0));
+            CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStart));
 #endif
-                ++iTime;
-                if (iTime == iAcc)
-                {
-                    /* dump to buffer */
+            CUDASafeCallWithCleanUp(cudaMemcpy(g_pf4SumStokes,
+                                               g_pf4SumStokes_d,
+                                               (g_iNumSubBands
+                                                * g_iNFFT
+                                                * sizeof(float4)),
+                                                cudaMemcpyDeviceToHost));
 #if BENCHMARKING
-                    CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStart, 0));
-                    CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStart));
-#endif
-                    CUDASafeCallWithCleanUp(cudaMemcpy(g_pf4SumStokes,
-                                                 g_pf4SumStokes_d,
-                                                 (g_iNumSubBands
-                                                  * g_iNFFT
-                                                  * sizeof(float4)),
-                                                 cudaMemcpyDeviceToHost));
-#if BENCHMARKING
-                    CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStop, 0));
-                    CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStop));
-                    CUDASafeCallWithCleanUp(cudaEventElapsedTime(&fTimeCpOut,
-                                                           g_cuStart,
-                                                           g_cuStop));
-                    fTotCpOut += fTimeCpOut;
-                    ++iCountCpOut;
+            CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStop, 0));
+            CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStop));
+            CUDASafeCallWithCleanUp(cudaEventElapsedTime(&fTimeCpOut,
+                                                         g_cuStart,
+                                                         g_cuStop));
+            fTotCpOut += fTimeCpOut;
+            ++iCountCpOut;
 #endif
 
 #if OUTFILE
-                    for (i = 0; i < g_iNFFT; ++i)
-                    {
-                        g_aiSumPowX[i] = *((int *) &g_pfSumPowX[i]);
-                        g_aiSumPowY[i] = *((int *) &g_pfSumPowY[i]);
-                        g_aiSumStokesRe[i] = *((int *) &g_pfSumStokesRe[i]);
-                        g_aiSumStokesIm[i] = *((int *) &g_pfSumStokesIm[i]);
-                    }
-                    (void) write(iFileSpec, g_aiSumPowX, g_iNFFT * sizeof(int));
-                    (void) write(iFileSpec, g_aiSumPowY, g_iNFFT * sizeof(int));
-                    (void) write(iFileSpec, g_aiSumStokesRe, g_iNFFT * sizeof(int));
-                    (void) write(iFileSpec, g_aiSumStokesIm, g_iNFFT * sizeof(int));
+            (void) write(iFileSpec,
+                         g_pf4SumStokes,
+                         g_iNumSubBands * g_iNFFT * sizeof(float4));
 #endif
 
 #if PLOT
-                    /* NOTE: Plot() will modify data! */
-                    Plot();
-                    (void) usleep(500000);
+            /* NOTE: Plot() will modify data! */
+            Plot();
+            (void) usleep(500000);
 #endif
 
-                    /* reset time */
-                    iTime = 0;
-                    /* zero accumulators */
-                    CUDASafeCallWithCleanUp(cudaMemset(g_pf4SumStokes_d,
-                                                 '\0',
-                                                 (g_iNumSubBands
-                                                  * g_iNFFT
-                                                  * sizeof(float4))));
-                }
-            }
-        }
-        else
-        {
-            /* TODO: */
-            if (1/* non-blanking to blanking */)
-            {
-                /* write status, dump data to disk buffer */
-            }
-            else
-            {
-                /* do nothing, wait for blanking to stop */
-            }
+            /* reset time */
+            iSpecCount = 0;
+            /* zero accumulators */
+            CUDASafeCallWithCleanUp(cudaMemset(g_pf4SumStokes_d,
+                                               '\0',
+                                               (g_iNumSubBands
+                                                * g_iNFFT
+                                                * sizeof(float4))));
         }
 
         /* if time to read from input buffer */
@@ -426,8 +394,6 @@ int main(int argc, char *argv[])
                 g_iIsProcDone = TRUE;
             }
         }
-#if BENCHMARKING
-#endif
     }
 #if (!BENCHMARKING)
     (void) gettimeofday(&stStop, NULL);
@@ -470,9 +436,6 @@ int Init()
     cudaDeviceProp stDevProp = {0};
     int iRet = EXIT_SUCCESS;
     cufftResult iCUFFTRet = CUFFT_SUCCESS;
-    int iFFTPlanN = g_iNFFT;
-    int iFFTPlanINEmbed = g_iNFFT;
-    int iFFTPlanONEmbed = g_iNFFT;
 
     iRet = RegisterSignalHandlers();
     if (iRet != EXIT_SUCCESS)
@@ -481,7 +444,10 @@ int Init()
         return EXIT_FAILURE;
     }
 
-    CUDASafeCallWithCleanUp(cudaGetDeviceCount(&iDevCount));
+    /* since CUDASafeCallWithCleanUp() calls cudaGetErrorString(),
+       it should not be used here - will cause crash if no CUDA device is
+       found */
+    (void) cudaGetDeviceCount(&iDevCount);
     if (0 == iDevCount)
     {
         (void) fprintf(stderr, "ERROR: No CUDA-capable device found!\n");
@@ -513,6 +479,64 @@ int Init()
         /* set number of taps to NUM_TAPS if PFB is on, else number of
            taps = 1 */
         g_iNTaps = NUM_TAPS;
+
+        g_pcPFBCoeff = (signed char *) malloc(g_iNumSubBands
+                                              * g_iNTaps
+                                              * g_iNFFT
+                                              * sizeof(signed char));
+        if (NULL == g_pcPFBCoeff)
+        {
+            (void) fprintf(stderr,
+                           "ERROR: Memory allocation failed! %s.\n",
+                           strerror(errno));
+            return EXIT_FAILURE;
+        }
+
+        /* allocate memory for the filter coefficient array on the device */
+        CUDASafeCallWithCleanUp(cudaMalloc((void **) &g_pcPFBCoeff_d,
+                                           g_iNumSubBands
+                                           * g_iNTaps
+                                           * g_iNFFT
+                                           * sizeof(signed char)));
+
+        /* read filter coefficients */
+        /* build file name */
+        (void) sprintf(g_acFileCoeff,
+                       "%s_%s_%d_%d_%d%s",
+                       FILE_COEFF_PREFIX,
+                       FILE_COEFF_DATATYPE,
+                       g_iNTaps,
+                       g_iNFFT,
+                       g_iNumSubBands,
+                       FILE_COEFF_SUFFIX);
+        g_iFileCoeff = open(g_acFileCoeff, O_RDONLY);
+        if (g_iFileCoeff < EXIT_SUCCESS)
+        {
+            (void) fprintf(stderr,
+                           "ERROR: Opening filter coefficients file %s "
+                           "failed! %s.\n",
+                           g_acFileCoeff,
+                           strerror(errno));
+            return EXIT_FAILURE;
+        }
+
+        iRet = read(g_iFileCoeff,
+                    g_pcPFBCoeff,
+                    g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(signed char));
+        if (iRet != (g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(signed char)))
+        {
+            (void) fprintf(stderr,
+                           "ERROR: Reading filter coefficients failed! %s.\n",
+                           strerror(errno));
+            return EXIT_FAILURE;
+        }
+        (void) close(g_iFileCoeff);
+
+        /* copy filter coefficients to the device */
+        CUDASafeCallWithCleanUp(cudaMemcpy(g_pcPFBCoeff_d,
+                   g_pcPFBCoeff,
+                   g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(signed char),
+                   cudaMemcpyHostToDevice));
     }
 
     /* allocate memory for data array - 32MB is the block size for the VEGAS
@@ -541,9 +565,9 @@ int Init()
         g_dimBCopy.x = g_iMaxThreadsPerBlock;
         g_dimBAccum.x = g_iMaxThreadsPerBlock;
     }
-    g_dimGPFB.x = (int) ceilf(((float) (g_iNumSubBands * g_iNFFT)) / g_iMaxThreadsPerBlock);
-    g_dimGCopy.x = (int) ceilf(((float) (g_iNumSubBands * g_iNFFT)) / g_iMaxThreadsPerBlock);
-    g_dimGAccum.x = (int) ceilf(((float) (g_iNumSubBands * g_iNFFT)) / g_iMaxThreadsPerBlock);
+    g_dimGPFB.x = (g_iNumSubBands * g_iNFFT) / g_iMaxThreadsPerBlock;
+    g_dimGCopy.x = (g_iNumSubBands * g_iNFFT) / g_iMaxThreadsPerBlock;
+    g_dimGAccum.x = (g_iNumSubBands * g_iNFFT) / g_iMaxThreadsPerBlock;
 
     iRet = ReadData();
     if (iRet != EXIT_SUCCESS)
@@ -553,9 +577,13 @@ int Init()
     }
 
     CUDASafeCallWithCleanUp(cudaMalloc((void **) &g_pf4FFTIn_d,
-                                 g_iNumSubBands * g_iNFFT * sizeof(float4)));
+                                       g_iNumSubBands
+                                       * g_iNFFT
+                                       * sizeof(float4)));
     CUDASafeCallWithCleanUp(cudaMalloc((void **) &g_pf4FFTOut_d,
-                                 g_iNumSubBands * g_iNFFT * sizeof(float4)));
+                                       g_iNumSubBands
+                                       * g_iNFFT
+                                       * sizeof(float4)));
 
     g_pf4SumStokes = (float4 *) malloc(g_iNumSubBands
                                        * g_iNFFT
@@ -568,19 +596,23 @@ int Init()
         return EXIT_FAILURE;
     }
     CUDASafeCallWithCleanUp(cudaMalloc((void **) &g_pf4SumStokes_d,
-                                 g_iNumSubBands * g_iNFFT * sizeof(float4)));
+                                       g_iNumSubBands
+                                       * g_iNFFT
+                                       * sizeof(float4)));
     CUDASafeCallWithCleanUp(cudaMemset(g_pf4SumStokes_d,
-                                 '\0',
-                                 g_iNumSubBands * g_iNFFT * sizeof(float4)));
+                                       '\0',
+                                       g_iNumSubBands
+                                       * g_iNFFT
+                                       * sizeof(float4)));
 
     /* create plan */
     iCUFFTRet = cufftPlanMany(&g_stPlan,
                               FFTPLAN_RANK,
-                              &iFFTPlanN,
-                              &iFFTPlanINEmbed,
+                              &g_iNFFT,
+                              &g_iNFFT,
                               FFTPLAN_ISTRIDE,
                               FFTPLAN_IDIST,
-                              &iFFTPlanONEmbed,
+                              &g_iNFFT,
                               FFTPLAN_OSTRIDE,
                               FFTPLAN_ODIST,
                               CUFFT_C2C,
@@ -592,7 +624,6 @@ int Init()
     }
 
 #if PLOT
-    /* just for plotting */
     iRet = InitPlot();
     if (iRet != EXIT_SUCCESS)
     {
@@ -620,7 +651,6 @@ int LoadDataToMem()
                        "ERROR: Failed to stat %s: %s!\n",
                        g_acFileData,
                        strerror(errno));
-        (void) close(iFileData);
         return EXIT_FAILURE;
     }
 
@@ -631,12 +661,11 @@ int LoadDataToMem()
         (void) fprintf(stderr,
                        "ERROR: Memory allocation failed! %s.\n",
                        strerror(errno));
-        (void) close(iFileData);
         return EXIT_FAILURE;
     }
 
     iFileData = open(g_acFileData, O_RDONLY);
-    if (EXIT_FAILURE == iFileData)
+    if (iFileData < EXIT_SUCCESS)
     {
         (void) fprintf(stderr,
                        "ERROR! Opening data file %s failed! %s.\n",
@@ -646,7 +675,7 @@ int LoadDataToMem()
     }
 
     iRet = read(iFileData, g_pc4InBuf, g_iSizeFile);
-    if (EXIT_FAILURE == iRet)
+    if (iRet < EXIT_SUCCESS)
     {
         (void) fprintf(stderr,
                        "ERROR: Data reading failed! %s.\n",
@@ -654,9 +683,13 @@ int LoadDataToMem()
         (void) close(iFileData);
         return EXIT_FAILURE;
     }
+    else if (iRet != stFileStats.st_size)
+    {
+        (void) printf("File read done!\n");
+    }
 
     (void) close(iFileData);
-    
+
     /* set the read pointer to the beginning of the data array */
     g_pc4InBufRead = g_pc4InBuf;
 
@@ -678,7 +711,9 @@ int ReadData()
 #if BENCHMARKING
     CUDASafeCallWithCleanUp(cudaEventRecord(g_cuStop, 0));
     CUDASafeCallWithCleanUp(cudaEventSynchronize(g_cuStop));
-    CUDASafeCallWithCleanUp(cudaEventElapsedTime(&g_fTimeCpIn, g_cuStart, g_cuStop));
+    CUDASafeCallWithCleanUp(cudaEventElapsedTime(&g_fTimeCpIn,
+                                                 g_cuStart,
+                                                 g_cuStop));
     g_fTotCpIn += g_fTimeCpIn;
     ++g_iCountCpIn;
 #endif
@@ -693,7 +728,7 @@ int ReadData()
     /* whenever there is a read, reset the read pointer to the beginning */
     g_pc4DataRead_d = g_pc4Data_d;
     ++g_iReadCount;
-    /* TODO: won't read last block - check it */
+    /* BUG: won't read last block */
     if ((((char *) g_pc4InBuf) + g_iSizeFile) - ((char *) g_pc4InBufRead)
         <= g_iSizeRead)
     {
@@ -704,16 +739,16 @@ int ReadData()
     return EXIT_SUCCESS;
 }
 
-__global__ void DoPFB(char4* pc4Data,
-                      float4* pf4FFTIn)
+/* function that performs the PFB */
+__global__ void DoPFB(char4 *pc4Data,
+                      float4 *pf4FFTIn,
+                      signed char *pcPFBCoeff)
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     int iNFFT = (gridDim.x * blockDim.x);
     int j = 0;
     int iAbsIdx = 0;
-    float fArg = 0.0;
     float4 f4PFBOut = make_float4(0.0, 0.0, 0.0, 0.0);
-    float fCoeff = 0.0;
     char4 c4Data = make_char4(0, 0, 0, 0);
 
     for (j = 0; j < NUM_TAPS; ++j)
@@ -722,14 +757,11 @@ __global__ void DoPFB(char4* pc4Data,
         iAbsIdx = (j * iNFFT) + i;
         /* get the address of the block */
         c4Data = pc4Data[iAbsIdx];
-        /* evaluate filter coefficient at this point */
-        fArg = (float) M_PI * ((((float) iAbsIdx) / iNFFT) - (NUM_TAPS / 2));
-        fCoeff = (((float) 0.0 == fArg) ? 1.0 : (__sinf(fArg) / fArg));
         
-        f4PFBOut.x += (float) c4Data.x * fCoeff;
-        f4PFBOut.y += (float) c4Data.y * fCoeff;
-        f4PFBOut.z += (float) c4Data.z * fCoeff;
-        f4PFBOut.w += (float) c4Data.w * fCoeff;
+        f4PFBOut.x += (float) c4Data.x * pcPFBCoeff[iAbsIdx];
+        f4PFBOut.y += (float) c4Data.y * pcPFBCoeff[iAbsIdx];
+        f4PFBOut.z += (float) c4Data.z * pcPFBCoeff[iAbsIdx];
+        f4PFBOut.w += (float) c4Data.w * pcPFBCoeff[iAbsIdx];
     }
 
     pf4FFTIn[i] = f4PFBOut;
@@ -773,38 +805,31 @@ __global__ void Accumulate(float4 *pf4FFTOut,
                            float4 *pf4SumStokes)
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
+    float4 f4FFTOut = pf4FFTOut[i];
+    float4 f4SumStokes = make_float4(0.0, 0.0, 0.0, 0.0);
 
     /* Re(X)^2 + Im(X)^2 */
-    pf4SumStokes[i].x += (pf4FFTOut[i].x * pf4FFTOut[i].x)
-                         + (pf4FFTOut[i].y * pf4FFTOut[i].y);
+    f4SumStokes.x += (f4FFTOut.x * f4FFTOut.x)
+                         + (f4FFTOut.y * f4FFTOut.y);
     /* Re(Y)^2 + Im(Y)^2 */
-    pf4SumStokes[i].y += (pf4FFTOut[i].z * pf4FFTOut[i].z)
-                         + (pf4FFTOut[i].w * pf4FFTOut[i].w);
+    f4SumStokes.y += (f4FFTOut.z * f4FFTOut.z)
+                         + (f4FFTOut.w * f4FFTOut.w);
     /* Re(XY*) */
-    pf4SumStokes[i].z += (pf4FFTOut[i].x * pf4FFTOut[i].z)
-                         + (pf4FFTOut[i].y * pf4FFTOut[i].w);
+    f4SumStokes.z += (f4FFTOut.x * f4FFTOut.z)
+                         + (f4FFTOut.y * f4FFTOut.w);
     /* Im(XY*) */
-    pf4SumStokes[i].w += (pf4FFTOut[i].y * pf4FFTOut[i].z)
-                         - (pf4FFTOut[i].x * pf4FFTOut[i].w);
+    f4SumStokes.w += (f4FFTOut.y * f4FFTOut.z)
+                         - (f4FFTOut.x * f4FFTOut.w);
+
+    pf4SumStokes[i] = f4SumStokes;
 
     return;
-}
-
-int IsRunning()
-{
-    return (!g_iIsProcDone);
-}
-
-int IsBlankingSet()
-{
-    /* check for status and return TRUE or FALSE */
-    return FALSE;
 }
 
 /* function that frees resources */
 void CleanUp()
 {
-    /* free memory */
+    /* free resources */
     if (g_pc4InBuf != NULL)
     {
         free(g_pc4InBuf);
@@ -836,7 +861,11 @@ void CleanUp()
         g_pf4SumStokes_d = NULL;
     }
 
+    free(g_pcPFBCoeff);
+    (void) cudaFree(g_pcPFBCoeff_d);
+
     /* destroy plan */
+    /* TODO: check for plan */
     (void) cufftDestroy(g_stPlan);
 
 #if PLOT
@@ -923,7 +952,7 @@ void PrintBenchmarks(float fTotPFB,
                   fTotFFT,
                   (int) ((fTotFFT / fTotal) * 100),
                   fTotFFT / iCountFFT);
-    (void) printf("        %6d calls to Accumulate()/accumulation loop   : "
+    (void) printf("        %6d calls to Accumulate()                     : "
                   "%5.3fms, %2d%%; Average = %5.3fms\n",
                   iCountAccum,
                   fTotAccum,
@@ -1020,7 +1049,9 @@ void Plot()
 
     for (k = 0; k < g_iNumSubBands; ++k)
     {
-        for (i = k, j = 0; i < (g_iNumSubBands * g_iNFFT); i += g_iNumSubBands, ++j)
+        for (i = k, j = 0;
+             i < (g_iNumSubBands * g_iNFFT);
+             i += g_iNumSubBands, ++j)
         {
             if (0.0 == g_pf4SumStokes[i].x)
             {
@@ -1059,14 +1090,12 @@ void Plot()
         /* to avoid min == max */
         fMaxY += 1.0;
         fMinY -= 1.0;
-        #if 1
         for (i = 0; i < g_iNFFT; ++i)
         {
             g_pfSumPowX[i] -= fMaxY;
         }
         fMinY -= fMaxY;
         fMaxY = 0;
-        #endif
         cpgpanl(k + 1, 1);
         cpgeras();
         cpgsvp(PG_VP_ML, PG_VP_MR, PG_VP_MB, PG_VP_MT);
@@ -1094,14 +1123,12 @@ void Plot()
         /* to avoid min == max */
         fMaxY += 1.0;
         fMinY -= 1.0;
-        #if 1
         for (i = 0; i < g_iNFFT; ++i)
         {
             g_pfSumPowY[i] -= fMaxY;
         }
         fMinY -= fMaxY;
         fMaxY = 0;
-        #endif
         cpgpanl(k + 1, 2);
         cpgeras();
         cpgsvp(PG_VP_ML, PG_VP_MR, PG_VP_MB, PG_VP_MT);
@@ -1166,8 +1193,6 @@ void Plot()
         cpgline(g_iNFFT, g_pfFreq, g_pfSumStokesIm);
         cpgsci(PG_CI_DEF);
     }
-   // CleanUp();
-   // exit(0);
 
     return;
 }

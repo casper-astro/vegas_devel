@@ -6,6 +6,9 @@
  * @date 2011.07.08
  */
 
+#ifndef __VEGAS_GPU_STANDALONE_H__
+#define __VEGAS_GPU_STANDALONE_H__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <cuda.h>
@@ -14,8 +17,8 @@
 /**
  * @defgroup Macros to enable/disable options such as plotting.
  */
-#define PLOT                0
-#define BENCHMARKING        0
+#define PLOT                1
+#define BENCHMARKING        1
 #define OUTFILE             0
 
 #include <string.h>     /* for memset(), strncpy(), memcpy(), strerror() */
@@ -31,7 +34,7 @@
 #include <assert.h>     /* for assert() */
 #include <errno.h>      /* for errno */
 #include <signal.h>     /* for signal-handling */
-#include <math.h>       /* for ceilf(), and log10f() in Plot() */
+#include <math.h>       /* for log10f() in Plot() */
 #include <sys/time.h>   /* for gettimeofday() */
 
 #define FALSE               0
@@ -50,7 +53,8 @@
                                            accumulate */
 /* for PFB */
 #define NUM_TAPS            8       /* number of multiples of g_iNFFT */
-#define FILE_COEFF_PREFIX   "tests/python/coeff8bit_"
+#define FILE_COEFF_PREFIX   "coeff"
+#define FILE_COEFF_DATATYPE "signedchar"
 #define FILE_COEFF_SUFFIX   ".dat"
 
 #define DEF_NUM_SUBBANDS    8
@@ -100,14 +104,13 @@ int ReadData(void);
  * @param[out]  pf4FFTIn    Output data (input to FFT)
  */
 __global__ void DoPFB(char4* pc4Data,
-                      float4* pf4FFTIn);
+                      float4* pf4FFTIn,
+                      signed char* pcPFBCoeff);
 __global__ void CopyDataForFFT(char4* pc4Data,
                                float4* pf4FFTIn);
 int DoFFT(void);
 __global__ void Accumulate(float4 *pf4FFTOut,
                            float4* pfSumStokes);
-int IsRunning(void);
-int IsBlankingSet(void);
 void CleanUp(void);
 
 #define CUDASafeCallWithCleanUp(iRet)   __CUDASafeCallWithCleanUp(iRet,       \
@@ -142,4 +145,6 @@ void Plot(void);
 int RegisterSignalHandlers();
 void HandleStopSignals(int iSigNo);
 void PrintUsage(const char* pcProgName);
+
+#endif  /* __VEGAS_GPU_STANDALONE_H__ */
 
