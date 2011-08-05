@@ -133,11 +133,17 @@ void write_spead_packet_to_block(struct datablock_stats *d, struct guppi_udp_pac
                                 unsigned int pkts_per_heap, char bw_mode[])
 {
     int block_heap_idx;
-    char *pkt_addr;
+    char *spead_header_addr, *spead_payload_addr;
+    char * pkt_addr;
     double mjd;
 
     /*Determine packet's address within block */
     block_heap_idx = heap_cntr - d->heap_idx;
+/*Simon is HERE*/
+    spead_header_addr = guppi_databuf_data(d->db, d->block_idx) + 
+                block_heap_idx*d->heap_size + heap_offset;
+    spead_payload_addr = guppi_databuf_data(d->db, d->block_idx) + 
+                block_heap_idx*d->heap_size + heap_offset;
     pkt_addr = guppi_databuf_data(d->db, d->block_idx) + 
                 block_heap_idx*d->heap_size + heap_offset;
 

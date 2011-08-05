@@ -271,6 +271,8 @@ void do_pfb(char *in, char *out, struct databuf_index *index_in,
                          index_in->cpu_gpu_buf[heap_out].heap_valid;
                 index_out->cpu_gpu_buf[heap_out].heap_cntr =
                         index_in->cpu_gpu_buf[heap_out].heap_cntr;
+                index_out->cpu_gpu_buf[heap_out].heap_rcvd_mjd =
+                         index_in->cpu_gpu_buf[heap_out].heap_rcvd_mjd ;
 
                 iRet = get_accumulated_spectrum_from_device(heap_addr_out + sizeof(struct freq_spead_heap));
                 if (iRet != GUPPI_OK)

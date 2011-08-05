@@ -34,9 +34,11 @@ union semun {
 
 #ifdef NEW_GBT
 
-#define GPU_INPUT_BUF   1
-#define CPU_INPUT_BUF   2
-#define DISK_INPUT_BUF  3
+#define GPU_INPUT_BUF       1
+#define CPU_INPUT_BUF       2
+#define DISK_INPUT_BUF      3
+
+#define MAX_HEAPS_PER_BLK   4096
 
 // Single element of the index for the GPU or CPU input buffer
 struct cpu_gpu_buf_index
