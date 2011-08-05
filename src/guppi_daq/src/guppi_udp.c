@@ -404,10 +404,11 @@ unsigned int guppi_spead_packet_datasize(const struct guppi_udp_packet *p)
 }
 
 
-int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *dest_addr, char bw_mode[])
+int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *header_addr,
+                            char* payload_addr, char bw_mode[])
 {
     int i, num_items;
-    char* payload_addr;
+    char* pkt_payload;
     int payload_size, offset;
 
     num_items = p->data[6]<<8 | p->data[7];
@@ -415,21 +416,21 @@ int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *dest_addr, char bw
     /* Copy header, reversing both the ID and value of each field */
     for(i = 0; i < num_items - 4; i++)
     {
-        dest_addr[0]
+        header_addr[0]
                 = guppi_spead_packet_data(p)[i*8];                                  //mode byte
-        *((unsigned short *)(dest_addr + 1))
+        *((unsigned short *)(header_addr + 1))
                 = ntohs(*(unsigned short *)(guppi_spead_packet_data(p) + i*8 + 1)); //ID (16 bits)
-        dest_addr[3]
+        header_addr[3]
                 = guppi_spead_packet_data(p)[i*8 + 3];                              //pad byte
-        *((unsigned int *)(dest_addr + 4))
+        *((unsigned int *)(header_addr + 4))
                 = ntohl(*(unsigned int *)(guppi_spead_packet_data(p) + i*8 + 4));   //value (32 bits)
 
-        dest_addr = (char*)(dest_addr + 8);
+        header_addr = (char*)(header_addr + 8);
     }
 
     /* Copy payload */
     
-    payload_addr = guppi_spead_packet_data(p) + (num_items - 4) * 8;
+    pkt_payload = guppi_spead_packet_data(p) + (num_items - 4) * 8;
     payload_size = guppi_spead_packet_datasize(p) - (num_items - 4) * 8;
 
     /* If high-bandwidth mode */
@@ -437,14 +438,14 @@ int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *dest_addr, char bw
     {
         for(offset = 0; offset < payload_size; offset += 4)
         {
-            *(unsigned int *)(dest_addr + offset) =
-                ntohl(*(unsigned int *)(payload_addr + offset));
+            *(unsigned int *)(payload_addr + offset) =
+                ntohl(*(unsigned int *)(pkt_payload + offset));
         }
     }
     
     /* Else if low-bandwidth mode */
     else if(strncmp(bw_mode, "low", 3) == 0)
-        memcpy(dest_addr, payload_addr, payload_size);
+        memcpy(payload_addr, pkt_payload, payload_size);
 
     return 0;
 }

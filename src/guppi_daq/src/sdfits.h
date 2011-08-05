@@ -26,7 +26,6 @@ struct hdrinfo
     char projid[16];        // The project ID
     char frontend[16];      // Frontend used
     double obsfreq;         // Centre frequency for observation
-    double lst;             // LST (seconds after 0h) at start of scan
     double scan;            // Scan number (float)
 
     char instrument[16];       // Backend or instrument used
@@ -39,11 +38,17 @@ struct hdrinfo
     double chan_bw;         // Width of each spectral bin
 
     int nsubband;           // Number of sub-bands
+    double efsampfr;        // Effective sampling frequency (after decimation)
+    double fpgaclk;         // FPGA clock rate [Hz]
+    double hwexposr;        // Duration of fixed integration on FPGA/GPU [s]
+    double filtnep;         // PFB filter noise-equivalent parameter
+    double sttmjd;          // Observation start time [double MJD]
 };
     
 struct sdfits_data_columns
 {
-    double time;            // UT seconds at start of integration (since 0h UT)
+    double time;            // MJD start of integration (from system time)
+    int time_counter;       // FPGA time counter at start of integration
     float exposure;         // Effective integration time (seconds)
     char object[16];        // Object being viewed
     float azimuth;          // Commanded azimuth

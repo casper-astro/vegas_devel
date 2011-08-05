@@ -97,6 +97,7 @@ void vegas_pfb_thread(void *_args) {
     int curblock_in=0, curblock_out=0;
     int first=1;
     signal(SIGINT,cc);
+
     while (run) {
 
         /* Note waiting status */
@@ -108,28 +109,21 @@ void vegas_pfb_thread(void *_args) {
         rv = guppi_databuf_wait_filled(db_in, curblock_in);
         if (rv!=0) continue;
 
-        /* Note waiting status, current block */
+        /* Note waiting status, current input block */
         guppi_status_lock_safe(&st);
         hputs(st.buf, STATUS_KEY, "processing");
-        hputi4(st.buf, "CURBLOCK", curblock_in);
+        hputi4(st.buf, "PFBBLKIN", curblock_in);
         guppi_status_unlock_safe(&st);
 
         /* Get params */
         hdr_in = guppi_databuf_header(db_in, curblock_in);
+
         if (first)
+        {
             guppi_read_obs_params(hdr_in, &gp, &sf);
-        else 
-            guppi_read_subint_params(hdr_in, &gp, &sf);
-
-        /* Any first-time init stuff */
-        if (first) {
-
-            /* Init PFB on GPU */
-            init_pfb(db_in->block_size, db_out->block_size, db_in->index_size, sf.hdr.nchan);
-
-            /* Clear first time flag */
-            first=0;
+            init_gpu(db_in->block_size, db_out->block_size, db_in->index_size, sf.hdr.nsubband, sf.hdr.nchan);
         }
+        guppi_read_subint_params(hdr_in, &gp, &sf);
 
         /* Setup input and output data block stuff */
         hdr_out = guppi_databuf_header(db_out, curblock_out);
@@ -143,7 +137,7 @@ void vegas_pfb_thread(void *_args) {
                 GUPPI_STATUS_SIZE);
 
         /* Call PFB function */
-        do_pfb(curdata_in, curdata_out, curindex_in, curindex_out);
+        do_pfb(curdata_in, curdata_out, curindex_in, curindex_out, first);
 
         /* Mark blocks as free/filled */
         guppi_databuf_set_free(db_in, curblock_in);
@@ -153,6 +147,11 @@ void vegas_pfb_thread(void *_args) {
         curblock_in = (curblock_in + 1) % db_in->n_block;
 
         printf("Debug: vegas_pfb_thread going to next output block\n");
+
+        /* Note current output block */
+        guppi_status_lock_safe(&st);
+        hputi4(st.buf, "PFBBLKOU", curblock_out);
+        guppi_status_unlock_safe(&st);
 
         /*  Wait for next output block */
         curblock_out = (curblock_out + 1) % db_out->n_block;
@@ -165,13 +164,16 @@ void vegas_pfb_thread(void *_args) {
         /* Check for cancel */
         pthread_testcancel();
 
+        if (first) {
+            first=0;
+        }
     }
     run=0;
 
     //cudaThreadExit();
     pthread_exit(NULL);
 
-    destroy_pfb();
+    cleanup_gpu();
 
     pthread_cleanup_pop(0); /* Closes guppi_databuf_detach(out) */
     pthread_cleanup_pop(0); /* Closes guppi_databuf_detach(in) */

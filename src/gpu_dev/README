@@ -1,13 +1,22 @@
 README
 -------------------------------------------------------------------------------
 
-Files: vegas_gpu_standalone.cu
-       vegas_gpu_standalone.h
-       Makefile
+This directory contains two programs - a standalone VEGAS spectrometer
+implementation in C and a similar program in CUDA/C. The relevant files are:
 
--------------------------------------------------------------------------------
+vegas_cpu_standalone.c
+vegas_cpu_standalone.h
+vegas_gpu_standalone.cu
+vegas_gpu_standalone.h
+vegas_gentestdata.c
+vegas_gencoeff.py
+Makefile
 
-Notation: A Hungarian-esque notation is used here. Example:
+------------------------------------------------------------------------------
+
+Notes on notation:
+
+A Hungarian-esque notation is used here. Example:
 
 #define DEF_NFFT    1024    /* 'DEF_' denotes default values */
 
@@ -36,7 +45,76 @@ int g_iVar; /* global variable */
 
 -------------------------------------------------------------------------------
 
-Code:
+vegas_cpu_standalone:
+
+System requirements: Linux PC, FFTW3 library, PGPLOT library (if PGPLOT flag is
+turned on - see below)
+
+Usage: vegas_cpu_standalone [options] <data-file>
+    -h  --help                           Display this usage information
+    -n  --nfft <value>                   Number of points in FFT
+    -p  --pfb                            Enable PFB
+    -a  --nacc <value>                   Number of spectra to add
+    -s  --fsamp <value>                  Sampling frequency (used only in
+                                                             plots)
+
+This code reads 8-bit, complex, dual-polarisation, single-sub-band data from a
+user-specified file, and does FFT or PFB+FFT on the data, depending on
+user-specified command-line flags, and accumulates spectra. The number of
+spectra to accumulate is also user-specified.
+
+Data is two's-complement 8-bit values in the range [-128, 127] (that are
+actually 8_7 fixed-point values in the range [-1.0, +0.992188]. The samples are
+interleaved, like so:
+
+Real(X-pol.), Imag(X-pol.), Real(Y-pol.), Imag(Y-pol.)
+
+There are two compilation flags defined in vegas_cpu_standalone.h:
+
+PLOT: If set to non-zero value, will use PGPLOT to plot spectra
+OUTFILE: If set to non-zero value, will write spectra to file. The spectra
+are written in the following format. The length of each block is given in
+parentheses, in units of samples.
+---------------------------------------------------------------
+| PowX (NFFT) | PowY (NFFT) | Re(XY*) (NFFT) | Im(XY*) (NFFT) |
+---------------------------------------------------------------
+(Interleave blocks)
+
+The main logic, in pseudo-code, is as follows:
+
+Initialise stuff, including reading the first NUM_TAPS blocks
+while(Data-processing-not-done)
+{
+    if (PFB-is-enabled)
+    {
+        Do PFB on first P * N samples (P = number of taps,
+                                       N = number of points in FFT)
+    }
+    else    /* only FFT */
+    {
+        Copy char array to float array (FFTW3 requires float input)
+    }
+
+    Do FFT
+
+    if (Blanking-not-set)
+    {
+        Accumulate spectra
+        if (Accumulation-length-reached)
+        {
+            Reset accumulator
+        }
+    }
+
+    Read next block of data
+}
+
+-------------------------------------------------------------------------------
+
+vegas_gpu_standalone:
+
+System requirements: Linux PC with a Fermi-architecture GPU, CUDA 4.0 with
+CUFFT library, PGPLOT library (if PGPLOT flag is turned on - see below)
 
 Usage: vegas_gpu_standalone [options] <data-file>
     -h  --help                           Display this usage information
@@ -46,16 +124,21 @@ Usage: vegas_gpu_standalone [options] <data-file>
     -s  --fsamp <value>                  Sampling frequency (used only in
                                                              plots)
 
-This code reads 8-bit, complex, dual-polarisation data from a user-specified
-file, loads the entire contents of the file to memory (that restricts the
-max. file size), and does FFT or PFB+FFT on the data, depending on
-user-specified command-line flags, and accumulates spectra. Data is copied from
-host memory to device/GPU memory in blocks of 32MB. (This code fails for data
-file size < 32MB.) The number of spectra to accumulate is also user-specified.
+This code reads 8-bit, complex, dual-polarisation, n-sub-band data from a
+user-specified file, loads the entire contents of the file to memory (that
+restricts the max. file size), and does FFT or PFB+FFT on the data, depending
+on user-specified command-line flags, and accumulates spectra. Data is copied
+from host memory to device/GPU memory in blocks of 32MB. (This code fails for
+data file size < 32MB.) The number of spectra to accumulate is also
+user-specified.
 
-Data is two's-complement 8-bit values between -128 to 127 (that are actually
-fixed-point values between -1.0 and +1.0). It is read into a CUDA char4 array
-as follows:
+Data is two's-complement 8-bit values in the range [-128, 127] (that are
+actually 8_7 fixed-point values in the range [-1.0, +0.992188]. The samples are
+interleaved, like so:
+
+Real(X-pol.), Imag(X-pol.), Real(Y-pol.), Imag(Y-pol.)
+
+They are read into a CUDA char4 array as follows:
 
 char4 c4Data;
 
@@ -64,13 +147,18 @@ c4Data.y = Imag(X-pol.)
 c4Data.z = Real(Y-pol.)
 c4Data.w = Imag(Y-pol.)
 
-There are three compilation flags defined in vegas_gpu_standalone.h (starting
-on line 17):
+There are three compilation flags defined in vegas_gpu_standalone.h:
 
 PLOT: If set to non-zero value, will use PGPLOT to plot spectra
 BENCHMARKING: If set to non-zero value, will calculate and print kernel
               benchmarks.
-OUTFILE: If set to non-zero value, will write spectra to file. (Incomplete)
+OUTFILE: If set to non-zero value, will write spectra to file. The spectra
+are written in the following format. The length of each block is given in
+parentheses, in units of samples.
+---------------------------------------------------
+| PowX (1) | PowY (1) | Re(XY*) (1) | Im(XY*) (1) |
+---------------------------------------------------
+(Interleaved samples)
 
 The main logic, in pseudo-code, is as follows:
 
@@ -108,5 +196,49 @@ while(Data-processing-not-done)
         continue;
     }
 }
+
+-------------------------------------------------------------------------------
+
+vegas_gentestdata.c:
+
+System requirements: Linux PC
+
+Usage: vegas_gentestdata [options] <data-file>
+    -h  --help                           Display this usage information
+    -n  --nsamp <value>                  Number of time samples
+
+Program to generate test data for the VEGAS standalone implementations. The
+test data is made up of 1-byte signed values in the range -128 to 127 that may
+be interpreted by the VEGAS programs to be 8_7 fixed-point values in the range
+[-1.0, 0.992188]. The VEGAS standalone implementations treat this data as
+interleaved, complex, dual-polarisation data, with an arbitrary number of
+sub-bands.
+
+This program has to be manually edited to change input tone frequencies, add
+sweeping signals, etc.
+
+-------------------------------------------------------------------------------
+
+vegas_gencoeff.py
+
+System requirements: Linux PC, Python, NumPy module, matplotlib module
+
+Usage: vegas_gencoeff.py [options]
+    -h  --help                 Display this usage information
+    -n  --nfft <value>         Number of points in FFT
+    -t  --taps <value>         Number of taps in PFB
+    -b  --sub-bands <value>    Number of sub-bands in data
+    -d  --data-type <value>    Data type - "float" or "signedchar"
+    -p  --no-plot              Do not plot coefficients
+
+Python script to generate filter coefficients for the VEGAS codes, given the
+number of points in the FFT, number of filter taps, number of sub-bands in the
+data, and whether to output single-precision floating point coefficients or
+signed chars in the range [-128, 127]. Note that the VEGAS codes can only
+accept signed chars.
+
+The output is a binary file, and the filename has the following format:
+
+coeff_<data-type>_<taps>_<nfft>_<sub-bands>.dat
 
 -------------------------------------------------------------------------------

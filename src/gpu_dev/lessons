@@ -1,0 +1,12 @@
+1. Make sure to run all samples in the GPU computing SDK to make sure that
+   the card is not bad.
+2. Constant memory is faster only if all threads in a threadblock(/warp?)
+   access the *same* location, and not if each thread accesses different (even
+   contiguous) locations.
+3. Texture references have to be global variables.
+4. You cannot have an array of texture references.
+5. Passing texture references to a function won't work.
+6. Using aligned built-in types such as float2 will not work with traditional
+   initialisers.
+   Example: float2 f2X = {0.0};                 // wrong
+            float2 f2X = make_float2(0.0, 0.0); // correct

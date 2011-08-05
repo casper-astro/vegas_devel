@@ -10,7 +10,6 @@ state_payload       = 4;
 state_done          = 5;
 
 switch double(state)
-    
     case state_reset
         head_count_rst  = true;
         head_count_en   = false;
@@ -19,9 +18,10 @@ switch double(state)
         words_sent_rst  = true;
         words_sent_en   = false;
         tge_valid       = false;
-        select_data     = false;
-        state           = state_long_header;
+        select_data     = 0;
         heap_elements   = 0;
+        
+        state           = state_long_header;
     
     case state_long_header
         head_count_rst  = false;
@@ -31,12 +31,13 @@ switch double(state)
         words_sent_rst  = false;
         words_sent_en   = false;
         tge_valid       = true;
-        select_data     = false;
-        heap_elements   = total_header_len;
+        select_data     = 0;
+        heap_elements   = total_header_len-1;
         
         if head_count == total_header_len-1
             state = state_ready_to_send;
         end
+        
     case state_short_header
         head_count_rst  = false;
         head_count_en   = true;
@@ -45,8 +46,8 @@ switch double(state)
         words_sent_rst  = false;
         words_sent_en   = false;
         tge_valid       = true;
-        select_data     = false;
-        heap_elements   = min_header_len;
+        select_data     = 0;
+        heap_elements   = min_header_len-1;
         
         if head_count == min_header_len-1
             state = state_ready_to_send;
@@ -57,11 +58,12 @@ switch double(state)
         head_count_en   = false;
         num_payload_rst = false;
         num_payload_en  = false;
-        words_sent_rst  = true;
+        words_sent_rst  = false;
         words_sent_en   = false;
         tge_valid       = false;
-        select_data     = true;
+        select_data     = 0;
         heap_elements   = 0;
+        
         state           = state_payload;
     
     case state_payload
@@ -71,14 +73,15 @@ switch double(state)
         num_payload_en  = false;
         words_sent_rst  = false;
         tge_valid       = data_valid_in;
-        select_data     = true;
+        select_data     = 1;
         heap_elements   = 0;
-        if (data_valid_in == true)
+        
+        if data_valid_in == true
             words_sent_en = true;
         else
             words_sent_en = false;
         end
-        if (num_words_sent == payload_len)
+        if num_words_sent == payload_len
             num_payload_en = true;
             state          = state_done;
         end
@@ -88,14 +91,14 @@ switch double(state)
         head_count_en   = false;
         num_payload_rst = false;
         num_payload_en  = false;
-        words_sent_rst  = false;
+        words_sent_rst  = true;
         words_sent_en   = false;
         tge_valid       = false;
-        select_data     = false;
+        select_data     = 0;
         heap_elements   = 0;
 
-        if (num_payload_sent == total_num_payloads-1)
-            num_payload_rst = true;
+        if num_payload_sent == total_num_payloads
+           num_payload_rst = true;
            state           = state_long_header;
         else
            state           = state_short_header;
@@ -106,10 +109,10 @@ switch double(state)
         head_count_en   = false;
         num_payload_rst = false;
         num_payload_en  = false;
-        tge_valid       = false;
         words_sent_en   = false;
         words_sent_rst  = false;
-        select_data     = false;
+        tge_valid       = false;
+        select_data     = 0;
         heap_elements   = 0;
 
 if (rst == true)
