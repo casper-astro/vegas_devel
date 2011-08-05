@@ -78,7 +78,7 @@ parentheses, in units of samples.
 ---------------------------------------------------------------
 | PowX (NFFT) | PowY (NFFT) | Re(XY*) (NFFT) | Im(XY*) (NFFT) |
 ---------------------------------------------------------------
-(Interleave blocks)
+(Interleaved blocks)
 
 The main logic, in pseudo-code, is as follows:
 
