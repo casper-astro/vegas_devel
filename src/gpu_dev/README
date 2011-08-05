@@ -197,6 +197,8 @@ while(Data-processing-not-done)
     }
 }
 
+BUG: Code doesn't work for data file size < 32MB.
+
 -------------------------------------------------------------------------------
 
 vegas_gentestdata.c:
