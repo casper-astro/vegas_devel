@@ -1,5 +1,4 @@
-1. Check bandwidth of each filter in PFB.
-2. Can't copy 50M in GT230M.
-3. g_iReadCount is 50 for 4K and 51 for 32K, for a 1.6G data set. Should be 50.
-4. Noise-equivalent bandwidth of the polyphase filter response?
-5. Keep CPU accumulation for modes where no accumulation is required?
+1. Can't copy 50M in GT230M.
+2. g_iReadCount is 50 for 4K and 51 for 32K, for a 1.6G data set. Should be 50.
+3. Noise-equivalent bandwidth of the polyphase filter response?
+4. Keep CPU accumulation for modes where no accumulation is required?
