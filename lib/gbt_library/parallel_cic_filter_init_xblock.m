@@ -19,13 +19,17 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parallel_cic_filter_init_xblock(m,n,n_inputs,polyphase,add_latency,dec2_halfout, half2first, n_bits, bin_pt, recursive)
+function parallel_cic_filter_init_xblock(blk,n_stages,n,n_inputs,polyphase,add_latency,dec2_halfout, half2first, n_bits, bin_pt, reduced_crtc_path, recursives)
 
 f=factor(n);
 len = length(f);
 if strcmp(half2first,'off')
     f=f(end:-1:1);
 end
+
+
+recursives = [reshape(recursives, 1, []), zeros(1, len)]; % try to make the recursive list long enough
+recursives
 
 n_of_2s=length(find(f==2));
 n_outputs = n_inputs/(2^n_of_2s);
@@ -35,6 +39,8 @@ end
 
 inports =cell(1,n_inputs);
 outports = cell(1,n_outputs);
+
+n_inputs
 for i =1:n_inputs
     inports{i}=xInport(['in',num2str(i)]);
 end
@@ -46,9 +52,13 @@ n_ins=cell(1,len+1);
 n_ins{1} = n_inputs;
 ninputs = n_inputs;
 for i = 1:len
-    if f(i)==2 && ninputs>=2
-        n_ins{i+1}=ninputs/2;
-        ninputs=ninputs/2;
+    if f(i)==2
+        if mod(ninputs/2,1) == 0
+            n_ins{i+1}=ninputs/2;
+            ninputs=ninputs/2;
+        else
+            n_ins{i+1} = ninputs;
+        end
     else
         n_ins{i+1}=ninputs;
     end
@@ -70,19 +80,33 @@ terminator_ins=cell(1,len);
 
 
 stage_blks=cell(1,len);
+stage_config = cell(1,len);
 for i=1:len
    terminator_ins{i}=xSignal(['ter',num2str(i)]);
-   stage_blks{i}=xBlock(struct('source', 'parallel_polynomial_dec_stage_init_xblock', 'name', ['Stage',num2str(i),'_dec',num2str(f(i))]), ...
-                               {m,f(i),n_ins{i},polyphase,add_latency,dec2_halfout, n_bits, bin_pt,recursive}, ...
-                          [{sigs{1}{1}},sigs{i}], ...
-                          [{terminator_ins{i}},sigs{i+1}]);
+   stage_config{i}.source = str2func('parallel_polynomial_dec_stage_init_xblock');
+   stage_config{i}.name = ['Stage',num2str(i),'_dec',num2str(f(i))];
+   stage_blks{i}=xBlock(stage_config{i}(1), ...
+                       {[blk,'/',stage_config{i}.name],n_stages,f(i),n_ins{i},polyphase,add_latency,dec2_halfout, n_bits, bin_pt,reduced_crtc_path, recursives(i)}, ...
+                          sigs{i}, ...
+                          sigs{i+1});
+                      
+   n_bits = ceil(n_stages*log2(f(i)*1) + n_bits);
+   
+   disp(['stage ',num2str(i),' completed!']);
 end
 
-for i =1:len
-    terminators{i} =xBlock(struct('source', 'Terminator', 'name', ['Terminator',num2str(i)]), ...
-                               {}, ...
-                          {terminator_ins{i}}, ...
-                          {});
-end
+% for i =1:len
+%     terminators{i} =xBlock(struct('source', 'Terminator', 'name', ['Terminator',num2str(i)]), ...
+%                                {}, ...
+%                           {terminator_ins{i}}, ...
+%                           {});
+% end
 
+
+fmtstr =sprintf('dec_rate = %d\nOrder = %d\n',n,n_stages);
+set_param(blk,'AttributesFormatString',fmtstr);
+
+clean_blocks(blk);
+
+disp('all done done');
 end
