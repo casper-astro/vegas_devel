@@ -75,8 +75,10 @@ for o, a in Opts:
 
 M = NTaps * NFFT
 
+# the filter-coefficient-generation section -->
 X = numpy.array([(float(i) / NFFT) - (float(NTaps) / 2) for i in range(M)])
 PFBCoeff = numpy.sinc(X) * numpy.hanning(M)
+# <-- the filter-coefficient-generation section
 
 # create conversion map
 if ("signedchar" == DataType):

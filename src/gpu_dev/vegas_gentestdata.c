@@ -125,8 +125,10 @@ int main(int argc, char *argv[])
         for (j = 0; j < NUM_FREQS; ++j)
         {
             /* NOTE: make sure that the sum is within [-128:127] */
-            cDataReX += SCALE_FACTOR * (0.1 * cos(2 * M_PI * afFreqX[j] * i / F_S));
-            cDataImX += SCALE_FACTOR * (0.1 * sin(2 * M_PI * afFreqX[j] * i / F_S));
+            cDataReX += SCALE_FACTOR
+                        * (0.1 * cos(2 * M_PI * afFreqX[j] * i / F_S));
+            cDataImX += SCALE_FACTOR
+                        * (0.1 * sin(2 * M_PI * afFreqX[j] * i / F_S));
         }
 
         /* write to disk */
@@ -141,17 +143,15 @@ int main(int argc, char *argv[])
         for (j = 0; j < NUM_FREQS; ++j)
         {
             /* NOTE: make sure that the sum is within [-128:127] */
-            cDataReY += SCALE_FACTOR * (0.2 * cos(2 * M_PI * afFreqY[j] * i / F_S));
-            cDataImY += SCALE_FACTOR * (0.2 * sin(2 * M_PI * afFreqY[j] * i / F_S));
+            cDataReY += SCALE_FACTOR
+                        * (0.2 * cos(2 * M_PI * afFreqY[j] * i / F_S));
+            cDataImY += SCALE_FACTOR
+                        * (0.2 * sin(2 * M_PI * afFreqY[j] * i / F_S));
         }
 
         /* write to disk */
         (void) write(iFile, &cDataReY, sizeof(signed char));
         (void) write(iFile, &cDataImY, sizeof(signed char));
-        
-        #if 0
-        printf("%d\t%d\t%d\t%d\n", cDataReX, cDataImX, cDataReY, cDataImY);
-        #endif
     }
 
     (void) close(iFile);
