@@ -146,7 +146,7 @@ void write_spead_packet_to_block(struct datablock_stats *d, struct guppi_udp_pac
     spead_payload_addr = guppi_databuf_data(d->db, d->block_idx) +
                 MAX_HEAPS_PER_BLK * d->spead_hdr_size +
                 block_heap_idx * (d->heap_size - d->spead_hdr_size) +
-                (heap_offset > 0 ? heap_offset - d->spead_hdr_size : 0);
+                heap_offset;
 
     /* Copy packet to address, while reversing the byte ordering */
     guppi_spead_packet_copy(p, spead_header_addr, spead_payload_addr, bw_mode);
@@ -292,9 +292,9 @@ void *guppi_net_thread(void *_args) {
     {
         if(strncmp(bw_mode, "high", 4) == 0)
         {
-            heap_size = sizeof(struct freq_spead_heap) + nchan*4*sizeof(float);
+            heap_size = sizeof(struct freq_spead_heap) + nchan*4*sizeof(int);
             spead_hdr_size = sizeof(struct freq_spead_heap);
-            packets_per_heap = nchan*4*sizeof(float) / PAYLOAD_SIZE;
+            packets_per_heap = nchan*4*sizeof(int) / PAYLOAD_SIZE;
         }
         else if(strncmp(bw_mode, "low", 3) == 0)
         {

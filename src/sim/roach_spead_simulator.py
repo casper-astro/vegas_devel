@@ -80,8 +80,6 @@ def send_spead_heap(header, heap):
                     (payload_data_off_id >> 16) & 0xFF, payload_data_off_id & 0xFFFF,
                         heap[payload_data_off_id])
 
-            offset += 6*8
-
         # Now write the spectrum to the packet
         packet += struct.pack('> 2048L',
                     *(heap['payload'][pkt_num*2048:(pkt_num+1)*2048]))
