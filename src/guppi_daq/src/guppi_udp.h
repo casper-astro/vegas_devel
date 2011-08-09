@@ -86,7 +86,8 @@ unsigned int guppi_spead_packet_heap_offset(const struct guppi_udp_packet *p);
 unsigned int guppi_spead_packet_seq_num(int heap_cntr, int heap_offset, int packets_per_heap);
 char* guppi_spead_packet_data(const struct guppi_udp_packet *p);
 unsigned int guppi_spead_packet_datasize(const struct guppi_udp_packet *p);
-int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *dest_addr, char bw_mode[]);
+int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *header_addr,
+                            char *payload_addr, char bw_mode[]);
 
 #endif
 

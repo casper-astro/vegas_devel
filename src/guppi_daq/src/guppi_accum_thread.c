@@ -247,11 +247,14 @@ void guppi_accum_thread(void *_args) {
 
             /* Read in heap from buffer */
             char* heap_addr = (char*)(guppi_databuf_data(db_in, curblock_in) +
-                                (index_in->heap_size)*heap);
+                                sizeof(struct freq_spead_heap) * heap);
             struct freq_spead_heap* freq_heap = (struct freq_spead_heap*)(heap_addr);
 
-            int *i_payload = (int*)(heap_addr + sizeof(struct freq_spead_heap));
-            float *f_payload = (float*)(heap_addr + sizeof(struct freq_spead_heap));
+            char* payload_addr = (char*)(guppi_databuf_data(db_in, curblock_in) +
+                                sizeof(struct freq_spead_heap) * MAX_HEAPS_PER_BLK +
+                                (index_in->heap_size - sizeof(struct freq_spead_heap)) * heap );
+            int *i_payload = (int*)(payload_addr);
+            float *f_payload = (float*)(payload_addr);
 
             accumid = freq_heap->status_bits & 0x7;         
 
