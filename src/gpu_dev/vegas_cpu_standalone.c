@@ -33,7 +33,6 @@ int g_iNTaps = 1;                       /* 1 if no PFB, NUM_TAPS if PFB */
 char g_acFileData[256] = {0};
 /* BUG: crash if file size is less than 32MB */
 int g_iSizeRead = DEF_SIZE_READ;
-int g_iFileCoeff = 0;
 char g_acFileCoeff[256] = {0};
 signed char *g_pcPFBCoeff = NULL;
 signed char *g_pcOptPFBCoeff = NULL;
@@ -267,6 +266,8 @@ int Init()
 
     if (g_iIsPFBOn)
     {
+        int iFileCoeff = 0;
+
         /* set number of taps to NUM_TAPS if PFB is on, else number of
            taps = 1 */
         g_iNTaps = NUM_TAPS;
@@ -303,8 +304,8 @@ int Init()
                        g_iNFFT,
                        DEF_NUM_SUBBANDS,
                        FILE_COEFF_SUFFIX);
-        g_iFileCoeff = open(g_acFileCoeff, O_RDONLY);
-        if (g_iFileCoeff < EXIT_SUCCESS)
+        iFileCoeff = open(g_acFileCoeff, O_RDONLY);
+        if (iFileCoeff < EXIT_SUCCESS)
         {
             (void) fprintf(stderr,
                            "ERROR: Opening filter coefficients file %s "
@@ -314,7 +315,7 @@ int Init()
             return EXIT_FAILURE;
         }
 
-        iRet = read(g_iFileCoeff,
+        iRet = read(iFileCoeff,
                     g_pcPFBCoeff,
                     g_iNTaps * g_iNFFT * sizeof(signed char));
         if (iRet != (g_iNTaps * g_iNFFT * sizeof(signed char)))
@@ -322,9 +323,10 @@ int Init()
             (void) fprintf(stderr,
                            "ERROR: Reading filter coefficients failed! %s.\n",
                            strerror(errno));
+            (void) close(iFileCoeff);
             return EXIT_FAILURE;
         }
-        (void) close(g_iFileCoeff);
+        (void) close(iFileCoeff);
 
     	/* duplicate the coefficients for PFB optimisation */
         for (i = 0; i < (g_iNTaps * g_iNFFT); ++i)
