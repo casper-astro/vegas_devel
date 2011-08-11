@@ -18,14 +18,10 @@ sync_period = (acc_len+1)*lcm*pfb_taps*fft_size/simul_inputs
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
-<<<<<<< HEAD
-boffile='mode01_2011_Aug_05_1527.bof'
-=======
 #boffile='mode01_full_2011_Aug_06_1914.bof'
 #boffile='mode01_2011_Aug_07_1833.bof'
 #
 boffile='mode01_full_2011_Aug_08_1329.bof'
->>>>>>> 9cbe43994f9a045b74d21fccf284b84a45cd10b7
 
 #boffile='gbtspec_mode13_2011_Jul_13_1553.bof'
 
