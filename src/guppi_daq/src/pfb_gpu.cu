@@ -245,20 +245,14 @@ void do_pfb(struct guppi_databuf *db_in,
     char* payload_addr_in = NULL;
     char* payload_addr_out = NULL;
     int num_in_heaps_per_proc = 0;
-    int num_in_heaps_per_acc = 0;
     int iSpecPerAcc = 0;
     int pfb_count = 0;
-    int num_in_heaps_gpu_buffer = 0;
 
     /* Setup input and first output data block stuff */
     index_in = (struct databuf_index*)guppi_databuf_index(db_in, curblock_in);
     /* Get the number of heaps per block of data that will be processed by the GPU */
     num_in_heaps_per_proc = (g_num_subbands * g_nchan * sizeof(char4)) / (index_in->heap_size - sizeof(struct time_spead_heap));
-    num_in_heaps_per_acc = num_in_heaps_per_proc * acc_len;
     g_block_in_data_size = (index_in->num_heaps * index_in->heap_size) - (index_in->num_heaps * sizeof(struct time_spead_heap));
-    num_in_heaps_gpu_buffer = index_in->num_heaps
-                              + (((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan * sizeof(char4))
-                                 / (index_in->heap_size - sizeof(struct time_spead_heap)));
 
     /* Calculate the maximum number of output heaps per block */
     g_iMaxNumHeapOut = (g_buf_out_block_size - (sizeof(struct time_spead_heap) * MAX_HEAPS_PER_BLK)) / (g_num_subbands * g_nchan * sizeof(float4)); 
@@ -583,34 +577,6 @@ int get_accumulated_spectrum_from_device(char *out)
                                        cudaMemcpyDeviceToHost));
 
     return GUPPI_OK;
-}
-
-int pfb_heaps_valid(struct databuf_index *index,
-                    int heap_start,
-                    int num_heaps,
-                    int num_in_heaps_gpu_buffer)
-{
-    int i = 0;
-
-    if ((heap_start + num_heaps) > num_in_heaps_gpu_buffer)
-    {
-        (void) fprintf(stderr,
-                       "ERROR: Heap count %d exceeds available number of heaps %d!\n",
-                       (heap_start + num_heaps),
-                       num_in_heaps_gpu_buffer);
-        run = 0;
-        return FALSE;
-    }
-
-    for (i = heap_start; i < (heap_start + num_heaps); ++i)
-    {
-        if (0 == index->cpu_gpu_buf[i].heap_valid)
-        {
-            return FALSE;
-        }
-    }
-
-    return TRUE;
 }
 
 void __CUDASafeCall(cudaError_t iCUDARet,

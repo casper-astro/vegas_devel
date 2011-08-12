@@ -134,13 +134,10 @@ void vegas_pfb_thread(void *_args) {
             /* Read required exposure from status shared memory, and calculate
                corresponding accumulation length */
             acc_len = (sf.hdr.chan_bw * sf.hdr.hwexposr * sf.hdr.npol * 2);
-            //acc_len = 1;
-            printf("***** vegas_pfb_thread: acc_len = %d\n", acc_len);
         }
         guppi_read_subint_params(hdr_in, &gp, &sf);
 
         /* Call PFB function */
-        printf("***** vegas_pfb_thread: curblock_in = %d\n", curblock_in);
         do_pfb(db_in, curblock_in, db_out, first, st, acc_len);
 
         /* Mark input block as free */
