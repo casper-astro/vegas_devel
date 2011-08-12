@@ -12,7 +12,7 @@ endif
 NVCCFLAGS = -g -arch sm_13 -I$(CUDA)/include -I$(VEGAS_INCL)
 
 LIBS = -L$(PYSLALIB) -L$(VEGAS_LIB) -lcfitsio -lsla -lm -lpthread
-CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm
+CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm -lpthread
 
 PROGS = check_guppi_databuf check_guppi_status clean_guppi_shmem
 OBJS  = guppi_status.o guppi_databuf.o guppi_udp.o guppi_error.o \

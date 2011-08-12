@@ -22,6 +22,7 @@
 #include "guppi_params.h"
 #include "pfb_gpu.h"
 
+/* TODO: move to .h? */
 #define STATUS_KEY "GPUSTAT"
 #include "guppi_threads.h"
 
@@ -91,11 +92,10 @@ void vegas_pfb_thread(void *_args) {
     pthread_cleanup_push((void *)guppi_databuf_detach, db_out);
 
     /* Loop */
-    char *hdr_in=NULL, *hdr_out=NULL;
-    char *curdata_in, *curdata_out;
-    struct databuf_index *curindex_in, *curindex_out;
-    int curblock_in=0, curblock_out=0;
+    char *hdr_in = NULL;
+    int curblock_in=0;
     int first=1;
+    int acc_len = 0;
     signal(SIGINT,cc);
 
     while (run) {
@@ -115,51 +115,38 @@ void vegas_pfb_thread(void *_args) {
         hputi4(st.buf, "PFBBLKIN", curblock_in);
         guppi_status_unlock_safe(&st);
 
-        /* Get params */
         hdr_in = guppi_databuf_header(db_in, curblock_in);
-
+        
+        /* Get params */
         if (first)
         {
             guppi_read_obs_params(hdr_in, &gp, &sf);
-            init_gpu(db_in->block_size, db_out->block_size, db_in->index_size, sf.hdr.nsubband, sf.hdr.nchan);
+            if (EXIT_SUCCESS != init_gpu(db_in->block_size,
+                                         db_out->block_size,
+                                         db_in->index_size,
+                                         sf.hdr.nsubband,
+                                         sf.hdr.nchan))
+            {
+                (void) fprintf(stderr, "ERROR: GPU initialisation failed!\n");
+                break;
+            }
+
+            /* Read required exposure from status shared memory, and calculate
+               corresponding accumulation length */
+            acc_len = (sf.hdr.chan_bw * sf.hdr.hwexposr * sf.hdr.npol * 2);
+            //acc_len = 1;
+            printf("***** vegas_pfb_thread: acc_len = %d\n", acc_len);
         }
         guppi_read_subint_params(hdr_in, &gp, &sf);
 
-        /* Setup input and output data block stuff */
-        hdr_out = guppi_databuf_header(db_out, curblock_out);
-        curdata_out = (char *)guppi_databuf_data(db_out, curblock_out);
-        curindex_out = (struct databuf_index*)guppi_databuf_index(db_out, curblock_out);
-
-        curdata_in = (char *)guppi_databuf_data(db_in, curblock_in);
-        curindex_in = (struct databuf_index*)guppi_databuf_index(db_in, curblock_in);
-
-        memcpy(hdr_out, guppi_databuf_header(db_in, curblock_in),
-                GUPPI_STATUS_SIZE);
-
         /* Call PFB function */
-        do_pfb(curdata_in, curdata_out, curindex_in, curindex_out, first);
+        printf("***** vegas_pfb_thread: curblock_in = %d\n", curblock_in);
+        do_pfb(db_in, curblock_in, db_out, first, st, acc_len);
 
-        /* Mark blocks as free/filled */
+        /* Mark input block as free */
         guppi_databuf_set_free(db_in, curblock_in);
-        guppi_databuf_set_filled(db_out, curblock_out);
-
         /* Go to next input block */
         curblock_in = (curblock_in + 1) % db_in->n_block;
-
-        printf("Debug: vegas_pfb_thread going to next output block\n");
-
-        /* Note current output block */
-        guppi_status_lock_safe(&st);
-        hputi4(st.buf, "PFBBLKOU", curblock_out);
-        guppi_status_unlock_safe(&st);
-
-        /*  Wait for next output block */
-        curblock_out = (curblock_out + 1) % db_out->n_block;
-        while ((rv=guppi_databuf_wait_free(db_out, curblock_out)!=0) && run) {
-            guppi_status_lock_safe(&st);
-            hputs(st.buf, STATUS_KEY, "blocked");
-            guppi_status_unlock_safe(&st);
-        }
 
         /* Check for cancel */
         pthread_testcancel();
@@ -183,3 +170,4 @@ void vegas_pfb_thread(void *_args) {
     pthread_cleanup_pop(0); /* Closes guppi_status_detach */
 
 }
+
