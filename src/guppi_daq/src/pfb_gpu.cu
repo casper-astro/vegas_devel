@@ -27,6 +27,8 @@ extern "C" {
 /* TODO: move to .h? */
 #define STATUS_KEY "GPUSTAT"
 
+/* ASSUMPTIONS: 1. All blocks contain the same number of heaps. */
+
 extern int run;
 
 /**
@@ -55,13 +57,20 @@ int g_iFileCoeff = 0;
 char g_acFileCoeff[256] = {0};
 signed char *g_pcPFBCoeff = NULL;
 signed char *g_pcPFBCoeff_d = NULL;
-unsigned int g_iPrevStatusBits = 0;
+unsigned int g_iPrevBlankingState = FALSE;
 int g_tot_heap_out = 0;
 int g_iMaxNumHeapOut = 0;
 int g_pfb_curblock_out = 0;
 int g_heap_out = 0;
 int g_block_in_data_size = 0;
 int g_iTailValid = TRUE;
+/* these arrays need to be only a little longer than MAX_HEAPS_PER_BLK, but
+   since we don't know the exact length, just allocate twice that value */
+unsigned int g_auiStatusBits[2*MAX_HEAPS_PER_BLK] = {0};
+unsigned int g_auiHeapValid[2*MAX_HEAPS_PER_BLK] = {0};
+int g_first_heap_in = 0;
+double g_first_heap_rcvd_mjd = 0.0;
+int g_iSpecPerAcc = 0;
 
 void __CUDASafeCall(cudaError_t iCUDARet,
                                const char* pcFile,
@@ -218,7 +227,6 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int
     return EXIT_SUCCESS;
 }
 
-
 /* Actually do the PFB by calling CUDA kernels */
 extern "C"
 void do_pfb(struct guppi_databuf *db_in,
@@ -233,10 +241,8 @@ void do_pfb(struct guppi_databuf *db_in,
     struct databuf_index *index_in = NULL;
     struct databuf_index *index_out = NULL;
     int heap_in = 0;
-    int first_heap_in = 0;
     char *heap_addr_in = NULL;
     char *heap_addr_out = NULL;
-    struct time_spead_heap* time_heap_in = NULL;
     struct time_spead_heap* first_time_heap_in_accum = NULL;
     struct freq_spead_heap* freq_heap_out = NULL;
     int iProcData = 0;
@@ -245,14 +251,22 @@ void do_pfb(struct guppi_databuf *db_in,
     char* payload_addr_in = NULL;
     char* payload_addr_out = NULL;
     int num_in_heaps_per_proc = 0;
-    int iSpecPerAcc = 0;
+    int num_in_heaps_per_acc = 0;
     int pfb_count = 0;
+    int num_in_heaps_gpu_buffer = 0;
+    int num_in_heaps_tail = 0;
+    int i = 0;
 
     /* Setup input and first output data block stuff */
     index_in = (struct databuf_index*)guppi_databuf_index(db_in, curblock_in);
     /* Get the number of heaps per block of data that will be processed by the GPU */
     num_in_heaps_per_proc = (g_num_subbands * g_nchan * sizeof(char4)) / (index_in->heap_size - sizeof(struct time_spead_heap));
+    num_in_heaps_per_acc = num_in_heaps_per_proc * acc_len;
     g_block_in_data_size = (index_in->num_heaps * index_in->heap_size) - (index_in->num_heaps * sizeof(struct time_spead_heap));
+
+    num_in_heaps_tail = (((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan * sizeof(char4))
+                         / (index_in->heap_size - sizeof(struct time_spead_heap)));
+    num_in_heaps_gpu_buffer = index_in->num_heaps + num_in_heaps_tail;
 
     /* Calculate the maximum number of output heaps per block */
     g_iMaxNumHeapOut = (g_buf_out_block_size - (sizeof(struct time_spead_heap) * MAX_HEAPS_PER_BLK)) / (g_num_subbands * g_nchan * sizeof(float4)); 
@@ -267,9 +281,13 @@ void do_pfb(struct guppi_databuf *db_in,
     /* Read in heap from buffer */
     heap_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
                         sizeof(struct time_spead_heap) * heap_in);
-    time_heap_in = (struct time_spead_heap*)(heap_addr_in);
     first_time_heap_in_accum = (struct time_spead_heap*)(heap_addr_in);
-    first_heap_in = heap_in;
+    if (first)
+    {
+        g_first_heap_in = heap_in;
+        printf("***** pfb_gpu: g_first_heap_in = %d\n", g_first_heap_in);
+        g_first_heap_rcvd_mjd = index_in->cpu_gpu_buf[g_first_heap_in].heap_rcvd_mjd;
+    }
     /* Here, the payload_addr_in is the start of the contiguous block of data that will be
        copied to the GPU (heap_in = 0) */
     payload_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
@@ -290,11 +308,30 @@ void do_pfb(struct guppi_databuf *db_in,
                                 payload_addr_in,
                                 g_block_in_data_size,
                                 cudaMemcpyHostToDevice));
-        /* duplicate the last (VEGAS_NUM_TAPS - 1) blocks at the end for the next iteration */
+        /* duplicate the last (VEGAS_NUM_TAPS - 1) segments at the end for
+           the next iteration */
         CUDASafeCall(cudaMemcpy(g_pc4Data_d + (g_block_in_data_size / sizeof(char4)),
                                 g_pc4Data_d + (g_block_in_data_size / sizeof(char4)) - ((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan),
                                 ((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan * sizeof(char4)),
                                 cudaMemcpyDeviceToDevice));
+
+        /* copy the status bits and valid flags for all heaps to arrays separate
+           from the index, so that it can be combined with the corresponding
+           values from the previous block */
+        struct time_spead_heap* time_heap = (struct time_spead_heap*) guppi_databuf_data(db_in, curblock_in);
+        for (i = 0; i < index_in->num_heaps; ++i)
+        {
+            g_auiStatusBits[i] = time_heap->status_bits;
+            g_auiHeapValid[i] = index_in->cpu_gpu_buf[i].heap_valid;
+            ++time_heap;
+        }
+        /* duplicate the last (VEGAS_NUM_TAPS - 1) segments at the end for the
+           next iteration */
+        for ( ; i < index_in->num_heaps + num_in_heaps_tail; ++i)
+        {
+            g_auiStatusBits[i] = g_auiStatusBits[i-num_in_heaps_tail];
+            g_auiHeapValid[i] = g_auiHeapValid[i-num_in_heaps_tail];
+        }
     }
     else
     {
@@ -307,12 +344,59 @@ void do_pfb(struct guppi_databuf *db_in,
                                 payload_addr_in,
                                 g_block_in_data_size,
                                 cudaMemcpyHostToDevice));
+        /* copy the status bits and valid flags for all heaps to arrays separate
+           from the index, so that it can be combined with the corresponding
+           values from the previous block */
+        for (i = 0; i < num_in_heaps_tail; ++i)
+        {
+            g_auiStatusBits[i] = g_auiStatusBits[index_in->num_heaps+i];
+            g_auiHeapValid[i] = g_auiHeapValid[index_in->num_heaps+i];
+        }
+        struct time_spead_heap* time_heap = (struct time_spead_heap*) guppi_databuf_data(db_in, curblock_in);
+        for ( ; i < num_in_heaps_tail + index_in->num_heaps; ++i)
+        {
+            g_auiStatusBits[i] = time_heap->status_bits;
+            g_auiHeapValid[i] = index_in->cpu_gpu_buf[i-num_in_heaps_tail].heap_valid;
+            ++time_heap;
+        }
     }
 
     g_pc4DataRead_d = g_pc4Data_d;
     iProcData = 0;
     while (g_block_in_data_size != iProcData)  /* loop till (num_heaps * heap_size) of data is processed */
     {
+        if (0 == pfb_count)
+        {
+            /* Check if all heaps necessary for this PFB are valid */
+            if (!(is_valid(heap_in, (VEGAS_NUM_TAPS * num_in_heaps_per_proc))))
+            {
+                /* Skip all heaps that go into this PFB if there is an invalid heap */
+                iProcData += (VEGAS_NUM_TAPS * g_num_subbands * g_nchan * sizeof(char4));
+                /* update the data read pointer */
+                g_pc4DataRead_d += (VEGAS_NUM_TAPS * g_num_subbands * g_nchan);
+                if (iProcData == g_block_in_data_size)
+                {
+                    break;
+                }
+
+                /* Calculate input heap addresses for the next round of processing */
+                heap_in += (VEGAS_NUM_TAPS * num_in_heaps_per_proc);
+                if (heap_in > num_in_heaps_gpu_buffer)
+                {
+                    /* This is not supposed to happen */
+                    (void) fprintf(stderr,
+                                   "ERROR: Heap count %d exceeds available number of heaps %d!\n",
+                                   heap_in,
+                                   num_in_heaps_gpu_buffer);
+                    run = 0;
+                    return;
+                }
+                heap_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
+                                    sizeof(struct time_spead_heap) * heap_in);
+                continue;
+            }
+        }
+
         /* Perform polyphase filtering */
         DoPFB<<<g_dimGPFB, g_dimBPFB>>>(g_pc4DataRead_d,
                                         g_pf4FFTIn_d,
@@ -340,8 +424,7 @@ void do_pfb(struct guppi_databuf *db_in,
 
         /* Accumulate power x, power y, stokes real and imag, if the blanking
            bit is not set */
-        /* TODO: not checking properly - have to check all heaps in this proc */
-        if ((time_heap_in->status_bits & 0x08) == 0)
+        if (!(is_blanked(heap_in, num_in_heaps_per_proc)))
         {
             iRet = accumulate();
             if (iRet != GUPPI_OK)
@@ -350,12 +433,13 @@ void do_pfb(struct guppi_databuf *db_in,
                 run = 0;
                 break;
             }
-            ++iSpecPerAcc;
+            ++g_iSpecPerAcc;
+            g_iPrevBlankingState = FALSE;
         }
         else
         {
             /* state just changed */
-            if (g_iPrevStatusBits & 0x08)
+            if (FALSE == g_iPrevBlankingState)
             {
                 /* dump to buffer */
                 heap_addr_out = (char*)(guppi_databuf_data(db_out, g_pfb_curblock_out) +
@@ -371,7 +455,7 @@ void do_pfb(struct guppi_databuf *db_in,
                 freq_heap_out->spectrum_cntr_id = 0x21;
                 freq_heap_out->spectrum_cntr = g_tot_heap_out;
                 freq_heap_out->integ_size_id = 0x22;
-                freq_heap_out->integ_size = iSpecPerAcc;
+                freq_heap_out->integ_size = g_iSpecPerAcc;
                 freq_heap_out->mode_id = 0x23;
                 freq_heap_out->mode = first_time_heap_in_accum->mode;
                 freq_heap_out->status_bits_id = 0x24;
@@ -384,7 +468,7 @@ void do_pfb(struct guppi_databuf *db_in,
                 index_out->cpu_gpu_buf[g_heap_out].heap_valid = 1;
                 index_out->cpu_gpu_buf[g_heap_out].heap_cntr = g_tot_heap_out;
                 index_out->cpu_gpu_buf[g_heap_out].heap_rcvd_mjd =
-                         index_in->cpu_gpu_buf[first_heap_in].heap_rcvd_mjd ;
+                         index_in->cpu_gpu_buf[g_first_heap_in].heap_rcvd_mjd ;
 
                 iRet = get_accumulated_spectrum_from_device(payload_addr_out);
                 if (iRet != GUPPI_OK)
@@ -399,13 +483,13 @@ void do_pfb(struct guppi_databuf *db_in,
 
                 /* zero accumulators */
                 zero_accumulator();
+                /* reset time */
+                g_iSpecPerAcc = 0;
+                g_iPrevBlankingState = TRUE;
             }
-            /* reset time */
-            iSpecPerAcc = 0;
         }
-        g_iPrevStatusBits = time_heap_in->status_bits;
 
-        if (iSpecPerAcc == acc_len)
+        if (g_iSpecPerAcc == acc_len)
         {
             /* dump to buffer */
             heap_addr_out = (char*)(guppi_databuf_data(db_out, g_pfb_curblock_out) +
@@ -421,7 +505,7 @@ void do_pfb(struct guppi_databuf *db_in,
             freq_heap_out->spectrum_cntr_id = 0x21;
             freq_heap_out->spectrum_cntr = g_tot_heap_out;
             freq_heap_out->integ_size_id = 0x22;
-            freq_heap_out->integ_size = iSpecPerAcc;
+            freq_heap_out->integ_size = g_iSpecPerAcc;
             freq_heap_out->mode_id = 0x23;
             freq_heap_out->mode = first_time_heap_in_accum->mode;
             freq_heap_out->status_bits_id = 0x24;
@@ -434,7 +518,7 @@ void do_pfb(struct guppi_databuf *db_in,
             index_out->cpu_gpu_buf[g_heap_out].heap_valid = 1;
             index_out->cpu_gpu_buf[g_heap_out].heap_cntr = g_tot_heap_out;
             index_out->cpu_gpu_buf[g_heap_out].heap_rcvd_mjd =
-                     index_in->cpu_gpu_buf[first_heap_in].heap_rcvd_mjd ;
+                     index_in->cpu_gpu_buf[g_first_heap_in].heap_rcvd_mjd ;
 
             iRet = get_accumulated_spectrum_from_device(payload_addr_out);
             if (iRet != GUPPI_OK)
@@ -450,7 +534,7 @@ void do_pfb(struct guppi_databuf *db_in,
             /* zero accumulators */
             zero_accumulator();
             /* reset time */
-            iSpecPerAcc = 0;
+            g_iSpecPerAcc = 0;
         }
 
         iProcData += (g_num_subbands * g_nchan * sizeof(char4));
@@ -461,11 +545,11 @@ void do_pfb(struct guppi_databuf *db_in,
         heap_in += num_in_heaps_per_proc;
         heap_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
                             sizeof(struct time_spead_heap) * heap_in);
-        time_heap_in = (struct time_spead_heap*)(heap_addr_in);
-        if (0 == iSpecPerAcc)
+        if (0 == g_iSpecPerAcc)
         {
             first_time_heap_in_accum = (struct time_spead_heap*)(heap_addr_in);
-            first_heap_in = heap_in;
+            g_first_heap_in = heap_in;
+            g_first_heap_rcvd_mjd = index_in->cpu_gpu_buf[g_first_heap_in].heap_rcvd_mjd;
         }
 
         /* if output block is full */
@@ -577,6 +661,42 @@ int get_accumulated_spectrum_from_device(char *out)
                                        cudaMemcpyDeviceToHost));
 
     return GUPPI_OK;
+}
+
+/*
+ * function to be used to check if any heap within the current PFB is invalid,
+ * in which case, the entire PFB should be discarded.
+ * NOTE: this function does not check ALL heaps - it returns at the first
+ * invalid heap.
+ */
+int is_valid(int heap_start, int num_heaps)
+{
+    for (int i = heap_start; i < (heap_start + num_heaps); ++i)
+    {
+        if (!g_auiHeapValid[i])
+        {
+            return FALSE;
+        }
+    }
+
+    return TRUE;
+}
+
+/*
+ * function that checks if blanking has started within this accumulation.
+ * ASSUMPTION: the blanking bit does not toggle within this time interval.
+ */
+int is_blanked(int heap_start, int num_heaps)
+{
+    for (int i = heap_start; i < (heap_start + num_heaps); ++i)
+    {
+        if (g_auiStatusBits[i] & 0x08)
+        {
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 void __CUDASafeCall(cudaError_t iCUDARet,

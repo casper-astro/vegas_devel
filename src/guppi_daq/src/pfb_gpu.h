@@ -42,6 +42,10 @@ void zero_accumulator();
 
 int get_accumulated_spectrum_from_device(char *out);
 
+int is_valid(int heap_start, int num_heaps);
+
+int is_blanked(int heap_start, int num_heaps);
+
 /* Free up any allocated memory */
 void cleanup_gpu();
 
