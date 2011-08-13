@@ -166,8 +166,9 @@ void guppi_rawdisk_thread(void *_args) {
         /* Get full data block size */
         hgeti4(ptr, "BLOCSIZE", &blocksize);
 
-        /* Note writing status */
+        /* Note writing status and current block */
         guppi_status_lock_safe(&st);
+        hputi4(st.buf, "DSKBLKIN", curblock);
         hputs(st.buf, STATUS_KEY, "writing");
         guppi_status_unlock_safe(&st);
 

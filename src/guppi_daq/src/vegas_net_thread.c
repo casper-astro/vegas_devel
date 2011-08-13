@@ -37,6 +37,8 @@
 #include "sdfits.h"
 #include "spead_heap.h"
 
+#define DEBUG_NET
+
 // Read a status buffer all of the key observation paramters
 extern void guppi_read_obs_params(char *buf, 
                                   struct guppi_params *g, 
@@ -345,6 +347,7 @@ void *guppi_net_thread(void *_args) {
     const double drop_lpf = 0.25;
     prev_heap_cntr = 0;
     prev_heap_offset = 0;
+    char msg[256];
 
     /* Main loop */
     unsigned force_new_block=0, waiting=-1;
@@ -375,8 +378,9 @@ void *guppi_net_thread(void *_args) {
         rv = guppi_udp_recv(&up, &p);
         if (rv!=GUPPI_OK) {
             if (rv==GUPPI_ERR_PACKET) {
-                /* Unexpected packet size, ignore? */
-printf("Error: incorrect pkt size\n");
+                #ifdef DEBUG_NET
+                guppi_warn("guppi_net_thread", "Incorrect pkt size");
+                #endif
                 continue; 
             } else {
                 guppi_error("guppi_net_thread", 
@@ -404,18 +408,20 @@ printf("Error: incorrect pkt size\n");
         
         if (seq_num_diff<=0) { 
 
-             if (seq_num_diff<-1024)
+            if (seq_num_diff<-1024)
             {
                 force_new_block=1;
                 obs_started = 1;
             }
             else if (seq_num_diff==0) {
-                char msg[256];
                 sprintf(msg, "Received duplicate packet (seq_num=%d)", seq_num);
-                guppi_warn("guppi_net_thread", msg);
+                guppi_warn("vegas_net_thread", msg);
             }
             else  {
-printf("Error: out of order packet. Diff = %d\n", seq_num_diff);
+                #ifdef DEBUG_NET
+                sprintf(msg, "out of order packet. Diff = %d", seq_num_diff);
+                guppi_warn("vegas_net_thread", msg);
+                #endif
                 continue;   /* No going backwards */
             }
         } else { 
@@ -424,7 +430,15 @@ printf("Error: out of order packet. Diff = %d\n", seq_num_diff);
             ndropped_total += seq_num_diff - 1;
             npacket_this_block += seq_num_diff;
             fblock->pkts_dropped += seq_num_diff - 1;
-if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d\n", seq_num_diff);
+
+            #ifdef DEBUG_NET
+            if(seq_num_diff > 1)
+            {
+                sprintf(msg, "Missing packet. seq_num_diff = %d", seq_num_diff);
+                guppi_warn("vegas_net_thread", msg);
+            }
+            #endif
+
         }
         last_seq_num = seq_num;
         last_heap_cntr = heap_cntr;
@@ -443,8 +457,6 @@ if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d\n", seq_nu
         /* Determine if we go to next block */
         if (heap_cntr>=nextblock_heap_cntr || force_new_block)
         {
-            printf("Debug: vegas_net_thread writing to next output block\n");
-
             /* Update drop stats */
             if (npacket_this_block > 0)  
                 drop_frac_avg = (1.0-drop_lpf)*drop_frac_avg 
@@ -478,7 +490,13 @@ if(seq_num_diff > 1) printf("Error: missing packet: seq_num_diff = %d\n", seq_nu
              * time.  Start time is rounded to nearest integer
              * second, with warning if we're off that by more
              * than 100ms.  Any current blocks on the stack
-             * are also finalized/reset */
+             * are also finalized/reset */            
+
+            #ifdef DEBUG_NET
+            //printf("Debug: vegas_net_thread writing to output block %d\n", fblock->block_idx);
+            #endif
+
+
             if (force_new_block) {
             
                 /* Reset stats */

@@ -137,8 +137,8 @@ void guppi_null_thread(void *_args) {
 
         /* Note waiting status, current block */
         guppi_status_lock_safe(&st);
-        hputs(st.buf, STATUS_KEY, "blanking");
-        hputi4(st.buf, "CURBLOCK", curblock);
+        hputs(st.buf, STATUS_KEY, "discarding");
+        hputi4(st.buf, "DSKBLKIN", curblock);
         guppi_status_unlock_safe(&st);
 
         /* Get params */
