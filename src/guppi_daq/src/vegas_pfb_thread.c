@@ -96,7 +96,27 @@ void vegas_pfb_thread(void *_args) {
     int curblock_in=0;
     int first=1;
     int acc_len = 0;
+    int nchan = 0;
+    int nsubband = 0;
     signal(SIGINT,cc);
+
+    guppi_status_lock_safe(&st);
+    if (hgeti4(st.buf, "NCHAN", &nchan)==0) {
+        fprintf(stderr, "ERROR: %s not in status shm!\n", "NCHAN");
+    }
+    if (hgeti4(st.buf, "NSUBBAND", &nsubband)==0) {
+        fprintf(stderr, "ERROR: %s not in status shm!\n", "NSUBBAND");
+    }
+    guppi_status_unlock_safe(&st);
+    if (EXIT_SUCCESS != init_gpu(db_in->block_size,
+                                 db_out->block_size,
+                                 db_in->index_size,
+                                 nsubband,
+                                 nchan))
+    {
+        (void) fprintf(stderr, "ERROR: GPU initialisation failed!\n");
+        run = 0;
+    }
 
     while (run) {
 
@@ -121,16 +141,6 @@ void vegas_pfb_thread(void *_args) {
         if (first)
         {
             guppi_read_obs_params(hdr_in, &gp, &sf);
-            if (EXIT_SUCCESS != init_gpu(db_in->block_size,
-                                         db_out->block_size,
-                                         db_in->index_size,
-                                         sf.hdr.nsubband,
-                                         sf.hdr.nchan))
-            {
-                (void) fprintf(stderr, "ERROR: GPU initialisation failed!\n");
-                break;
-            }
-
             /* Read required exposure from status shared memory, and calculate
                corresponding accumulation length */
             acc_len = (sf.hdr.chan_bw * sf.hdr.hwexposr * sf.hdr.npol * 2);
