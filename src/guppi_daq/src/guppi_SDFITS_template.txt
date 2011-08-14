@@ -109,20 +109,20 @@ TFORM#  = 'D       '           / 8-byte real (* number of sub-bands)
 #
 ### The data array axes ###
 #
-CTYPE1  = 'SUBBAND '           / DATA ARRAY AXIS 1: Sub-bands          
+CTYPE1  = 'FREQ    '           / DATA ARRAY AXIS 1: frequency in Hz.            
+TTYPE#  = 'CRPIX1  '           / Channel num. of centre of spectral bin                              
+TFORM#  = '1E      '           / 4-byte real                              
+TTYPE#  = 'CRVAL1  '           / Freq at centre of sub-band (always 0Hz)                              
+TFORM#  = '1D      '           / 8-byte real                               
+TUNIT#  = 'Hz      '           / Units is Hz                                 
+TTYPE#  = 'CDELT1  '           / Width of each spectral channel                               
+TFORM#  = '1D      '           / 8-byte real                                
+TUNIT#  = 'Hz      '           / Units is Hz    
+#
+CTYPE2  = 'SUBBAND '           / DATA ARRAY AXIS 2: Sub-bands          
 CRPIX1  =                  1.0 / Reference pixel
 CRVAL1  =                  0.0 / Sub-band number for reference pixel
 CDELT1  =                  1.0 / Sub-band axis increment               
-#
-CTYPE2  = 'FREQ    '           / DATA ARRAY AXIS 2: frequency in Hz.            
-TTYPE# 	= 'CRPIX2  '           / Channel num. of centre of spectral bin                              
-TFORM# 	= '1E      '           / 4-byte real                              
-TTYPE#  = 'CRVAL2  '           / Freq at centre of sub-band (always 0Hz)                              
-TFORM#  = '1D      '           / 8-byte real                               
-TUNIT# 	= 'Hz      '           / Units is Hz                                 
-TTYPE#  = 'CDELT2  '           / Width of each spectral channel                               
-TFORM#  = '1D      '           / 8-byte real                                
-TUNIT#  = 'Hz      '           / Units is Hz    
 #                            
 CTYPE3  = 'STOKES  '           / DATA ARRAY AXIS 3: Stokes polarisation          
 CRPIX3  =                  1.0 / Polarization code reference pixel

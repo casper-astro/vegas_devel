@@ -2,16 +2,16 @@
 ${GUPPI_DIR}/bin/vegas_init_shmem 
 python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -D --nogbt
 python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -U --nogbt \
-    --host=localhost     \
+    --host=10.0.0.4     \
     --port=60000        \
     --packets=SPEAD     \
     --npol=2		    \
-    --nchan=1024        \
-    --chan_bw=1465      \
+    --nchan=32768       \
+    --chan_bw=2288.8    \
     --nsubband=1        \
     --sub0freq=2.4e9    \
-    --exposure=1e-3     \
-    --fpgaclk=375e6     \
-    --efsampfr=3e9      \
-    --hwexposr=0.5e-3   \
+    --exposure=20e-3    \
+    --fpgaclk=150e6     \
+    --efsampfr=150e6    \
+    --hwexposr=10e-3    \
  

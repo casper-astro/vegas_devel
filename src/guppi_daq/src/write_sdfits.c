@@ -107,7 +107,7 @@ int sdfits_create(struct sdfits *sf) {
     fits_modify_vector_len(sf->fptr, 13, hdr->nsubband, status);    // SUBFREQ
 
     // Update the TDIM field for the data column
-    sprintf(ctmp, "(%d,%d,4,1,1)", hdr->nsubband, hdr->nchan);
+    sprintf(ctmp, "(%d,%d,4,1,1)", hdr->nchan, hdr->nsubband);
     fits_update_key(sf->fptr, TSTRING, "TDIM19", ctmp, NULL, status);
 
     fits_flush_file(sf->fptr, status);

@@ -45,10 +45,35 @@ extern void guppi_read_subint_params(char *buf,
                                      struct guppi_params *g,
                                      struct sdfits *p);
 
+/* Dynamically allocates memory for the vector accumulators */
+void create_accumulators(float ***accumulator, int num_chans, int num_subbands)
+{
+    int i;
+
+    /* Want: float accumulator[NUM_SW_STATES][num_chan][num_subband][NUM_STOKES] */
+
+    *accumulator = malloc(NUM_SW_STATES * sizeof(float*));
+
+    if(*accumulator == NULL) {
+        guppi_error("guppi_net_thread", "malloc failed");
+        pthread_exit(NULL);
+    }
+
+    for(i = 0; i < NUM_SW_STATES; i++)
+    {
+        (*accumulator)[i] = malloc(num_chans * num_subbands * NUM_STOKES * sizeof(float));
+    
+        if((*accumulator)[i] == NULL) {
+            guppi_error("guppi_net_thread", "malloc failed");
+            pthread_exit(NULL);
+        }
+    }
+}
+
+
 /* Resets the vector accumulators */
-void reset_accumulators(float accumulator[][MAX_NUM_SUB][MAX_NUM_CH][NUM_STOKES],
-                        struct sdfits_data_columns* data_cols, char* accum_dirty,
-                        int num_subbands, int num_chans)
+void reset_accumulators(float **accumulator, struct sdfits_data_columns* data_cols,
+                        char* accum_dirty, int num_subbands, int num_chans)
 {
     int i, j, k, l;
     int sum = 0;
@@ -57,12 +82,12 @@ void reset_accumulators(float accumulator[][MAX_NUM_SUB][MAX_NUM_CH][NUM_STOKES]
     {
         if(accum_dirty[i])
         {
-            for(j = 0; j < num_subbands; j++)
+            for(j = 0; j < num_chans; j++)
             {
-                for(k = 0; k < num_chans; k++)
+                for(k = 0; k < num_subbands; k++)
                 {
                     for(l = 0; l < NUM_STOKES; l++)
-                        accumulator[i][j][k][l] = 0.0;
+                        accumulator[i][j*num_subbands*NUM_STOKES + k*NUM_STOKES + l] = 0.0;
                 }
             }
 
@@ -79,13 +104,10 @@ void reset_accumulators(float accumulator[][MAX_NUM_SUB][MAX_NUM_CH][NUM_STOKES]
 }
 
 
-/* Declare accumulators */
-float accumulator[NUM_SW_STATES][MAX_NUM_SUB][MAX_NUM_CH][NUM_STOKES];
-
-
 /* The main CPU accumulator thread */
 void guppi_accum_thread(void *_args) {
 
+    float **accumulator;      //indexed accumulator[accum_id][chan][subband][stokes]
     char accum_dirty[NUM_SW_STATES];
     struct sdfits_data_columns data_cols[NUM_SW_STATES];
     int payload_type;
@@ -225,6 +247,9 @@ void guppi_accum_thread(void *_args) {
             index_out->num_datasets = 0;
             index_out->array_size = sf.hdr.nsubband * sf.hdr.nchan * NUM_STOKES * 4;
 
+            /* Allocate memory for vector accumulators */
+            create_accumulators(&accumulator, sf.hdr.nchan, sf.hdr.nsubband);
+
             /* Clear the vector accumulators */
             for(i = 0; i < NUM_SW_STATES; i++) accum_dirty[i] = 1;
             reset_accumulators(accumulator, data_cols, accum_dirty,
@@ -332,7 +357,7 @@ void guppi_accum_thread(void *_args) {
 
                         /*Copy data array to disk buffer */
                         memcpy(guppi_databuf_data(db_out, curblock_out) + array_offset,
-                                accumulator[accumid], index_out->array_size);
+                                accumulator[i], index_out->array_size);
                         
                         /*Update SDFITS data_columns pointer to data array */
                         ((struct sdfits_data_columns*)
@@ -386,14 +411,15 @@ void guppi_accum_thread(void *_args) {
                 /* Add spectrum to appropriate vector accumulator (high-bw mode) */
                 if(payload_type == INT_PAYLOAD)
                 {
-                    for(i = 0; i < sf.hdr.nsubband; i++)
+                    for(i = 0; i < sf.hdr.nchan; i++)
                     {
-                        for(j = 0; j < sf.hdr.nchan; j++)
+                        for(j = 0; j < sf.hdr.nsubband; j++)
                         {
                             for(k = 0; k < NUM_STOKES; k++)
                             {
-                                accumulator[accumid][i][j][k] +=
-                                    (float)i_payload[i*sf.hdr.nchan + j*NUM_STOKES + k];
+                                accumulator[accumid]
+                                           [i*sf.hdr.nsubband*NUM_STOKES + j*NUM_STOKES + k] +=
+                                    (float)i_payload[i*sf.hdr.nsubband*NUM_STOKES + j*NUM_STOKES + k];
                             }
                         }
                     }
@@ -402,14 +428,15 @@ void guppi_accum_thread(void *_args) {
                 /* Add spectrum to appropriate vector accumulator (low-bw mode) */
                 else
                 {
-                    for(i = 0; i < sf.hdr.nsubband; i++)
+                    for(i = 0; i < sf.hdr.nchan; i++)
                     {
-                        for(j = 0; j < sf.hdr.nchan; j++)
+                        for(j = 0; j < sf.hdr.nsubband; j++)
                         {
                             for(k = 0; k < NUM_STOKES; k++)
                             {
-                                accumulator[accumid][i][j][k] +=
-                                    f_payload[i*sf.hdr.nchan + j*NUM_STOKES + k];
+                                accumulator[accumid]
+                                           [i*sf.hdr.nsubband*NUM_STOKES + j*NUM_STOKES + k] +=
+                                    f_payload[i*sf.hdr.nsubband*NUM_STOKES + j*NUM_STOKES + k];
                             }
                         }
                     }
