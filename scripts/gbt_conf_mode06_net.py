@@ -18,7 +18,7 @@ sync_period = (acc_len+1)*lcm*pfb_taps*fft_size/simul_inputs
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
-boffile='mode13_net_2011_Aug_13_2025.bof'
+boffile='mode06_net2_2011_Aug_14_0005.bof'
 
 # Unprogram the device
 fpga.progdev('')
