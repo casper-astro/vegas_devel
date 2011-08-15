@@ -45,7 +45,7 @@ fpga.write_int('sync_period',sync_period)
 fpga.write_int('sync_sel',1)
 
 # Create test waveform
-wave = [120*cmath.exp(2j*math.pi*t/16) + 120 for t in range(16)]
+wave = [50*cmath.exp(2j*math.pi*t*4/16) + 50 for t in range(16)]
 wave_comb = [((int)(w.real) << 8) + (int)(w.imag) for w in wave] 
 wave_packed = struct.pack('> 16I', *wave_comb)
 
