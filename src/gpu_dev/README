@@ -239,6 +239,10 @@ data, and whether to output single-precision floating point coefficients or
 signed chars in the range [-128, 127]. Note that the VEGAS codes can only
 accept signed chars.
 
+The number of sub-bands does not actually affect the coefficients themselves,
+but is included as an optimisation feature - each coefficient repeats this
+many times, for ease of GPU thread indexing.
+
 The output is a binary file, and the filename has the following format:
 
 coeff_<data-type>_<taps>_<nfft>_<sub-bands>.dat

@@ -18,7 +18,7 @@ endif
 CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I$(CUDA)/include -I$(VEGAS_INCL) \
 		-I$(PYSLALIB) -I$(GUPPI_DIR)/src $(OPT_FLAGS)
 
-NVCCFLAGS = -g -arch sm_13 -I$(CUDA)/include -I$(VEGAS_INCL)
+NVCCFLAGS = -arch=sm_20 -I$(CUDA)/include -I$(VEGAS_INCL)
 
 LIBS = -L$(PYSLALIB) -L$(VEGAS_LIB) -lcfitsio -lsla -lm -lpthread
 CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm -lpthread
