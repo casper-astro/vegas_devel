@@ -45,9 +45,11 @@ fpga.write_int('sync_period',sync_period)
 fpga.write_int('sync_sel',1)
 
 # Create test waveform
-wave = [50*cmath.exp(2j*math.pi*t*4/16) + 50 for t in range(16)]
-wave_comb = [((int)(w.real) << 8) + (int)(w.imag) for w in wave] 
-wave_packed = struct.pack('> 16I', *wave_comb)
+wave = [50*cmath.exp(2j*math.pi*t/16) for t in range(16)]
+wave_comb = []
+map(wave_comb.extend, zip([(int)(w.real) for w in wave], [int(x.imag) for x in wave]))
+fmt_string = "> " + "xxbb"*16
+wave_packed = struct.pack(fmt_string, *wave_comb)
 
 # Load test waveform into BRAM
 fpga.write('test_waveform', wave_packed)
