@@ -30,7 +30,7 @@
 #define F_S             128.0       /* sampling frequency in MHz */
 #define NUM_FREQS       4
 #define NUM_SUBBANDS    1
-#define SCALE_FACTOR    128
+#define SCALE_FACTOR    127
 
 void PrintUsage(const char *pcProgName);
 

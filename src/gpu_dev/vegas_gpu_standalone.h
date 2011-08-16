@@ -17,8 +17,8 @@
 /**
  * @defgroup Macros to enable/disable options such as plotting.
  */
-#define PLOT                1
-#define BENCHMARKING        1
+#define PLOT                0
+#define BENCHMARKING        0
 #define OUTFILE             0
 
 #include <string.h>     /* for memset(), strncpy(), memcpy(), strerror() */

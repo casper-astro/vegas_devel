@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <fftw3.h>
 
-#define PLOT                1
+#define PLOT                0
 #define OUTFILE             0
 
 #include <string.h>     /* for memset(), strncpy(), memcpy(), strerror() */
