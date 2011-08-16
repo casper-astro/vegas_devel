@@ -13,16 +13,16 @@
 #define FILE_COEFF_SUFFIX   ".dat"
 
 #define FFTPLAN_RANK        1
-#define FFTPLAN_ISTRIDE     (2 * g_num_subbands)
-#define FFTPLAN_OSTRIDE     (2 * g_num_subbands)
+#define FFTPLAN_ISTRIDE     (2 * g_iNumSubBands)
+#define FFTPLAN_OSTRIDE     (2 * g_iNumSubBands)
 #define FFTPLAN_IDIST       1
 #define FFTPLAN_ODIST       1
-#define FFTPLAN_BATCH       (2 * g_num_subbands)
+#define FFTPLAN_BATCH       (2 * g_iNumSubBands)
 
 #if defined __cplusplus
 extern "C"
 #endif
-int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int num_subbands, int num_chans);
+int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, int num_chans);
 
 #if defined __cplusplus
 extern "C"

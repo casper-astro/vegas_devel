@@ -24,7 +24,6 @@ extern "C" {
 #include "pfb_gpu_kernels.h"
 #include "spead_heap.h"
 
-/* TODO: move to .h? */
 #define STATUS_KEY "GPUSTAT"
 
 /* ASSUMPTIONS: 1. All blocks contain the same number of heaps. */
@@ -36,10 +35,8 @@ extern int run;
  */
 size_t g_buf_in_block_size;
 size_t g_buf_out_block_size;
-size_t g_buf_index_size;
 int g_nchan;
 
-int g_iMaxThreadsPerBlock = 0;
 cufftHandle g_stPlan = {0};
 float4* g_pf4FFTIn_d = NULL;
 float4* g_pf4FFTOut_d = NULL;
@@ -52,24 +49,23 @@ dim3 g_dimGPFB(1, 1);
 dim3 g_dimBAccum(1, 1, 1);
 dim3 g_dimGAccum(1, 1);
 float4* g_pf4SumStokes_d = NULL;
-int g_num_subbands = 0;
+int g_iNumSubBands = 0;
 int g_iFileCoeff = 0;
 char g_acFileCoeff[256] = {0};
 signed char *g_pcPFBCoeff = NULL;
 signed char *g_pcPFBCoeff_d = NULL;
 unsigned int g_iPrevBlankingState = FALSE;
-int g_tot_heap_out = 0;
+int g_iTotHeapOut = 0;
 int g_iMaxNumHeapOut = 0;
-int g_pfb_curblock_out = 0;
-int g_heap_out = 0;
-int g_block_in_data_size = 0;
-int g_iTailValid = TRUE;
+int g_iPFBCurBlockOut = 0;
+int g_iHeapOut = 0;
+int g_iBlockInDataSize = 0;
 /* these arrays need to be only a little longer than MAX_HEAPS_PER_BLK, but
    since we don't know the exact length, just allocate twice that value */
 unsigned int g_auiStatusBits[2*MAX_HEAPS_PER_BLK] = {0};
 unsigned int g_auiHeapValid[2*MAX_HEAPS_PER_BLK] = {0};
-int g_first_heap_in = 0;
-double g_first_heap_rcvd_mjd = 0.0;
+int g_iFirstHeapIn = 0;
+double g_dFirstHeapRcvdMJD = 0.0;
 int g_iSpecPerAcc = 0;
 
 void __CUDASafeCall(cudaError_t iCUDARet,
@@ -86,18 +82,18 @@ void __CUDASafeCall(cudaError_t iCUDARet,
  * at the given params.
  */
 extern "C"
-int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int num_subbands, int num_chans)
+int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, int num_chans)
 {
     int iDevCount = 0;
     cudaDeviceProp stDevProp = {0};
     cufftResult iCUFFTRet = CUFFT_SUCCESS;
     int iRet = EXIT_SUCCESS;
+    int iMaxThreadsPerBlock = 0;
 
     g_buf_in_block_size = input_block_sz;
     g_buf_out_block_size = output_block_sz;
-    g_buf_index_size = index_sz;
     g_nchan = num_chans;
-    g_num_subbands = num_subbands;
+    g_iNumSubBands = num_subbands;
 
     /* since CUDASafeCall() calls cudaGetErrorString(),
        it should not be used here - will cause crash if no CUDA device is
@@ -114,9 +110,9 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int
     CUDASafeCall(cudaSetDevice(0));
 
     CUDASafeCall(cudaGetDeviceProperties(&stDevProp, 0));
-    g_iMaxThreadsPerBlock = stDevProp.maxThreadsPerBlock;
+    iMaxThreadsPerBlock = stDevProp.maxThreadsPerBlock;
 
-    g_pcPFBCoeff = (signed char *) malloc(g_num_subbands
+    g_pcPFBCoeff = (signed char *) malloc(g_iNumSubBands
                                           * VEGAS_NUM_TAPS
                                           * g_nchan
                                           * sizeof(signed char));
@@ -130,7 +126,7 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int
 
     /* allocate memory for the filter coefficient array on the device */
     CUDASafeCall(cudaMalloc((void **) &g_pcPFBCoeff_d,
-                                       g_num_subbands
+                                       g_iNumSubBands
                                        * VEGAS_NUM_TAPS
                                        * g_nchan
                                        * sizeof(signed char)));
@@ -143,7 +139,7 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int
                    FILE_COEFF_DATATYPE,
                    VEGAS_NUM_TAPS,
                    g_nchan,
-                   g_num_subbands,
+                   g_iNumSubBands,
                    FILE_COEFF_SUFFIX);
     g_iFileCoeff = open(g_acFileCoeff, O_RDONLY);
     if (g_iFileCoeff < EXIT_SUCCESS)
@@ -158,8 +154,8 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int
 
     iRet = read(g_iFileCoeff,
                 g_pcPFBCoeff,
-                g_num_subbands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char));
-    if (iRet != (g_num_subbands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char)))
+                g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char));
+    if (iRet != (g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char)))
     {
         (void) fprintf(stderr,
                        "ERROR: Reading filter coefficients failed! %s.\n",
@@ -171,7 +167,7 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int
     /* copy filter coefficients to the device */
     CUDASafeCall(cudaMemcpy(g_pcPFBCoeff_d,
                g_pcPFBCoeff,
-               g_num_subbands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char),
+               g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char),
                cudaMemcpyHostToDevice));
 
     /* allocate memory for data array - 32MB is the block size for the VEGAS
@@ -183,27 +179,27 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, size_t index_sz, int
     CUDASafeCall(cudaMalloc((void **) &g_pc4Data_d,
                                        (g_buf_in_block_size
                                         + ((VEGAS_NUM_TAPS - 1)
-                                           * g_num_subbands
+                                           * g_iNumSubBands
                                            * g_nchan
                                            * sizeof(char4)))));
     g_pc4DataRead_d = g_pc4Data_d;
 
     /* calculate kernel parameters */
-    /* ASSUMPTION: g_nchan >= g_iMaxThreadsPerBlock */
-    g_dimBPFB.x = g_iMaxThreadsPerBlock;
-    g_dimBAccum.x = g_iMaxThreadsPerBlock;
-    g_dimGPFB.x = (g_num_subbands * g_nchan) / g_iMaxThreadsPerBlock;
-    g_dimGAccum.x = (g_num_subbands * g_nchan) / g_iMaxThreadsPerBlock;
+    /* ASSUMPTION: g_nchan >= iMaxThreadsPerBlock */
+    g_dimBPFB.x = iMaxThreadsPerBlock;
+    g_dimBAccum.x = iMaxThreadsPerBlock;
+    g_dimGPFB.x = (g_iNumSubBands * g_nchan) / iMaxThreadsPerBlock;
+    g_dimGAccum.x = (g_iNumSubBands * g_nchan) / iMaxThreadsPerBlock;
 
     CUDASafeCall(cudaMalloc((void **) &g_pf4FFTIn_d,
-                                 g_num_subbands * g_nchan * sizeof(float4)));
+                                 g_iNumSubBands * g_nchan * sizeof(float4)));
     CUDASafeCall(cudaMalloc((void **) &g_pf4FFTOut_d,
-                                 g_num_subbands * g_nchan * sizeof(float4)));
+                                 g_iNumSubBands * g_nchan * sizeof(float4)));
     CUDASafeCall(cudaMalloc((void **) &g_pf4SumStokes_d,
-                                 g_num_subbands * g_nchan * sizeof(float4)));
+                                 g_iNumSubBands * g_nchan * sizeof(float4)));
     CUDASafeCall(cudaMemset(g_pf4SumStokes_d,
                                  '\0',
-                                 g_num_subbands * g_nchan * sizeof(float4)));
+                                 g_iNumSubBands * g_nchan * sizeof(float4)));
 
     /* create plan */
     iCUFFTRet = cufftPlanMany(&g_stPlan,
@@ -251,7 +247,6 @@ void do_pfb(struct guppi_databuf *db_in,
     char* payload_addr_in = NULL;
     char* payload_addr_out = NULL;
     int num_in_heaps_per_proc = 0;
-    int num_in_heaps_per_acc = 0;
     int pfb_count = 0;
     int num_in_heaps_gpu_buffer = 0;
     int num_in_heaps_tail = 0;
@@ -260,33 +255,31 @@ void do_pfb(struct guppi_databuf *db_in,
     /* Setup input and first output data block stuff */
     index_in = (struct databuf_index*)guppi_databuf_index(db_in, curblock_in);
     /* Get the number of heaps per block of data that will be processed by the GPU */
-    num_in_heaps_per_proc = (g_num_subbands * g_nchan * sizeof(char4)) / (index_in->heap_size - sizeof(struct time_spead_heap));
-    num_in_heaps_per_acc = num_in_heaps_per_proc * acc_len;
-    g_block_in_data_size = (index_in->num_heaps * index_in->heap_size) - (index_in->num_heaps * sizeof(struct time_spead_heap));
+    num_in_heaps_per_proc = (g_iNumSubBands * g_nchan * sizeof(char4)) / (index_in->heap_size - sizeof(struct time_spead_heap));
+    g_iBlockInDataSize = (index_in->num_heaps * index_in->heap_size) - (index_in->num_heaps * sizeof(struct time_spead_heap));
 
-    num_in_heaps_tail = (((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan * sizeof(char4))
+    num_in_heaps_tail = (((VEGAS_NUM_TAPS - 1) * g_iNumSubBands * g_nchan * sizeof(char4))
                          / (index_in->heap_size - sizeof(struct time_spead_heap)));
     num_in_heaps_gpu_buffer = index_in->num_heaps + num_in_heaps_tail;
 
     /* Calculate the maximum number of output heaps per block */
-    g_iMaxNumHeapOut = (g_buf_out_block_size - (sizeof(struct time_spead_heap) * MAX_HEAPS_PER_BLK)) / (g_num_subbands * g_nchan * sizeof(float4)); 
+    g_iMaxNumHeapOut = (g_buf_out_block_size - (sizeof(struct time_spead_heap) * MAX_HEAPS_PER_BLK)) / (g_iNumSubBands * g_nchan * sizeof(float4)); 
 
-    hdr_out = guppi_databuf_header(db_out, g_pfb_curblock_out);
-    index_out = (struct databuf_index*)guppi_databuf_index(db_out, g_pfb_curblock_out);
+    hdr_out = guppi_databuf_header(db_out, g_iPFBCurBlockOut);
+    index_out = (struct databuf_index*)guppi_databuf_index(db_out, g_iPFBCurBlockOut);
     memcpy(hdr_out, guppi_databuf_header(db_in, curblock_in),
             GUPPI_STATUS_SIZE);
 
     /* Set basic params in output index */
-    index_out->heap_size = sizeof(struct freq_spead_heap) + (g_num_subbands * g_nchan * sizeof(float4));
+    index_out->heap_size = sizeof(struct freq_spead_heap) + (g_iNumSubBands * g_nchan * sizeof(float4));
     /* Read in heap from buffer */
     heap_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
                         sizeof(struct time_spead_heap) * heap_in);
     first_time_heap_in_accum = (struct time_spead_heap*)(heap_addr_in);
     if (first)
     {
-        g_first_heap_in = heap_in;
-        printf("***** pfb_gpu: g_first_heap_in = %d\n", g_first_heap_in);
-        g_first_heap_rcvd_mjd = index_in->cpu_gpu_buf[g_first_heap_in].heap_rcvd_mjd;
+        g_iFirstHeapIn = heap_in;
+        g_dFirstHeapRcvdMJD = index_in->cpu_gpu_buf[g_iFirstHeapIn].heap_rcvd_mjd;
     }
     /* Here, the payload_addr_in is the start of the contiguous block of data that will be
        copied to the GPU (heap_in = 0) */
@@ -298,7 +291,7 @@ void do_pfb(struct guppi_databuf *db_in,
     if (first)
     {
         /* Sanity check for the first iteration */
-        if ((g_block_in_data_size % (g_num_subbands * g_nchan * sizeof(char4))) != 0)
+        if ((g_iBlockInDataSize % (g_iNumSubBands * g_nchan * sizeof(char4))) != 0)
         {
             (void) fprintf(stderr, "ERROR: Data size mismatch!\n");
             run = 0;
@@ -306,13 +299,13 @@ void do_pfb(struct guppi_databuf *db_in,
         }
         CUDASafeCall(cudaMemcpy(g_pc4Data_d,
                                 payload_addr_in,
-                                g_block_in_data_size,
+                                g_iBlockInDataSize,
                                 cudaMemcpyHostToDevice));
         /* duplicate the last (VEGAS_NUM_TAPS - 1) segments at the end for
            the next iteration */
-        CUDASafeCall(cudaMemcpy(g_pc4Data_d + (g_block_in_data_size / sizeof(char4)),
-                                g_pc4Data_d + (g_block_in_data_size / sizeof(char4)) - ((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan),
-                                ((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan * sizeof(char4)),
+        CUDASafeCall(cudaMemcpy(g_pc4Data_d + (g_iBlockInDataSize / sizeof(char4)),
+                                g_pc4Data_d + (g_iBlockInDataSize / sizeof(char4)) - ((VEGAS_NUM_TAPS - 1) * g_iNumSubBands * g_nchan),
+                                ((VEGAS_NUM_TAPS - 1) * g_iNumSubBands * g_nchan * sizeof(char4)),
                                 cudaMemcpyDeviceToDevice));
 
         /* copy the status bits and valid flags for all heaps to arrays separate
@@ -337,12 +330,12 @@ void do_pfb(struct guppi_databuf *db_in,
     {
         /* If this is not the first run, need to handle block boundary, while doing the PFB */
         CUDASafeCall(cudaMemcpy(g_pc4Data_d,
-                                g_pc4Data_d + (g_block_in_data_size / sizeof(char4)),
-                                ((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan * sizeof(char4)),
+                                g_pc4Data_d + (g_iBlockInDataSize / sizeof(char4)),
+                                ((VEGAS_NUM_TAPS - 1) * g_iNumSubBands * g_nchan * sizeof(char4)),
                                 cudaMemcpyDeviceToDevice));
-        CUDASafeCall(cudaMemcpy(g_pc4Data_d + ((VEGAS_NUM_TAPS - 1) * g_num_subbands * g_nchan),
+        CUDASafeCall(cudaMemcpy(g_pc4Data_d + ((VEGAS_NUM_TAPS - 1) * g_iNumSubBands * g_nchan),
                                 payload_addr_in,
-                                g_block_in_data_size,
+                                g_iBlockInDataSize,
                                 cudaMemcpyHostToDevice));
         /* copy the status bits and valid flags for all heaps to arrays separate
            from the index, so that it can be combined with the corresponding
@@ -363,7 +356,7 @@ void do_pfb(struct guppi_databuf *db_in,
 
     g_pc4DataRead_d = g_pc4Data_d;
     iProcData = 0;
-    while (g_block_in_data_size != iProcData)  /* loop till (num_heaps * heap_size) of data is processed */
+    while (g_iBlockInDataSize != iProcData)  /* loop till (num_heaps * heap_size) of data is processed */
     {
         if (0 == pfb_count)
         {
@@ -371,10 +364,10 @@ void do_pfb(struct guppi_databuf *db_in,
             if (!(is_valid(heap_in, (VEGAS_NUM_TAPS * num_in_heaps_per_proc))))
             {
                 /* Skip all heaps that go into this PFB if there is an invalid heap */
-                iProcData += (VEGAS_NUM_TAPS * g_num_subbands * g_nchan * sizeof(char4));
+                iProcData += (VEGAS_NUM_TAPS * g_iNumSubBands * g_nchan * sizeof(char4));
                 /* update the data read pointer */
-                g_pc4DataRead_d += (VEGAS_NUM_TAPS * g_num_subbands * g_nchan);
-                if (iProcData == g_block_in_data_size)
+                g_pc4DataRead_d += (VEGAS_NUM_TAPS * g_iNumSubBands * g_nchan);
+                if (iProcData == g_iBlockInDataSize)
                 {
                     break;
                 }
@@ -442,18 +435,18 @@ void do_pfb(struct guppi_databuf *db_in,
             if (FALSE == g_iPrevBlankingState)
             {
                 /* dump to buffer */
-                heap_addr_out = (char*)(guppi_databuf_data(db_out, g_pfb_curblock_out) +
-                                    sizeof(struct freq_spead_heap) * g_heap_out);
+                heap_addr_out = (char*)(guppi_databuf_data(db_out, g_iPFBCurBlockOut) +
+                                    sizeof(struct freq_spead_heap) * g_iHeapOut);
                 freq_heap_out = (struct freq_spead_heap*)(heap_addr_out);
-                payload_addr_out = (char*)(guppi_databuf_data(db_out, g_pfb_curblock_out) +
+                payload_addr_out = (char*)(guppi_databuf_data(db_out, g_iPFBCurBlockOut) +
                                     sizeof(struct freq_spead_heap) * MAX_HEAPS_PER_BLK +
-                                    (index_out->heap_size - sizeof(struct freq_spead_heap)) * g_heap_out);
+                                    (index_out->heap_size - sizeof(struct freq_spead_heap)) * g_iHeapOut);
          
                 /* Write new heap header fields */
                 freq_heap_out->time_cntr_id = 0x20;
                 freq_heap_out->time_cntr = first_time_heap_in_accum->time_cntr;
                 freq_heap_out->spectrum_cntr_id = 0x21;
-                freq_heap_out->spectrum_cntr = g_tot_heap_out;
+                freq_heap_out->spectrum_cntr = g_iTotHeapOut;
                 freq_heap_out->integ_size_id = 0x22;
                 freq_heap_out->integ_size = g_iSpecPerAcc;
                 freq_heap_out->mode_id = 0x23;
@@ -465,10 +458,10 @@ void do_pfb(struct guppi_databuf *db_in,
                 freq_heap_out->payload_data_off = 0;
 
                 /* Update output index */
-                index_out->cpu_gpu_buf[g_heap_out].heap_valid = 1;
-                index_out->cpu_gpu_buf[g_heap_out].heap_cntr = g_tot_heap_out;
-                index_out->cpu_gpu_buf[g_heap_out].heap_rcvd_mjd =
-                         index_in->cpu_gpu_buf[g_first_heap_in].heap_rcvd_mjd ;
+                index_out->cpu_gpu_buf[g_iHeapOut].heap_valid = 1;
+                index_out->cpu_gpu_buf[g_iHeapOut].heap_cntr = g_iTotHeapOut;
+                index_out->cpu_gpu_buf[g_iHeapOut].heap_rcvd_mjd =
+                         index_in->cpu_gpu_buf[g_iFirstHeapIn].heap_rcvd_mjd ;
 
                 iRet = get_accumulated_spectrum_from_device(payload_addr_out);
                 if (iRet != GUPPI_OK)
@@ -478,8 +471,8 @@ void do_pfb(struct guppi_databuf *db_in,
                     break;
                 }
 
-                ++g_heap_out;
-                ++g_tot_heap_out;
+                ++g_iHeapOut;
+                ++g_iTotHeapOut;
 
                 /* zero accumulators */
                 zero_accumulator();
@@ -492,18 +485,18 @@ void do_pfb(struct guppi_databuf *db_in,
         if (g_iSpecPerAcc == acc_len)
         {
             /* dump to buffer */
-            heap_addr_out = (char*)(guppi_databuf_data(db_out, g_pfb_curblock_out) +
-                                sizeof(struct freq_spead_heap) * g_heap_out);
+            heap_addr_out = (char*)(guppi_databuf_data(db_out, g_iPFBCurBlockOut) +
+                                sizeof(struct freq_spead_heap) * g_iHeapOut);
             freq_heap_out = (struct freq_spead_heap*)(heap_addr_out);
-            payload_addr_out = (char*)(guppi_databuf_data(db_out, g_pfb_curblock_out) +
+            payload_addr_out = (char*)(guppi_databuf_data(db_out, g_iPFBCurBlockOut) +
                                 sizeof(struct freq_spead_heap) * MAX_HEAPS_PER_BLK +
-                                (index_out->heap_size - sizeof(struct freq_spead_heap)) * g_heap_out);
+                                (index_out->heap_size - sizeof(struct freq_spead_heap)) * g_iHeapOut);
      
             /* Write new heap header fields */
             freq_heap_out->time_cntr_id = 0x20;
             freq_heap_out->time_cntr = first_time_heap_in_accum->time_cntr;
             freq_heap_out->spectrum_cntr_id = 0x21;
-            freq_heap_out->spectrum_cntr = g_tot_heap_out;
+            freq_heap_out->spectrum_cntr = g_iTotHeapOut;
             freq_heap_out->integ_size_id = 0x22;
             freq_heap_out->integ_size = g_iSpecPerAcc;
             freq_heap_out->mode_id = 0x23;
@@ -515,10 +508,10 @@ void do_pfb(struct guppi_databuf *db_in,
             freq_heap_out->payload_data_off = 0;
 
             /* Update output index */
-            index_out->cpu_gpu_buf[g_heap_out].heap_valid = 1;
-            index_out->cpu_gpu_buf[g_heap_out].heap_cntr = g_tot_heap_out;
-            index_out->cpu_gpu_buf[g_heap_out].heap_rcvd_mjd =
-                     index_in->cpu_gpu_buf[g_first_heap_in].heap_rcvd_mjd ;
+            index_out->cpu_gpu_buf[g_iHeapOut].heap_valid = 1;
+            index_out->cpu_gpu_buf[g_iHeapOut].heap_cntr = g_iTotHeapOut;
+            index_out->cpu_gpu_buf[g_iHeapOut].heap_rcvd_mjd =
+                     index_in->cpu_gpu_buf[g_iFirstHeapIn].heap_rcvd_mjd ;
 
             iRet = get_accumulated_spectrum_from_device(payload_addr_out);
             if (iRet != GUPPI_OK)
@@ -528,8 +521,8 @@ void do_pfb(struct guppi_databuf *db_in,
                 break;
             }
 
-            ++g_heap_out;
-            ++g_tot_heap_out;
+            ++g_iHeapOut;
+            ++g_iTotHeapOut;
 
             /* zero accumulators */
             zero_accumulator();
@@ -537,9 +530,9 @@ void do_pfb(struct guppi_databuf *db_in,
             g_iSpecPerAcc = 0;
         }
 
-        iProcData += (g_num_subbands * g_nchan * sizeof(char4));
+        iProcData += (g_iNumSubBands * g_nchan * sizeof(char4));
         /* update the data read pointer */
-        g_pc4DataRead_d += (g_num_subbands * g_nchan);
+        g_pc4DataRead_d += (g_iNumSubBands * g_nchan);
 
         /* Calculate input heap addresses for the next round of processing */
         heap_in += num_in_heaps_per_proc;
@@ -548,52 +541,54 @@ void do_pfb(struct guppi_databuf *db_in,
         if (0 == g_iSpecPerAcc)
         {
             first_time_heap_in_accum = (struct time_spead_heap*)(heap_addr_in);
-            g_first_heap_in = heap_in;
-            g_first_heap_rcvd_mjd = index_in->cpu_gpu_buf[g_first_heap_in].heap_rcvd_mjd;
+            g_iFirstHeapIn = heap_in;
+            g_dFirstHeapRcvdMJD = index_in->cpu_gpu_buf[g_iFirstHeapIn].heap_rcvd_mjd;
         }
 
         /* if output block is full */
-        if (g_heap_out == g_iMaxNumHeapOut)
+        if (g_iHeapOut == g_iMaxNumHeapOut)
         {
             /* Set the number of heaps written to this block */
-            index_out->num_heaps = g_heap_out;
+            index_out->num_heaps = g_iHeapOut;
 
             /* Mark output buffer as filled */
-            guppi_databuf_set_filled(db_out, g_pfb_curblock_out);
+            guppi_databuf_set_filled(db_out, g_iPFBCurBlockOut);
 
             printf("Debug: vegas_pfb_thread going to next output block\n");
 
             /* Note current output block */
+            /* NOTE: guppi_status_lock_safe() and guppi_status_unlock_safe() are macros
+               that have been explicitly expanded here, due to compilation issues */
             //guppi_status_lock_safe(&st);
                 pthread_cleanup_push((void (*) (void *))&guppi_status_unlock, (void *) &st);
                 guppi_status_lock(&st);
-            hputi4(st.buf, "PFBBLKOU", g_pfb_curblock_out);
+            hputi4(st.buf, "PFBBLKOU", g_iPFBCurBlockOut);
             //guppi_status_unlock_safe(&st);
-               guppi_status_unlock(&st);
-               pthread_cleanup_pop(0);
+                guppi_status_unlock(&st);
+                pthread_cleanup_pop(0);
 
             /*  Wait for next output block */
-            g_pfb_curblock_out = (g_pfb_curblock_out + 1) % db_out->n_block;
-            while ((guppi_databuf_wait_free(db_out, g_pfb_curblock_out)!=0) && run) {
+            g_iPFBCurBlockOut = (g_iPFBCurBlockOut + 1) % db_out->n_block;
+            while ((guppi_databuf_wait_free(db_out, g_iPFBCurBlockOut)!=0) && run) {
                 //guppi_status_lock_safe(&st);
                     pthread_cleanup_push((void (*)(void *))&guppi_status_unlock, (void *) &st);
                     guppi_status_lock(&st);
 
                 hputs(st.buf, STATUS_KEY, "blocked");
                 //guppi_status_unlock_safe(&st);
-                   guppi_status_unlock(&st);
-                   pthread_cleanup_pop(0);
+                    guppi_status_unlock(&st);
+                    pthread_cleanup_pop(0);
             }
 
-            g_heap_out = 0;
+            g_iHeapOut = 0;
 
-            hdr_out = guppi_databuf_header(db_out, g_pfb_curblock_out);
-            index_out = (struct databuf_index*)guppi_databuf_index(db_out, g_pfb_curblock_out);
+            hdr_out = guppi_databuf_header(db_out, g_iPFBCurBlockOut);
+            index_out = (struct databuf_index*)guppi_databuf_index(db_out, g_iPFBCurBlockOut);
             memcpy(hdr_out, guppi_databuf_header(db_in, curblock_in),
                     GUPPI_STATUS_SIZE);
 
             /* Set basic params in output index */
-            index_out->heap_size = sizeof(struct freq_spead_heap) + (g_num_subbands * g_nchan * sizeof(float4));
+            index_out->heap_size = sizeof(struct freq_spead_heap) + (g_iNumSubBands * g_nchan * sizeof(float4));
         }
 
         pfb_count = (pfb_count + 1) % VEGAS_NUM_TAPS;
@@ -644,7 +639,7 @@ void zero_accumulator()
 {
     CUDASafeCall(cudaMemset(g_pf4SumStokes_d,
                                        '\0',
-                                       (g_num_subbands
+                                       (g_iNumSubBands
                                        * g_nchan
                                        * sizeof(float4))));
 
@@ -655,7 +650,7 @@ int get_accumulated_spectrum_from_device(char *out)
 {
     CUDASafeCall(cudaMemcpy(out,
                                        g_pf4SumStokes_d,
-                                       (g_num_subbands
+                                       (g_iNumSubBands
                                         * g_nchan
                                         * sizeof(float4)),
                                        cudaMemcpyDeviceToHost));

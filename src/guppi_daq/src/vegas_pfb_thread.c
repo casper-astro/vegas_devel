@@ -22,7 +22,6 @@
 #include "guppi_params.h"
 #include "pfb_gpu.h"
 
-/* TODO: move to .h? */
 #define STATUS_KEY "GPUSTAT"
 #include "guppi_threads.h"
 
@@ -110,7 +109,6 @@ void vegas_pfb_thread(void *_args) {
     guppi_status_unlock_safe(&st);
     if (EXIT_SUCCESS != init_gpu(db_in->block_size,
                                  db_out->block_size,
-                                 db_in->index_size,
                                  nsubband,
                                  nchan))
     {
