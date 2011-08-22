@@ -37,8 +37,8 @@ int g_iSizeRead = DEF_SIZE_READ;
 int g_iNumSubBands = DEF_NUM_SUBBANDS;
 int g_iFileCoeff = 0;
 char g_acFileCoeff[256] = {0};
-signed char *g_pcPFBCoeff = NULL;
-signed char *g_pcPFBCoeff_d = NULL;
+float *g_pfPFBCoeff = NULL;
+float *g_pfPFBCoeff_d = NULL;
 
 #if PLOT
 float* g_pfSumPowX = NULL;
@@ -213,7 +213,7 @@ int main(int argc, char *argv[])
 #endif
             DoPFB<<<g_dimGPFB, g_dimBPFB>>>(g_pc4DataRead_d,
                                             g_pf4FFTIn_d,
-                                            g_pcPFBCoeff_d);
+                                            g_pfPFBCoeff_d);
             CUDASafeCallWithCleanUp(cudaThreadSynchronize());
             iCUDARet = cudaGetLastError();
             if (iCUDARet != cudaSuccess)
@@ -480,11 +480,11 @@ int Init()
            taps = 1 */
         g_iNTaps = NUM_TAPS;
 
-        g_pcPFBCoeff = (signed char *) malloc(g_iNumSubBands
-                                              * g_iNTaps
-                                              * g_iNFFT
-                                              * sizeof(signed char));
-        if (NULL == g_pcPFBCoeff)
+        g_pfPFBCoeff = (float *) malloc(g_iNumSubBands
+                                        * g_iNTaps
+                                        * g_iNFFT
+                                        * sizeof(float));
+        if (NULL == g_pfPFBCoeff)
         {
             (void) fprintf(stderr,
                            "ERROR: Memory allocation failed! %s.\n",
@@ -493,11 +493,11 @@ int Init()
         }
 
         /* allocate memory for the filter coefficient array on the device */
-        CUDASafeCallWithCleanUp(cudaMalloc((void **) &g_pcPFBCoeff_d,
+        CUDASafeCallWithCleanUp(cudaMalloc((void **) &g_pfPFBCoeff_d,
                                            g_iNumSubBands
                                            * g_iNTaps
                                            * g_iNFFT
-                                           * sizeof(signed char)));
+                                           * sizeof(float)));
 
         /* read filter coefficients */
         /* build file name */
@@ -521,9 +521,9 @@ int Init()
         }
 
         iRet = read(g_iFileCoeff,
-                    g_pcPFBCoeff,
-                    g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(signed char));
-        if (iRet != (g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(signed char)))
+                    g_pfPFBCoeff,
+                    g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(float));
+        if (iRet != (g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(float)))
         {
             (void) fprintf(stderr,
                            "ERROR: Reading filter coefficients failed! %s.\n",
@@ -533,9 +533,9 @@ int Init()
         (void) close(g_iFileCoeff);
 
         /* copy filter coefficients to the device */
-        CUDASafeCallWithCleanUp(cudaMemcpy(g_pcPFBCoeff_d,
-                   g_pcPFBCoeff,
-                   g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(signed char),
+        CUDASafeCallWithCleanUp(cudaMemcpy(g_pfPFBCoeff_d,
+                   g_pfPFBCoeff,
+                   g_iNumSubBands * g_iNTaps * g_iNFFT * sizeof(float),
                    cudaMemcpyHostToDevice));
     }
 
@@ -742,7 +742,7 @@ int ReadData()
 /* function that performs the PFB */
 __global__ void DoPFB(char4 *pc4Data,
                       float4 *pf4FFTIn,
-                      signed char *pcPFBCoeff)
+                      float *pfPFBCoeff)
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     int iNFFT = (gridDim.x * blockDim.x);
@@ -758,10 +758,10 @@ __global__ void DoPFB(char4 *pc4Data,
         /* get the address of the block */
         c4Data = pc4Data[iAbsIdx];
         
-        f4PFBOut.x += (float) c4Data.x * pcPFBCoeff[iAbsIdx];
-        f4PFBOut.y += (float) c4Data.y * pcPFBCoeff[iAbsIdx];
-        f4PFBOut.z += (float) c4Data.z * pcPFBCoeff[iAbsIdx];
-        f4PFBOut.w += (float) c4Data.w * pcPFBCoeff[iAbsIdx];
+        f4PFBOut.x += (float) c4Data.x * pfPFBCoeff[iAbsIdx];
+        f4PFBOut.y += (float) c4Data.y * pfPFBCoeff[iAbsIdx];
+        f4PFBOut.z += (float) c4Data.z * pfPFBCoeff[iAbsIdx];
+        f4PFBOut.w += (float) c4Data.w * pfPFBCoeff[iAbsIdx];
     }
 
     pf4FFTIn[i] = f4PFBOut;
@@ -861,8 +861,8 @@ void CleanUp()
         g_pf4SumStokes_d = NULL;
     }
 
-    free(g_pcPFBCoeff);
-    (void) cudaFree(g_pcPFBCoeff_d);
+    free(g_pfPFBCoeff);
+    (void) cudaFree(g_pfPFBCoeff_d);
 
     /* destroy plan */
     /* TODO: check for plan */

@@ -54,7 +54,7 @@
 /* for PFB */
 #define NUM_TAPS            8       /* number of multiples of g_iNFFT */
 #define FILE_COEFF_PREFIX   "coeff"
-#define FILE_COEFF_DATATYPE "signedchar"
+#define FILE_COEFF_DATATYPE "float"
 #define FILE_COEFF_SUFFIX   ".dat"
 
 #define DEF_NUM_SUBBANDS    8
@@ -105,7 +105,7 @@ int ReadData(void);
  */
 __global__ void DoPFB(char4* pc4Data,
                       float4* pf4FFTIn,
-                      signed char* pcPFBCoeff);
+                      float* pfPFBCoeff);
 __global__ void CopyDataForFFT(char4* pc4Data,
                                float4* pf4FFTIn);
 int DoFFT(void);
