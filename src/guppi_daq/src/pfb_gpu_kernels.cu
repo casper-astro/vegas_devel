@@ -10,7 +10,7 @@
 
 __global__ void DoPFB(char4* pc4Data,
                       float4 *pf4FFTIn,
-                      signed char *pcPFBCoeff)
+                      float *pfPFBCoeff)
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     int iNFFT = (gridDim.x * blockDim.x);
@@ -26,10 +26,10 @@ __global__ void DoPFB(char4* pc4Data,
         /* get the address of the block */
         c4Data = pc4Data[iAbsIdx];
         
-        f4PFBOut.x += (float) c4Data.x * pcPFBCoeff[iAbsIdx];
-        f4PFBOut.y += (float) c4Data.y * pcPFBCoeff[iAbsIdx];
-        f4PFBOut.z += (float) c4Data.z * pcPFBCoeff[iAbsIdx];
-        f4PFBOut.w += (float) c4Data.w * pcPFBCoeff[iAbsIdx];
+        f4PFBOut.x += (float) c4Data.x * pfPFBCoeff[iAbsIdx];
+        f4PFBOut.y += (float) c4Data.y * pfPFBCoeff[iAbsIdx];
+        f4PFBOut.z += (float) c4Data.z * pfPFBCoeff[iAbsIdx];
+        f4PFBOut.w += (float) c4Data.w * pfPFBCoeff[iAbsIdx];
     }
 
     pf4FFTIn[i] = f4PFBOut;

@@ -9,7 +9,7 @@
 #define VEGAS_NUM_TAPS      8
 
 #define FILE_COEFF_PREFIX   "coeff"
-#define FILE_COEFF_DATATYPE "signedchar"
+#define FILE_COEFF_DATATYPE "float"
 #define FILE_COEFF_SUFFIX   ".dat"
 
 #define FFTPLAN_RANK        1

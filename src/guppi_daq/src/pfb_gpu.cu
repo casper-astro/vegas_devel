@@ -52,8 +52,8 @@ float4* g_pf4SumStokes_d = NULL;
 int g_iNumSubBands = 0;
 int g_iFileCoeff = 0;
 char g_acFileCoeff[256] = {0};
-signed char *g_pcPFBCoeff = NULL;
-signed char *g_pcPFBCoeff_d = NULL;
+float *g_pfPFBCoeff = NULL;
+float *g_pfPFBCoeff_d = NULL;
 unsigned int g_iPrevBlankingState = FALSE;
 int g_iTotHeapOut = 0;
 int g_iMaxNumHeapOut = 0;
@@ -112,11 +112,11 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, in
     CUDASafeCall(cudaGetDeviceProperties(&stDevProp, 0));
     iMaxThreadsPerBlock = stDevProp.maxThreadsPerBlock;
 
-    g_pcPFBCoeff = (signed char *) malloc(g_iNumSubBands
+    g_pfPFBCoeff = (float *) malloc(g_iNumSubBands
                                           * VEGAS_NUM_TAPS
                                           * g_nchan
-                                          * sizeof(signed char));
-    if (NULL == g_pcPFBCoeff)
+                                          * sizeof(float));
+    if (NULL == g_pfPFBCoeff)
     {
         (void) fprintf(stderr,
                        "ERROR: Memory allocation failed! %s.\n",
@@ -125,11 +125,11 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, in
     }
 
     /* allocate memory for the filter coefficient array on the device */
-    CUDASafeCall(cudaMalloc((void **) &g_pcPFBCoeff_d,
+    CUDASafeCall(cudaMalloc((void **) &g_pfPFBCoeff_d,
                                        g_iNumSubBands
                                        * VEGAS_NUM_TAPS
                                        * g_nchan
-                                       * sizeof(signed char)));
+                                       * sizeof(float)));
 
     /* read filter coefficients */
     /* build file name */
@@ -153,9 +153,9 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, in
     }
 
     iRet = read(g_iFileCoeff,
-                g_pcPFBCoeff,
-                g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char));
-    if (iRet != (g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char)))
+                g_pfPFBCoeff,
+                g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(float));
+    if (iRet != (g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(float)))
     {
         (void) fprintf(stderr,
                        "ERROR: Reading filter coefficients failed! %s.\n",
@@ -165,9 +165,9 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, in
     (void) close(g_iFileCoeff);
 
     /* copy filter coefficients to the device */
-    CUDASafeCall(cudaMemcpy(g_pcPFBCoeff_d,
-               g_pcPFBCoeff,
-               g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(signed char),
+    CUDASafeCall(cudaMemcpy(g_pfPFBCoeff_d,
+               g_pfPFBCoeff,
+               g_iNumSubBands * VEGAS_NUM_TAPS * g_nchan * sizeof(float),
                cudaMemcpyHostToDevice));
 
     /* allocate memory for data array - 32MB is the block size for the VEGAS
@@ -393,7 +393,7 @@ void do_pfb(struct guppi_databuf *db_in,
         /* Perform polyphase filtering */
         DoPFB<<<g_dimGPFB, g_dimBPFB>>>(g_pc4DataRead_d,
                                         g_pf4FFTIn_d,
-                                        g_pcPFBCoeff_d);
+                                        g_pfPFBCoeff_d);
         CUDASafeCall(cudaThreadSynchronize());
         iCUDARet = cudaGetLastError();
         if (iCUDARet != cudaSuccess)
