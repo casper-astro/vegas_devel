@@ -19,7 +19,7 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parallel_adder_init_xblock(n_inputs,R,add_latency)
+function parallel_adder_init_xblock(blk, n_inputs,R,add_latency)
 
 sync_in = xInport('sync_in');
 inports = cell(1,n_inputs);
@@ -95,11 +95,14 @@ for i =1:n_inputs
     adder_tree_sync_in{i+1} = xSignal(['adder_tree_sync_in',num2str(i+1)]);
     adder_tree_sync_in{i+1} =xSignal(['adder_tree_sync_in',num2str(i)]);
     adder_tree_blks{i} = xBlock(struct('source', str2func('adder_tree_init_xblock'),'name', ['adder_tree',num2str(i)]), ...
-                     {R, add_latency, 'Round  (unbiased: +/- Inf)', 'Saturate', 'Behavioral'}, ...
+                     {[blk,'/','adder_tree',num2str(i)], R, add_latency, 'Round  (unbiased: +/- Inf)', 'Saturate', 'Behavioral'}, ...
                      {adder_tree_sync_in{i},adder_tree_inports{i,:}}, ...
                      {adder_tree_sync_in{i+1},outports{i}});
 end
 
 sync_out.bind(adder_tree_sync_in{n_inputs+1});
 
+if ~isempty(blk) && ~strcmp(blk(1),'/')
+    clean_blocks(blk);
+end
 end

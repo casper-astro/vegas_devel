@@ -19,7 +19,7 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function shift_mult_init_xblock(const,add_latency,n_bits,bin_pt)
+function shift_mult_init_xblock(blk, const,add_latency,n_bits,bin_pt)
 
 inport = xInport('in');
 outport = xOutport('out');
@@ -54,9 +54,14 @@ if len1==1
     
 else
     xlsub3_addertree = xBlock(struct('source', str2func('adder_tree_init_xblock'),'name', 'adder_tree'), ...
-                             {len1, add_latency, 'Round  (unbiased: +/- Inf)', 'Saturate', 'Behavioral'}, ...
+                             {[blk,'/adder_tree'], len1, add_latency, 'Round  (unbiased: +/- Inf)', 'Saturate', 'Behavioral'}, ...
                              [{inport},shift_out], ...
                              {{},outport});
 
+end
+
+
+if ~isempty(blk) && ~strcmp(blk(1),'/')
+    clean_blocks(blk);
 end
 end
