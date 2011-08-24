@@ -14,7 +14,7 @@ dest_port = 60000
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
 
-boffile='mode13_one_subband_2011_Aug_23_0039.bof'
+boffile='mode13_one_subband_2011_Aug_24_1422.bof'
 
 def exit_fail():
     print 'FAILURE DETECTED. Log entries:\n',lh.printMessages()
