@@ -103,7 +103,9 @@ try:
 
     print '---------------------------'
     print 'Writing Lookup-Tables to Registers'
-    pack_subband(1, 8) #Mixing with 2343750 Hz 
+    pack_subband(1, 8) #Mixing with 2343750 Hz
+    #set gain 
+    fpga.write_int('gain', 10)
     print 'done'
 
 except KeyboardInterrupt:
