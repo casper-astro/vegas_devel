@@ -68,7 +68,7 @@ switch double(state)
         if (wr_heap == false)
             state = state_serialize;
             serializer_ld = true;
-        elseif (waste_count == waste_time && wr_heap == true)        
+        elseif (waste_count >= waste_time && wr_heap == true)        
            state = state_serialize;
            serializer_ld = true;
         end

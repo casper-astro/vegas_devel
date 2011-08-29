@@ -102,11 +102,13 @@ end
 %                           {});
 % end
 
+if ~isempty(blk) && ~strcmp(blk(1),'/')
+    fmtstr =sprintf('dec_rate = %d\nOrder = %d\n',n,n_stages);
+    set_param(blk,'AttributesFormatString',fmtstr);
 
-fmtstr =sprintf('dec_rate = %d\nOrder = %d\n',n,n_stages);
-set_param(blk,'AttributesFormatString',fmtstr);
+    clean_blocks(blk);
+end
 
-clean_blocks(blk);
 
 disp('all done done');
 end

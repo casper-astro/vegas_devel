@@ -19,7 +19,7 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parallel_filter_init_xblock(R, n_inputs)
+function parallel_filter_init_xblock(blk, R, n_inputs)
 
 if mod(n_inputs,2)==1
     disp('not supported yet');
@@ -88,5 +88,8 @@ sync_delay = xBlock(struct('source','Delay','name', 'sync_delay'), ...
                               struct('latency', 1), ...   
                               {sync_in}, ...
                               {sync_out});
-
+                          
+if ~isempty(blk) && ~strcmp(blk(1),'/')
+    clean_blocks(blk);
+end
 end

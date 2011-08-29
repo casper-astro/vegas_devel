@@ -24,14 +24,14 @@
 
 /* Thread declarations */
 void *guppi_net_thread(void *args);
+void *vegas_pfb_thread(void *args);
+void *guppi_accum_thread(void *args);
+
 #if FITS_TYPE == PSRFITS
 void *guppi_psrfits_thread(void *args);
 #else
 void *guppi_sdfits_thread(void *args);
 #endif
-
-void *vegas_pfb_thread(void *args);
-void *guppi_accum_thread(void *args);
 
 #ifdef RAW_DISK
 void *guppi_rawdisk_thread(void *args);
@@ -54,6 +54,7 @@ int main(int argc, char *argv[]) {
     guppi_thread_args_init(&pfb_args);
     guppi_thread_args_init(&accum_args);
     guppi_thread_args_init(&disk_args);
+
     net_args.output_buffer = 1;
     pfb_args.input_buffer = net_args.output_buffer;
     pfb_args.output_buffer = 2;
@@ -170,6 +171,8 @@ int main(int argc, char *argv[]) {
 #elif defined NULL_DISK
     rv = pthread_create(&disk_thread_id, NULL, guppi_null_thread, 
         (void *)&disk_args);
+#elif defined EXT_DISK
+    rv = 0;
 #elif FITS_TYPE == PSRFITS
     rv = pthread_create(&disk_thread_id, NULL, guppi_psrfits_thread, 
         (void *)&disk_args);

@@ -19,7 +19,7 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function shift_mult_array_init_xblock(const_array, add_latency,n_bits,bin_pt,delay_max)
+function shift_mult_array_init_xblock(blk, const_array, add_latency,n_bits,bin_pt,delay_max)
 
 len = length(const_array);
 
@@ -155,7 +155,7 @@ for i =1:len
     end
     adder_trees_inputs{i}
     xlsub3_addertree{i} = xBlock(struct('source', str2func('adder_tree_init_xblock'),'name', ['adder_tree',num2str(i)]), ...
-                             {temp_len, add_latency, 'Round  (unbiased: +/- Inf)', 'Saturate', 'Behavioral'}, ...
+                             {[blk, '/adder_tree',num2str(i)], temp_len, add_latency, 'Round  (unbiased: +/- Inf)', 'Saturate', 'Behavioral'}, ...
                              [{inport},adder_trees_inputs{i}], ...
                              {{},adder_trees_out{i}});
 end
@@ -194,4 +194,9 @@ sync_delay =  xBlock(struct('source','Delay','name','sync_delay'), ...
                                     struct('latency', max_delay), ...
                                     {sync}, ...
                                     {sync_out});
+
+if ~isempty(blk) && ~strcmp(blk(1),'/')
+    clean_blocks(blk);
+end
+
 end

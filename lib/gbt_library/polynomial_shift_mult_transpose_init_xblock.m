@@ -19,7 +19,7 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function polynomial_shift_mult_transpose_init_xblock(coeffs, add_latency, n_bits, bin_pt,oddeven,delay_max)
+function polynomial_shift_mult_transpose_init_xblock(blk, coeffs, add_latency, n_bits, bin_pt,oddeven,delay_max)
 
 if add_latency ~= 1
     disp('only supports add_latency == 1 at this moment');
@@ -42,7 +42,7 @@ if strcmp(oddeven,'off')
 
     % shift multiplication with coefficients
     mult_blk = xBlock(struct('source',str2func('shift_mult_array_init_xblock'), 'name', 'shift_mult_array'), ...
-                      {coeffs(end:-1:1), add_latency, n_bits, bin_pt,delay_max}, ...
+                      {[blk,'/shift_mult_array'], coeffs(end:-1:1), add_latency, n_bits, bin_pt,delay_max}, ...
                       {inport,sync}, ...
                       [mult_outs,{sync_mult}]); 
 
@@ -89,7 +89,7 @@ else
 
     % shift multiplication with coefficients
     mult_blk = xBlock(struct('source',str2func('shift_mult_array_init_xblock'), 'name', 'shift_mult_array'), ...
-                      {coeffs(end:-1:1), add_latency, n_bits, bin_pt,delay_max}, ...
+                      {[blk, '/shift_mult_array'], coeffs(end:-1:1), add_latency, n_bits, bin_pt,delay_max}, ...
                       {inport,sync}, ...
                       [mult_outs,{sync_mult}]); 
                   
@@ -142,4 +142,11 @@ else
                               struct('latency', add_latency), ...
                               {sync_mult}, ...
                               {sync_out});
+
+
+end
+
+if ~isempty(blk) && ~strcmp(blk(1),'/')
+    clean_blocks(blk);
+end
 end

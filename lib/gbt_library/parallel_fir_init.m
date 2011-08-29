@@ -16,7 +16,7 @@
 %                                                                             %
 %   Center for Astronomy Signal Processing and Electronics Research           %
 %   http://seti.ssl.berkeley.edu/casper/                                      %
-%   Copyright (C) 2006 David MacMahon, Aaron Parsons                          %
+%   Copyright (C) 2010 Mark Wagner, Hong Chen                                 %
 %                                                                             %
 %   This program is free software; you can redistribute it and/or modify      %
 %   it under the terms of the GNU General Public License as published by      %
@@ -62,3 +62,6 @@ set_param([blk,'/f0pf1'],'coeff',f0pf1);
 annotation=sprintf('%d taps\n%d_%d r/i', length(coeff), n_bits, n_bits-1);
 set_param(blk,'AttributesFormatString',annotation);
 save_state(blk, 'defaults', defaults, varargin{:});
+
+
+end

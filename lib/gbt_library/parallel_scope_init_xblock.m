@@ -19,7 +19,7 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parallel_scope_init_xblock( varargin)
+function parallel_scope_init_xblock(blk, varargin)
 
 defaults = {...
     'n_inputs',8, ...
@@ -65,6 +65,10 @@ switcher = xBlock(struct('source', 'simulink/Signal Routing/Multiport Switch', '
                         
                         
 
+                        
+if ~isempty(blk) && ~strcmp(blk(1),'/')
+    clean_blocks(blk);
+end
 end
 
 
