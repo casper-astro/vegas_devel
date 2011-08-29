@@ -202,14 +202,15 @@ void *guppi_net_thread(void *_args) {
 
     /* Get arguments */
     struct guppi_thread_args *args = (struct guppi_thread_args *)_args;
+    int rv;
 
     /* Set cpu affinity */
     cpu_set_t cpuset, cpuset_orig;
     sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
     CPU_ZERO(&cpuset);
-    //CPU_SET(2, &cpuset);
+    CPU_SET(2, &cpuset);
     CPU_SET(3, &cpuset);
-    int rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
+    rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
         guppi_error("guppi_net_thread", "Error setting cpu affinity.");
         perror("sched_setaffinity");
@@ -261,15 +262,6 @@ void *guppi_net_thread(void *_args) {
         pthread_exit(NULL);
     }
     pthread_cleanup_push((void *)guppi_databuf_detach, db);
-
-    /* Set up UDP socket */
-    rv = guppi_udp_init(&up);
-    if (rv!=GUPPI_OK) {
-        guppi_error("guppi_net_thread",
-                "Error opening UDP socket.");
-        pthread_exit(NULL);
-    }
-    pthread_cleanup_push((void *)guppi_udp_close, &up);
 
     /* Time parameters */
     double meas_stt_mjd=0.0;
@@ -349,6 +341,18 @@ void *guppi_net_thread(void *_args) {
     prev_heap_offset = 0;
     char msg[256];
 
+    /* Give all the threads a chance to start before opening network socket */
+    sleep(1);
+
+    /* Set up UDP socket */
+    rv = guppi_udp_init(&up);
+    if (rv!=GUPPI_OK) {
+        guppi_error("guppi_net_thread",
+                "Error opening UDP socket.");
+        pthread_exit(NULL);
+    }
+    pthread_cleanup_push((void *)guppi_udp_close, &up);
+
     /* Main loop */
     unsigned force_new_block=0, waiting=-1;
     signal(SIGINT,cc);
@@ -406,12 +410,19 @@ void *guppi_net_thread(void *_args) {
         heap_cntr_diff = heap_cntr - last_heap_cntr;
         seq_num_diff = (int)(seq_num - last_seq_num);
         
+        last_seq_num = seq_num;
+        last_heap_cntr = heap_cntr;
+
         if (seq_num_diff<=0) { 
 
             if (seq_num_diff<-1024)
             {
                 force_new_block=1;
                 obs_started = 1;
+
+                #ifdef DEBUG_NET
+                printf("Debug: observation started\n");
+                #endif
             }
             else if (seq_num_diff==0) {
                 sprintf(msg, "Received duplicate packet (seq_num=%d)", seq_num);
@@ -440,8 +451,6 @@ void *guppi_net_thread(void *_args) {
             #endif
 
         }
-        last_seq_num = seq_num;
-        last_heap_cntr = heap_cntr;
 
         /* If obs has not started, ignore this packet */
         if(!obs_started)
@@ -492,11 +501,6 @@ void *guppi_net_thread(void *_args) {
              * than 100ms.  Any current blocks on the stack
              * are also finalized/reset */            
 
-            #ifdef DEBUG_NET
-            //printf("Debug: vegas_net_thread writing to output block %d\n", fblock->block_idx);
-            #endif
-
-
             if (force_new_block) {
             
                 /* Reset stats */
@@ -529,13 +533,6 @@ void *guppi_net_thread(void *_args) {
                     guppi_warn("guppi_net_thread", msg);
                 }
             
-                /* Flush any current buffers */
-                for (i=0; i<nblock-1; i++) {
-                    if (blocks[i].block_idx>=0) 
-                        finalize_block(&blocks[i]);
-                    reset_block(&blocks[i]);
-                }
-
             }
             
             /* Read current status shared mem */
@@ -550,6 +547,7 @@ void *guppi_net_thread(void *_args) {
                     != GUPPI_OK) {
                 if (rv==GUPPI_TIMEOUT) {
                     waiting=1;
+                    guppi_warn("vegas_net_thread", "timeout while waiting for output block\n");
                     guppi_status_lock_safe(&st);
                     hputs(st.buf, STATUS_KEY, "blocked");
                     guppi_status_unlock_safe(&st);
