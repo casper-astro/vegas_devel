@@ -46,7 +46,7 @@ void guppi_sdfits_thread(void *_args) {
     cpu_set_t cpuset, cpuset_orig;
     sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
     CPU_ZERO(&cpuset);
-    CPU_SET(1, &cpuset);
+    CPU_SET(6, &cpuset);
     int rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
         guppi_error("guppi_sdfits_thread", "Error setting cpu affinity.");

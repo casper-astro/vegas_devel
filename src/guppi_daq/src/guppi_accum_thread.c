@@ -71,6 +71,19 @@ void create_accumulators(float ***accumulator, int num_chans, int num_subbands)
 }
 
 
+/* Frees up memory that was allocated for the accumulators */
+void destroy_accumulators(float **accumulator)
+{
+    int i;
+
+    for(i = 0; i < NUM_SW_STATES; i++)
+        free(accumulator[i]);
+
+    free(accumulator);
+}
+
+
+
 /* Resets the vector accumulators */
 void reset_accumulators(float **accumulator, struct sdfits_data_columns* data_cols,
                         char* accum_dirty, int num_subbands, int num_chans)
@@ -111,16 +124,17 @@ void guppi_accum_thread(void *_args) {
     char accum_dirty[NUM_SW_STATES];
     struct sdfits_data_columns data_cols[NUM_SW_STATES];
     int payload_type;
+    int i, j, k, rv;
 
     /* Get arguments */
     struct guppi_thread_args *args = (struct guppi_thread_args *)_args;
 
     /* Set cpu affinity */
-    cpu_set_t cpuset;
-    sched_getaffinity(0, sizeof(cpu_set_t), &cpuset);
-    CPU_CLR(2, &cpuset);
-    CPU_CLR(3, &cpuset);
-    int rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
+    cpu_set_t cpuset, cpuset_orig;
+    sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
+    CPU_ZERO(&cpuset);
+    CPU_SET(5, &cpuset);
+    rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
         guppi_error("guppi_accum_thread", "Error setting cpu affinity.");
         perror("sched_setaffinity");
@@ -191,6 +205,16 @@ void guppi_accum_thread(void *_args) {
     else
         guppi_error("guppi_net_thread", "BW_MODE not set");
 
+    /* Read nchan and nsubband from status shared memory */
+    guppi_read_obs_params(st.buf, &gp, &sf);
+
+    /* Allocate memory for vector accumulators */
+    create_accumulators(&accumulator, sf.hdr.nchan, sf.hdr.nsubband);
+    pthread_cleanup_push((void *)destroy_accumulators, accumulator);
+
+    /* Clear the vector accumulators */
+    for(i = 0; i < NUM_SW_STATES; i++) accum_dirty[i] = 1;
+    reset_accumulators(accumulator, data_cols, accum_dirty, sf.hdr.nsubband, sf.hdr.nchan);
 
     /* Loop */
     int curblock_in=0, curblock_out=0;
@@ -198,7 +222,7 @@ void guppi_accum_thread(void *_args) {
     float reqd_exposure=0;
     double accum_time=0;
     float pfb_rate;
-    int heap, accumid, i, j,k, struct_offset, array_offset;
+    int heap, accumid, struct_offset, array_offset;
     char *hdr_in=NULL, *hdr_out=NULL;
     struct databuf_index *index_in, *index_out;
 
@@ -229,7 +253,7 @@ void guppi_accum_thread(void *_args) {
         else
             guppi_read_subint_params(hdr_in, &gp, &sf);
 
-        /* Do any first time stuff: first time code runs, not first time process this block*/
+        /* Do any first time stuff: first time code runs, not first time process this block */
         if (first) {
 
             /* Set up first output header. This header is copied from block to block
@@ -246,14 +270,6 @@ void guppi_accum_thread(void *_args) {
             index_out = (struct databuf_index*)guppi_databuf_index(db_out, curblock_out);
             index_out->num_datasets = 0;
             index_out->array_size = sf.hdr.nsubband * sf.hdr.nchan * NUM_STOKES * 4;
-
-            /* Allocate memory for vector accumulators */
-            create_accumulators(&accumulator, sf.hdr.nchan, sf.hdr.nsubband);
-
-            /* Clear the vector accumulators */
-            for(i = 0; i < NUM_SW_STATES; i++) accum_dirty[i] = 1;
-            reset_accumulators(accumulator, data_cols, accum_dirty,
-                                sf.hdr.nsubband, sf.hdr.nchan);
 
             first=0;
         }
@@ -323,6 +339,20 @@ void guppi_accum_thread(void *_args) {
                             /* Wait for next output buf */
                             curblock_out = (curblock_out + 1) % db_out->n_block;
                             guppi_databuf_wait_free(db_out, curblock_out);
+
+                            while ((rv=guppi_databuf_wait_free(db_out, curblock_out)) != GUPPI_OK)
+                            {
+                                if (rv==GUPPI_TIMEOUT) {
+                                    guppi_warn("guppi_accum_thread", "timeout while waiting for output block");
+                                    continue;
+                                } else {
+                                    guppi_error("guppi_accum_thread", "error waiting for free databuf");
+                                    run=0;
+                                    pthread_exit(NULL);
+                                    break;
+                                }
+                            }
+
                             hdr_out = guppi_databuf_header(db_out, curblock_out);
                             memcpy(hdr_out, guppi_databuf_header(db_in, curblock_in),
                                     GUPPI_STATUS_SIZE);
@@ -465,6 +495,7 @@ void guppi_accum_thread(void *_args) {
     pthread_cleanup_pop(0); /* Closes set_finished */
     pthread_cleanup_pop(0); /* Closes guppi_free_sdfits */
     pthread_cleanup_pop(0); /* Closes ? */
+    pthread_cleanup_pop(0); /* Closes destroy_accumulators */
     pthread_cleanup_pop(0); /* Closes guppi_status_detach */
     pthread_cleanup_pop(0); /* Closes guppi_databuf_detach */
 }

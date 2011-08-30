@@ -18,9 +18,6 @@
 // and hence disables the network portion of GUPPI.
 // #define FAKE_NET    1
 
-// Uncomment the following line to disable disk writing
-//#define NULL_DISK
-
 // Types of FITS files
 #define PSRFITS     1
 #define SDFITS      2

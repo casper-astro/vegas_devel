@@ -37,8 +37,18 @@ void vegas_pfb_thread(void *_args) {
 
     /* Get args */
     struct guppi_thread_args *args = (struct guppi_thread_args *)_args;
-
     int rv;
+
+    /* Set cpu affinity */
+    cpu_set_t cpuset, cpuset_orig;
+    sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
+    CPU_ZERO(&cpuset);
+    CPU_SET(4, &cpuset);
+    rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
+    if (rv<0) { 
+        guppi_error("vegas_pfb_thread", "Error setting cpu affinity.");
+        perror("sched_setaffinity");
+    }
 
     /* Set priority */
     rv = setpriority(PRIO_PROCESS, 0, args->priority);

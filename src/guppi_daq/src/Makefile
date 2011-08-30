@@ -15,6 +15,10 @@ ifdef NULL_DISK
 	OPT_FLAGS += -DNULL_DISK
 endif
 
+ifdef EXT_DISK
+	OPT_FLAGS += -DEXT_DISK
+endif
+
 CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I$(CUDA)/include -I$(VEGAS_INCL) \
 		-I$(PYSLALIB) -I$(GUPPI_DIR)/src $(OPT_FLAGS)
 
