@@ -7,7 +7,7 @@ python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -U --nogbt \
     --packets=SPEAD     \
     --npol=2		    \
     --nchan=4096        \
-    --chan_bw=7629.4    \
+    --chan_bw=5722.05   \
     --nsubband=8        \
     --sub0freq=2.4e9    \
     --sub1freq=2.5e9    \

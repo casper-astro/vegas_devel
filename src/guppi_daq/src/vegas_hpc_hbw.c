@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
     guppi_thread_args_init(&net_args);
     guppi_thread_args_init(&accum_args);
     guppi_thread_args_init(&disk_args);
-    net_args.output_buffer = 1;
+    net_args.output_buffer = 2;
     accum_args.input_buffer = net_args.output_buffer;
     accum_args.output_buffer = 3;
     disk_args.input_buffer = accum_args.output_buffer;
