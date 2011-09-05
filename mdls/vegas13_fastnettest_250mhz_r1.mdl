@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.522"
+    ComputedModelVersion    "1.524"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -25,9 +25,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "sscott"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sun Aug 28 17:39:50 2011"
-  RTWModifiedTimeStamp	  236452107
-  ModelVersionFormat	  "1.%<AutoIncrement:522>"
+  LastModifiedDate	  "Mon Sep  5 00:35:53 2011"
+  RTWModifiedTimeStamp	  237082148
+  ModelVersionFormat	  "1.%<AutoIncrement:524>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -725,7 +725,7 @@ Model {
   }
   System {
     Name		    "vegas13_fastnettest_250mhz_r1"
-    Location		    [-5, 29, 1905, 1034]
+    Location		    [5, 77, 1915, 1082]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -3914,7 +3914,7 @@ Model {
       MaskIconRotate	      "none"
       MaskPortRotate	      "default"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "on|on|off|off|off|on|600|1|8"
+      MaskValueString	      "on|on|off|off|off|on|1000|1|8"
       System {
 	Name			"adc083000x1"
 	Location		[0, 53, 1525, 949]
@@ -3930,7 +3930,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	1197
+	SIDHighWatermark	1203
 	SIDPrevWatermark	66
 	Block {
 	  BlockType		  Inport
@@ -8273,7 +8273,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -8285,7 +8285,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -8313,14 +8313,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -8335,7 +8335,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_arm_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -8445,7 +8445,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	297
+	SIDHighWatermark	301
 	SIDPrevWatermark	103
 	Block {
 	  BlockType		  Inport
@@ -8457,7 +8457,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "convert"
-	  SID			  296
+	  SID			  300
 	  Ports			  [1, 1]
 	  Position		  [60, 29, 105, 61]
 	  LibraryVersion	  "1.2"
@@ -8489,7 +8489,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_cic_data_user_data_in"
-	  SID			  297
+	  SID			  301
 	  Ports			  [1, 1]
 	  Position		  [135, 35, 195, 55]
 	  LibraryVersion	  "1.2"
@@ -8712,7 +8712,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -8724,7 +8724,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -8752,14 +8752,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -8774,7 +8774,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_cnt_rst_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -8925,7 +8925,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -8937,7 +8937,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -8965,14 +8965,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -8987,7 +8987,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_dest_ip_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -9138,7 +9138,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -9150,7 +9150,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -9178,14 +9178,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -9200,7 +9200,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_dest_port_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -9470,7 +9470,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	359
 	Block {
 	  BlockType		  Inport
@@ -9482,7 +9482,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -9510,14 +9510,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -9532,7 +9532,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_eth_rst_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -9642,7 +9642,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	297
+	SIDHighWatermark	301
 	SIDPrevWatermark	31
 	Block {
 	  BlockType		  Inport
@@ -9654,7 +9654,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "convert"
-	  SID			  296
+	  SID			  300
 	  Ports			  [1, 1]
 	  Position		  [60, 29, 105, 61]
 	  LibraryVersion	  "1.2"
@@ -9686,7 +9686,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_ext_sync_ctr_user_data_in"
-	  SID			  297
+	  SID			  301
 	  Ports			  [1, 1]
 	  Position		  [135, 35, 195, 55]
 	  LibraryVersion	  "1.2"
@@ -9843,7 +9843,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -9855,7 +9855,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -9883,14 +9883,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -9905,7 +9905,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_ip_select_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -10125,7 +10125,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	297
+	SIDHighWatermark	301
 	SIDPrevWatermark	103
 	Block {
 	  BlockType		  Inport
@@ -10137,7 +10137,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "convert"
-	  SID			  296
+	  SID			  300
 	  Ports			  [1, 1]
 	  Position		  [60, 29, 105, 61]
 	  LibraryVersion	  "1.2"
@@ -10169,7 +10169,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_pkt_data_user_data_in"
-	  SID			  297
+	  SID			  301
 	  Ports			  [1, 1]
 	  Position		  [135, 35, 195, 55]
 	  LibraryVersion	  "1.2"
@@ -10326,7 +10326,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -10338,7 +10338,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -10366,14 +10366,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -10388,7 +10388,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_port_select_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -15899,7 +15899,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -15911,7 +15911,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -15939,14 +15939,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -15961,7 +15961,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_sync_en_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -16191,7 +16191,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -16203,7 +16203,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -16231,14 +16231,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -16253,7 +16253,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_sync_period_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
@@ -16483,7 +16483,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	555
+	SIDHighWatermark	563
 	SIDPrevWatermark	27
 	Block {
 	  BlockType		  Inport
@@ -16495,7 +16495,7 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "delay_pipe"
-	  SID			  553
+	  SID			  561
 	  Ports			  [1, 1]
 	  Position		  [155, 30, 205, 70]
 	  MinAlgLoopOccurrences	  off
@@ -16523,14 +16523,14 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "d"
-	      SID		      554
+	      SID		      562
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "q"
-	      SID		      555
+	      SID		      563
 	      Position		      [15, 15, 35, 35]
 	      IconDisplay	      "Port number"
 	    }
@@ -16545,7 +16545,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "vegas13_fastnettest_250mhz_r1_sync_sel_user_data_out"
-	  SID			  552
+	  SID			  560
 	  Ports			  [1, 1]
 	  Position		  [60, 40, 125, 60]
 	  LibraryVersion	  "1.2"
