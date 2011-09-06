@@ -1,7 +1,7 @@
 #!/bin/bash
 ${GUPPI_DIR}/bin/vegas_init_shmem 
-python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -D --nogbt
-python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -U --nogbt \
+python2.5 ${GUPPI_DIR}/python/vegas_set_params.py -D --nogbt
+python2.5 ${GUPPI_DIR}/python/vegas_set_params.py -U --nogbt \
     --host=10.0.0.4     \
     --port=60000        \
     --packets=SPEAD     \
