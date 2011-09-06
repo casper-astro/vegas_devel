@@ -70,8 +70,8 @@ struct databuf_index
     
     // The actual index
     union {
-        struct cpu_gpu_buf_index cpu_gpu_buf[4096];
-        struct disk_buf_index disk_buf[8192];
+        struct cpu_gpu_buf_index cpu_gpu_buf[MAX_HEAPS_PER_BLK];
+        struct disk_buf_index disk_buf[2*MAX_HEAPS_PER_BLK];
     };
 };
 
