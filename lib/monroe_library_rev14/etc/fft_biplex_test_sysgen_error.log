@@ -1,0 +1,30 @@
+--------------------------------- Version Log ----------------------------------
+Version                                 Path
+System Generator 13.1                   /home/Xilinx/13.1/ISE_DS/ISE/sysgen
+Matlab 7.11.0.584 (R2010b)              /nas/LINUX64/matlab-r2010b
+ISE                                     /home/Xilinx/13.1/ISE_DS/ISE
+--------------------------------------------------------------------------------
+Summary of Errors:
+Error 0001: Undriven input port
+     Block: 'fft_biplex_test/fft_biplex_real_4x1/biplex_core/fft_stage_5/complex_scope6/c_to_ri/slice_im'
+Error 0002: Undriven input port
+     Block: 'fft_biplex_test/fft_biplex_real_4x1/biplex_core/fft_stage_5/complex_scope6/c_to_ri/slice_re'
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'fft_biplex_test/fft_biplex_real_4x1/biplex_core/fft_stage_5/complex_scope6/c_to_ri/slice_im'
+
+Details:
+The input ports on this block must be driven by other Xilinx blocks
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'fft_biplex_test/fft_biplex_real_4x1/biplex_core/fft_stage_5/complex_scope6/c_to_ri/slice_re'
+
+Details:
+The input ports on this block must be driven by other Xilinx blocks
+--------------------------------------------------------------------------------

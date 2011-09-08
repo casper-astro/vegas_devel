@@ -1,0 +1,6 @@
+function throwWarning(errorMsg, pathToBlock)
+
+strError = strcat(errorMsg, char(10), char(13),  ';  <in ', pathToBlock, ' >');
+
+%disp(strError);
+warning(strError);

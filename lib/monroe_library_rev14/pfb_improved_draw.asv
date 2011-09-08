@@ -1,0 +1,348 @@
+function pfb_improved_draw(pfb_size, n_sim_inputs,  n_taps , data_n_bits, data_bin_pt, coeff_n_bits, coeff_bin_pt, output_bit_width, window_fn, mem_type, bram_latency_coeff, bram_latency_delay, bin_width, end_scale_val, endDelay, cheap_sync, register_delay_counter, autoplace_mode, autoplace_optimize, path_to_block)
+
+
+%pfb_fir_real drawer
+
+%1. draw sync in/out
+%2. draw inputs, outputs.  Store in an array so I can handle dynamic sizing
+%3. draw tap pairs. As per pfb design plan
+
+
+% % 
+% xBlock;
+% 
+% 
+% data_n_bits=18;
+% data_bin_pt=17;
+% coeff_n_bits=18;
+% coeff_bin_pt=17;
+% pfb_size=8;
+% n_taps=3;
+% window_fn = 'hamming';
+% bram_latency_coeff = 3;
+% bram_latency_delay = 3;
+% n_sim_inputs = 3;
+% bin_width = 1;
+% mem_type = 'Block RAM';
+% output_bit_width= 18;
+% end_scale_val = n_taps/3;
+% cheap_sync=0;
+% endDelay=1;
+% register_delay_counter = 1;
+%end comment block
+
+
+
+
+if (end_scale_val == -1)
+     end_scale_val = n_taps/3;
+end
+
+vector_len = pfb_size - n_sim_inputs;
+
+if(n_taps < 2)
+    error('must have at least two taps.')
+end
+
+%generate inputs.  Someday, I'll have to make a sync tree for this
+
+iSync= xInport('sync');
+oSyncOut= xOutport('sync_out');
+
+for(i= 1:2^n_sim_inputs)
+    blockTemp=xInport(strcat('in', num2str(i-1)));
+    iDataIn{i} = blockTemp;
+    blockTemp= xOutport(strcat('out', num2str(i-1)));
+    oTapOut{i} = blockTemp;
+end
+
+bSyncTree = xBlock(struct('source', 'monroe_library/delay_tree_z^-6_0'),{}, {iSync}, ...
+    {xSignal,xSignal,xSignal,xSignal,xSignal,xSignal,xSignal,xSignal, ...
+     xSignal,xSignal,xSignal,xSignal,xSignal,xSignal,xSignal,xSignal, ...
+     xSignal,xSignal,xSignal,xSignal,xSignal,xSignal,xSignal,xSignal, ...
+     xSignal,xSignal,xSignal,xSignal,xSignal,xSignal,xSignal,xSignal});
+ sSyncTree = bSyncTree.getOutSignals();
+ 
+%procedure for making filter pairs:
+%1. make coefficient generator
+%2. add first tap
+%2.1. add dual bram delay for first tap
+%3. add 2nd to n-1th tap (for loop)
+%3.1 add each dual bram delay with that tap
+%4. add nth tap
+%5. add scale/converts
+%6. add sync delay
+
+
+%j = filter pair we are on 
+%k = tap inside filter we are on.
+
+for filterPairNum=1:(2^(n_sim_inputs-1))
+    
+    
+    
+    %<<<<<<<<<<<<<BEGIN FILTER PAIR LOOP>>>>>>>>>>>>%
+    sGenSync=xSignal;
+    sGenCoeff=xSignal;
+    sGenCoeffRev=xSignal;
+    
+    
+    %coefficient generator
+    
+    % signalTemp1=sGenSync(filterPairNum);
+    % signalTemp2=sGenCoeff(filterPairNum);
+    % signalTemp3=sGenCoeffRev(filterPairNum);
+    %
+    
+    % config.source = str2func('pfb_coeff_gen_dual_draw');
+    % config.toplevel=gcb;
+    % config.debug=1;
+    % xBlock(config, {pfb_size,n_sim_inputs,n_taps,input_num,n_bits,window_fn,mem_type,bram_latency,bin_width})
+    
+    num_sim_inputs = n_sim_inputs;
+    
+    % block: pfb_fir_real_plan/Subsystem/coeff_gen_00_15
+    % blockTemp = xBlock(struct('source', @pfb_coeff_gen_dual_draw, 'name', strcat('coeff_gen_', num2str(filterPairNum-1), '_', num2str(2^num_sim_inputs-filterPairNum+1))), ...
+    %                                 struct('pfb_size', pfb_size,'n_sim_inputs',n_sim_inputs, 'n_taps',n_taps,'input_num',filterPairNum, ...
+    %                                 'n_bits',coeff_n_bits,'window_fn',window_fn,'mem_type',mem_type,'bram_latency',bram_latency,'bin_width',bin_width), ...
+    %                                 {iSync}, ...
+    %                                 {sGenSync(filterPairNum), sGenCoeff(filterPairNum), sGenCoeffRev(filterPairNum)});
+    
+    
+    
+    
+
+%     
+%     drawing_parameters.pfb_size=pfb_size;
+%     drawing_parameters.n_sim_inputs=n_sim_inputs;
+%     drawing_parameters.n_taps=n_taps;
+%     drawing_parameters.input_num=filterPairNum-1;
+%     drawing_parameters.n_bits=coeff_n_bits;
+%     drawing_parameters.window_fn=window_fn;
+%     drawing_parameters.mem_type=mem_type;
+%     drawing_parameters.bram_latency=bram_latency;
+%     drawing_parameters.bin_width=bin_width;
+%     
+    
+    blockName = strcat('coeff_gen_',num2str(filterPairNum-1), '_', num2str(2^n_sim_inputs-filterPairNum));
+    blockTemp = xBlock(struct('source', str2func('pfb_coeff_gen_dual_draw'), 'name', blockName), ...
+        {pfb_size,n_sim_inputs,n_taps,filterPairNum-1,coeff_n_bits,window_fn,mem_type,bram_latency_coeff,bin_width, extendPath(pathToBlock,blockName)});
+    blockTemp.bindPort({sSyncTree{filterPairNum}},{sGenSync,sGenCoeff,sGenCoeffRev});
+    
+    %syncTemp = xInport('in1');
+    
+    
+    % blockTemp = xBlock('monroe_library/pfb_coeff_gen_dual',struct('pfb_size', pfb_size,'n_sim_inputs',n_sim_inputs, ...
+    %     'n_taps',n_taps,'input_num',filterPairNum,'n_bits',coeff_n_bits,'window_fn',window_fn,'mem_type',mem_type,'bram_latency',bram_latency,'bin_width',bin_width), ...
+    %     {iSync}, {sGenSync(filterPairNum), sGenCoeff(filterPairNum), sGenCoeffRev(filterPairNum) })
+    bGen(filterPairNum) = blockTemp;
+    
+    %first tap
+    stageNum=1;
+    
+    
+    %apparently, xBlocks hates putting *anything* into arrays.  must use
+    %structs or unique names.  cell arrays maybe?
+    sTapACoeffOutPrevious = xSignal;
+    sTapADataOutPrevious = xSignal;
+    
+    sTapBCoeffOutPrevious = xSignal;
+    sTapBDataOutPrevious = xSignal;
+    
+    
+    blockTemp = xBlock(struct('source','monroe_library/first_tap_improved','name',strcat('filter_in',num2str(filterPairNum-1), '_stage', num2str(stageNum))),struct('din_bit_width', data_n_bits, 'din_bin_pt',data_bin_pt, 'coeff_bit_width',coeff_n_bits,'coeff_bin_pt', coeff_bin_pt));
+    blockTemp.bindPort({iDataIn{filterPairNum}, sGenCoeff}, {sTapACoeffOutPrevious, sTapADataOutPrevious});
+    
+    bTapA(filterPairNum,stageNum) = blockTemp;
+    
+    blockTemp = xBlock(struct('source','monroe_library/first_tap_improved','name',strcat('filter_in',num2str(2^n_sim_inputs-filterPairNum), '_stage', num2str(stageNum))),struct('din_bit_width', data_n_bits, ...
+        'din_bin_pt',data_bin_pt, 'coeff_bit_width',coeff_n_bits,'coeff_bin_pt', coeff_bin_pt), ...
+        {iDataIn{(2^n_sim_inputs)-filterPairNum+1}, sGenCoeffRev},{sTapBCoeffOutPrevious, sTapBDataOutPrevious});
+    bTapB(filterPairNum,stageNum) =blockTemp;
+    
+    
+    %first inter-tap delay
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+%     sDataDelayCounter = xSignal
+%     
+%     blockTemp = xBlock(struct('source', 'monroe_library/counter_limited_fast','name', strcat('delay_counter_', num2str(filterPairNum-1))), {  'bit_width',ceil(log(((2^vector_len)-bram_latency))/log(2)), 'count_to', 2^vector_len - bram_latency-1}, {}, {sDataDelayCounter})
+%     sDataDelayAPrevious = xSignal;
+%     sDataDelayBPrevious = xSignal;
+    
+    for(kk= 1:(2*(n_taps-1)))
+        sDelayIn{kk}=xSignal;
+        sDelayOut{kk}=xSignal;
+        
+    end
+    sDelayIn{1} = iDataIn{filterPairNum};
+    sDelayIn{n_taps} = iDataIn{2^n_sim_inputs-filterPairNum+1};
+    
+%     drawing_parameters.numSignals=(2*(n_taps-1));
+%     drawing_parameters.delay_len=2^vector_len;
+%     drawing_parameters.bitWidth=data_n_bits;
+%     drawing_parameters.binPt=data_bin_pt;
+%     drawing_parameters.signalType='Signed';
+%     drawing_parameters.bram_latency=bram_latency;
+    
+    blockName = strcat('multi_delay_bram_fast_', num2str(filterPairNum-1));
+    blockTemp =  xBlock(struct('source', @multi_delay_bram_fast_draw, 'name', blockName), ...
+        {(2*(n_taps-1)),2^vector_len,data_n_bits,data_bin_pt, ...
+        'Signed',bram_latency_delay,register_delay_counter, extendPath(pathToBlock,blockName)}, ...
+       sDelayIn, sDelayOut);
+   
+    %make the other taps
+    for(stageNum=2:(n_taps-1))
+        %nth tap
+        sTapACoeffOut= xSignal;
+        sTapADataOut= xSignal;
+        
+        sTapBCoeffOut = xSignal;
+        sTapBDataOut = xSignal;
+        
+    
+        sDelayOut{stageNum-1}.bind(sDelayIn{stageNum});
+        sDelayOut{(stageNum-1)+(n_taps-1)}.bind(sDelayIn{(stageNum)+(n_taps-1)});
+        
+        
+        
+        
+        
+        
+        blockTemp =  xBlock(struct('source','monroe_library/middle_tap_improved','name',strcat('filter_in',num2str(filterPairNum-1), '_stage', num2str(stageNum))) ...
+            ,struct('din_bit_width', data_n_bits, ...
+            'din_bin_pt',data_bin_pt, 'coeff_bit_width',coeff_n_bits,'coeff_bin_pt', coeff_bin_pt, 'stage_num', stageNum), ...
+            {sDelayOut{stageNum-1}, sTapACoeffOutPrevious, sTapADataOutPrevious}, {sTapACoeffOut, sTapADataOut});
+        %bTapA(filterPairNum,stageNum) = blockTemp;
+        
+        blockTemp =  xBlock(struct('source','monroe_library/middle_tap_improved','name',strcat('filter_in',num2str(2^n_sim_inputs-filterPairNum), '_stage', num2str(stageNum))) ...
+            ,struct('din_bit_width', data_n_bits, ...
+            'din_bin_pt',data_bin_pt, 'coeff_bit_width',coeff_n_bits,'coeff_bin_pt', coeff_bin_pt, 'stage_num', stageNum), ...
+            {sDelayOut{stageNum-1 + (n_taps-1)}, sTapBCoeffOutPrevious, sTapBDataOutPrevious}, {sTapBCoeffOut, sTapBDataOut});
+        %bTapB(filterPairNum,stageNum) = blockTemp;
+        sTapACoeffOutPrevious=sTapACoeffOut;
+        sTapBCoeffOutPrevious=sTapBCoeffOut;
+        sTapADataOutPrevious=sTapADataOut;
+        sTapBDataOutPrevious=sTapBDataOut;
+        
+        
+    end
+    
+    
+    
+    %all the taps but the last are now finished.  All the data delays are too.
+    
+    
+    %Let's make that last tap.
+    
+    
+    stageNum= n_taps;
+    
+    sTapACoeffOut(stageNum) = xSignal;
+    sTapADataOut(stageNum) = xSignal;
+    
+    sTapBCoeffOut(stageNum) = xSignal;
+    sTapBDataOut(stageNum) = xSignal;
+    
+    
+
+    
+    bLastTapA = xBlock(struct('source','monroe_library/last_tap_improved','name',strcat('filter_in',num2str(filterPairNum-1), '_stage', num2str(stageNum))) ...
+        ,struct('data_bin_pt',data_bin_pt,'coeff_bin_pt', coeff_bin_pt, 'stage_num', stageNum));
+    %blockTemp.bindPort({sDataDelayAPrevious, sTapACoeffOutPrevious, sTapADataOutPrevious}, {sTapADataOut});
+    bLastTapA.bindPort({sDelayOut{n_taps-1}, sTapACoeffOutPrevious, sTapADataOutPrevious}, {xSignal});
+    sTapADataOut_ca=bLastTapA.getOutSignals();
+    sTapADataOut=sTapADataOut_ca{1};
+    %bTapA(filterPairNum,stageNum) = blockTemp;
+    
+    bLastTapB= xBlock(struct('source','monroe_library/last_tap_improved','name',strcat('filter_in',num2str(2^n_sim_inputs-filterPairNum), '_stage', num2str(stageNum))) ...
+        ,struct('data_bin_pt',data_bin_pt,'coeff_bin_pt', coeff_bin_pt, 'stage_num', stageNum));
+    bLastTapB.bindPort({sDelayOut{2*(n_taps-1)}, sTapBCoeffOutPrevious, sTapBDataOutPrevious}, {xSignal});
+    sTapBDataOut_ca=bLastTapB.getOutSignals();
+    sTapBDataOut=sTapBDataOut_ca{1};
+    
+    %bTapB(filterPairNum,stageNum) = blockTemp;
+    
+    
+    
+    sScaleA= xSignal;
+    sScaleB = xSignal;
+    
+    blockTemp =  xBlock('Scale', struct('scale_factor', -1* ceil(end_scale_val) )...
+        , {sTapADataOut} , {sScaleA});
+    %bScaleA(filterPairNum) = blockTemp;
+    blockTemp =  xBlock('Scale', struct('scale_factor', -1* ceil(end_scale_val)) ...
+        , {sTapBDataOut} , {sScaleB});
+    
+    
+    
+    sReinterpretA = xSignal;
+    sReinterpretB = xSignal;
+    
+    blockName = strcat('reinterpret_', num2str(filterPairNum-1));
+    sReinterpretA = xReinterpret(sScaleA, 1, 'signed', 1, binpt, blockName, extendPath(pathToBlock,blockName))
+    
+    
+    
+    
+    blockTemp =  xBlock('Reinterpret', struct('force_arith_type', 'on', 'arith_type', 'Signed', 'force_bin_pt', 'on', 'bin_pt', data_bin_pt + coeff_bin_pt) ...
+        , {sScaleA}, {sReinterpretA});
+    %bReinterpretA(filterPairNum) = blockTemp;
+    
+    blockTemp =  xBlock('Reinterpret', struct('force_arith_type', 'on', 'arith_type', 'Signed', 'force_bin_pt', 'on', 'bin_pt', data_bin_pt + coeff_bin_pt) ...
+        , {sScaleB}, {sReinterpretB});
+    %bReinterpretB(filterPairNum) = blockTemp;
+    
+    % block: fft_stage_n_improved/fft_stage_6/Convert1
+    
+    
+%     for jj= 1:endDelay
+%         
+%         sDelayTempA = xSignal;
+%         sDelayTempB = xSignal;
+%         
+%         blockTemp = xBlock('Delay', struct('latency', 1), {sReinterpretA}, {sDelayTempA});
+%         blockTemp = xBlock('Delay', struct('latency', 1), {sReinterpretB}, {sDelayTempB});
+%             
+%         sReinterpretA = sDelayTempA;
+%         sReinterpretB = sDelayTempB;
+%        
+%         
+%     end
+xlsub2_Convert1 = xBlock(struct('source', 'Convert'), ...
+                         struct('n_bits', output_bit_width, ...
+                                'bin_pt', output_bit_width-1, ...
+                                'latency', endDelay), ...
+                         {sReinterpretA}, ...
+                         {oTapOut{filterPairNum}});
+
+                     
+xlsub2_Convert1 = xBlock(struct('source', 'Convert'), ...
+                         struct('n_bits', output_bit_width, ...
+                                'bin_pt', output_bit_width-1, ...
+                                'latency', endDelay), ...
+                         {sReinterpretB}, ...
+                         {oTapOut{(2^num_sim_inputs)-filterPairNum+1}});
+
+    
+    
+    
+end
+%<<<<<<<<<<<<<END FILTER PAIR LOOP>>>>>>>>>>>>%
+
+
+if( cheap_sync == 1)
+    %this line for a cheaper sync delay.  OK if all your hardware elements run
+    %with periods at subdivisions of your vector length (they probably do)
+    bSyncDelay = xBlock('Delay', struct('latency',endDelay + (n_taps +2)), {sGenSync}, {oSyncOut});
+else
+    %this line for an "honest" sync delay.  More hardware expensive
+    bSyncDelay = xBlock('monroe_library/sync_delay_fast', struct('delay_len', endDelay + (n_taps +2) + ((2^vector_len)*n_taps)) , {sGenSync}, {oSyncOut});
+end
+ 
+
+
+
+    

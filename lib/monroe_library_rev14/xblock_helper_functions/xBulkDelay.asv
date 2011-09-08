@@ -1,0 +1,19 @@
+function sOut = xBulkDelay(sIn, numInputs, delay_arr, name)
+
+noName = ~exist('name');
+
+if(length(delay_arr) == 1)
+    delay_arr = delay_arr * ones(1,numInputs);
+end
+
+for(i = 1:numInputs)
+    sOut{i} = xSignal;
+end
+
+if(noName)
+   bBulkDelay = xBlock(struct('source',str2func('bulk_delay_draw'), ...
+    'name', 'bulk_delay_0_1'), ...
+    {numInputs, delay_arr}, sIn, sOut); 
+else
+    
+end
