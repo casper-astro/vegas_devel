@@ -19,7 +19,7 @@ fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
 # boffile='mode13_fastnet_2011_Aug_18_2039.bof'
-boffile='vegas13_fastnettest_250mhz_r1_2011_Aug_28_1712.bof'
+boffile='vegas13_speedtest_300MHz.bof'
 
 # Unprogram the device
 fpga.progdev('')
