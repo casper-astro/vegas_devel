@@ -1,0 +1,76 @@
+#!/bin/bash
+ 
+DEVICE=/dev/usbtmc1
+ 
+case "$1" in
+    freq)
+        if [[ -n $2 ]]
+        then
+            echo FREQ:CW $2 MHz > $DEVICE
+        else
+            echo FREQ:CW? > $DEVICE
+            cat $DEVICE
+            echo
+        fi
+    ;;
+    ampl)
+        if [[ -n $2 ]]
+        then
+            echo AMPL:CW $2 dBm > $DEVICE
+        else
+            echo AMPL:CW? > $DEVICE
+            cat $DEVICE
+            echo
+        fi
+    ;;
+    rf)
+        case "$2" in
+            on)
+                echo RFO:STAT ON > $DEVICE
+            ;;
+            off)
+                echo RFO:STAT OFF > $DEVICE
+            ;;
+            *)
+                echo RFO:STAT? > $DEVICE
+                state=`cat $DEVICE`
+                if ((state))
+                then
+                    echo "RF is on."
+                else
+                    echo "RF is off."
+                fi
+            ;;
+        esac
+    ;;
+    mod)
+        case "$2" in
+            on)
+                echo MOD:STAT ON > $DEVICE
+            ;;
+            off)
+                echo MOD:STAT OFF > $DEVICE
+            ;;
+            *)
+                echo MOD:STAT? > $DEVICE
+                state=`cat $DEVICE`
+                if ((state))
+                then
+                    echo "Modulation is on."
+                else
+                    echo "modulation is off."
+                fi
+            ;;
+        esac
+    ;;  
+    *)
+        echo "Usage:"
+        echo "  $0 freq [frequency in MHz]"
+        echo "  $0 ampl [amplitude in dBm]"
+        echo "  $0 rf [on/off]"
+        echo "  $0 mod [on/off]"
+        exit 1
+    ;;
+esac
+ 
+exit 0

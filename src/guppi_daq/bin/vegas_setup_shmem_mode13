@@ -1,4 +1,5 @@
 #!/bin/bash
+GUPPI_DIR=~mwagner/workspace/gbt_devel/src/guppi_daq
 ${GUPPI_DIR}/bin/vegas_init_shmem 
 python2.5 ${GUPPI_DIR}/python/vegas_set_params.py -D --nogbt
 python2.5 ${GUPPI_DIR}/python/vegas_set_params.py -U --nogbt \
