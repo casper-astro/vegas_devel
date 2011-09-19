@@ -42,8 +42,9 @@ void vegas_pfb_thread(void *_args) {
     /* Set cpu affinity */
     cpu_set_t cpuset, cpuset_orig;
     sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
-    CPU_ZERO(&cpuset);
-    CPU_SET(4, &cpuset);
+    //CPU_ZERO(&cpuset);
+    CPU_CLR(13, &cpuset);
+    CPU_SET(11, &cpuset);
     rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
         guppi_error("vegas_pfb_thread", "Error setting cpu affinity.");

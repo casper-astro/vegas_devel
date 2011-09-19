@@ -207,9 +207,8 @@ void *guppi_net_thread(void *_args) {
     /* Set cpu affinity */
     cpu_set_t cpuset, cpuset_orig;
     sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
-    CPU_ZERO(&cpuset);
-    CPU_SET(2, &cpuset);
-    CPU_SET(3, &cpuset);
+    //CPU_ZERO(&cpuset);
+    CPU_SET(13, &cpuset);
     rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
         guppi_error("guppi_net_thread", "Error setting cpu affinity.");
