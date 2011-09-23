@@ -2,7 +2,7 @@
 %                                                                             %
 %   Center for Astronomy Signal Processing and Electronics Research           %
 %   http://casper.berkeley.edu                                                %      
-%   Copyright (C) 2011 Mark Wagner, Hong Chen                                 %
+%   Copyright (C) 2011 Glenn Jones, Mark Wagner, Hong Chen                    %
 %                                                                             %
 %   This program is free software; you can redistribute it and/or modify      %
 %   it under the terms of the GNU General Public License as published by      %
@@ -20,6 +20,8 @@
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function parallel_fir_init_xblock(blk, filter_coeffs)
+% Parallelized FIR filter
+% as of September 20, 2011 only supports 2 inputs
 
 f0=filter_coeffs(1:2:end);
 f1=filter_coeffs(2:2:end);
@@ -27,26 +29,15 @@ f1=filter_coeffs(2:2:end);
 f0pf1=f0+f1;
 
 % validate coefficients
-f0_round = round(f0 * 1e16) * 1e-16;
-if mod(length(f0)/4,1) ~= 0,
-    error('The number of coefficients must be integer multiples of the number of inputs');
-    return;
-end
-num_fir_col = length(f0)/4;
-disp(num_fir_col);
-if coeff_round(1:int32(length(f0)/2)) == f0_round(length(f0):-1:int32(length(f0)/2)+1)
-    num_fir_col = num_fir_col / 2;
-end
-if num_fir_col <= 0
-    disp(['error: the number of column must be a positive integer. num_fir_col = ', num2str(num_fir_col)]);
+check = parallel_fir_coefficient_check(filter_coeffs);
+if check
     return;
 end
 
 
 %% inports
-xlsub3_In1 = xInport('In1');
-xlsub3_In2 = xInport('In2');
-xlsub3_In3 = xInport('In3');
+xlsub3_In1 = xInport('in1');
+xlsub3_In2 = xInport('in2');
 
 %% outports
 xlsub3_sync_out = xOutport('sync_out');
@@ -116,18 +107,20 @@ xlsub3_Delay1 = xBlock(struct('source', 'Delay', 'name', 'Delay1'), ...
                        {xlsub3_Delay1_out1});
 
 % block: half_band_xblock/Subsystem/parallel_fir/c_to_ri
-xlsub3_f0_out2 = xSignal;
+real_in1 = xSignal('real_in1');
+imag_in1 = xSignal('ima
 xlsub3_c_to_ri_sub = xBlock(struct('source', str2func('c_to_ri_init_xblock'), 'name', 'c_to_ri'), ...
                         {[blk,'/c_to_ri'], 8, 7}, ...
-                        {xlsub3_f0_out2}, ...
-                        {xlsub3_c_to_ri_out1, xlsub3_c_to_ri_out2});
+                        {xlsub3_In1}, ...
+                        {real_in1, imag_in1});
 
 % block: half_band_xblock/Subsystem/parallel_fir/c_to_ri1
-xlsub3_f0pf1_out2 = xSignal;
+real_in2 = xSignal('real_in2');
+imag_in2 = xSignal('imag_in2');
 xlsub3_c_to_ri1_sub = xBlock(struct('source', str2func('c_to_ri_init_xblock'), 'name', 'c_to_ri1'), ...
                          {[blk,'/c_to_ri1'], 8, 7}, ...
-                         {xlsub3_f0pf1_out2}, ...
-                         {xlsub3_c_to_ri1_out1, xlsub3_c_to_ri1_out2});
+                         {xlsub3_In2}, ...
+                         {real_in2, imag_in2});
 
 % block: half_band_xblock/Subsystem/parallel_fir/c_to_ri2
 xlsub3_f1_out2 = xSignal;
@@ -156,8 +149,6 @@ xlsub3_f1_sub = xBlock(struct('source', str2func('dec_fir_init_xblock'), 'name',
 
 
 if ~isempty(blk) && ~strcmp(blk(1),'/')
-    annotation=sprintf('%d taps\n%d_%d r/i', length(coeff), n_bits, n_bits-1);
-    set_param(blk,'AttributesFormatString',annotation);
     clean_blocks(blk);
 end
 
