@@ -19,6 +19,9 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% m: order of the CIC filter
+% dec_rate: decimation rate
+
 function coefficients = cic_coefficient_generator(m, dec_rate)
 if ~isprime(dec_rate)
     disp('Only supports decimation rate that''s a prime number');

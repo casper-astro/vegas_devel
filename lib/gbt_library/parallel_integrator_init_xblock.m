@@ -19,8 +19,27 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parallel_integrator_init_xblock(blk, n_inputs,n_bits, bin_pt, add_latency, reduced_crtc_path)
+% n_inputs: Number of parallel input streams
+% n_bits:   Bit width of input/output data
+% bin_pt:   Position of binary point of input/output data
+% add_latency:  Add/Sub latency
+% reduced_crtc_path: Whether to use the reduced critical path structure;
+%                       this designed is abandoned since we don't want the
+%                       add_latency to be zero, so it's forced to be 'off'
+function parallel_integrator_init_xblock(blk, varargin)
 
+defaults = {'n_inputs', 4, ...
+            'n_bits', 18, ...
+            'bin_pt', 16, ...
+            'add_latency', 2, ...
+            'reduced_crtc_path', 'off'};
+            
+
+n_inputs = get_var('n_inputs', 'defaults', defaults, varargin{:});
+n_bits = get_var('n_bits', 'defaults', defaults, varargin{:});
+bin_pt = get_var('bin_pt', 'defaults', defaults, varargin{:});
+add_latency = get_var('add_latency', 'defaults', defaults, varargin{:});
+reduced_crtc_path = get_var('reduced_crtc_path', 'defaults', defaults, varargin{:});
 
 in = cell(1,n_inputs);
 for i = 1:n_inputs,
@@ -72,6 +91,8 @@ end
 if ~isempty(blk)
     if ~strcmp(blk(1), '/')
         clean_blocks(blk);
+        fmtstr = sprintf('Add Latency = %d\nBitwidth = %d bin_pt = %d', add_latency, n_bits, bin_pt);
+        set_param(blk, 'AttributesFormatString', fmtstr);
     end
 end
 

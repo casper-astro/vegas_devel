@@ -19,14 +19,22 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parallel_filter_init_xblock(blk, R, n_inputs)
+% dec_rate: decimation rate
+% n_inputs: number of parallel input streams
+
+function parallel_downconverter_init_xblock(blk, varargin)
+
+defaults = {'n_inputs', 4, 'dec_rate', 3};
+
+n_inputs = get_var('n_inputs', 'defaults', defaults, varargin{:});
+dec_rate = get_var('dec_rate', 'defaults', defaults, varargin{:});
 
 if mod(n_inputs,2)==1
     disp('not supported yet');
     return;
 end
 
-if mod(R,2) == 0
+if mod(dec_rate,2) == 0
     disp('not supported yet');
     return;
 end
@@ -40,15 +48,15 @@ end
 % but maybe not
 % efficiency's not that important in this case
 % and YES I'm a Math Major
-max_delay = ceil((n_inputs-1)*R/n_inputs)-1;
+max_delay = ceil((n_inputs-1)*dec_rate/n_inputs)-1;
 delay_values = cell(1,n_inputs);
 in2out_map =cell(1,n_inputs);
 for i =1:n_inputs
-    for j=0:R-1
+    for j=0:dec_rate-1
         test = n_inputs*j+i;
-        if mod(test-1,R) == 0
+        if mod(test-1,dec_rate) == 0
             delay_values{i} = max_delay - j;
-            in2out_map{i} = ceil(test/R);
+            in2out_map{i} = ceil(test/dec_rate);
             break;
         end
     end
@@ -76,7 +84,7 @@ for i =1:n_inputs
                               {inports{i}}, ...
                               {delay_outs{i}});
     downsample_blks{i} = xBlock(struct('source', 'xbsBasic_r4/Down Sample', 'name', ['Down_sample',num2str(i)]), ...
-                               struct('sample_ratio',R, ...
+                               struct('sample_ratio',dec_rate, ...
                                         'sample_phase','Last Value of Frame  (most efficient)', ...
                                       'latency', 1), ...
                           {delay_outs{i}}, ...
