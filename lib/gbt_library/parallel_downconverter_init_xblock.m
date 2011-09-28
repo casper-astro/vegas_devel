@@ -41,13 +41,7 @@ end
 
 
 %% finding the amount of delays
-% very very dumb and ugly...
-% I'm just to hungry to write something that really make sense
-% anyway this works for now I think
-% maybe I should go get some food and come back and fix this
-% but maybe not
-% efficiency's not that important in this case
-% and YES I'm a Math Major
+% not the most elegant way, but it works for now
 max_delay = ceil((n_inputs-1)*dec_rate/n_inputs)-1;
 delay_values = cell(1,n_inputs);
 in2out_map =cell(1,n_inputs);
