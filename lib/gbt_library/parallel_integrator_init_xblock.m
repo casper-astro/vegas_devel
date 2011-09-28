@@ -40,6 +40,7 @@ n_bits = get_var('n_bits', 'defaults', defaults, varargin{:});
 bin_pt = get_var('bin_pt', 'defaults', defaults, varargin{:});
 add_latency = get_var('add_latency', 'defaults', defaults, varargin{:});
 reduced_crtc_path = get_var('reduced_crtc_path', 'defaults', defaults, varargin{:});
+reduced_crtc_path = 'off';
 
 in = cell(1,n_inputs);
 for i = 1:n_inputs,
