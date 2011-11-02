@@ -1,0 +1,13 @@
+
+xx = imag(direct_coeff_gen_calc(3, 1, 13, 11, 0))
+figure();plot(xx(1:841),'g')
+figure();plot(direct_orig_1_0_i)
+% 
+% figure();plot(real(direct_coeff_gen_calc(3, 1, 13, 11, 0)),'g')
+% figure();plot(direct_orig_1_0_r)
+% 
+% figure();plot(real(direct_coeff_gen_calc(3, 1, 13, 11, 0)),'g')
+% figure();plot(direct_orig_1_0_r)
+% 
+% figure();plot(real(direct_coeff_gen_calc(3, 1, 13, 11, 0)),'g')
+% figure();plot(direct_orig_1_0_r)

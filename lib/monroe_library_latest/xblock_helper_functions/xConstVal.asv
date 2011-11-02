@@ -1,0 +1,6 @@
+function sOut = xConstVal(value, arithType, nBits, binPt, name, pathToBlock)
+
+sOut = xSignal;
+
+bConst_0_Val = xBlock(struct('source', 'Constant', 'name', name),struct('const', 0, 'n_bits', n_bits, 'bin_pt', bin_pt, 'arith_type', 'Signed (2''s comp)', 'explicit_period', 'on', 'period', 1), ...
+        {},{sOut});

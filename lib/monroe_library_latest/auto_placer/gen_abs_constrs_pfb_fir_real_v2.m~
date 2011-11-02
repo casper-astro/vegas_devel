@@ -1,0 +1,187 @@
+function constrs = gen_abs_constrs_pfb_fir_real(pfbSize, nSimInputs, nTaps, coeffBitWidth, inputBitWidth, pfbConfig, current_block)
+
+
+%first, determine how much DSP and slice we're going to take up...
+%ram is measured in RAMB18s.
+numDsp = nTaps;
+current_block = 'currentBlockString\'
+numRamb18Coeff = nTaps; %simplified by the fact that the maximum coeff bit width is 18.
+%this also means that the coeffs will *always* be found on the right colmun
+%because I don't need to worry about dynamically programming where they
+%should be.  I want to minimize colmun space, and I think that will be
+%DSP-limited now.  Everything else will conform.  In addition, I can make
+%some free BRAMs on the left side, too... if I'm lucky!
+newline = [char(10), char(13)];
+
+
+
+
+
+
+
+if(numDelayBits > 9)
+    numRamb36Delay = numRamb36Delay +1;
+    numRamb18Delay=0;
+elseif(numDelayBits>0)
+    numRamb18Delay = 1;
+else
+    numRamb18Delay=0;
+end
+
+
+for(i=1:10)
+    for(k=1:64)
+        placeGridDsp(i,k).instName = 'empty';
+        placeGridDsp(i,k).rlocGroup = 'none';
+        placeGridDsp(i,k).loc = 'none';
+    end
+end
+
+for(i=1:7)
+    for(k=1:64)
+        placeGridBRAM(i,k).instName = 'empty';
+        placeGridBRAM(i,k).rlocGroup = 'none';
+        placeGridBRAM(i,k).loc = 'none';
+    end
+end
+
+
+numRamb36 = 
+
+
+
+
+%if pfbConfig is 'adc0', then we are targeting adc0 with this pfb.  if it
+%is 'adc1', we are targeting 'adc1'.  if it is 'both', then we are
+%targeting both.  n_sim_inputs=3 for adc0 or adc1, and n_sim_inputs=4 for 'both'.
+%No matter what, you absolutely cannot put two pfbs into
+%the same configuration, or have any placed pfb with another in the 'both'
+%config.
+
+
+%lets index brams like so:
+%coeffBramArr(count) = [<bram18s_above_bottom_dsp>];
+%delayBramArr(count) = [<bram18s_above_bottom_dsp>, <col0/col1>];
+%and the bram36 it will be placed = floor(coeffBramArr(count)/2)
+%also place by BEL for higher performance.
+
+%set up the local placement.
+hashCode = '_??????????/';
+constrs = '';
+%INST "spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_x0/pfb_fir_real1_955976e529/multi_delay_bram_fast_draw1_61594231c8/double_delay_bram_fast3_9ced2d73ab/dual_port_ram/comp29.core_instance29/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM36.TDP" LOC = RAMB36_X1Y6;
+%INST "spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_x0/pfb_fir_real1_955976e529/coeff_gen_1_6_5b14b22e07/coeff_ram_3/comp9.core_instance9/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y4;
+%INST "spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_x0/pfb_fir_real_a3983a29b7/filter_in6_stage3_99b132a0f6/dsp48e_mult_add_pcin_f23cd6695f/dsp48e/dsp48e_inst" LOC = DSP48_X1Y42;
+
+dsp_col0_min_lvl = 32; %anything above here is free.
+%do the taps that go above the middle...
+if(strcmp(pfbconfig, 'adc0'))
+    %make a temporary dsp and bram grid (2 cols each)
+    pfbNum = 0
+    for(i=1:2)
+        for(k=1:64)
+            placeGridDspLocal(i,k).instName = 'empty';
+            placeGridDspLocal(i,k).rlocGroup = 'none';
+            placeGridDspLocal(i,k).rloc = 'none';
+        end
+    end
+    
+    for(i=1:2)
+        for(k=1:64)
+            placeGridBRAMLocal(i,k).instName = 'empty';
+            placeGridBRAMLocal(i,k).rlocGroup = 'none';
+            placeGridBRAMLocal(i,k).rloc = 'none';
+        end
+    end
+    
+    
+    
+    for(inputnum=0:(2^2-1))
+%         oddtap = mod(filterheighttotal,2);
+%         if(numTaps > 2*numRamb36Delay+ numRamb18Delay+oddTap)
+%             filterHeight = numTaps;
+%             
+%         else
+%             filterHeight = 2*numRamb36Delay+ numRamb18Delay +oddTap;
+%         end
+%         
+%         
+        %coefficient brams
+        coeffPlaceArr = zeros(1,nTaps);
+        coeffPlaceArr = mod((1:nTaps) + floor(nTaps/2),nTaps)';
+        if(oddTaps && mod(inputNum,2))
+            coeffPlaceArr = coeffPlaceArr + 1;
+        end
+        
+        %dsp placement
+        for(i=0:(nTaps-1))
+            dspPlaceLoc = getVerticalPlaceLoc(placeGridDspLocal, 1);
+            
+            
+            dsp_constrs = strcat(dsp_constrs,  buildAutoplaceHeader(current_block), 'filter_in', num2str(inputNum), '_stage', num2str(i), hashCode, 'dsp48e_mult', hashCode, 'dsp48e/dsp48e_inst" LOC = DSP48_X0Y',  num2str(dsp_col0_min_lvl+i), '/n', newline);
+            dsp_constrs = strcat(dsp_constrs,  buildAutoplaceHeader(current_block), 'filter_in', num2str(7-inputNum), '_stage', num2str(i), hashCode, 'dsp48e_mult', hashCode, 'dsp48e/dsp48e_inst" LOC = DSP48_X1Y',  num2str(dsp_col0_min_lvl+i), '/n', newline);
+            instName1 = strcat(buildAutoplaceHeader(current_block), 'filter_in', num2str(inputNum), '_stage', num2str(i), hashCode, 'dsp48e_mult', hashCode, 'dsp48e/dsp48e_inst"');
+            instName2 = strcat(buildAutoplaceHeader(current_block), 'filter_in', num2str(7-inputNum), '_stage', num2str(i), hashCode, 'dsp48e_mult', hashCode, 'dsp48e/dsp48e_inst"');
+            placeGridDspLocal(1,dspPlaceLoc).instName = instName1;
+            placeGridDspLocal(2, dspPlaceLoc).instName = instName2;
+            rLocGroup = strcat('auto_pfb', num2str(pfbNum), '_in', num2str(inputNum));
+            placeGridDspLocal(1, dspPlaceLoc).rlocGroup = rLocGroup;
+            placeGridDspLocal(2, dspPlaceLoc).rlocGroup = rLocGroup;
+            
+            rloc1 = strcat('X0Y', num2str(5*i));
+            rloc2 = strcat('X12Y', num2str(5*i));
+            
+            placeGridDspLocal(1, dspPlaceLoc).rloc = rloc1;
+            placeGridDspLocal(2, dspPlaceLoc).rloc = rloc2;
+            
+        end
+        
+        
+        
+        
+        %INST "spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_x0/pfb_fir_real1_955976e529/coeff_gen_1_6_5b14b22e07/coeff_ram_3/comp9.core_instance9/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y4;
+        %coeff bram placement
+        for(i=0:(nTaps-1))
+            bramPlaceLoc = getVerticalPlaceLoc(placeGridBramLocal, 1);
+            instStr = strcat(coeff,buildAutoplaceHeader(current_block), 'coeff_gen_', num2str(inputNum), '_', num2str(7-inputNum), hashCode, 'coeff_ram_', num2str(i), '/*', '/blk_mem_generator/*', '/TRUE_DP.SINGLE_PRIM18.TDP"', newline);
+            placeGridBramLocal(1, bramPlaceLoc).instName = instStr;
+        end
+        
+        
+        
+        
+        
+        %bramPlaceArr = [ones(1,numRamb36Delay), (0:(numRamb36Delay-1)+oddTap)];
+        
+        for(i = 0:numRamb36Delay)
+            bramPlaceLoc = bramPlaceArr(i)*2 +dsp_col0_min_lvl;
+            xilinxBramPlaceLoc = ceil(bramPlaceLoc/2);
+            %INST "spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_XSG_core_config/spec_2pol_4kw_6tap_pfb_x0/pfb_fir_real1_955976e529/multi_delay_bram_fast_draw1_61594231c8/double_delay_bram_fast3_9ced2d73ab/dual_port_ram/comp29.core_instance29/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM36.TDP" LOC = RAMB36_X1Y6;
+            
+            
+            
+        end
+        
+        
+        
+        
+        
+        dsp_col0_min_lvl = dsp_col0_min_lvl+ filterHeightTotal;
+    end
+end
+for(i=0:(2^n_sim_inputs))
+    coeffPlaceArr = zeros(1,nTaps);
+    coeffPlaceArr = mod((1:nTaps) + floor(nTaps/2),nTaps);
+    if(oddTaps && mod(i,2))
+        coeffPlaceArr = tap_locs + 1;
+    end
+    
+    if(strcmp(pfbConfig, 'both') || strcmp(pfbConfig, 'adc0'))
+        
+    else
+        
+        
+    end
+    
+end
+
+end

@@ -1,0 +1,124 @@
+--------------------------------- Version Log ----------------------------------
+Version                                 Path
+System Generator 13.1                   /home/Xilinx/13.1/ISE_DS/ISE/sysgen
+Matlab 7.11.0.584 (R2010b)              /nas/LINUX64/matlab-r2010b
+ISE                                     /home/Xilinx/13.1/ISE_DS/ISE
+--------------------------------------------------------------------------------
+Summary of Errors:
+Error 0001: Design Rule Check Failed
+    Blocks: 'butterfly_simplified_improved/Gateway Out', et al.
+Error 0002: Design Rule Check Failed
+    Blocks: 'butterfly_simplified_improved/Gateway Out1', et al.
+Error 0003: Design Rule Check Failed
+    Blocks: 'butterfly_simplified_improved/Gateway Out2', et al.
+Error 0004: Design Rule Check Failed
+    Blocks: 'butterfly_simplified_improved/Gateway Out3', et al.
+Error 0005: Design Rule Check Failed
+    Blocks: 'butterfly_simplified_improved/complex_scope7/Gateway Out15', et al.
+Error 0006: Design Rule Check Failed
+    Blocks: 'butterfly_simplified_improved/complex_scope7/Gateway Out16', et al.
+Error 0007: Design Rule Check Failed
+    Blocks: 'butterfly_simplified_improved/complex_scope1/Gateway Out15', et al.
+Error 0008: Design Rule Check Failed
+    Blocks: 'butterfly_simplified_improved/complex_scope1/Gateway Out16', et al.
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'butterfly_simplified_improved/Gateway Out'
+  'butterfly_simplified_improved/complex_scope7/Gateway Out15'
+
+Details:
+Gateway Out named "butterfly_simplified_improved/Gateway Out" is
+connected to Gateway Out named
+"butterfly_simplified_improved/complex_scope7/Gateway Out15"
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'butterfly_simplified_improved/Gateway Out1'
+  'butterfly_simplified_improved/complex_scope1/Gateway Out15'
+
+Details:
+Gateway Out named "butterfly_simplified_improved/Gateway Out1" is
+connected to Gateway Out named
+"butterfly_simplified_improved/complex_scope1/Gateway Out15"
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'butterfly_simplified_improved/Gateway Out2'
+  'butterfly_simplified_improved/complex_scope1/Gateway Out16'
+
+Details:
+Gateway Out named "butterfly_simplified_improved/Gateway Out2" is
+connected to Gateway Out named
+"butterfly_simplified_improved/complex_scope1/Gateway Out16"
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'butterfly_simplified_improved/Gateway Out3'
+  'butterfly_simplified_improved/complex_scope7/Gateway Out16'
+
+Details:
+Gateway Out named "butterfly_simplified_improved/Gateway Out3" is
+connected to Gateway Out named
+"butterfly_simplified_improved/complex_scope7/Gateway Out16"
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'butterfly_simplified_improved/complex_scope7/Gateway Out15'
+  'butterfly_simplified_improved/Gateway Out'
+
+Details:
+Gateway Out named
+"butterfly_simplified_improved/complex_scope7/Gateway Out15" is
+connected to Gateway Out named
+"butterfly_simplified_improved/Gateway Out"
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'butterfly_simplified_improved/complex_scope7/Gateway Out16'
+  'butterfly_simplified_improved/Gateway Out3'
+
+Details:
+Gateway Out named
+"butterfly_simplified_improved/complex_scope7/Gateway Out16" is
+connected to Gateway Out named
+"butterfly_simplified_improved/Gateway Out3"
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'butterfly_simplified_improved/complex_scope1/Gateway Out15'
+  'butterfly_simplified_improved/Gateway Out1'
+
+Details:
+Gateway Out named
+"butterfly_simplified_improved/complex_scope1/Gateway Out15" is
+connected to Gateway Out named
+"butterfly_simplified_improved/Gateway Out1"
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'butterfly_simplified_improved/complex_scope1/Gateway Out16'
+  'butterfly_simplified_improved/Gateway Out2'
+
+Details:
+Gateway Out named
+"butterfly_simplified_improved/complex_scope1/Gateway Out16" is
+connected to Gateway Out named
+"butterfly_simplified_improved/Gateway Out2"
+--------------------------------------------------------------------------------
