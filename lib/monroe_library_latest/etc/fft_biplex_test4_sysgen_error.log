@@ -1,0 +1,28 @@
+--------------------------------- Version Log ----------------------------------
+Version                                 Path
+System Generator 13.1                   C:/Xilinx/13.1/ISE_DS/ISE/sysgen
+Matlab 7.10.0.499 (R2010a)              D:/Program Files/MATLAB/R2010a
+ISE                                     C:/Xilinx/13.1/ISE_DS/ISE
+--------------------------------------------------------------------------------
+Summary of Errors:
+Error 0001: Fatal Internal Error
+     Block: 'fft_biplex_test4/Gateway Out1'
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'fft_biplex_test4/Gateway Out1'
+
+Details:
+An internal error occurred in the Xilinx Blockset Library.
+
+Please report this error to Xilinx (http://support.xilinx.com),
+in as much detail as possible. You may also find immediate help
+in the Answers Database and other online resources at http://support.xilinx.com.
+
+Since it is possible that this internal error resulted from an
+unhandled usage error in your design, we advise you to carefully
+check the usage of the block reporting the internal error. If
+errors persist, we recommend that you restart MATLAB.
+--------------------------------------------------------------------------------

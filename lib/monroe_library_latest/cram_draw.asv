@@ -1,0 +1,35 @@
+function cram_draw(numInputs, pathToBlock)
+
+
+% 
+% xBlock;
+% numInputs=1;
+% calledByInit=1;
+
+
+for(i= 1:numInputs)
+    blockTemp=xInport(strcat('in', num2str(i-1)));
+    iDataIn{i} = xInport(strcat('in', num2str(i-1)));
+    
+    concatIn{i} = xSignal;
+end
+
+oOut = xOutport('out');
+
+if(numInputs > 1)
+    
+    sConcatOut = xConcat(concatIn, 'concat', extendPath(pathToBlock, 'concat'));
+    oOut.bind(sConcatOut);
+    
+    for(i = 1:numInputs)
+        
+        blockName = strcat('reinterpret', 
+        sReinterpretOut = xReinterpret(iDataIn{i}, 1, 'Unsigned', 1, 0, blockName, extendPath(pathToBlock, blockName));
+        =     xBlock('Reinterpret', struct('force_arith_type', 'on', 'arith_type', 'Unsigned', 'force_bin_pt', 'on', 'bin_pt', 0) ...
+            , {iDataIn.(strcat('s',num2str(i)))}, {concatIn{i}});
+        
+    end
+else
+    blockTemp =     xBlock('Reinterpret', struct('force_arith_type', 'on', 'arith_type', 'Unsigned', 'force_bin_pt', 'on', 'bin_pt', 0) ...
+            , {iDataIn.s1}, {oOut});
+end

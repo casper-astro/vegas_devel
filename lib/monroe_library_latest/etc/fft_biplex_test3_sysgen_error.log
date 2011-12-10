@@ -1,0 +1,21 @@
+--------------------------------- Version Log ----------------------------------
+Version                                 Path
+System Generator 13.1                   /home/Xilinx/13.1/ISE_DS/ISE/sysgen
+Matlab 7.11.0.584 (R2010b)              /nas/LINUX64/matlab-r2010b
+ISE                                     /home/Xilinx/13.1/ISE_DS/ISE
+--------------------------------------------------------------------------------
+Summary of Errors:
+Error 0001: Incorrect slice end point
+     Block: 'fft_biplex_test3/FFT_Biplex_4x1/biplex_muxsel_gen/slice_sel_bottom_2'
+--------------------------------------------------------------------------------
+
+Error 0001:
+
+Reported by:
+  'fft_biplex_test3/FFT_Biplex_4x1/biplex_muxsel_gen/slice_sel_bottom_2'
+
+Details:
+Slice endpoints must lie between the LSB and MSB
+Error occurred during "Rate and Type Error Checking".
+
+--------------------------------------------------------------------------------

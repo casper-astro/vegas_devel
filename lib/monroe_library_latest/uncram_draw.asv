@@ -1,0 +1,62 @@
+function uncram_draw(numSignals, bitWidth, binPt, signalType, pathToBlock)
+% % 
+% xBlock;
+% numSignals=4;
+% bitWidth=18;
+% binPt=0;
+% signalType='Signed';
+%pathToBlock = 'PATH_PATH_PATH'
+
+signalTypeGood = (strcmpi(signalType, 'signed') || ...
+                  strcmpi(signalType, 'unsigned') || ...
+                  strcmpi(signalType, 'boolean')); 
+if(~signalTypeGood)
+    throwError('The signal type must be either ''Signed'', ''Unsigned'' or ''Boolean''', pathToBlock);
+elseif(binPt <0)
+   throwError('The Binal Point must be non-negative', pathToBlock); 
+elseif(binPt <0)
+    strError = strcat('The Binal Point must be non-negative; binPt = ', num2str(binPt)); 
+   throwError(strError, pathToBlock); 
+elseif(binPt > bitWidth)
+    strError = strcat('The Binal Point must be less than the bit width; binPt = ', num2str(binPt), '; bitWidth = ', num2str(bitWidth)); 
+   throwError(strError, pathToBlock); 
+elseif(binPt == bitWidth)
+    strError = strcat('The binal point equals the bit width, this block may not function as intended; binPt = ', num2str(binPt), '; bitWidth = ', num2str(bitWidth)); 
+   throwWarning(strError, pathToBlock); 
+elseif(bitWidth < 1)
+    strError = strcat('The bit width must be an integer greater than 0; bitWidth = ', num2str(bitWidth)); 
+   throwError(strError, pathToBlock); 
+elseif(~isInt([numSignals, bitWidth, binPt]))
+    strError = strcat('The number of signals, bit width and binal point must all be integers; numSignals = ', num2str(numSignals), '; bitWidth = ', num2str(bitWidth), '; binPt = ', num2str(binPt)); 
+   throwError(strError, pathToBlock);  
+end
+
+signalType = proper(signalType);
+
+
+for(i= 1:numSignals)
+    blockTemp=xOutport(strcat('out', num2str(i-1)));
+    oOut{i} = blockTemp;
+    %concatIn{i} = xSignal;
+end
+
+iIn = xInport('in');
+
+%bConcat = xBlock('Concat', struct('num_inputs', numInputs), concatIn, {oOut});
+
+for(i = 1:numSignals)
+    
+   %sSlice = xSignal;
+   blockName = strcat('signal', num2str(i));
+   sSlice = xSlice(iIn, bitWidth, 'upper',  -1*(i-1)*bitWidth, blockName , extendPath(pathToBlock, blockName));
+   %blockTemp = xBlock('Slice', struct('nbits', bitWidth, 'boolean_output','off', 'mode', 'Upper Bit Location + Width', 'base1', 'MSB of Input', 'base0', 'MSB of Input', 'bit1', -1*(i-1)*bitWidth), {iIn}, {sSlice});
+   
+   if(binPt == 0)
+       oOut{i}.bind(sSlice);
+   else
+       
+       sOut{i} = xReinterpret(sSlice, 1, arithType, 1, binPt, strcat('reinterpret', num2str(i)),
+       blockTemp =     xBlock('Reinterpret', struct('force_arith_type', 'on', 'arith_type', signalType, 'force_bin_pt', 'on', 'bin_pt', binPt) ...
+           , {sSlice}, {oOut{i}});
+   end
+end

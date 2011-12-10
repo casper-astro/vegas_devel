@@ -1,0 +1,43 @@
+function sOut = xReinterpret(sIn, arithMode, binPt, name, pathToBlock)
+
+
+
+if(arithMode(1) == 1)
+    forceArithMode = 'on';
+    
+    strArithMode = arithMode(2);
+    
+    signalTypeGood = (strcmpi(arithMode(2), 'signed') || ...
+        strcmpi(arithMode(2), 'unsigned'));
+    if(~signalTypeGood)
+        throwError('The arith mode must be either ''Signed'', ''Unsigned''', pathToBlock);
+    end
+else
+    forceArithMode = 'off';
+    strArithMode = 'Signed';
+end
+
+if(binPt(1) == 1)
+    forceBinPt = 'on';
+    if((~isInt(binPt(2)))|| binPt(2) < 0)
+        strError = strcat('The binal point must be a positive integer; binPt = ', num2str(binPt(2)));
+        throwError(strError, pathToBlock);
+    end
+else
+    forceBinPt = 'off';
+end
+strArithMode(1) = upper(strArithMode(1));
+strArithMode(2:length(strArithMode)) = lower(strArithMode(2:length(strArithMode)));
+
+forceArithMode
+
+sOut = xSignal;
+
+blockTemp =     xBlock('Reinterpret', struct('force_arith_type', forceArithType, 'arith_type', signalType, 'force_bin_pt', 'on', 'bin_pt', binPt), {sSlice}, {oOut{i}});
+
+
+bSlice = xBlock(struct('source', 'Slice', 'name', name), struct( ...
+    'nbits', bitWidth, 'boolean_output','on', 'mode', 'Lower Bit Location + Width', ...
+    'base1', 'MSB of Input', 'base0', 'MSB of Input', 'bit1', dist_from_endpoint, ...
+    'bit0', dist_from_endpoint), ...
+    {sIn}, {sOut});

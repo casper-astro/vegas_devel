@@ -1,0 +1,28 @@
+FFTSize = 4;
+FFTStage = 1;
+LargerFFTSize = 14;
+
+
+
+
+stage=FFTStage;
+i= tap_in_stage; %zero to (2^FFTSize) -1
+
+
+        % Implement a normal FFT or the tail end of a larger FFT
+            redundancy = 2^(LargerFFTSize - FFTSize);
+   %         coeffs = '[';
+            %for r=0:redundancy-1,
+                r=0:redundancy-1,
+                n = bit_reverse(r, LargerFFTSize - FFTSize);
+                coeffs = floor((i+n*2^(FFTSize-1))/2^(LargerFFTSize-(StartStage+stage-1)));
+            %end
+ %           Coeffs = [Coeffs, ']'];
+  %          actual_fft_size = LargerFFTSize;
+%            num_coeffs = redundancy;
+            
+            
+            
+            br_indices = bit_rev(Coeffs, FFTSize-1);
+br_indices = -2*pi*1j*br_indices/2^FFTSize;
+ActualCoeffs = exp(br_indices);

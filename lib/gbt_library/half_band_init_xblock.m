@@ -19,113 +19,137 @@
 %   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function half_band_init_xblock(blk, filter_coeffs)
+function half_band_init_xblock(blk, varargin)
 %% not very parameterized...
 
+defaults = {'ExplicitCoefficient', 'on', ...
+    'filter_coeffs', [0   -0.0228         0    0.2754    0.5000    0.2754         0   -0.0228], ...
+    'n_taps', 8, ...
+    'window', 'hamming', ...
+    };
+
+
+ExplicitCoefficient = get_var('ExplicitCoefficient', 'defaults', defaults, varargin{:});
+if strcmp(ExplicitCoefficient, 'on')
+    disp('Explicit Coefficient on');
+    filter_coeffs = get_var('filter_coeffs', 'defaults', defaults, varargin{:});
+    % validate coefficients
+    check = parallel_fir_coefficient_check(filter_coeffs);
+    if check
+        return;
+    end
+else
+    disp('Explicit Coefficient off');
+    n_taps = get_var('n_taps', 'defaults', defaults, varargin{:});  % number of taps, or the order of the FIR filter
+    window = get_var('window', 'defaults', defaults, varargin{:});
+    
+    if mod(n_taps, 4)
+        disp('The number of taps must be a multiple of 4');
+        return;
+    end
+    d = fdesign.halfband('Type', 'Lowpass', 'N', n_taps);
+    f = design(d, 'window', 'Window', window);
+    filter_coeffs = f.Numerator(2:end);
+end
+
+% disp(filter_coeffs);
 
 
 %% inports
-xlsub2_In1 = xInport('In1');
-xlsub2_In2 = xInport('In2');
-xlsub2_In3 = xInport('In3');
-xlsub2_In4 = xInport('In4');
-xlsub2_In5 = xInport('In5');
-xlsub2_In6 = xInport('In6');
-xlsub2_In7 = xInport('In7');
-xlsub2_In8 = xInport('In8');
-xlsub2_In9 = xInport('In9');
-xlsub2_In10 = xInport('In10');
-xlsub2_In11 = xInport('In11');
-xlsub2_In12 = xInport('In12');
+sync_in = xInport('sync_in');
+cin_0 = xInport('cin_0');
+cin_1 = xInport('cin_1');
+cin_2 = xInport('cin_2');
+cin_3 = xInport('cin_3');
+cin_4 = xInport('cin_4');
+cin_5 = xInport('cin_5');
+cin_6 = xInport('cin_6');
+cin_7 = xInport('cin_7');
 
 %% outports
-xlsub2_Out1 = xOutport('Out1');
-xlsub2_Out2 = xOutport('Out2');
-xlsub2_Out3 = xOutport('Out3');
-xlsub2_Out4 = xOutport('Out4');
-xlsub2_Out5 = xOutport('Out5');
-xlsub2_Out6 = xOutport('Out6');
-xlsub2_Out7 = xOutport('Out7');
-xlsub2_Out8 = xOutport('Out8');
+sync_out = xOutport('sync_out');
+out1_real = xOutport('out1_real');
+out1_imag = xOutport('out1_imag');
+out2_real = xOutport('out2_real');
+out2_imag = xOutport('out2_imag');
 
 %% diagram
 
+% xSignals
+dec_fir_sync_out = xSignal('dec_fir_sync_out');
+real_v0_out = xSignal('real_v0_out');
+real_v1_out = xSignal('real_v1_out');
+real_v2_out = xSignal('real_v2_out');
+real_v3_out = xSignal('real_v3_out');
+real_v4_out = xSignal('real_v4_out');
+real_v5_out = xSignal('real_v5_out');
+real_v6_out = xSignal('real_v6_out');
+real_v7_out = xSignal('real_v7_out');
+imag_v0_out = xSignal('imag_v0_out');
+imag_v1_out = xSignal('imag_v1_out');
+imag_v2_out = xSignal('imag_v2_out');
+imag_v3_out = xSignal('imag_v3_out');
+imag_v4_out = xSignal('imag_v4_out');
+imag_v5_out = xSignal('imag_v5_out');
+imag_v6_out = xSignal('imag_v6_out');
+imag_v7_out = xSignal('imag_v7_out');
+
 % block: half_band_xblock/Subsystem/adder_tree
-xlsub2_parallel_fir_out1 = xSignal;
-xlsub2_parallel_fir_out2 = xSignal;
-xlsub2_parallel_fir1_out2 = xSignal;
-xlsub2_parallel_fir2_out2 = xSignal;
-xlsub2_parallel_fir3_out2 = xSignal;
 xlsub2_adder_tree_sub = xBlock(struct('source',str2func('adder_tree_lib_init_xblock'), 'name', 'adder_tree'), ...
                            {[blk, '/adder_tree'], 'n_inputs',4,...
                              'latency', 1, ...
                              'first_stage_hdl', 'off'} , ... 
-                           {xlsub2_parallel_fir_out1, xlsub2_parallel_fir_out2, xlsub2_parallel_fir1_out2, xlsub2_parallel_fir2_out2, xlsub2_parallel_fir3_out2}, ...
-                           {xlsub2_Out1, xlsub2_Out2});
+                           {dec_fir_sync_out, real_v0_out, real_v1_out, real_v2_out, real_v3_out}, ...
+                           {sync_out, out1_real});
 
 % block: half_band_xblock/Subsystem/adder_tree1
-xlsub2_parallel_fir1_out1 = xSignal;
-xlsub2_parallel_fir_out3 = xSignal;
-xlsub2_parallel_fir1_out3 = xSignal;
-xlsub2_parallel_fir2_out3 = xSignal;
-xlsub2_parallel_fir3_out3 = xSignal;
 xlsub2_adder_tree1_sub = xBlock(struct('source', str2func('adder_tree_lib_init_xblock'), 'name', 'adder_tree1'), ...
                             {[blk, '/adder_tree1'],'n_inputs',4,...
                              'latency',1, ...
                              'first_stage_hdl', 'off'} , ... 
-                            {xlsub2_parallel_fir1_out1, xlsub2_parallel_fir_out3, xlsub2_parallel_fir1_out3, xlsub2_parallel_fir2_out3, xlsub2_parallel_fir3_out3}, ...
-                            {xlsub2_Out3, xlsub2_Out4});
+                            {dec_fir_sync_out, imag_v0_out, imag_v1_out, imag_v2_out, imag_v3_out}, ...
+                            {[], out1_imag});
 
 % block: half_band_xblock/Subsystem/adder_tree3
-xlsub2_parallel_fir2_out1 = xSignal;
-xlsub2_parallel_fir_out4 = xSignal;
-xlsub2_parallel_fir1_out4 = xSignal;
-xlsub2_parallel_fir2_out4 = xSignal;
-xlsub2_parallel_fir3_out4 = xSignal;
 xlsub2_adder_tree3_sub = xBlock(struct('source',str2func('adder_tree_lib_init_xblock'), 'name', 'adder_tree3'), ...
                             {[blk, '/adder_tree3'],'n_inputs',4,...
                              'latency', 1, ...
                              'first_stage_hdl', 'off'} , ... 
-                            {xlsub2_parallel_fir2_out1, xlsub2_parallel_fir_out4, xlsub2_parallel_fir1_out4, xlsub2_parallel_fir2_out4, xlsub2_parallel_fir3_out4}, ...
-                            {xlsub2_Out5, xlsub2_Out6});
+                            {dec_fir_sync_out, real_v4_out, real_v5_out, real_v6_out, real_v7_out}, ...
+                            {[], out2_real});
 
 % block: half_band_xblock/Subsystem/adder_tree4
-xlsub2_parallel_fir3_out1 = xSignal;
-xlsub2_parallel_fir_out5 = xSignal;
-xlsub2_parallel_fir1_out5 = xSignal;
-xlsub2_parallel_fir2_out5 = xSignal;
-xlsub2_parallel_fir3_out5 = xSignal;
 xlsub2_adder_tree4_sub = xBlock(struct('source', str2func('adder_tree_lib_init_xblock'), 'name', 'adder_tree4'), ...
                             {[blk,'/adder_tree4'], ...
                              'n_inputs',4,...
                              'latency', 1, ...
                              'first_stage_hdl', 'off'} , ... 
-                            {xlsub2_parallel_fir3_out1, xlsub2_parallel_fir_out5, xlsub2_parallel_fir1_out5, xlsub2_parallel_fir2_out5, xlsub2_parallel_fir3_out5}, ...
-                            {xlsub2_Out7, xlsub2_Out8});
+                            {dec_fir_sync_out, imag_v4_out, imag_v5_out, imag_v6_out, imag_v7_out}, ...
+                            {[], out2_imag});
 
 % block: half_band_xblock/Subsystem/parallel_fir
 xlsub2_parallel_fir_sub = xBlock(struct('source', str2func('parallel_fir_init_xblock'), 'name', 'parallel_fir'), ...
                              {[blk, '/parallel_fir'], filter_coeffs}, ...
-                             {xlsub2_In1, xlsub2_In2, xlsub2_In3}, ...
-                             {xlsub2_parallel_fir_out1, xlsub2_parallel_fir_out2, xlsub2_parallel_fir_out3, xlsub2_parallel_fir_out4, xlsub2_parallel_fir_out5});
+                             {sync_in, cin_0, cin_4}, ...
+                             {dec_fir_sync_out, real_v0_out, imag_v0_out, real_v4_out, imag_v4_out});
 
 % block: half_band_xblock/Subsystem/parallel_fir1
 xlsub2_parallel_fir1_sub = xBlock(struct('source', str2func('parallel_fir_init_xblock'), 'name', 'parallel_fir1'), ...
                               {[blk, '/parallel_fir1'],filter_coeffs}, ...
-                              {xlsub2_In4, xlsub2_In5, xlsub2_In6}, ...
-                              {xlsub2_parallel_fir1_out1, xlsub2_parallel_fir1_out2, xlsub2_parallel_fir1_out3, xlsub2_parallel_fir1_out4, xlsub2_parallel_fir1_out5});
+                              {sync_in, cin_1, cin_5}, ...
+                              {[], real_v1_out, imag_v1_out, real_v5_out, imag_v5_out});
 
 % block: half_band_xblock/Subsystem/parallel_fir2
 xlsub2_parallel_fir2_sub = xBlock(struct('source', str2func('parallel_fir_init_xblock'), 'name', 'parallel_fir2'), ...
                               {[blk, '/parallel_fir2'],filter_coeffs}, ...
-                              {xlsub2_In7, xlsub2_In8, xlsub2_In9}, ...
-                              {xlsub2_parallel_fir2_out1, xlsub2_parallel_fir2_out2, xlsub2_parallel_fir2_out3, xlsub2_parallel_fir2_out4, xlsub2_parallel_fir2_out5});
+                              {sync_in, cin_2, cin_6}, ...
+                              {[], real_v2_out, imag_v2_out, real_v6_out, imag_v6_out});
 
 % block: half_band_xblock/Subsystem/parallel_fir3
 xlsub2_parallel_fir3_sub = xBlock(struct('source', str2func('parallel_fir_init_xblock'), 'name', 'parallel_fir3'), ...
                               {[blk, '/parallel_fir3'],filter_coeffs}, ...
-                              {xlsub2_In10, xlsub2_In11, xlsub2_In12}, ...
-                              {xlsub2_parallel_fir3_out1, xlsub2_parallel_fir3_out2, xlsub2_parallel_fir3_out3, xlsub2_parallel_fir3_out4, xlsub2_parallel_fir3_out5});
+                              {sync_in, cin_3, cin_7}, ...
+                              {[], real_v3_out, imag_v3_out, real_v7_out, imag_v7_out});
 
 
 

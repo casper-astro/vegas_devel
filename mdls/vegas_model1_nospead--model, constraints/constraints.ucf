@@ -1,0 +1,1008 @@
+################## Global Timing Constraints
+#
+
+Net sys_clk_n TNM_NET = sys_clk_n;
+TIMESPEC TS_sys_clk_n = PERIOD sys_clk_n 100 MHz;
+
+Net dly_clk_n TNM_NET = dly_clk_n;
+TIMESPEC TS_dly_clk_n = PERIOD dly_clk_n 200 MHz;
+
+Net epb_clk TNM_NET = epb_clk;
+TIMESPEC TS_epb_clk = PERIOD epb_clk 88 MHz;
+
+ Net mgt_clk_0 TNM_NET = mgt_clk_0;
+ TIMESPEC TS_mgt_clk_0 = PERIOD mgt_clk_0 156.25 MHz;
+
+################### Pin constraints
+#
+
+#
+# System signals
+#
+
+NET "sys_clk_n"  LOC = H13;
+NET "sys_clk_p"  LOC = J14;
+
+NET "aux0_clk_p" LOC = G15;
+NET "aux0_clk_n" LOC = G16;
+
+NET "aux1_clk_p" LOC = H14;
+NET "aux1_clk_n" LOC = H15;
+
+NET "dly_clk_n"  LOC = J17;
+NET "dly_clk_p"  LOC = J16;
+
+#
+# PPC External Peripheral Bus [EPB]
+#
+
+NET "ppc_irq_n"    IOSTANDARD = LVCMOS33 | LOC = G23;
+
+# transparent endian change
+
+NET "epb_data<15>" IOSTANDARD = LVCMOS33 | LOC = AH13;
+NET "epb_data<14>" IOSTANDARD = LVCMOS33 | LOC = AH14;
+NET "epb_data<13>" IOSTANDARD = LVCMOS33 | LOC = AH19;
+NET "epb_data<12>" IOSTANDARD = LVCMOS33 | LOC = AH20;
+NET "epb_data<11>" IOSTANDARD = LVCMOS33 | LOC = AG13;
+NET "epb_data<10>" IOSTANDARD = LVCMOS33 | LOC = AH12;
+NET "epb_data<9>"  IOSTANDARD = LVCMOS33 | LOC = AH22;
+NET "epb_data<8>"  IOSTANDARD = LVCMOS33 | LOC = AG22;
+NET "epb_data<7>"  IOSTANDARD = LVCMOS33 | LOC = AD19;
+NET "epb_data<6>"  IOSTANDARD = LVCMOS33 | LOC = AE19;
+NET "epb_data<5>"  IOSTANDARD = LVCMOS33 | LOC = AE17;
+NET "epb_data<4>"  IOSTANDARD = LVCMOS33 | LOC = AF16;
+NET "epb_data<3>"  IOSTANDARD = LVCMOS33 | LOC = AD20;
+NET "epb_data<2>"  IOSTANDARD = LVCMOS33 | LOC = AE21;
+NET "epb_data<1>"  IOSTANDARD = LVCMOS33 | LOC = AE16;
+NET "epb_data<0>"  IOSTANDARD = LVCMOS33 | LOC = AF15;
+
+# transparent endian change
+NET "epb_addr<0>"  IOSTANDARD = LVCMOS33 | LOC = AE23;
+NET "epb_addr<1>"  IOSTANDARD = LVCMOS33 | LOC = AE22;
+NET "epb_addr<2>"  IOSTANDARD = LVCMOS33 | LOC = AG18;
+NET "epb_addr<3>"  IOSTANDARD = LVCMOS33 | LOC = AG12;
+NET "epb_addr<4>"  IOSTANDARD = LVCMOS33 | LOC = AG15;
+NET "epb_addr<5>"  IOSTANDARD = LVCMOS33 | LOC = AG23;
+NET "epb_addr<6>"  IOSTANDARD = LVCMOS33 | LOC = AF19;
+NET "epb_addr<7>"  IOSTANDARD = LVCMOS33 | LOC = AE12;
+NET "epb_addr<8>"  IOSTANDARD = LVCMOS33 | LOC = AG16;
+NET "epb_addr<9>"  IOSTANDARD = LVCMOS33 | LOC = AF13;
+NET "epb_addr<10>" IOSTANDARD = LVCMOS33 | LOC = AG20;
+NET "epb_addr<11>" IOSTANDARD = LVCMOS33 | LOC = AF23;
+NET "epb_addr<12>" IOSTANDARD = LVCMOS33 | LOC = AH17;
+NET "epb_addr<13>" IOSTANDARD = LVCMOS33 | LOC = AH15;
+NET "epb_addr<14>" IOSTANDARD = LVCMOS33 | LOC = L20;
+NET "epb_addr<15>" IOSTANDARD = LVCMOS33 | LOC = J22;
+NET "epb_addr<16>" IOSTANDARD = LVCMOS33 | LOC = H22;
+NET "epb_addr<17>" IOSTANDARD = LVCMOS33 | LOC = L15;
+NET "epb_addr<18>" IOSTANDARD = LVCMOS33 | LOC = L16;
+NET "epb_addr<19>" IOSTANDARD = LVCMOS33 | LOC = K22;
+NET "epb_addr<20>" IOSTANDARD = LVCMOS33 | LOC = K21;
+NET "epb_addr<21>" IOSTANDARD = LVCMOS33 | LOC = K16;
+NET "epb_addr<22>" IOSTANDARD = LVCMOS33 | LOC = J15;
+
+# EPB multi purpose pins
+NET "epb_addr_gp<0>" IOSTANDARD = LVCMOS33 | LOC = L21; # DMA_REQ_2
+NET "epb_addr_gp<1>" IOSTANDARD = LVCMOS33 | LOC = G22; # DMA_ACK_2
+NET "epb_addr_gp<2>" IOSTANDARD = LVCMOS33 | LOC = K23; # EOT_TC_2
+NET "epb_addr_gp<3>" IOSTANDARD = LVCMOS33 | LOC = K14; # DMA_REQ_3
+NET "epb_addr_gp<4>" IOSTANDARD = LVCMOS33 | LOC = L14; # DMA_ACK_3
+NET "epb_addr_gp<5>" IOSTANDARD = LVCMOS33 | LOC = J12; # EOT_TC_3
+
+#NET "epb_cs_alt_n"   IOSTANDARD = LVCMOS33 | LOC = AG17;
+NET "epb_cs_n"       IOSTANDARD = LVCMOS33 | LOC = K13;
+NET "epb_be_n<1>"    IOSTANDARD = LVCMOS33 | LOC = AF18;
+NET "epb_be_n<0>"    IOSTANDARD = LVCMOS33 | LOC = AF14;
+NET "epb_r_w_n"      IOSTANDARD = LVCMOS33 | LOC = AF20;
+NET "epb_oe_n"       IOSTANDARD = LVCMOS33 | LOC = AF21;
+#NET "epb_blast_n"    IOSTANDARD = LVCMOS33 | LOC = H23;
+NET "epb_rdy"        IOSTANDARD = LVCMOS33 | LOC = K12;
+
+NET "epb_clk_in"    IOSTANDARD = LVCMOS33 | LOC = AH18;
+
+
+NET "adc0_ser_clk" LOC = F28 | SLEW = SLOW;
+NET "adc0_ser_dat" LOC = D32 | SLEW = SLOW;
+NET "adc0_ser_cs"  LOC = C32 | SLEW = SLOW;
+NET "adc1_ser_clk" LOC = AE32 | SLEW = SLOW;
+NET "adc1_ser_dat" LOC = AD34 | SLEW = SLOW;
+NET "adc1_ser_cs"  LOC = AC34 | SLEW = SLOW;
+
+
+# ADC card 3 wire control
+#NET "adc0_adc3wire_clk"       IOSTANDARD = LVCMOS25 | LOC = F28;
+#NET "adc0_adc3wire_data"      IOSTANDARD = LVCMOS25 | LOC = D32;
+#NET "adc0_adc3wire_strobe"    IOSTANDARD = LVCMOS25 | LOC = C32;
+#NET "adc0_modepin"            IOSTANDARD = LVCMOS25 | LOC = E28;
+
+
+NET "mgt_ref_clk_top_n"    LOC = C8;
+NET "mgt_ref_clk_top_p"    LOC = D8;
+
+NET "mgt_ref_clk_bottom_n" LOC = Y3;
+NET "mgt_ref_clk_bottom_p" LOC = Y4;
+
+NET "mgt_rx_top_1_n<1>"    LOC = A7;
+NET "mgt_rx_top_1_p<1>"    LOC = A6;
+NET "mgt_rx_top_1_n<0>"    LOC = A8;
+NET "mgt_rx_top_1_p<0>"    LOC = A9;
+NET "mgt_tx_top_1_n<1>"    LOC = B6;
+NET "mgt_tx_top_1_p<1>"    LOC = B5;
+NET "mgt_tx_top_1_n<0>"    LOC = B9;
+NET "mgt_tx_top_1_p<0>"    LOC = B10;
+NET "mgt_rx_top_1_n<3>"    LOC = C1;
+NET "mgt_rx_top_1_p<3>"    LOC = D1;
+NET "mgt_rx_top_1_n<2>"    LOC = A2;
+NET "mgt_rx_top_1_p<2>"    LOC = A3;
+NET "mgt_tx_top_1_n<3>"    LOC = D2;
+NET "mgt_tx_top_1_p<3>"    LOC = E2;
+NET "mgt_tx_top_1_n<2>"    LOC = B3;
+NET "mgt_tx_top_1_p<2>"    LOC = B4;
+NET "mgt_rx_top_0_n<1>"    LOC = J1;
+NET "mgt_rx_top_0_p<1>"    LOC = K1;
+NET "mgt_rx_top_0_n<0>"    LOC = H1;
+NET "mgt_rx_top_0_p<0>"    LOC = G1;
+NET "mgt_tx_top_0_n<1>"    LOC = K2;
+NET "mgt_tx_top_0_p<1>"    LOC = L2;
+NET "mgt_tx_top_0_n<0>"    LOC = G2;
+NET "mgt_tx_top_0_p<0>"    LOC = F2;
+NET "mgt_rx_top_0_n<3>"    LOC = R1;
+NET "mgt_rx_top_0_p<3>"    LOC = T1;
+NET "mgt_rx_top_0_n<2>"    LOC = P1;
+NET "mgt_rx_top_0_p<2>"    LOC = N1;
+NET "mgt_tx_top_0_n<3>"    LOC = T2;
+NET "mgt_tx_top_0_p<3>"    LOC = U2;
+NET "mgt_tx_top_0_n<2>"    LOC = N2;
+NET "mgt_tx_top_0_p<2>"    LOC = M2;
+NET "mgt_rx_bottom_1_n<1>" LOC = AA1;
+NET "mgt_rx_bottom_1_p<1>" LOC = AB1;
+NET "mgt_rx_bottom_1_n<0>" LOC = Y1;
+NET "mgt_rx_bottom_1_p<0>" LOC = W1;
+NET "mgt_tx_bottom_1_n<1>" LOC = AB2;
+NET "mgt_tx_bottom_1_p<1>" LOC = AC2;
+NET "mgt_tx_bottom_1_n<0>" LOC = W2;
+NET "mgt_tx_bottom_1_p<0>" LOC = V2;
+NET "mgt_rx_bottom_1_n<3>" LOC = AG1;
+NET "mgt_rx_bottom_1_p<3>" LOC = AH1;
+NET "mgt_rx_bottom_1_n<2>" LOC = AF1;
+NET "mgt_rx_bottom_1_p<2>" LOC = AE1;
+NET "mgt_tx_bottom_1_n<3>" LOC = AH2;
+NET "mgt_tx_bottom_1_p<3>" LOC = AJ2;
+NET "mgt_tx_bottom_1_n<2>" LOC = AE2;
+NET "mgt_tx_bottom_1_p<2>" LOC = AD2;
+NET "mgt_rx_bottom_0_n<1>" LOC = AP2;
+NET "mgt_rx_bottom_0_p<1>" LOC = AP3;
+NET "mgt_rx_bottom_0_n<0>" LOC = AM1;
+NET "mgt_rx_bottom_0_p<0>" LOC = AL1;
+NET "mgt_tx_bottom_0_n<1>" LOC = AN3;
+NET "mgt_tx_bottom_0_p<1>" LOC = AN4;
+NET "mgt_tx_bottom_0_n<0>" LOC = AL2;
+NET "mgt_tx_bottom_0_p<0>" LOC = AK2;
+NET "mgt_rx_bottom_0_n<3>" LOC = AP8;
+NET "mgt_rx_bottom_0_p<3>" LOC = AP9;
+NET "mgt_rx_bottom_0_n<2>" LOC = AP7;
+NET "mgt_rx_bottom_0_p<2>" LOC = AP6;
+NET "mgt_tx_bottom_0_n<3>" LOC = AN9;
+NET "mgt_tx_bottom_0_p<3>" LOC = AN10;
+NET "mgt_tx_bottom_0_n<2>" LOC = AN6;
+NET "mgt_tx_bottom_0_p<2>" LOC = AN5;
+
+
+
+##############################################
+# IP UCF constraints                         #
+##############################################
+
+# vegas_mode1_model_nospead/XSG core config
+
+# vegas_mode1_model_nospead/acc_len
+
+# vegas_mode1_model_nospead/acc_len_sel
+
+# vegas_mode1_model_nospead/adc083000x1
+NET "adc0clk_p" LOC = H19 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE | PERIOD = 2.6667 ns ;
+NET "adc0clk_n" LOC = H20 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE | PERIOD = 2.6667 ns ;
+NET "adc0sync_p" LOC = B33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0sync_n" LOC = C33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0outofrange_p" LOC = C34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0outofrange_n" LOC = D34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_p<0>" LOC = M31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_p<1>" LOC = M28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_p<2>" LOC = M25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_p<3>" LOC = K28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_p<4>" LOC = K24 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_p<5>" LOC = H29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_p<6>" LOC = H28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_p<7>" LOC = F31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_n<0>" LOC = N30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_n<1>" LOC = N28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_n<2>" LOC = M26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_n<3>" LOC = L28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_n<4>" LOC = L24 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_n<5>" LOC = J29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_n<6>" LOC = G28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataeveni_n<7>" LOC = E31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_p<0>" LOC = N27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_p<1>" LOC = L29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_p<2>" LOC = L25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_p<3>" LOC = J30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_p<4>" LOC = G33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_p<5>" LOC = G30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_p<6>" LOC = H25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_p<7>" LOC = E29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_n<0>" LOC = M27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_n<1>" LOC = K29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_n<2>" LOC = L26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_n<3>" LOC = J31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_n<4>" LOC = F34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_n<5>" LOC = F30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_n<6>" LOC = H24 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddi_n<7>" LOC = F29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_p<0>" LOC = L34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_p<1>" LOC = K33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_p<2>" LOC = J32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_p<3>" LOC = K27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_p<4>" LOC = H30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_p<5>" LOC = J24 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_p<6>" LOC = G27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_p<7>" LOC = G25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_n<0>" LOC = K34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_n<1>" LOC = K32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_n<2>" LOC = H33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_n<3>" LOC = K26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_n<4>" LOC = G31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_n<5>" LOC = J25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_n<6>" LOC = H27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataevenq_n<7>" LOC = G26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_p<0>" LOC = L30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_p<1>" LOC = K31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_p<2>" LOC = H34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_p<3>" LOC = J27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_p<4>" LOC = G32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_p<5>" LOC = F33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_p<6>" LOC = E32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_p<7>" LOC = F25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_n<0>" LOC = M30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_n<1>" LOC = L31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_n<2>" LOC = J34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_n<3>" LOC = J26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_n<4>" LOC = H32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_n<5>" LOC = E34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_n<6>" LOC = E33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0dataoddq_n<7>" LOC = F26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc0_reset" LOC = J20 | IOSTANDARD = LVCMOS25 ;
+NET "adc1clk_p" LOC = K17 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE | PERIOD = 2.6667 ns ;
+NET "adc1clk_n" LOC = L18 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE | PERIOD = 2.6667 ns ;
+NET "adc1sync_p" LOC = AD31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1sync_n" LOC = AE31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1outofrange_p" LOC = AB27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1outofrange_n" LOC = AC27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_p<0>" LOC = AN34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_p<1>" LOC = AK29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_p<2>" LOC = AJ31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_p<3>" LOC = AJ32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_p<4>" LOC = AH34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_p<5>" LOC = AE27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_p<6>" LOC = AD26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_p<7>" LOC = AF34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_n<0>" LOC = AN33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_n<1>" LOC = AJ29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_n<2>" LOC = AK31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_n<3>" LOC = AK32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_n<4>" LOC = AJ34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_n<5>" LOC = AE26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_n<6>" LOC = AD25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataeveni_n<7>" LOC = AE34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_p<0>" LOC = AJ25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_p<1>" LOC = AL34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_p<2>" LOC = AK34 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_p<3>" LOC = AG27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_p<4>" LOC = AF29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_p<5>" LOC = AG33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_p<6>" LOC = AE29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_p<7>" LOC = AD30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_n<0>" LOC = AH25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_n<1>" LOC = AL33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_n<2>" LOC = AK33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_n<3>" LOC = AG26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_n<4>" LOC = AF30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_n<5>" LOC = AH33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_n<6>" LOC = AD29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddi_n<7>" LOC = AC29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_p<0>" LOC = AN32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_p<1>" LOC = AM33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_p<2>" LOC = AH27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_p<3>" LOC = AH29 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_p<4>" LOC = AF25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_p<5>" LOC = AD24 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_p<6>" LOC = AE28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_p<7>" LOC = AC25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_n<0>" LOC = AP32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_n<1>" LOC = AM32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_n<2>" LOC = AJ26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_n<3>" LOC = AG30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_n<4>" LOC = AF26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_n<5>" LOC = AE24 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_n<6>" LOC = AF28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataevenq_n<7>" LOC = AC24 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_p<0>" LOC = AK26 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_p<1>" LOC = AK28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_p<2>" LOC = AJ30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_p<3>" LOC = AF24 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_p<4>" LOC = AG28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_p<5>" LOC = AG32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_p<6>" LOC = AF31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_p<7>" LOC = AF33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_n<0>" LOC = AJ27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_n<1>" LOC = AK27 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_n<2>" LOC = AH30 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_n<3>" LOC = AG25 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_n<4>" LOC = AH28 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_n<5>" LOC = AH32 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_n<6>" LOC = AG31 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1dataoddq_n<7>" LOC = AE33 | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE ;
+NET "adc1_reset" LOC = H17 | IOSTANDARD = LVCMOS25 ;
+
+# vegas_mode1_model_nospead/dest_ip
+
+# vegas_mode1_model_nospead/dest_port
+
+# vegas_mode1_model_nospead/gbe0
+
+# vegas_mode1_model_nospead/ip_select
+
+# vegas_mode1_model_nospead/port_select
+
+# vegas_mode1_model_nospead/rst
+
+# vegas_mode1_model_nospead/sync_en
+
+# vegas_mode1_model_nospead/sync_en1
+
+# vegas_mode1_model_nospead/sync_gen_sel
+
+# vegas_mode1_model_nospead/sync_period
+
+# vegas_mode1_model_nospead/sync_period_sel
+
+
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in0_stage3_ea70b72190/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X1Y34;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in0_stage1_1b74d783b8/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y32;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in0_stage2_91bacfcaa7/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X1Y33;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in0_stage4_d6850731d7/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y35;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in1_stage3_14ba0582fd/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X1Y38;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in1_stage1_40212a28e6/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y36;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in1_stage2_9e8456f380/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X1Y37;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in1_stage4_50a78132ed/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y39;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in2_stage3_b6b6cf2084/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X1Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in2_stage1_e75022ce7b/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y40;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in2_stage2_fd35440838/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X1Y41;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in2_stage4_aaff851e87/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y43;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in3_stage3_70d05adb22/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X1Y46;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in3_stage1_e295f87e63/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y44;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in3_stage2_bfe3402734/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X1Y45;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in3_stage4_408a046976/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y47;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in4_stage3_0d1745dd57/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X0Y46;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in4_stage1_245666a26b/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y44;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in4_stage2_10a5c3a250/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X0Y45;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in4_stage4_096b7e3e33/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y47;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in5_stage3_709d7f6aa2/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X0Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in5_stage1_06234b216c/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y40;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in5_stage2_78fdc51cd9/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X0Y41;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in5_stage4_12c247f800/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y43;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in6_stage3_19b2bc3d51/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X0Y38;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in6_stage1_3fde6f4fe8/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y36;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in6_stage2_f467128f26/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X0Y37;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in6_stage4_7dca50a467/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y39;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in7_stage3_ac8d5ac41d/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X0Y34;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in7_stage1_c64b8282fb/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y32;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in7_stage2_d1a7caec39/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X0Y33;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/filter_in7_stage4_8ce1262626/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y35;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in3_stage3_70d05adb22/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X1Y30;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in3_stage1_e295f87e63/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in3_stage2_bfe3402734/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X1Y29;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in3_stage4_408a046976/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y31;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in2_stage3_b6b6cf2084/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X1Y26;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in2_stage1_e75022ce7b/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in2_stage2_fd35440838/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X1Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in2_stage4_aaff851e87/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in1_stage3_14ba0582fd/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X1Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in1_stage1_40212a28e6/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in1_stage2_9e8456f380/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X1Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in1_stage4_50a78132ed/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in0_stage3_ea70b72190/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X1Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in0_stage1_1b74d783b8/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in0_stage2_91bacfcaa7/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X1Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in0_stage4_d6850731d7/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in6_stage2_f467128f26/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X0Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in6_stage3_19b2bc3d51/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X0Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in6_stage1_3fde6f4fe8/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in6_stage4_7dca50a467/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in5_stage3_709d7f6aa2/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X0Y26;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in5_stage1_06234b216c/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in5_stage2_78fdc51cd9/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X0Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in5_stage4_12c247f800/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in7_stage3_ac8d5ac41d/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X0Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in7_stage1_c64b8282fb/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in7_stage2_d1a7caec39/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X0Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in7_stage4_8ce1262626/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in4_stage3_0d1745dd57/dsp48e_mult_d9aa3cd2df/dsp48e/dsp48e_inst" LOC = DSP48_X0Y30;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in4_stage1_245666a26b/dsp48e_mult_2e476fcea0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in4_stage2_10a5c3a250/dsp48e_mult_fda1302724/dsp48e/dsp48e_inst" LOC = DSP48_X0Y29;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/filter_in4_stage4_096b7e3e33/dsp48e_mult_70639523c5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y31;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_1_8fc201e42e/butterfly_direct_93c125e155/cadd_a3ccc0e562/dsp48e/dsp48e_inst" LOC = DSP48_X0Y48;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_1_8fc201e42e/butterfly_direct_93c125e155/csub_f03c3ee2e6/dsp48e/dsp48e_inst" LOC = DSP48_X0Y49;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_2_c78090594b/butterfly_direct_a329082f98/cadd_e6ac2e6403/dsp48e/dsp48e_inst" LOC = DSP48_X0Y50;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_2_c78090594b/butterfly_direct_a329082f98/csub_e458a1cd8d/dsp48e/dsp48e_inst" LOC = DSP48_X0Y51;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_2_c78090594b/butterfly_direct_a329082f98/twiddle_3abf33876c/negate_mux_8423525ffe/dsp48e/dsp48e_inst" LOC = DSP48_X0Y52;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_1_8fc201e42e/butterfly_direct_93c125e155/cadd_a3ccc0e562/dsp48e/dsp48e_inst" LOC = DSP48_X1Y48;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_1_8fc201e42e/butterfly_direct_93c125e155/csub_f03c3ee2e6/dsp48e/dsp48e_inst" LOC = DSP48_X1Y49;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_2_c78090594b/butterfly_direct_a329082f98/cadd_e6ac2e6403/dsp48e/dsp48e_inst" LOC = DSP48_X1Y50;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_2_c78090594b/butterfly_direct_a329082f98/csub_e458a1cd8d/dsp48e/dsp48e_inst" LOC = DSP48_X1Y51;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_2_c78090594b/butterfly_direct_a329082f98/twiddle_3abf33876c/negate_mux_8423525ffe/dsp48e/dsp48e_inst" LOC = DSP48_X1Y52;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/apbw_c6342e80a4/dsp48e_0/dsp48e_inst" LOC = DSP48_X3Y57;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/apbw_c6342e80a4/dsp48e_1/dsp48e_inst" LOC = DSP48_X3Y58;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/apbw_79ef8747c1/dsp48e_3/dsp48e_inst" LOC = DSP48_X4Y61;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/apbw_79ef8747c1/dsp48e_2/dsp48e_inst" LOC = DSP48_X4Y60;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/apbw_2e2338b8dd/dsp48e_1/dsp48e_inst" LOC = DSP48_X1Y60;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/apbw_2e2338b8dd/dsp48e_0/dsp48e_inst" LOC = DSP48_X1Y59;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_1_9c03a9066f/butterfly_direct_5115ffa442/cadd_06f67dec14/dsp48e/dsp48e_inst" LOC = DSP48_X1Y15;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_1_9c03a9066f/butterfly_direct_5115ffa442/csub_4b789564e5/dsp48e/dsp48e_inst" LOC = DSP48_X1Y14;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_2_30c3d78e4c/butterfly_direct_35ecda93d1/cadd_cc24d307fe/dsp48e/dsp48e_inst" LOC = DSP48_X1Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_2_30c3d78e4c/butterfly_direct_35ecda93d1/csub_1157af7aad/dsp48e/dsp48e_inst" LOC = DSP48_X1Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_2_30c3d78e4c/butterfly_direct_35ecda93d1/twiddle_69242e0220/negate_mux_34d987e410/dsp48e/dsp48e_inst" LOC = DSP48_X1Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/apbw_8971ddcdd3/dsp48e_3/dsp48e_inst" LOC = DSP48_X2Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/apbw_8971ddcdd3/dsp48e_2/dsp48e_inst" LOC = DSP48_X2Y5;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/apbw_57937a318a/dsp48e_3/dsp48e_inst" LOC = DSP48_X1Y5;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/apbw_57937a318a/dsp48e_2/dsp48e_inst" LOC = DSP48_X1Y4;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_2_30c3d78e4c/butterfly_direct_35ecda93d1/twiddle_69242e0220/negate_mux_34d987e410/dsp48e/dsp48e_inst" LOC = DSP48_X0Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_2_30c3d78e4c/butterfly_direct_35ecda93d1/csub_1157af7aad/dsp48e/dsp48e_inst" LOC = DSP48_X0Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_2_30c3d78e4c/butterfly_direct_35ecda93d1/cadd_cc24d307fe/dsp48e/dsp48e_inst" LOC = DSP48_X0Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_1_9c03a9066f/butterfly_direct_5115ffa442/csub_4b789564e5/dsp48e/dsp48e_inst" LOC = DSP48_X0Y14;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_1_9c03a9066f/butterfly_direct_5115ffa442/cadd_06f67dec14/dsp48e/dsp48e_inst" LOC = DSP48_X0Y15;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_2_b5060a720e/arith_366f37724f/apbw_87c72fae00/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_2_b5060a720e/arith_366f37724f/apbw_87c72fae00/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_2_b5060a720e/arith_366f37724f/apbw_87c72fae00/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_2_b5060a720e/arith_366f37724f/apbw_87c72fae00/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_2_b5060a720e/arith_366f37724f/csub_7b1d47e7b5/dsp48e/dsp48e_inst" LOC = DSP48_X4Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_3_f3c3e12d3d/arith_366f37724f/apbw_87c72fae00/dsp48e_2/dsp48e_inst" LOC = DSP48_X4Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_3_f3c3e12d3d/arith_366f37724f/apbw_87c72fae00/dsp48e_3/dsp48e_inst" LOC = DSP48_X4Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_3_f3c3e12d3d/arith_366f37724f/apbw_87c72fae00/dsp48e_0/dsp48e_inst" LOC = DSP48_X5Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_3_f3c3e12d3d/arith_366f37724f/apbw_87c72fae00/dsp48e_1/dsp48e_inst" LOC = DSP48_X5Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_3_f3c3e12d3d/arith_366f37724f/csub_7b1d47e7b5/dsp48e/dsp48e_inst" LOC = DSP48_X5Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_2_eed3880a23/arith_50d85c01da/apbw_ab334d2603/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_2_eed3880a23/arith_50d85c01da/apbw_ab334d2603/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y26;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_3_cb6f1a5026/arith_54cd153dc5/apbw_a42d592c13/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_3_cb6f1a5026/arith_54cd153dc5/apbw_a42d592c13/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_2_eed3880a23/arith_50d85c01da/apbw_ab334d2603/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_3_cb6f1a5026/arith_54cd153dc5/apbw_a42d592c13/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_3_cb6f1a5026/arith_54cd153dc5/apbw_a42d592c13/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_1_690a9901f3/arith_aa22400bd6/apbw_140beafce7/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y29;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_2_eed3880a23/arith_50d85c01da/apbw_ab334d2603/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y26;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_1_690a9901f3/arith_aa22400bd6/apbw_140beafce7/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_1_9c03a9066f/delay_b_8c37b98de7/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_1_9c03a9066f/delay_b_8c37b98de7/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X0Y7;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_1_9c03a9066f/delay_f_218f942482/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_1_9c03a9066f/delay_f_218f942482/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X0Y7;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_2_30c3d78e4c/delay_b_92cdf0ceea/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_2_30c3d78e4c/delay_b_92cdf0ceea/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X0Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_2_30c3d78e4c/delay_f_fa6d7fe040/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_2_30c3d78e4c/delay_f_fa6d7fe040/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X0Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_1_9c03a9066f/delay_b_8c37b98de7/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_1_9c03a9066f/delay_b_8c37b98de7/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y7;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_1_9c03a9066f/delay_f_218f942482/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_1_9c03a9066f/delay_f_218f942482/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y7;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_2_30c3d78e4c/delay_b_92cdf0ceea/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_2_30c3d78e4c/delay_b_92cdf0ceea/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_2_30c3d78e4c/delay_f_fa6d7fe040/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_2_30c3d78e4c/delay_f_fa6d7fe040/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_1_8fc201e42e/delay_b_589b8ceff7/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_1_8fc201e42e/delay_b_589b8ceff7/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_1_8fc201e42e/delay_f_1d1419e073/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_1_8fc201e42e/delay_f_1d1419e073/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_2_c78090594b/delay_b_1ec9ea5e0d/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_2_c78090594b/delay_b_1ec9ea5e0d/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_2_c78090594b/delay_f_4c84a5fc54/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_2_c78090594b/delay_f_4c84a5fc54/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_0_13b808b87e/arith_27c8f3fa9d/apbw_48bc75f95c/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y31;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_0_91ad52ad90/arith_a92a727e5f/apbw_a9e25b4858/dsp48e_1/dsp48e_inst" LOC = DSP48_X2Y31;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_0_13b808b87e/arith_27c8f3fa9d/apbw_48bc75f95c/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y30;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_2_c25d8b1182/arith_0c543980a0/apbw_2dabf1b396/dsp48e_2/dsp48e_inst" LOC = DSP48_X3Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_2_c25d8b1182/arith_0c543980a0/apbw_2dabf1b396/dsp48e_3/dsp48e_inst" LOC = DSP48_X3Y26;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_2_c25d8b1182/arith_0c543980a0/csub_c40cff0e6a/dsp48e/dsp48e_inst" LOC = DSP48_X2Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_3_ad971d2f0b/arith_0c543980a0/apbw_2dabf1b396/dsp48e_0/dsp48e_inst" LOC = DSP48_X3Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_3_ad971d2f0b/arith_0c543980a0/apbw_2dabf1b396/dsp48e_1/dsp48e_inst" LOC = DSP48_X3Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_2_c25d8b1182/arith_0c543980a0/apbw_2dabf1b396/dsp48e_1/dsp48e_inst" LOC = DSP48_X2Y26;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_0_18c9ff9c8f/arith_366f37724f/apbw_87c72fae00/dsp48e_3/dsp48e_inst" LOC = DSP48_X3Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_3_ad971d2f0b/arith_0c543980a0/apbw_2dabf1b396/dsp48e_2/dsp48e_inst" LOC = DSP48_X2Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_3_ad971d2f0b/arith_0c543980a0/apbw_2dabf1b396/dsp48e_3/dsp48e_inst" LOC = DSP48_X2Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_3_ad971d2f0b/arith_0c543980a0/csub_c40cff0e6a/dsp48e/dsp48e_inst" LOC = DSP48_X3Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_1_690a9901f3/arith_aa22400bd6/apbw_140beafce7/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y29;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_1_690a9901f3/arith_aa22400bd6/apbw_140beafce7/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_0_13b808b87e/arith_27c8f3fa9d/apbw_48bc75f95c/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y31;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_0_13b808b87e/arith_27c8f3fa9d/apbw_48bc75f95c/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y30;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_0_91ad52ad90/arith_a92a727e5f/apbw_a9e25b4858/dsp48e_0/dsp48e_inst" LOC = DSP48_X2Y30;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_0_91ad52ad90/arith_a92a727e5f/apbw_a9e25b4858/dsp48e_2/dsp48e_inst" LOC = DSP48_X3Y30;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_0_91ad52ad90/arith_a92a727e5f/apbw_a9e25b4858/dsp48e_3/dsp48e_inst" LOC = DSP48_X3Y31;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_0_91ad52ad90/arith_a92a727e5f/csub_813f457b17/dsp48e/dsp48e_inst" LOC = DSP48_X2Y29;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_1_e86d7af517/arith_a92a727e5f/apbw_a9e25b4858/dsp48e_0/dsp48e_inst" LOC = DSP48_X3Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_1_e86d7af517/arith_a92a727e5f/apbw_a9e25b4858/dsp48e_1/dsp48e_inst" LOC = DSP48_X3Y29;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_1_e86d7af517/arith_a92a727e5f/apbw_a9e25b4858/dsp48e_2/dsp48e_inst" LOC = DSP48_X2Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_1_e86d7af517/arith_a92a727e5f/apbw_a9e25b4858/dsp48e_3/dsp48e_inst" LOC = DSP48_X2Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_1_e86d7af517/arith_a92a727e5f/csub_813f457b17/dsp48e/dsp48e_inst" LOC = DSP48_X3Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_2_c25d8b1182/arith_0c543980a0/apbw_2dabf1b396/dsp48e_0/dsp48e_inst" LOC = DSP48_X2Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_0_18c9ff9c8f/arith_366f37724f/apbw_87c72fae00/dsp48e_2/dsp48e_inst" LOC = DSP48_X3Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_1_4759e15889/arith_366f37724f/csub_7b1d47e7b5/dsp48e/dsp48e_inst" LOC = DSP48_X3Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_0_18c9ff9c8f/arith_366f37724f/apbw_87c72fae00/dsp48e_0/dsp48e_inst" LOC = DSP48_X2Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_0_18c9ff9c8f/arith_366f37724f/apbw_87c72fae00/dsp48e_1/dsp48e_inst" LOC = DSP48_X2Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_0_18c9ff9c8f/arith_366f37724f/csub_7b1d47e7b5/dsp48e/dsp48e_inst" LOC = DSP48_X2Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_1_4759e15889/arith_366f37724f/apbw_87c72fae00/dsp48e_0/dsp48e_inst" LOC = DSP48_X2Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_1_4759e15889/arith_366f37724f/apbw_87c72fae00/dsp48e_1/dsp48e_inst" LOC = DSP48_X2Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_1_4759e15889/arith_366f37724f/apbw_87c72fae00/dsp48e_2/dsp48e_inst" LOC = DSP48_X3Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_1_4759e15889/arith_366f37724f/apbw_87c72fae00/dsp48e_3/dsp48e_inst" LOC = DSP48_X3Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_0_7_182bfc23e8/coeff_ram_4/comp15.core_instance15/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_0_7_182bfc23e8/coeff_ram_4/comp15.core_instance15/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_0_7_182bfc23e8/coeff_ram_1/comp12.core_instance12/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_0_7_182bfc23e8/coeff_ram_1/comp12.core_instance12/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_0_7_182bfc23e8/coeff_ram_2/comp13.core_instance13/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_0_7_182bfc23e8/coeff_ram_2/comp13.core_instance13/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_0_7_182bfc23e8/coeff_ram_3/comp14.core_instance14/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_0_7_182bfc23e8/coeff_ram_3/comp14.core_instance14/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_1_6_8873ee89e4/coeff_ram_1/comp16.core_instance16/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_1_6_8873ee89e4/coeff_ram_1/comp16.core_instance16/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_1_6_8873ee89e4/coeff_ram_2/comp17.core_instance17/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_1_6_8873ee89e4/coeff_ram_2/comp17.core_instance17/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_1_6_8873ee89e4/coeff_ram_3/comp18.core_instance18/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_1_6_8873ee89e4/coeff_ram_3/comp18.core_instance18/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_1_6_8873ee89e4/coeff_ram_4/comp19.core_instance19/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_1_6_8873ee89e4/coeff_ram_4/comp19.core_instance19/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_2_5_f0237b29b0/coeff_ram_1/comp20.core_instance20/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_2_5_f0237b29b0/coeff_ram_1/comp20.core_instance20/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_2_5_f0237b29b0/coeff_ram_2/comp21.core_instance21/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_2_5_f0237b29b0/coeff_ram_2/comp21.core_instance21/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_2_5_f0237b29b0/coeff_ram_3/comp22.core_instance22/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_2_5_f0237b29b0/coeff_ram_3/comp22.core_instance22/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_2_5_f0237b29b0/coeff_ram_4/comp23.core_instance23/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_2_5_f0237b29b0/coeff_ram_4/comp23.core_instance23/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_3_4_85d705a376/coeff_ram_1/comp24.core_instance24/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_3_4_85d705a376/coeff_ram_1/comp24.core_instance24/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_3_4_85d705a376/coeff_ram_2/comp25.core_instance25/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_3_4_85d705a376/coeff_ram_2/comp25.core_instance25/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_3_4_85d705a376/coeff_ram_3/comp26.core_instance26/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_3_4_85d705a376/coeff_ram_3/comp26.core_instance26/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_3_4_85d705a376/coeff_ram_4/comp27.core_instance27/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/coeff_gen_3_4_85d705a376/coeff_ram_4/comp27.core_instance27/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_0_d7cb104973/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_0_d7cb104973/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_0_d7cb104973/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_0_d7cb104973/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_1_140e330ef2/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_1_140e330ef2/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_1_140e330ef2/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_1_140e330ef2/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_2_fcaa1ae00f/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_2_fcaa1ae00f/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_2_fcaa1ae00f/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_2_fcaa1ae00f/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_3_cff6c93393/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_3_cff6c93393/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_3_cff6c93393/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_058ff62e28/multi_delay_bram_fast_3_cff6c93393/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_0_7_182bfc23e8/coeff_ram_1/comp12.core_instance12/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_0_7_182bfc23e8/coeff_ram_1/comp12.core_instance12/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y8;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_0_7_182bfc23e8/coeff_ram_2/comp13.core_instance13/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_0_7_182bfc23e8/coeff_ram_2/comp13.core_instance13/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y8;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_0_7_182bfc23e8/coeff_ram_3/comp14.core_instance14/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_0_7_182bfc23e8/coeff_ram_3/comp14.core_instance14/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y9;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_0_7_182bfc23e8/coeff_ram_4/comp15.core_instance15/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_0_7_182bfc23e8/coeff_ram_4/comp15.core_instance15/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y9;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_1_6_8873ee89e4/coeff_ram_1/comp16.core_instance16/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_1_6_8873ee89e4/coeff_ram_1/comp16.core_instance16/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_1_6_8873ee89e4/coeff_ram_2/comp17.core_instance17/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_1_6_8873ee89e4/coeff_ram_2/comp17.core_instance17/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_1_6_8873ee89e4/coeff_ram_3/comp18.core_instance18/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_1_6_8873ee89e4/coeff_ram_3/comp18.core_instance18/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_1_6_8873ee89e4/coeff_ram_4/comp19.core_instance19/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_1_6_8873ee89e4/coeff_ram_4/comp19.core_instance19/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_2_5_f0237b29b0/coeff_ram_1/comp20.core_instance20/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_2_5_f0237b29b0/coeff_ram_1/comp20.core_instance20/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_2_5_f0237b29b0/coeff_ram_2/comp21.core_instance21/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_2_5_f0237b29b0/coeff_ram_2/comp21.core_instance21/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_2_5_f0237b29b0/coeff_ram_3/comp22.core_instance22/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_2_5_f0237b29b0/coeff_ram_3/comp22.core_instance22/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_2_5_f0237b29b0/coeff_ram_4/comp23.core_instance23/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_2_5_f0237b29b0/coeff_ram_4/comp23.core_instance23/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_3_4_85d705a376/coeff_ram_1/comp24.core_instance24/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_3_4_85d705a376/coeff_ram_1/comp24.core_instance24/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y14;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_3_4_85d705a376/coeff_ram_2/comp25.core_instance25/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_3_4_85d705a376/coeff_ram_2/comp25.core_instance25/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y14;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_3_4_85d705a376/coeff_ram_3/comp26.core_instance26/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_3_4_85d705a376/coeff_ram_3/comp26.core_instance26/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y15;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_3_4_85d705a376/coeff_ram_4/comp27.core_instance27/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/coeff_gen_3_4_85d705a376/coeff_ram_4/comp27.core_instance27/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X0Y15;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_0_d7cb104973/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_0_d7cb104973/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y8;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_0_d7cb104973/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_0_d7cb104973/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y8;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_1_140e330ef2/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_1_140e330ef2/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_1_140e330ef2/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_1_140e330ef2/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_2_fcaa1ae00f/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_2_fcaa1ae00f/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_2_fcaa1ae00f/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_2_fcaa1ae00f/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_3_cff6c93393/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_3_cff6c93393/double_delay_bram_fast1_6b53756eb3/dual_port_ram/comp28.core_instance28/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y14;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_3_cff6c93393/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_0cc66fd9c8/multi_delay_bram_fast_3_cff6c93393/double_delay_bram_fast2_80c6e5da45/single_port_ram/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X1Y14;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_3_ea11167e40/arith_fa5927a61e/apbw_9d34fb2bd5/dsp48e_0/dsp48e_inst" LOC = DSP48_X2Y32;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_3_ea11167e40/arith_fa5927a61e/apbw_9d34fb2bd5/dsp48e_1/dsp48e_inst" LOC = DSP48_X2Y33;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_2_78a9333594/arith_fa5927a61e/csub_4a9857b719/dsp48e/dsp48e_inst" LOC = DSP48_X2Y34;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_2_78a9333594/arith_fa5927a61e/apbw_9d34fb2bd5/dsp48e_2/dsp48e_inst" LOC = DSP48_X2Y35;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_2_78a9333594/arith_fa5927a61e/apbw_9d34fb2bd5/dsp48e_3/dsp48e_inst" LOC = DSP48_X2Y36;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_1_c0d6180d77/arith_fee95c5062/apbw_b53f2a6c0e/dsp48e_0/dsp48e_inst" LOC = DSP48_X2Y37;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_1_c0d6180d77/arith_fee95c5062/apbw_b53f2a6c0e/dsp48e_1/dsp48e_inst" LOC = DSP48_X2Y38;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_0_b7d1e729d8/arith_fee95c5062/csub_9f13afce34/dsp48e/dsp48e_inst" LOC = DSP48_X2Y39;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_0_b7d1e729d8/arith_fee95c5062/apbw_b53f2a6c0e/dsp48e_0/dsp48e_inst" LOC = DSP48_X2Y40;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_0_b7d1e729d8/arith_fee95c5062/apbw_b53f2a6c0e/dsp48e_1/dsp48e_inst" LOC = DSP48_X2Y41;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_1_fb08cc1082/arith_313488dceb/apbw_ea7d116f0b/dsp48e_2/dsp48e_inst" LOC = DSP48_X2Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_1_fb08cc1082/arith_313488dceb/apbw_ea7d116f0b/dsp48e_3/dsp48e_inst" LOC = DSP48_X2Y43;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_0_e1310d4f8d/arith_313488dceb/csub_f71585cf88/dsp48e/dsp48e_inst" LOC = DSP48_X2Y44;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_0_e1310d4f8d/arith_313488dceb/apbw_ea7d116f0b/dsp48e_2/dsp48e_inst" LOC = DSP48_X2Y45;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_0_e1310d4f8d/arith_313488dceb/apbw_ea7d116f0b/dsp48e_3/dsp48e_inst" LOC = DSP48_X2Y46;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_3_ea11167e40/arith_fa5927a61e/apbw_9d34fb2bd5/dsp48e_2/dsp48e_inst" LOC = DSP48_X3Y32;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_3_ea11167e40/arith_fa5927a61e/apbw_9d34fb2bd5/dsp48e_3/dsp48e_inst" LOC = DSP48_X3Y33;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_3_ea11167e40/arith_fa5927a61e/csub_4a9857b719/dsp48e/dsp48e_inst" LOC = DSP48_X3Y34;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_2_78a9333594/arith_fa5927a61e/apbw_9d34fb2bd5/dsp48e_0/dsp48e_inst" LOC = DSP48_X3Y35;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_2_78a9333594/arith_fa5927a61e/apbw_9d34fb2bd5/dsp48e_1/dsp48e_inst" LOC = DSP48_X3Y36;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_1_c0d6180d77/arith_fee95c5062/apbw_b53f2a6c0e/dsp48e_2/dsp48e_inst" LOC = DSP48_X3Y37;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_1_c0d6180d77/arith_fee95c5062/apbw_b53f2a6c0e/dsp48e_3/dsp48e_inst" LOC = DSP48_X3Y38;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_1_c0d6180d77/arith_fee95c5062/csub_9f13afce34/dsp48e/dsp48e_inst" LOC = DSP48_X3Y39;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_0_b7d1e729d8/arith_fee95c5062/apbw_b53f2a6c0e/dsp48e_2/dsp48e_inst" LOC = DSP48_X3Y40;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_0_b7d1e729d8/arith_fee95c5062/apbw_b53f2a6c0e/dsp48e_3/dsp48e_inst" LOC = DSP48_X3Y41;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_1_fb08cc1082/arith_313488dceb/csub_f71585cf88/dsp48e/dsp48e_inst" LOC = DSP48_X3Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_1_fb08cc1082/arith_313488dceb/apbw_ea7d116f0b/dsp48e_0/dsp48e_inst" LOC = DSP48_X3Y43;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_1_fb08cc1082/arith_313488dceb/apbw_ea7d116f0b/dsp48e_1/dsp48e_inst" LOC = DSP48_X3Y44;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_0_e1310d4f8d/arith_313488dceb/apbw_ea7d116f0b/dsp48e_0/dsp48e_inst" LOC = DSP48_X3Y45;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_0_e1310d4f8d/arith_313488dceb/apbw_ea7d116f0b/dsp48e_1/dsp48e_inst" LOC = DSP48_X3Y46;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_3_95954a661b/arith_f1e07bd37c/apbw_e6beec23de/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y32;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_3_95954a661b/arith_f1e07bd37c/apbw_e6beec23de/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y33;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_2_7e350705e2/arith_acb33225b0/apbw_ef36beca83/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y34;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_2_7e350705e2/arith_acb33225b0/apbw_ef36beca83/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y35;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_1_8f9fe1d007/arith_b810e04bc5/apbw_d5083bc22d/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y36;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_1_8f9fe1d007/arith_b810e04bc5/apbw_d5083bc22d/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y37;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_0_7a211aadb2/arith_90aa497759/apbw_df4d0a07c6/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y38;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_0_7a211aadb2/arith_90aa497759/apbw_df4d0a07c6/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y39;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_3_3333063214/arith_313488dceb/apbw_ea7d116f0b/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y40;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_3_3333063214/arith_313488dceb/apbw_ea7d116f0b/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y41;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_2_eb3f573967/arith_313488dceb/csub_f71585cf88/dsp48e/dsp48e_inst" LOC = DSP48_X4Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_2_eb3f573967/arith_313488dceb/apbw_ea7d116f0b/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y43;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_2_eb3f573967/arith_313488dceb/apbw_ea7d116f0b/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y44;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_3_95954a661b/arith_f1e07bd37c/apbw_e6beec23de/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y32;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_3_95954a661b/arith_f1e07bd37c/apbw_e6beec23de/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y33;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_2_7e350705e2/arith_acb33225b0/apbw_ef36beca83/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y34;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_2_7e350705e2/arith_acb33225b0/apbw_ef36beca83/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y35;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_1_8f9fe1d007/arith_b810e04bc5/apbw_d5083bc22d/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y36;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_1_8f9fe1d007/arith_b810e04bc5/apbw_d5083bc22d/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y37;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_0_7a211aadb2/arith_90aa497759/apbw_df4d0a07c6/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y38;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_0_7a211aadb2/arith_90aa497759/apbw_df4d0a07c6/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y39;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_3_3333063214/arith_313488dceb/apbw_ea7d116f0b/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y40;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_3_3333063214/arith_313488dceb/apbw_ea7d116f0b/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y41;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_3_3333063214/arith_313488dceb/csub_f71585cf88/dsp48e/dsp48e_inst" LOC = DSP48_X5Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_2_eb3f573967/arith_313488dceb/apbw_ea7d116f0b/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y43;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly1_2_eb3f573967/arith_313488dceb/apbw_ea7d116f0b/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y44;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_3_95954a661b/arith_f1e07bd37c/coeff_gen_03cbf5a422/coeff_mem/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_3_95954a661b/arith_f1e07bd37c/coeff_gen_03cbf5a422/coeff_mem/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_2_7e350705e2/arith_acb33225b0/coeff_gen_77742b1c97/coeff_mem/comp10.core_instance10/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_2_7e350705e2/arith_acb33225b0/coeff_gen_77742b1c97/coeff_mem/comp10.core_instance10/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_1_8f9fe1d007/arith_b810e04bc5/coeff_gen_865ef6d1df/coeff_mem/comp9.core_instance9/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_1_8f9fe1d007/arith_b810e04bc5/coeff_gen_865ef6d1df/coeff_mem/comp9.core_instance9/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_0_7a211aadb2/arith_90aa497759/coeff_gen_194a339468/coeff_mem/comp8.core_instance8/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly3_0_7a211aadb2/arith_90aa497759/coeff_gen_194a339468/coeff_mem/comp8.core_instance8/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_3_ea11167e40/arith_fa5927a61e/coeff_gen_b4b4d9ab93/coeff_mem/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_3_ea11167e40/arith_fa5927a61e/coeff_gen_b4b4d9ab93/coeff_mem/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X2Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_2_78a9333594/arith_fa5927a61e/coeff_gen_b4b4d9ab93/coeff_mem/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_2_78a9333594/arith_fa5927a61e/coeff_gen_b4b4d9ab93/coeff_mem/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_1_c0d6180d77/arith_fee95c5062/coeff_gen_504bea828d/coeff_mem/comp6.core_instance6/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_1_c0d6180d77/arith_fee95c5062/coeff_gen_504bea828d/coeff_mem/comp6.core_instance6/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y19;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_0_b7d1e729d8/arith_fee95c5062/coeff_gen_504bea828d/coeff_mem/comp6.core_instance6/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_direct_fac7d222ff/butterfly2_0_b7d1e729d8/arith_fee95c5062/coeff_gen_504bea828d/coeff_mem/comp6.core_instance6/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X2Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_3_cb6f1a5026/arith_54cd153dc5/coeff_gen_db5ef44a5b/coeff_mem/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_3_cb6f1a5026/arith_54cd153dc5/coeff_gen_db5ef44a5b/coeff_mem/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_2_eed3880a23/arith_50d85c01da/coeff_gen_a818e5b09a/coeff_mem/comp10.core_instance10/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_2_eed3880a23/arith_50d85c01da/coeff_gen_a818e5b09a/coeff_mem/comp10.core_instance10/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_1_690a9901f3/arith_aa22400bd6/coeff_gen_5a41121649/coeff_mem/comp9.core_instance9/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_1_690a9901f3/arith_aa22400bd6/coeff_gen_5a41121649/coeff_mem/comp9.core_instance9/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y14;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_0_13b808b87e/arith_27c8f3fa9d/coeff_gen_c70e57a24c/coeff_mem/comp8.core_instance8/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly3_0_13b808b87e/arith_27c8f3fa9d/coeff_gen_c70e57a24c/coeff_mem/comp8.core_instance8/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y15;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_3_ad971d2f0b/arith_0c543980a0/coeff_gen_df3c38124c/coeff_mem/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_3_ad971d2f0b/arith_0c543980a0/coeff_gen_df3c38124c/coeff_mem/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X2Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_2_c25d8b1182/arith_0c543980a0/coeff_gen_df3c38124c/coeff_mem/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_2_c25d8b1182/arith_0c543980a0/coeff_gen_df3c38124c/coeff_mem/comp7.core_instance7/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X2Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_1_e86d7af517/arith_a92a727e5f/coeff_gen_e934727a4e/coeff_mem/comp6.core_instance6/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_1_e86d7af517/arith_a92a727e5f/coeff_gen_e934727a4e/coeff_mem/comp6.core_instance6/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X2Y14;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_0_91ad52ad90/arith_a92a727e5f/coeff_gen_e934727a4e/coeff_mem/comp6.core_instance6/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly2_0_91ad52ad90/arith_a92a727e5f/coeff_gen_e934727a4e/coeff_mem/comp6.core_instance6/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y15;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_3_f3c3e12d3d/arith_366f37724f/coeff_gen_ca4dc10284/coeff_mem/comp5.core_instance5/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_3_f3c3e12d3d/arith_366f37724f/coeff_gen_ca4dc10284/coeff_mem/comp5.core_instance5/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X2Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_2_b5060a720e/arith_366f37724f/coeff_gen_ca4dc10284/coeff_mem/comp5.core_instance5/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_2_b5060a720e/arith_366f37724f/coeff_gen_ca4dc10284/coeff_mem/comp5.core_instance5/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X3Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_0_18c9ff9c8f/arith_366f37724f/coeff_gen_ca4dc10284/coeff_mem/comp5.core_instance5/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_0_18c9ff9c8f/arith_366f37724f/coeff_gen_ca4dc10284/coeff_mem/comp5.core_instance5/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X2Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_1_4759e15889/arith_366f37724f/coeff_gen_ca4dc10284/coeff_mem/comp5.core_instance5/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_direct_a22abcf73e/butterfly1_1_4759e15889/arith_366f37724f/coeff_gen_ca4dc10284/coeff_mem/comp5.core_instance5/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/TRUE_DP.SINGLE_PRIM18.TDP" LOC = RAMB36_X1Y9;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_2_5b3555b0f8/dsp48e_0/dsp48e_inst" LOC = DSP48_X6Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_2_5b3555b0f8/dsp48e_1/dsp48e_inst" LOC = DSP48_X6Y29;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_1_a5e8ee41e8/dsp48e_2/dsp48e_inst" LOC = DSP48_X6Y34;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_1_a5e8ee41e8/dsp48e_3/dsp48e_inst" LOC = DSP48_X6Y35;
+
+
+
+
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_2_c78090594b/delay_f_4c84a5fc54/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_1_8fc201e42e/delay_f_1d1419e073/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = LOWER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_2_c78090594b/delay_b_1ec9ea5e0d/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_1_8fc201e42e/delay_b_589b8ceff7/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" BEL = UPPER;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/apbw_57937a318a/dsp48e_0/dsp48e_inst" LOC = DSP48_X0Y4;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/apbw_57937a318a/dsp48e_1/dsp48e_inst" LOC = DSP48_X0Y5;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/apbw_2e2338b8dd/dsp48e_2/dsp48e_inst" LOC = DSP48_X0Y56;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/apbw_2e2338b8dd/dsp48e_3/dsp48e_inst" LOC = DSP48_X0Y57;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/csub_acc8559860/dsp48e/dsp48e_inst" LOC = DSP48_X0Y58;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/apbw_2e2338b8dd/dsp48e_2/dsp48e_inst" LOC = DSP48_X0Y59;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/csub_e9cedbe8a0/dsp48e/dsp48e_inst" LOC = DSP48_X0Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/apbw_2e2338b8dd/dsp48e_3/dsp48e_inst" LOC = DSP48_X0Y60;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/apbw_57937a318a/dsp48e_2/dsp48e_inst" LOC = DSP48_X0Y7;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/apbw_57937a318a/dsp48e_3/dsp48e_inst" LOC = DSP48_X0Y8;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/apbw_2e2338b8dd/dsp48e_0/dsp48e_inst" LOC = DSP48_X1Y56;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/apbw_2e2338b8dd/dsp48e_1/dsp48e_inst" LOC = DSP48_X1Y57;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_3_f51b3e95c3/butterfly_direct_9f3748bce5/arith_48460fac82/csub_acc8559860/dsp48e/dsp48e_inst" LOC = DSP48_X1Y58;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/csub_e9cedbe8a0/dsp48e/dsp48e_inst" LOC = DSP48_X1Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/apbw_57937a318a/dsp48e_0/dsp48e_inst" LOC = DSP48_X1Y7;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_3_f806c55c09/butterfly_direct_cbdc414351/arith_06b39649c6/apbw_57937a318a/dsp48e_1/dsp48e_inst" LOC = DSP48_X1Y8;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_257c5dd1d3/hilbert_dsp48e0_fd8b46f8fa/cadd_2957595b8e/dsp48e/dsp48e_inst" LOC = DSP48_X2Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_257c5dd1d3/hilbert_dsp48e1_419b0b92fd/cadd_2957595b8e/dsp48e/dsp48e_inst" LOC = DSP48_X2Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/bi_real_unscr_4x_7ffe2c05f6/hilbert_dsp48e0_2adfd40b6e/csub_2a233da84b/dsp48e/dsp48e_inst" LOC = DSP48_X2Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/bi_real_unscr_4x_7ffe2c05f6/hilbert_dsp48e1_d9d2e9ec55/cadd_2957595b8e/dsp48e/dsp48e_inst" LOC = DSP48_X2Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/apbw_8971ddcdd3/dsp48e_0/dsp48e_inst" LOC = DSP48_X2Y2;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/apbw_8971ddcdd3/dsp48e_1/dsp48e_inst" LOC = DSP48_X2Y3;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/csub_9453875837/dsp48e/dsp48e_inst" LOC = DSP48_X2Y4;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_7441aac465/hilbert_dsp48e1_cdbd34ad7f/cadd_faeb0fdd54/dsp48e/dsp48e_inst" LOC = DSP48_X2Y50;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_7441aac465/hilbert_dsp48e0_4ca26784fe/cadd_faeb0fdd54/dsp48e/dsp48e_inst" LOC = DSP48_X2Y51;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/bi_real_unscr_4x_583453616f/hilbert_dsp48e1_aa630f2681/cadd_faeb0fdd54/dsp48e/dsp48e_inst" LOC = DSP48_X2Y52;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/bi_real_unscr_4x_583453616f/hilbert_dsp48e0_eeb575490a/cadd_faeb0fdd54/dsp48e/dsp48e_inst" LOC = DSP48_X2Y53;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/apbw_c6342e80a4/dsp48e_2/dsp48e_inst" LOC = DSP48_X2Y57;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/apbw_c6342e80a4/dsp48e_3/dsp48e_inst" LOC = DSP48_X2Y58;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/csub_5457418722/dsp48e/dsp48e_inst" LOC = DSP48_X2Y59;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/apbw_c6342e80a4/dsp48e_2/dsp48e_inst" LOC = DSP48_X2Y60;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/apbw_c6342e80a4/dsp48e_3/dsp48e_inst" LOC = DSP48_X2Y61;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_257c5dd1d3/hilbert_dsp48e0_fd8b46f8fa/csub_2a233da84b/dsp48e/dsp48e_inst" LOC = DSP48_X3Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_257c5dd1d3/hilbert_dsp48e1_419b0b92fd/csub_2a233da84b/dsp48e/dsp48e_inst" LOC = DSP48_X3Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/bi_real_unscr_4x_7ffe2c05f6/hilbert_dsp48e0_2adfd40b6e/cadd_2957595b8e/dsp48e/dsp48e_inst" LOC = DSP48_X3Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/bi_real_unscr_4x_7ffe2c05f6/hilbert_dsp48e1_d9d2e9ec55/csub_2a233da84b/dsp48e/dsp48e_inst" LOC = DSP48_X3Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/apbw_8971ddcdd3/dsp48e_2/dsp48e_inst" LOC = DSP48_X3Y2;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/apbw_8971ddcdd3/dsp48e_3/dsp48e_inst" LOC = DSP48_X3Y3;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/csub_9453875837/dsp48e/dsp48e_inst" LOC = DSP48_X3Y4;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/apbw_8971ddcdd3/dsp48e_0/dsp48e_inst" LOC = DSP48_X3Y5;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_7441aac465/hilbert_dsp48e1_cdbd34ad7f/csub_fbd2eabfbc/dsp48e/dsp48e_inst" LOC = DSP48_X3Y50;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_7441aac465/hilbert_dsp48e0_4ca26784fe/csub_fbd2eabfbc/dsp48e/dsp48e_inst" LOC = DSP48_X3Y51;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/bi_real_unscr_4x_583453616f/hilbert_dsp48e1_aa630f2681/csub_fbd2eabfbc/dsp48e/dsp48e_inst" LOC = DSP48_X3Y52;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/bi_real_unscr_4x_583453616f/hilbert_dsp48e0_eeb575490a/csub_fbd2eabfbc/dsp48e/dsp48e_inst" LOC = DSP48_X3Y53;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/csub_5457418722/dsp48e/dsp48e_inst" LOC = DSP48_X3Y59;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_4_a9c22291d0/butterfly_direct_93e66c5a80/arith_2e676d9c88/apbw_8971ddcdd3/dsp48e_1/dsp48e_inst" LOC = DSP48_X3Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/apbw_c6342e80a4/dsp48e_0/dsp48e_inst" LOC = DSP48_X3Y60;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_4_d58979019a/butterfly_direct_b20b8a5331/arith_10c867fb17/apbw_c6342e80a4/dsp48e_1/dsp48e_inst" LOC = DSP48_X3Y61;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/apbw_26dd983f85/dsp48e_3/dsp48e_inst" LOC = DSP48_X4Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/csub_b290d9b5ee/dsp48e/dsp48e_inst" LOC = DSP48_X4Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/apbw_26dd983f85/dsp48e_2/dsp48e_inst" LOC = DSP48_X4Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/apbw_26dd983f85/dsp48e_3/dsp48e_inst" LOC = DSP48_X4Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_257c5dd1d3/mirror_spectrum_225a36ac1b/complex_conj0_2483ef423d/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X4Y15;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_257c5dd1d3/mirror_spectrum_225a36ac1b/complex_conj2_0648de69a6/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X4Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/bi_real_unscr_4x_7ffe2c05f6/mirror_spectrum_2ecdf7516c/complex_conj2_ae6c7d5126/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X4Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/bi_real_unscr_4x_7ffe2c05f6/mirror_spectrum_2ecdf7516c/complex_conj1_a545d8462d/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X4Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/apbw_96e206ed8a/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y2;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/apbw_96e206ed8a/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y3;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/csub_e7bb744245/dsp48e/dsp48e_inst" LOC = DSP48_X4Y4;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/bi_real_unscr_4x_583453616f/mirror_spectrum_b7a88f8a78/complex_conj3_4e4252719e/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X4Y45;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/bi_real_unscr_4x_583453616f/mirror_spectrum_b7a88f8a78/complex_conj0_2483ef423d/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X4Y46;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_7441aac465/mirror_spectrum_6a34c0d2ac/complex_conj2_ae6c7d5126/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X4Y47;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_7441aac465/mirror_spectrum_6a34c0d2ac/complex_conj0_cfae0f9186/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X4Y48;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/apbw_96e206ed8a/dsp48e_2/dsp48e_inst" LOC = DSP48_X4Y5;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/apbw_b0c201ef28/dsp48e_2/dsp48e_inst" LOC = DSP48_X4Y51;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/apbw_b0c201ef28/dsp48e_3/dsp48e_inst" LOC = DSP48_X4Y52;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/csub_749ea094dc/dsp48e/dsp48e_inst" LOC = DSP48_X4Y53;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/apbw_b0c201ef28/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y54;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/apbw_b0c201ef28/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y55;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/apbw_79ef8747c1/dsp48e_0/dsp48e_inst" LOC = DSP48_X4Y57;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/apbw_79ef8747c1/dsp48e_1/dsp48e_inst" LOC = DSP48_X4Y58;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/csub_360fa9d651/dsp48e/dsp48e_inst" LOC = DSP48_X4Y59;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/apbw_96e206ed8a/dsp48e_3/dsp48e_inst" LOC = DSP48_X4Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/apbw_26dd983f85/dsp48e_2/dsp48e_inst" LOC = DSP48_X4Y9;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/apbw_26dd983f85/dsp48e_1/dsp48e_inst" LOC = DSP48_X5Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/csub_b290d9b5ee/dsp48e/dsp48e_inst" LOC = DSP48_X5Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/apbw_26dd983f85/dsp48e_0/dsp48e_inst" LOC = DSP48_X5Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/apbw_26dd983f85/dsp48e_1/dsp48e_inst" LOC = DSP48_X5Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_257c5dd1d3/mirror_spectrum_225a36ac1b/complex_conj1_9eb31db0e6/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X5Y15;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_257c5dd1d3/mirror_spectrum_225a36ac1b/complex_conj3_4e4252719e/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X5Y16;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/bi_real_unscr_4x_7ffe2c05f6/mirror_spectrum_2ecdf7516c/complex_conj3_605fad4f1f/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X5Y17;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/bi_real_unscr_4x_7ffe2c05f6/mirror_spectrum_2ecdf7516c/complex_conj0_cfae0f9186/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X5Y18;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/apbw_96e206ed8a/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y2;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/apbw_96e206ed8a/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y3;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/csub_e7bb744245/dsp48e/dsp48e_inst" LOC = DSP48_X5Y4;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/bi_real_unscr_4x_583453616f/mirror_spectrum_b7a88f8a78/complex_conj2_0648de69a6/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X5Y45;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/bi_real_unscr_4x_583453616f/mirror_spectrum_b7a88f8a78/complex_conj1_9eb31db0e6/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X5Y46;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_7441aac465/mirror_spectrum_6a34c0d2ac/complex_conj3_605fad4f1f/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X5Y47;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_7441aac465/mirror_spectrum_6a34c0d2ac/complex_conj1_a545d8462d/imag_negate_8dfdc1267a/dsp48e0/dsp48e_inst" LOC = DSP48_X5Y48;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/apbw_96e206ed8a/dsp48e_0/dsp48e_inst" LOC = DSP48_X5Y5;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/apbw_b0c201ef28/dsp48e_0/dsp48e_inst" LOC = DSP48_X5Y51;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/apbw_b0c201ef28/dsp48e_1/dsp48e_inst" LOC = DSP48_X5Y52;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/csub_749ea094dc/dsp48e/dsp48e_inst" LOC = DSP48_X5Y53;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/apbw_b0c201ef28/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y54;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_8_f6c24775bd/butterfly_direct_bd6aa6df6d/arith_38e382bf26/apbw_b0c201ef28/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y55;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/apbw_79ef8747c1/dsp48e_2/dsp48e_inst" LOC = DSP48_X5Y57;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/apbw_79ef8747c1/dsp48e_3/dsp48e_inst" LOC = DSP48_X5Y58;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/csub_360fa9d651/dsp48e/dsp48e_inst" LOC = DSP48_X5Y59;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_5_c4a68b8ff4/butterfly_direct_1772cc8088/arith_f3642e5b14/apbw_96e206ed8a/dsp48e_1/dsp48e_inst" LOC = DSP48_X5Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/apbw_79ef8747c1/dsp48e_0/dsp48e_inst" LOC = DSP48_X5Y60;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_5_cd603b0042/butterfly_direct_976e02b70b/arith_6426de165c/apbw_79ef8747c1/dsp48e_1/dsp48e_inst" LOC = DSP48_X5Y61;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_8_6d70c7f0b2/butterfly_direct_a47f188c49/arith_abb2ea542c/apbw_26dd983f85/dsp48e_0/dsp48e_inst" LOC = DSP48_X5Y9;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/apbw_48097b5063/dsp48e_3/dsp48e_inst" LOC = DSP48_X6Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/csub_f1beff2b49/dsp48e/dsp48e_inst" LOC = DSP48_X6Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/apbw_48097b5063/dsp48e_2/dsp48e_inst" LOC = DSP48_X6Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/apbw_48097b5063/dsp48e_3/dsp48e_inst" LOC = DSP48_X6Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/apbw_6370d1b9ba/dsp48e_0/dsp48e_inst" LOC = DSP48_X6Y2;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/apbw_6370d1b9ba/dsp48e_1/dsp48e_inst" LOC = DSP48_X6Y3;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/csub_403b712a62/dsp48e/dsp48e_inst" LOC = DSP48_X6Y4;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/apbw_6370d1b9ba/dsp48e_0/dsp48e_inst" LOC = DSP48_X6Y5;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/apbw_b621f0c4ed/dsp48e_2/dsp48e_inst" LOC = DSP48_X6Y50;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/apbw_b621f0c4ed/dsp48e_3/dsp48e_inst" LOC = DSP48_X6Y51;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/csub_7161e6e983/dsp48e/dsp48e_inst" LOC = DSP48_X6Y52;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/apbw_b621f0c4ed/dsp48e_2/dsp48e_inst" LOC = DSP48_X6Y53;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/apbw_b621f0c4ed/dsp48e_3/dsp48e_inst" LOC = DSP48_X6Y54;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/apbw_32c91ba670/dsp48e_2/dsp48e_inst" LOC = DSP48_X6Y57;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/apbw_32c91ba670/dsp48e_3/dsp48e_inst" LOC = DSP48_X6Y58;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/csub_3431f60ee9/dsp48e/dsp48e_inst" LOC = DSP48_X6Y59;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/apbw_6370d1b9ba/dsp48e_1/dsp48e_inst" LOC = DSP48_X6Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/apbw_32c91ba670/dsp48e_2/dsp48e_inst" LOC = DSP48_X6Y60;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/apbw_32c91ba670/dsp48e_3/dsp48e_inst" LOC = DSP48_X6Y61;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/apbw_48097b5063/dsp48e_2/dsp48e_inst" LOC = DSP48_X6Y9;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/apbw_48097b5063/dsp48e_1/dsp48e_inst" LOC = DSP48_X7Y10;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/csub_f1beff2b49/dsp48e/dsp48e_inst" LOC = DSP48_X7Y11;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/apbw_48097b5063/dsp48e_0/dsp48e_inst" LOC = DSP48_X7Y12;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/apbw_48097b5063/dsp48e_1/dsp48e_inst" LOC = DSP48_X7Y13;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/apbw_6370d1b9ba/dsp48e_2/dsp48e_inst" LOC = DSP48_X7Y2;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/apbw_6370d1b9ba/dsp48e_3/dsp48e_inst" LOC = DSP48_X7Y3;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/csub_403b712a62/dsp48e/dsp48e_inst" LOC = DSP48_X7Y4;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/apbw_6370d1b9ba/dsp48e_2/dsp48e_inst" LOC = DSP48_X7Y5;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/apbw_b621f0c4ed/dsp48e_0/dsp48e_inst" LOC = DSP48_X7Y50;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/apbw_b621f0c4ed/dsp48e_1/dsp48e_inst" LOC = DSP48_X7Y51;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/csub_7161e6e983/dsp48e/dsp48e_inst" LOC = DSP48_X7Y52;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/apbw_b621f0c4ed/dsp48e_0/dsp48e_inst" LOC = DSP48_X7Y53;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_7_6fec69a3b9/butterfly_direct_b520a6e2cf/arith_1c950d754c/apbw_b621f0c4ed/dsp48e_1/dsp48e_inst" LOC = DSP48_X7Y54;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/apbw_32c91ba670/dsp48e_0/dsp48e_inst" LOC = DSP48_X7Y57;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/apbw_32c91ba670/dsp48e_1/dsp48e_inst" LOC = DSP48_X7Y58;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/biplex_core_802396f9b4/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/csub_3431f60ee9/dsp48e/dsp48e_inst" LOC = DSP48_X7Y59;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_0d13902cc4/biplex_core_9506bbf4f9/fft_stage_6_1dbfbb19e7/butterfly_direct_fbb6a53e9e/arith_c4d98ee199/apbw_6370d1b9ba/dsp48e_3/dsp48e_inst" LOC = DSP48_X7Y6;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/apbw_32c91ba670/dsp48e_0/dsp48e_inst" LOC = DSP48_X7Y60;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_6_c3f42a8c11/butterfly_direct_c71195d899/arith_c5a28e250d/apbw_32c91ba670/dsp48e_1/dsp48e_inst" LOC = DSP48_X7Y61;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/biplex_core_36d34c61aa/fft_stage_7_37880fbb0d/butterfly_direct_0ec266a948/arith_f8aa6f9b77/apbw_48097b5063/dsp48e_0/dsp48e_inst" LOC = DSP48_X7Y9;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_1_8fc201e42e/delay_f_1d1419e073/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X0Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_1_8fc201e42e/delay_b_589b8ceff7/bram1/comp2.core_instance2/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X0Y24;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_2_c78090594b/delay_b_1ec9ea5e0d/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X0Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_cd3efa61d6/biplex_core_c508fdc893/fft_stage_2_c78090594b/delay_f_4c84a5fc54/bram1/comp3.core_instance3/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP" LOC = RAMB36_X0Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc3_2142fb6fbc/vacc_core_ec29f47d7f/adder_with_enable_4_3ddc60f3e0/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc3_2142fb6fbc/vacc_core_ec29f47d7f/adder_with_enable_3_a742fec40d/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc3_2142fb6fbc/vacc_core_ec29f47d7f/adder_with_enable_2_b596700998/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc3_2142fb6fbc/vacc_core_ec29f47d7f/adder_with_enable_1_28b31ca915/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y23;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc2_21f82a8932/vacc_core_ec29f47d7f/adder_with_enable_4_3ddc60f3e0/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc2_21f82a8932/vacc_core_ec29f47d7f/adder_with_enable_3_a742fec40d/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc2_21f82a8932/vacc_core_ec29f47d7f/adder_with_enable_2_b596700998/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y29;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc2_21f82a8932/vacc_core_ec29f47d7f/adder_with_enable_1_28b31ca915/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y30;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc1_8e73a61888/vacc_core_ec29f47d7f/adder_with_enable_4_3ddc60f3e0/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y34;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc1_8e73a61888/vacc_core_ec29f47d7f/adder_with_enable_3_a742fec40d/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y35;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc1_8e73a61888/vacc_core_ec29f47d7f/adder_with_enable_2_b596700998/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y36;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc1_8e73a61888/vacc_core_ec29f47d7f/adder_with_enable_1_28b31ca915/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y37;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc0_f0e945f6c4/vacc_core_ec29f47d7f/adder_with_enable_1_28b31ca915/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y44;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc0_f0e945f6c4/vacc_core_ec29f47d7f/adder_with_enable_3_a742fec40d/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y43;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc0_f0e945f6c4/vacc_core_ec29f47d7f/adder_with_enable_4_3ddc60f3e0/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc0_f0e945f6c4/vacc_core_ec29f47d7f/adder_with_enable_2_b596700998/dynamic_adder_b8e343b29f/dsp48e/dsp48e_inst" LOC = DSP48_X8Y41;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_3_8ebd44e5d4/dsp48e_2/dsp48e_inst" LOC = DSP48_X7Y20;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_3_8ebd44e5d4/dsp48e_0/dsp48e_inst" LOC = DSP48_X6Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_3_8ebd44e5d4/dsp48e_1/dsp48e_inst" LOC = DSP48_X6Y22;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_3_8ebd44e5d4/dsp48e_3/dsp48e_inst" LOC = DSP48_X7Y21;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_2_5b3555b0f8/dsp48e_3/dsp48e_inst" LOC = DSP48_X7Y28;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_2_5b3555b0f8/dsp48e_2/dsp48e_inst" LOC = DSP48_X7Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_1_a5e8ee41e8/dsp48e_0/dsp48e_inst" LOC = DSP48_X7Y35;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_1_a5e8ee41e8/dsp48e_1/dsp48e_inst" LOC = DSP48_X7Y36;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_0_9e2d2bd751/dsp48e_3/dsp48e_inst" LOC = DSP48_X6Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_0_9e2d2bd751/dsp48e_2/dsp48e_inst" LOC = DSP48_X6Y41;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_0_9e2d2bd751/dsp48e_0/dsp48e_inst" LOC = DSP48_X7Y42;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes_79a7b85f51/cmult_dsp48e_xy_0_9e2d2bd751/dsp48e_1/dsp48e_inst" LOC = DSP48_X7Y43;
+
+
+
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real1_*" AREA_GROUP = "pfb_fir_real_1";
+AREA_GROUP "pfb_fir_real_1" RANGE=SLICE_X0Y70:SLICE_X19Y129;
+AREA_GROUP "pfb_fir_real_1" RANGE=DSP48_X0Y28:DSP48_X1Y51;
+AREA_GROUP "pfb_fir_real_1" RANGE=RAMB36_X0Y14:RAMB36_X1Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/pfb_fir_real2_*" AREA_GROUP = "pfb_fir_real_2";
+AREA_GROUP "pfb_fir_real_2" RANGE=SLICE_X0Y30:SLICE_X19Y89;
+AREA_GROUP "pfb_fir_real_2" RANGE=DSP48_X0Y12:DSP48_X1Y35;
+AREA_GROUP "pfb_fir_real_2" RANGE=RAMB36_X0Y6:RAMB36_X1Y17;
+
+
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_6_*" AREA_GROUP = "biplex_topRight";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_7_*" AREA_GROUP = "biplex_topRight";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_6_*" AREA_GROUP = "biplex_topRight";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_7_*" AREA_GROUP = "biplex_topRight";
+AREA_GROUP "biplex_topRight" RANGE=SLICE_X48Y110:SLICE_X91Y159;
+AREA_GROUP "biplex_topRight" RANGE=DSP48_X6Y44:DSP48_X9Y63;
+AREA_GROUP "biplex_topRight" RANGE=RAMB36_X4Y22:RAMB36_X7Y31;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_6_*" AREA_GROUP = "biplex_bottomRight";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_7_*" AREA_GROUP = "biplex_bottomRight";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_6_*" AREA_GROUP = "biplex_bottomRight";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_7_*" AREA_GROUP = "biplex_bottomRight";
+AREA_GROUP "biplex_bottomRight" RANGE=SLICE_X48Y0:SLICE_X91Y49;
+AREA_GROUP "biplex_bottomRight" RANGE=DSP48_X6Y0:DSP48_X9Y19;
+AREA_GROUP "biplex_bottomRight" RANGE=RAMB36_X4Y9:RAMB36_X7Y0;
+
+
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_1_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_2_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_3_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_4_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_5_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_1_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_2_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_3_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_4_*" AREA_GROUP = "biplex_topLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_5_*" AREA_GROUP = "biplex_topLeft";
+AREA_GROUP "biplex_topLeft" RANGE=SLICE_X0Y110:SLICE_X47Y159;
+AREA_GROUP "biplex_topLeft" RANGE=DSP48_X0Y44:DSP48_X5Y63;
+AREA_GROUP "biplex_topLeft" RANGE=RAMB36_X0Y22:RAMB36_X3Y31;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_1_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_2_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_3_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_4_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x0_??????????/biplex_core_??????????/fft_stage_5_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_1_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_2_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_3_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_4_*" AREA_GROUP = "biplex_bottomLeft";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_biplex_real_4x1_??????????/biplex_core_??????????/fft_stage_5_*" AREA_GROUP = "biplex_bottomLeft";
+AREA_GROUP "biplex_bottomLeft" RANGE=SLICE_X0Y0:SLICE_X47Y49;
+AREA_GROUP "biplex_bottomLeft" RANGE=DSP48_X0Y0:DSP48_X5Y19;
+AREA_GROUP "biplex_bottomLeft" RANGE=RAMB36_X0Y0:RAMB36_X3Y9;
+
+
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x1_6c33b8a198/bi_real_unscr_4x_*" AREA_GROUP = "fft_wideband_real1_unscr";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_8cdb75b144/fft_biplex_real_4x0_??????????/bi_real_unscr_4x_*" AREA_GROUP = "fft_wideband_real1_unscr";
+AREA_GROUP "fft_wideband_real1_unscr" RANGE=SLICE_X20Y100:SLICE_X47Y139;
+AREA_GROUP "fft_wideband_real1_unscr" RANGE=DSP48_X2Y40:DSP48_X5Y55;
+AREA_GROUP "fft_wideband_real1_unscr" RANGE=RAMB36_X2Y20:RAMB36_X3Y27;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x0_e263ab0546/bi_real_unscr_4x_*" AREA_GROUP = "fft_wideband_real2_unscr";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_0f41ac350e/fft_biplex_real_4x1_??????????/bi_real_unscr_4x_*" AREA_GROUP = "fft_wideband_real2_unscr";
+AREA_GROUP "fft_wideband_real2_unscr" RANGE=SLICE_X20Y20:SLICE_X47Y59;
+AREA_GROUP "fft_wideband_real2_unscr" RANGE=DSP48_X2Y8:DSP48_X5Y23;
+AREA_GROUP "fft_wideband_real2_unscr" RANGE=RAMB36_X2Y4:RAMB36_X3Y11;
+
+
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real1_??????????/fft_direct_*" AREA_GROUP = "fft_direct_1";
+AREA_GROUP "fft_direct_1" RANGE=SLICE_X12Y81:SLICE_X47Y129;
+AREA_GROUP "fft_direct_1" RANGE=DSP48_X1Y34:DSP48_X5Y51;
+AREA_GROUP "fft_direct_1" RANGE=RAMB36_X1Y17:RAMB36_X3Y25;
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/fft_wideband_real2_??????????/fft_direct_*" AREA_GROUP = "fft_direct_2";
+AREA_GROUP "fft_direct_2" RANGE=SLICE_X12Y30:SLICE_X47Y80;
+AREA_GROUP "fft_direct_2" RANGE=DSP48_X1Y12:DSP48_X5Y31;
+AREA_GROUP "fft_direct_2" RANGE=RAMB36_X1Y6:RAMB36_X3Y15;
+
+
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/vacc*" AREA_GROUP = "stokes_vacc";
+INST "vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_XSG_core_config/vegas_mode1_model_nospead_x0/stokes*" AREA_GROUP = "stokes_vacc";
+AREA_GROUP "stokes_vacc" RANGE=SLICE_X48Y30:SLICE_X83Y129;
+AREA_GROUP "stokes_vacc" RANGE=DSP48_X6Y12:DSP48_X9Y51;
+AREA_GROUP "stokes_vacc" RANGE=RAMB36_X4Y6:RAMB36_X6Y25;
+
+
+
