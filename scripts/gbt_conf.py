@@ -1,8 +1,14 @@
 import corr,time
 
 roach = 'roach03'
-dest_ip = 10*(2**24)+145
-src_ip = 10*(2**24)+4
+
+## IPs at Greenbank
+dest_ip = 192*(2**24)+168*(2**16)+3*(2**8)+15
+src_ip = 192*(2**24)+168*(2**16)+3*(2**8)+17
+
+#dest_ip = 10*(2**24)+145
+#src_ip = 10*(2**24)+4
+
 dest_port = 60000
 
 mac_base = (2 << 40) + (2<<32)
@@ -22,8 +28,6 @@ time.sleep(1)
 #boffile='mode01_2011_Aug_07_1833.bof'
 #
 boffile='mode01_full_2011_Aug_14_1541.bof'
-
-#boffile='gbtspec_mode13_2011_Jul_13_1553.bof'
 
 # Unprogram the device
 fpga.progdev('')

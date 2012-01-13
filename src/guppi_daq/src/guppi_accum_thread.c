@@ -222,6 +222,7 @@ void guppi_accum_thread(void *_args) {
     int first=1;
     float reqd_exposure=0;
     double accum_time=0;
+    int integ_num;
     float pfb_rate;
     int heap, accumid, struct_offset, array_offset;
     char *hdr_in=NULL, *hdr_out=NULL;
@@ -401,6 +402,7 @@ void guppi_accum_thread(void *_args) {
                 }
 
                 accum_time = 0;
+                integ_num += 1;
 
                 reset_accumulators(accumulator, data_cols, accum_dirty,
                                 sf.hdr.nsubband, sf.hdr.nchan);
@@ -415,6 +417,7 @@ void guppi_accum_thread(void *_args) {
                     /*Record SPEAD header fields*/
                     data_cols[accumid].time = index_in->cpu_gpu_buf[heap].heap_rcvd_mjd;
                     data_cols[accumid].time_counter = freq_heap->time_cntr;
+                    data_cols[accumid].integ_num = integ_num;
                     data_cols[accumid].sttspec = freq_heap->spectrum_cntr;
                     data_cols[accumid].accumid = accumid;
 

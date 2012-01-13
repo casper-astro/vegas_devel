@@ -7,17 +7,17 @@ echo "Setting GUPPI, GUPPI_DIR, CUDA, PYSLALIB, VEGAS_INCL/BIN/LIB, PATH, PYTHON
 
 # User must set this variable (GUPPI) for their home directory
 # No other variables should need changing
-# export GUPPI=~/casper/gbt_devel/src
+export GUPPI=~/workspace/vegas_devel/src
 
 export GUPPI_DIR=$GUPPI/guppi_daq
 
-export CUDA=/opt/vegas/cuda
+export CUDA=/opt/local/cuda
 
-export PYSLALIB=/opt/vegas/lib/python2.5/site-packages/pyslalib
+export PYSLALIB=/opt/local/lib/python2.5/site-packages/pyslalib
 
-export VEGAS_INCL=/opt/vegas/include
-export VEGAS_BIN=/opt/vegas/bin
-export VEGAS_LIB=/opt/vegas/lib
+#export VEGAS_INCL=/opt/local/include
+#export VEGAS_BIN=/opt/lo/bin
+#export VEGAS_LIB=/opt/vegas/lib
 
 export PATH=$GUPPI_DIR/bin:$CUDA/bin:$VEGAS_BIN:$PATH
 
