@@ -4,17 +4,17 @@ if test "$LOGNAME" != "root"; then
 	exit 1 
 fi
 export LD_LIBRARY_PATH=/home/pulsar64/presto/lib
-export GUPPI_DIR=/home/gpu/src/guppi_daq
+export VEGAS_DIR=/home/gpu/src/guppi_daq
 
 # Delete all old shmem
-$GUPPI_DIR/bin/clean_guppi_shmem
-$GUPPI_DIR/bin/clean_guppi_shmem
+$VEGAS_DIR/bin/clean_guppi_shmem
+$VEGAS_DIR/bin/clean_guppi_shmem
 
 # New status shmem
-$GUPPI_DIR/bin/check_guppi_status > /dev/null
+$VEGAS_DIR/bin/check_guppi_status > /dev/null
 
 # New databuf 1 (net/search)
-$GUPPI_DIR/bin/check_guppi_databuf -c -i1 -s128 -n8 > /dev/null
+$VEGAS_DIR/bin/check_guppi_databuf -c -i1 -s128 -n8 > /dev/null
 
 # New databuf 2 (fold)
-$GUPPI_DIR/bin/check_guppi_databuf -c -i2 -s256 -n4 > /dev/null
+$VEGAS_DIR/bin/check_guppi_databuf -c -i2 -s256 -n4 > /dev/null
