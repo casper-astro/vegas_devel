@@ -45,7 +45,7 @@ def cardlist_from_string(str):
     return cardlist
 
 
-GUPPI_STATUS_KEY = 16783408
+GUPPI_STATUS_KEY = int('0x01001840', 16)
 GUPPI_STATUS_SEMID = "/guppi_status"
 
 class guppi_status:
@@ -147,7 +147,7 @@ class guppi_status:
         self.update("AZ", az)
         self.update("ZA", za)
 
-GUPPI_DATABUF_KEY = 12987498
+GUPPI_DATABUF_KEY = int('0x00C62C70', 16)
 
 class guppi_databuf:
 

@@ -107,8 +107,8 @@ spead_heap = {
 	'payload'		        : waveform
 }
 
-# Send 10 heaps
-for heap_cntr in range(1500, 12000):
+# Send heaps
+for heap_cntr in range(1500, 20000):
 
     if heap_cntr < 2000:	
         spead_header[heap_cntr_id] = heap_cntr
@@ -120,4 +120,4 @@ for heap_cntr in range(1500, 12000):
     # Send the heap
     send_spead_heap(spead_header, spead_heap)
 
-    time.sleep(0.0001)  # 0.002 works
+    time.sleep(0.001)  # 0.002 works

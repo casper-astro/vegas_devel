@@ -1,9 +1,15 @@
 import corr,time, struct, cmath, math
 
 roach = 'roach03'
-dest_ip = 10*(2**24)+145
-src_ip = 10*(2**24)+4
 dest_port = 60000
+
+# IPs for BWRC
+dest_ip = 10*(2**24) + 145
+src_ip = 10*(2**24) + 4
+
+# IPs for Greenbank
+# dest_ip = 192*(2**24) + 168*(2**16) + 1*(2**8) + 223
+# src_ip = 192*(2**24) + 168*(2**16) + 1*(2**8) + 4
 
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
