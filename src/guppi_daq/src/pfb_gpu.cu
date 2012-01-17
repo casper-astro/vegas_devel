@@ -356,7 +356,7 @@ void do_pfb(struct guppi_databuf *db_in,
 
     g_pc4DataRead_d = g_pc4Data_d;
     iProcData = 0;
-    while (g_iBlockInDataSize != iProcData)  /* loop till (num_heaps * heap_size) of data is processed */
+    while (g_iBlockInDataSize > iProcData)  /* loop till (num_heaps * heap_size) of data is processed */
     {
         if (0 == pfb_count)
         {
@@ -376,13 +376,12 @@ void do_pfb(struct guppi_databuf *db_in,
                 heap_in += (VEGAS_NUM_TAPS * num_in_heaps_per_proc);
                 if (heap_in > num_in_heaps_gpu_buffer)
                 {
-                    /* This is not supposed to happen */
+                    /* This is not supposed to happen (but may happen if odd number of pkts are dropped
+                       right at the end of the buffer, so we therefore do not exit) */
                     (void) fprintf(stderr,
-                                   "ERROR: Heap count %d exceeds available number of heaps %d!\n",
+                                   "WARNING: Heap count %d exceeds available number of heaps %d!\n",
                                    heap_in,
                                    num_in_heaps_gpu_buffer);
-                    run = 0;
-                    return;
                 }
                 heap_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
                                     sizeof(struct time_spead_heap) * heap_in);
