@@ -20,7 +20,7 @@ export VEGAS_LIB_GCC=/usr/lib/gcc/x86_64-redhat-linux/3.4.6
 
 export PATH=$VEGAS_DIR/bin:$CUDA/bin:$VEGAS_BIN:$PATH
 
-export PYTHONPATH=$GUPPI/lib/python/site-packages:$GUPPI/lib/python:$VEGAS_DIR/python:/opt/vegas/lib/python2.5/site-packages:$PYTHONPATH
+export PYTHONPATH=$VEGAS/lib/python/site-packages:$VEGAS/lib/python:$VEGAS_DIR/python:/opt/vegas/lib/python2.5/site-packages:$PYTHONPATH
 
 export LD_LIBRARY_PATH=$PYSLALIB:$VEGAS_LIB:$CUDA/lib64:$LD_LIBRARY_PATH
 
