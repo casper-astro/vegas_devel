@@ -23,8 +23,8 @@
 % dec_rate: decimation rate
 
 function coefficients = cic_coefficient_generator(m, dec_rate)
-if ~isprime(dec_rate)
-    disp('Only supports decimation rate that''s a prime number');
+if ~isprime(dec_rate) && dec_rate~=1
+    disp('Only supports decimation rate that''s a prime number or 1');
     return;
 end
 
