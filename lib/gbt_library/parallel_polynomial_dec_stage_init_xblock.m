@@ -645,7 +645,7 @@ else
     parallel_adder_sync_ins{1} = inports{1};  %fake sync singal
     for i =1:m
         for j = 1:n_inputs
-            parallel_adder_ins{iU+1,j} = xSignal(['pa_i',num2str(i+1),'_',num2str(j)]);
+            parallel_adder_ins{i+1,j} = xSignal(['pa_i',num2str(i+1),'_',num2str(j)]);
         end
         parallel_adder_sync_ins{i+1} = xSignal(['sync_in',num2str(i+1)]);
         parallel_adder_blks{i} = xBlock(struct('source',str2func('parallel_accumulator_init_xblock'), ...
