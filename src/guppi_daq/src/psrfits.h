@@ -8,7 +8,7 @@
 #define PSRFITS_MAXFILELEN_FOLD 1L
 
 // The following is the template file to use to create a PSRFITS file.
-// Path is relative to GUPPI_DIR environment variable.
+// Path is relative to VEGAS_DIR environment variable.
 #define PSRFITS_SEARCH_TEMPLATE "src/guppi_PSRFITS_v3.4_search_template.txt"
 #define PSRFITS_FOLD_TEMPLATE "src/guppi_PSRFITS_v3.4_fold_template.txt"
 

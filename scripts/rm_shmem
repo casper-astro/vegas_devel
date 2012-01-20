@@ -1,10 +1,10 @@
 #!/bin/bash
-ipcrm -M 0x01001830
+ipcrm -M 0x01001840
 
-ipcrm -M 0x00c62c6a
-ipcrm -M 0x00c62c6b
-ipcrm -M 0x00c62c6c
+ipcrm -M 0x00C62C70
+ipcrm -M 0x00C62C71
+ipcrm -M 0x00C62C72
 
-ipcrm -S 0x00c62c6a
-ipcrm -S 0x00c62c6b
-ipcrm -S 0x00c62c6c
+ipcrm -S 0x00C62C70
+ipcrm -S 0x00C62C71
+ipcrm -S 0x00C62C72

@@ -44,7 +44,7 @@ int sdfits_create(struct sdfits *sf) {
     sprintf(sf->filename, "%s_%04d.fits", sf->basefilename, sf->filenum);
 
     // Create basic FITS file from our template
-    char *guppi_dir = getenv("GUPPI_DIR");
+    char *guppi_dir = getenv("VEGAS_DIR");
     char template_file[1024];
     if (guppi_dir==NULL) {
         fprintf(stderr, 

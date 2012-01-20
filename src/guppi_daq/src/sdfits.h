@@ -7,7 +7,7 @@
 #define SDFITS_MAXFILELEN 1L
 
 // The following is the template file to use to create a PSRFITS file.
-// Path is relative to GUPPI_DIR environment variable.
+// Path is relative to VEGAS_DIR environment variable.
 #define SDFITS_TEMPLATE "src/guppi_SDFITS_template.txt"
 
 struct primary_hdrinfo

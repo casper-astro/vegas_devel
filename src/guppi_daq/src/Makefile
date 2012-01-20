@@ -20,12 +20,11 @@ ifdef EXT_DISK
 endif
 
 CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I$(CUDA)/include -I$(VEGAS_INCL) \
-		-I$(PYSLALIB) -I$(GUPPI_DIR)/src $(OPT_FLAGS)
+		-I$(PYSLALIB) -I$(VEGAS_DIR)/src $(OPT_FLAGS)
 
 NVCCFLAGS = -arch=sm_20 -I$(CUDA)/include -I$(VEGAS_INCL)
 
-#LIBS = -L$(PYSLALIB) -L$(VEGAS_LIB) -lcfitsio -lsla -lm -lpthread
-LIBS = -L$(PYSLALIB) -L/home/gbt7/llama64/lib -L/usr/lib/gcc/x86_64-redhat-linux/3.4.6 -lcfitsio -lsla -lm -lpthread -lg2c
+LIBS = -L$(PYSLALIB) -L$(VEGAS_LIB) -L$(VEGAS_LIB_GCC) -lcfitsio -lsla -lm -lpthread -lg2c
 CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm -lpthread
 
 PROGS = check_guppi_databuf check_guppi_status clean_guppi_shmem

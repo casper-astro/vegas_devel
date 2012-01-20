@@ -42,7 +42,7 @@ __global__ void Accumulate(float4 *pf4FFTOut,
 {
     int i = (blockIdx.x * blockDim.x) + threadIdx.x;
     float4 f4FFTOut = pf4FFTOut[i];
-    float4 f4SumStokes = make_float4(0.0, 0.0, 0.0, 0.0);
+    float4 f4SumStokes = pf4SumStokes[i];
 
     /* Re(X)^2 + Im(X)^2 */
     f4SumStokes.x += (f4FFTOut.x * f4FFTOut.x)

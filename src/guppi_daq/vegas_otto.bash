@@ -3,13 +3,13 @@
 # Lines that have been commented out are lines that were either modified
 # or removed by Simon Scott, to allow installation on otto.
 echo "This script is specific to otto"
-echo "Setting GUPPI, GUPPI_DIR, CUDA, PYSLALIB, VEGAS_INCL/BIN/LIB, PATH, PYTHONPATH and LD_LIBRARY_PATH for VEGAS..."
+echo "Setting GUPPI, VEGAS_DIR, CUDA, PYSLALIB, VEGAS_INCL/BIN/LIB, PATH, PYTHONPATH and LD_LIBRARY_PATH for VEGAS..."
 
 # User must set this variable (GUPPI) for their home directory
 # No other variables should need changing
 export GUPPI=~/casper/gbt_devel/src
 
-export GUPPI_DIR=$GUPPI/guppi_daq
+export VEGAS_DIR=$GUPPI/guppi_daq
 
 # Simon added these lines
 export CUDA=/usr/local/cuda
@@ -20,11 +20,11 @@ export VEGAS_INCL=$CFITSIO/include
 export VEGAS_BIN=
 export VEGAS_LIB=$CFITSIO/lib
 
-# export PATH=$PSR64/bin:$PRESTO/bin:$GUPPI_DIR/bin:$GUPPI/bin:$OPT64/bin:$PATH
-export PATH=$GUPPI_DIR/bin:$CUDA/bin:$VEGAS_BIN:$PATH
+# export PATH=$PSR64/bin:$PRESTO/bin:$VEGAS_DIR/bin:$GUPPI/bin:$OPT64/bin:$PATH
+export PATH=$VEGAS_DIR/bin:$CUDA/bin:$VEGAS_BIN:$PATH
 
-#export PYTHONPATH=$PSR64/lib/python:$PSR64/lib/python/site-packages:$PRESTO/lib/python:$GUPPI/lib/python/site-packages:$GUPPI/lib/python:$GUPPI_DIR/python:$PYTHONPATH
-export PYTHONPATH=$GUPPI/lib/python/site-packages:$GUPPI/lib/python:$GUPPI_DIR/python:$PYTHONPATH
+#export PYTHONPATH=$PSR64/lib/python:$PSR64/lib/python/site-packages:$PRESTO/lib/python:$GUPPI/lib/python/site-packages:$GUPPI/lib/python:$VEGAS_DIR/python:$PYTHONPATH
+export PYTHONPATH=$GUPPI/lib/python/site-packages:$GUPPI/lib/python:$VEGAS_DIR/python:$PYTHONPATH
 
 # export LD_LIBRARY_PATH=$PSR64/lib:$OPT64/lib:$PGPLOT_DIR:$PRESTO/lib
 export LD_LIBRARY_PATH=$PYSLALIB:$VEGAS_LIB:$CUDA/lib64:$LD_LIBRARY_PATH

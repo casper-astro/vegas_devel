@@ -22,7 +22,7 @@ struct guppi_databuf {
     int n_block;        /* Number of data blocks in buffer */
 };
 
-#define GUPPI_DATABUF_KEY 12987498
+#define GUPPI_DATABUF_KEY 0x00C62C70
 
 /* union for semaphore ops.  Is this really needed? */
 union semun {

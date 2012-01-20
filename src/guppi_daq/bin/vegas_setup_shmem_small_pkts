@@ -1,7 +1,7 @@
 #!/bin/bash
-${GUPPI_DIR}/bin/vegas_init_shmem_small_pkts
-python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -D --nogbt
-python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -U --nogbt \
+${VEGAS_DIR}/bin/vegas_init_shmem_small_pkts
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -D --nogbt
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -U --nogbt \
     --host=10.0.0.4     \
     --port=60000        \
     --packets=SPEAD     \
@@ -14,4 +14,3 @@ python2.5 ${GUPPI_DIR}/python/guppi_set_params.py -U --nogbt \
     --fpgaclk=150e6     \
     --efsampfr=600e6    \
     --hwexposr=0.5e-3   \
- 
