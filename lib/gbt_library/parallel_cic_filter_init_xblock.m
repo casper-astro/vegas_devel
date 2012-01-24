@@ -52,6 +52,7 @@ defaults = {'n_stages', 3, ...
             'reduced_crtc_path', 'off', ...
             'recursives', [1 1 1 1 1], ...
             'half2first', 'off', ...
+            'input_clk_rate', 1, ...
             };
 
 
@@ -59,6 +60,7 @@ n_inputs = get_var('n_inputs', 'defaults', defaults, varargin{:});
 n_stages = get_var('n_stages', 'defaults', defaults, varargin{:});
 n_bits = get_var('n_bits', 'defaults', defaults, varargin{:});
 bin_pt = get_var('bin_pt', 'defaults', defaults, varargin{:});
+input_clk_rate = get_var('input_clk_rate', 'defaults', defaults, varargin{:});
 add_latency = get_var('add_latency', 'defaults', defaults, varargin{:});
 dec_rate = get_var('dec_rate', 'defaults', defaults, varargin{:});
 polyphase = get_var('polyphase', 'defaults', defaults, varargin{:});
@@ -132,6 +134,8 @@ end
 
 stage_blks=cell(1,len);
 stage_config = cell(1,len);
+% clk_rates = cell(1,len+1);
+% clk_rates{1} = input_clk_rate;
 for i=1:len
    %terminator_ins{i}=xSignal(['ter',num2str(i)]);
    stage_config{i}.source = str2func('parallel_polynomial_dec_stage_init_xblock');
@@ -141,6 +145,7 @@ for i=1:len
                        'n_stages',n_stages, ...
                         'dec_rate', f(i), ...
                         'n_inputs', n_ins{i},...
+                        'input_clk_rate', input_clk_rate, ...  %clk_rates{i}, ...
                         'polyphase', polyphase,...
                         'add_latency',add_latency,...
                         'dec2_halfout', dec2_halfout, ...
@@ -154,6 +159,7 @@ for i=1:len
                       
    n_bits = ceil(n_stages*log2(f(i)*1) + n_bits);
    
+  % clk_rates{i+1} = clk_rates{i}*f(i);
    disp(['stage ',num2str(i),' completed!']);
 end
 
