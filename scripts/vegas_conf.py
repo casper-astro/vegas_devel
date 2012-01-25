@@ -26,8 +26,9 @@ fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
 #
-boffile='vegas01_4tap_1024ch_220_r6c_2012_Jan_18_1626.bof'
+#boffile='vegas01_4tap_1024ch_220_r6c_2012_Jan_18_1626.bof'
 #boffile='vegas01_4tap_1024ch_220_r6e_2012_Jan_21_1753.bof'
+boffile='vegas01_4tap_1024ch_220_r6e_2012_Jan_23_1813.bof'
 
 # Unprogram the device
 fpga.progdev('')
@@ -39,6 +40,7 @@ fpga.progdev(boffile)
 # Set 10GbE NIC IP and Port
 time.sleep(3)
 fpga.tap_start('tap0','gbe0',mac_base+src_ip,src_ip,fabric_port)
+fpga.tap_start('tap0','gbe1',mac_base+src_ip+1,src_ip+1,fabric_port+1)
 time.sleep(3)
 
 # Set destination IP
