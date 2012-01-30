@@ -1,6 +1,6 @@
 %% Jan 19, 2012
 %% Jan 20, 2012
-%% This script works with cic_filter_test2.mdl to test the behavior of the
+%% This script works with cic_filter_test_16.mdl to test the behavior of the
 %% multi-stage parallel cic filter
 %% 8 parallel input in this case
 %%
@@ -11,25 +11,20 @@
 %  note now the clock rate isn't really changed in the CIC stage, but
 %  rather the same values are hold for a few cycles. The result shows that
 %  it still produces exactly the same result for both parallel CIC and
-%  xilinx CIC, but with different delay value.{ <----this is only true for
-%  a few cases} o_O?
+%  xilinx CIC, but with different delay value. { <----this is only true for a few cases}
 %
 %  Tested cases (bit-by-bit):
-%       (1) dec_rate = 5, non-recursive[Fail! for both case], recursive[Fail! for non-xilinx Down Sample]
-%       (2) dec_rate = 25, all-non-recursive[Fail! for non-xilinx Down Sample], all-recursive[Fail! for non-xilinx Down Sample]
-%       (3) dec_rate = 30, all-non-recursive
-%       (4) dec_rate = 2(halved outputs), non-recursive[Scrambled(reverse order?)]
-%       (5) dec_rate = 4(halved outputs), non-recursive[Different, phase difference?]
-%       (6) dec_rate = 8(halved outputs), non-recursive[Different, phase difference?]
+%       (1) dec_rate = 16(halved outputs), non-recursive
 %  Tested cases (plot):
-%       (1) dec_rate = 2(halved outputs), non-recursive[OK]
-%       (2) dec_rate = 4(halved outputs), non-recursive[OK]
-%       (3) dec_rate = 8(halved outputs), non-recursive[OK]
+%       (1) dec_rate = 16(halved outputs), non-recursive
 
 
-dec_rate = 2;   % change this accordingly.
-n_inputs = 4;   % change this accordingly, used xilinx CIC?
-clk_rate_change = 1; % change this accordingly, note the special case when the number of output ports are halved
+
+% Note the special case when the number of output ports are halved
+dec_rate = 16;   % change this accordingly.
+n_inputs = 1;   % change this accordingly
+clk_rate_change = 0; % change this accordingly , used xilinx CIC?
+
 pcic_outs = cell(1,n_inputs);
 pcic = zeros(length(pcic_out1.signals.values),n_inputs);
 for i = 1:n_inputs
@@ -38,20 +33,19 @@ for i = 1:n_inputs
     size(pcic_outs{i})
     pcic(:,i)= pcic_outs{i};
 end
+
 xcic=xcic_out.signals.values;
-mycic=mycic_out.signals.values;
 dlmwrite('cic.txt',pcic,'delimiter','\t','precision', '%16.8f');
 dlmwrite('xcic.txt',xcic);
+
 pcic_length = length(pcic_out1.signals.values)
-if ~clk_rate_change   % if the clock rate isn't changed in the CIC
+if ~clk_rate_change   % if the clock rate isn't changed in the CIC, skip
     pcic_unfold = zeros(pcic_length*n_inputs/dec_rate,1);  
     for i = 1:pcic_length/dec_rate
         for j = 1:n_inputs
             pcic_unfold((i-1)*n_inputs+j,1) = pcic((i-1)*dec_rate+1,j);
         end
     end
-   % mycic_old = mycic;
-   % mycic = mycic_old(1:dec_rate:end);
 else
     pcic_unfold = zeros(pcic_length*n_inputs,1);
     for i =1:pcic_length
@@ -69,16 +63,12 @@ if a < b
 else
     xcic = [xcic;zeros(a-b,1)];
 end
-mycic = [mycic; zeros(abs(a-b),1)];
 size(pcic_unfold)
 size(xcic)
-size(mycic)
 dlmwrite('pcic_unfold.txt',pcic_unfold);
-dlmwrite('pcic_xcic_comparison.txt',[pcic_unfold,xcic,mycic(1:size(xcic))],'delimiter','\t','precision', '%16.8f');
+dlmwrite('pcic_xcic_comparison.txt',[pcic_unfold,xcic],'delimiter','\t','precision', '%16.8f');
 
 figure(1)
 semilogy(abs(fft(pcic_unfold)),'b');
 hold on;
 semilogy(abs(fft(xcic)),'r');
-hold on;
-semilogy(abs(fft(mycic)),'g');
