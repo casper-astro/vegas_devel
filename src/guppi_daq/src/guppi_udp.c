@@ -12,6 +12,7 @@
 #include <netdb.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <errno.h>
 
 #include "guppi_udp.h"
 #include "guppi_databuf.h"
@@ -95,7 +96,14 @@ int guppi_udp_wait(struct guppi_udp_params *p) {
     int rv = poll(&p->pfd, 1, 1000); /* Timeout 1sec */
     if (rv==1) { return(GUPPI_OK); } /* Data ready */
     else if (rv==0) { return(GUPPI_TIMEOUT); } /* Timed out */
-    else { return(GUPPI_ERR_SYS); }  /* Other error */
+    else { 
+        /* EINTR is not actually an error */
+        if (errno == EINTR) {
+            printf("Got interrupted system call (EINTR)... continuing\n");
+            return(GUPPI_TIMEOUT);
+        }
+        return(GUPPI_ERR_SYS); /* Other error */
+    }  
 }
 
 int guppi_udp_recv(struct guppi_udp_params *p, struct guppi_udp_packet *b) {

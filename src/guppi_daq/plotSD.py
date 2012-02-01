@@ -18,7 +18,10 @@ def plotSDfile(fname,nplot=1):
         f,axs = plt.subplots(4,1,squeeze=True,sharex=True)
         sidx = pn*nspec/nplot + nspec/(2*nplot)
         for offs in range(4):
-            axs[offs].plot(d[sidx,offs::4])
+	    data = d[sidx,offs::4]
+#	    data = data.reshape((256,4))[:,::-1].flatten() # uncomment this line for designs before r8a
+#            axs[offs].plot(d[sidx,offs::4])
+	    axs[offs].plot(data)
             axs[offs].text(0.1,0.99,("idx=%d:%d" % (sidx,offs)),va='top',transform=axs[offs].transAxes)
             if offs ==0:
                 ax2 = plt.twiny(axs[offs])
