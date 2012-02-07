@@ -25,8 +25,11 @@ sync_period = (acc_len+1)*lcm*pfb_taps*fft_size/simul_inputs
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
-#
-boffile='vegas01_4tap_1024ch_220_r6i_2012_Jan_28_1516.bof'
+#boffile='vegas01_4tap_1024ch_220_r6i_2012_Jan_28_1516.bof'
+#boffile='vegas01_4tap_1024ch_220_r8a_2012_Jan_31_1413.bof'
+#boffile='vegas01_4tap_1024ch_220_r8b_2012_Feb_01_1621.bof'
+#boffile='vegas01_4tap_1024ch_220_r8b_2012_Feb_02_1638.bof'
+boffile='vegas01_4tap_1024ch_220_r8b_2012_Feb_03_1409.bof'
 
 # Unprogram the device
 fpga.progdev('')
@@ -53,7 +56,7 @@ time.sleep(1)
 
 # Set sync period
 
-fpga.write_int('fftshift',0x77777777)
+#fpga.write_int('fftshift',0x77777777)
 
 fpga.write_int('sg_period',2**30)
 fpga.write_int('sg_sync',0x12)

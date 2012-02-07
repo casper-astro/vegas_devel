@@ -7,11 +7,11 @@ import numpy as np
 
 def getSDdata(fname):
     pf = pyfits.open(fname)[1]
-    data = pf.columns[-1].array[:].array['DATA']
+    data = pf.data.field('DATA')
     print "Found data with shape:",data.shape
     return data
     
-def plotSDfile(fname,nplot=1):
+def plotSDfile(fname,nplot=1,fadc=800.0):
     d = getSDdata(fname)
     nspec = d.shape[0]
     for pn in range(nplot):
@@ -25,8 +25,8 @@ def plotSDfile(fname,nplot=1):
             axs[offs].text(0.1,0.99,("idx=%d:%d" % (sidx,offs)),va='top',transform=axs[offs].transAxes)
             if offs ==0:
                 ax2 = plt.twiny(axs[offs])
-                ax2.set_xlim(0,800)
-                ax2.set_xlabel('MHz (assuiming 800MHz clk)')
+                ax2.set_xlim(0,fadc)
+                ax2.set_xlabel('MHz (assuiming %.1fMHz clk)'%fadc)
             if offs ==3:
                 axs[offs].set_xlabel('bin')
             
@@ -39,5 +39,9 @@ if __name__ == "__main__":
         nplot = int(sys.argv[2])
     else:
         nplot = 1
-    plotSDfile(fn,nplot)
+    if len(sys.argv) >3:
+	fadc = float(sys.argv[3])
+    else:
+	fadc = 800.0
+    plotSDfile(fn,nplot,fadc=fadc)
     plt.show()
