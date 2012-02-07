@@ -15,6 +15,7 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/types.h>
+#include <stdint.h>
 
 #include "guppi_defines.h"
 #include "fitshead.h"
@@ -296,7 +297,7 @@ void guppi_accum_thread(void *_args) {
             char* payload_addr = (char*)(guppi_databuf_data(db_in, curblock_in) +
                                 sizeof(struct freq_spead_heap) * MAX_HEAPS_PER_BLK +
                                 (index_in->heap_size - sizeof(struct freq_spead_heap)) * heap );
-            int *i_payload = (int*)(payload_addr);
+            int32_t *i_payload = (int32_t*)(payload_addr);
             float *f_payload = (float*)(payload_addr);
 
             accumid = freq_heap->status_bits & 0x7;         
