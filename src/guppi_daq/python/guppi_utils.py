@@ -4,7 +4,8 @@ import time, pyfits, guppi_daq.possem as possem
 import numpy as n
 #import psr_utils as psr
 import astro_utils as astro
-import slalib as s
+#import slalib as s
+from pyslalib import slalib as s
 
 DEGTORAD = 0.017453292519943295769236907684
 RADTODEG = 57.29577951308232087679815481410

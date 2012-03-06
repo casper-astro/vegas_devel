@@ -14,22 +14,21 @@ dest_port = 60000
 
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
-
-acc_len=255
-fft_size=2**5
-simul_inputs=4
-lcm=6
-pfb_taps=4
-sync_period = (acc_len+1)*lcm*pfb_taps*fft_size/simul_inputs
+acc_len=1023
 
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
-#boffile='vegas01_4tap_1024ch_220_r6i_2012_Jan_28_1516.bof'
-#boffile='vegas01_4tap_1024ch_220_r8a_2012_Jan_31_1413.bof'
-#boffile='vegas01_4tap_1024ch_220_r8b_2012_Feb_01_1621.bof'
 #boffile='vegas01_4tap_1024ch_220_r8b_2012_Feb_02_1638.bof'
-boffile='vegas01_4tap_1024ch_220_r8b_2012_Feb_03_1409.bof'
+
+## fast 357MHz
+#boffile='vegas01_4tap_1024ch_220_r8b_2012_Feb_03_1409.bof'
+
+## slow 150MHz (with added snap blocks for testing)
+boffile='vegas01_4tap_1024ch_220_r9a_2012_Feb_13_2153.bof'
+
+## 354 MHZ /w ADC snap
+#boffile='vegas01_8b_snaps_2012_Feb_19_1129.bof'
 
 # Unprogram the device
 fpga.progdev('')
@@ -56,9 +55,10 @@ time.sleep(1)
 
 # Set sync period
 
-#fpga.write_int('fftshift',0x77777777)
+#fftshift will be hardcoded for final design
+fpga.write_int('fftshift',0b10101010101)
 
-fpga.write_int('sg_period',2**30)
+fpga.write_int('sg_period',2*16*1024*1024/8 -2)
 fpga.write_int('sg_sync',0x12)
 
 fpga.write_int('arm',0)
@@ -67,25 +67,15 @@ fpga.write_int('arm',0)
 
 time.sleep(1)
 
-#fpga.write_int('rst',1)
-#fpga.write_int('rst',0)
-
 fpga.write_int('sg_sync',0x13)
-
 
 def reset():
     fpga.write_int('sg_sync',0x12) 
-    
-    #rst counter
-#    fpga.write_int('rst',1)
-#    fpga.write_int('rst',0)
-
     fpga.write_int('arm',0)
     fpga.write_int('arm',1)
     fpga.write_int('arm',0)
     fpga.write_int('sg_sync',0x12)
     fpga.write_int('sg_sync',0x11)
-
 
 reset()
 

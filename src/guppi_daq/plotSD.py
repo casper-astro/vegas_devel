@@ -4,14 +4,26 @@ import matplotlib
 from matplotlib import pyplot as plt
 import pyfits
 import numpy as np
+import glob
+import os
 
+def getLastSD(home='.',nspectra=None):
+    """ Attempt to get data from latest SD file"""
+    fits = glob.glob(os.path.join(home,'vegas*.fits'))
+    fits.sort()
+    print "opening",fits[-1]
+    data = getSDdata(fits[-1])
+    if nspectra:
+        data = data[-nspectra:,:]
+    return data
+    
 def getSDdata(fname):
     pf = pyfits.open(fname)[1]
     data = pf.data.field('DATA')
     print "Found data with shape:",data.shape
     return data
     
-def plotSDfile(fname,nplot=1,fadc=800.0):
+def plotSDfile(fname,nplot=1,fadc=600.0):
     d = getSDdata(fname)
     nspec = d.shape[0]
     for pn in range(nplot):
@@ -42,6 +54,6 @@ if __name__ == "__main__":
     if len(sys.argv) >3:
 	fadc = float(sys.argv[3])
     else:
-	fadc = 800.0
+	fadc = 600.0
     plotSDfile(fn,nplot,fadc=fadc)
     plt.show()

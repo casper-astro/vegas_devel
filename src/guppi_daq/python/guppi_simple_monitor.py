@@ -171,11 +171,15 @@ d = guppi_databuf()
 data = d.data(0) # argument is the block in the data buffer
 #d.dtype = n.uint8
 if view_mean:
-    main_spec = data[:nspec_sum,poln].mean(0)
+#    main_spec = data[:nspec_sum,poln].mean(0)
+    main_spec = data[:nspec_sum,poln]
 else:
-    main_spec = data[:nspec_sum,poln].std(0)
+#    main_spec = data[:nspec_sum,poln].std(0)
+    main_spec = data[:nspec_sum,poln]
 min_spec = data[:nspec_sum,poln].min(0)
 max_spec = data[:nspec_sum,poln].max(0)
+
+
 
 # Initialize the plot
 fig = p.figure()
@@ -193,8 +197,8 @@ if view_dB:
     min_line, = ax.plot(freqs, dB(min_spec), 'b:', animated=True)
 else:
     main_line, = ax.plot(freqs, main_spec, 'r',  animated=True)
-    max_line, = ax.plot(freqs, max_spec, 'b:', animated=True)
-    min_line, = ax.plot(freqs, min_spec, 'b:', animated=True)
+#    max_line, = ax.plot(freqs, max_spec, 'b:', animated=True)
+#    min_line, = ax.plot(freqs, min_spec, 'b:', animated=True)
 ax.axis([freqs.min(),freqs.max(),-128,128])
 fig.canvas.draw()
 

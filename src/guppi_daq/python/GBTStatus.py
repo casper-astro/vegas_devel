@@ -1,5 +1,5 @@
 import MySQLdb, string, sys, time, os, math
-import slalib as s
+from pyslalib import slalib as s
 
 RADTODEG    = float('57.295779513082320876798154814105170332405472466564')
 DEGTORAD    = float('1.7453292519943295769236907684886127134428718885417e-2')
