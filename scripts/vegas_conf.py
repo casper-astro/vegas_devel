@@ -25,10 +25,13 @@ time.sleep(1)
 #boffile='vegas01_4tap_1024ch_220_r8b_2012_Feb_03_1409.bof'
 
 ## slow 150MHz (with added snap blocks for testing)
-boffile='vegas01_4tap_1024ch_220_r9a_2012_Feb_13_2153.bof'
+#boffile='vegas01_4tap_1024ch_220_r9a_2012_Feb_13_2153.bof'
 
 ## 354 MHZ /w ADC snap
 #boffile='vegas01_8b_snaps_2012_Feb_19_1129.bof'
+
+## 150MHz /w ASIAA adc
+boffile='vegas01_4tap_1024ch_220_r10a_2012_Mar_06_1341.bof'
 
 # Unprogram the device
 fpga.progdev('')
