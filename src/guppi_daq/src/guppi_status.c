@@ -83,6 +83,18 @@ char *guppi_find_end(char *buf) {
 /* So far, just checks for existence of "END" in the proper spot */
 void guppi_status_chkinit(struct guppi_status *s) {
 
+    int semval;
+    int retval;
+    retval = sem_getvalue(s->lock,&semval);
+    if (retval) {
+        guppi_error("guppi_status_chkinit", "sem_getvalue failed");
+
+    }
+    if (semval == 0) {
+        printf("Found guppi status semaphore locked in guppi_status_chkinit. releasing\n");
+        guppi_status_unlock(s);
+    }
+
     /* Lock */
     guppi_status_lock(s);
 
@@ -102,6 +114,17 @@ void guppi_status_chkinit(struct guppi_status *s) {
 
 /* Clear out guppi status buf */
 void guppi_status_clear(struct guppi_status *s) {
+
+    int semval;
+    int retval;
+    retval = sem_getvalue(s->lock,&semval);
+    if (retval) {
+        guppi_error("guppi_status_clear", "sem_getvalue failed");
+    }
+    if (semval == 0) {
+        printf("Found guppi status semaphore locked in guppi_status_clear. releasing\n");
+        guppi_status_unlock(s);
+    }
 
     /* Lock */
     guppi_status_lock(s);
