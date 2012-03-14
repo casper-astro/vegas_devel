@@ -19,7 +19,7 @@ ifdef EXT_DISK
 	OPT_FLAGS += -DEXT_DISK
 endif
 
-CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I/usr/include/cfitsio -I$(CUDA)/include -I$(VEGAS_INCL) \
+CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I$(CUDA)/include -I$(VEGAS_INCL) \
 		-I$(PYSLALIB) -I$(VEGAS_DIR)/src $(OPT_FLAGS)
 
 NVCCFLAGS = -arch=sm_20 -I$(CUDA)/include -I$(VEGAS_INCL)
