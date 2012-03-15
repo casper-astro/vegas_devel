@@ -1,0 +1,26 @@
+Model file naming convention:
+the first block is the mode (e.g. v01 is vegas mode 1);
+the second block is the adc being used (aa is asiaa adc, na is the national adc);
+the third block is the fpga board used (ri is roach 1, rii is roach 2);
+the fourth block is the demux of the adc, the number of taps in the pfb, and the 
+number of pts in the fft (e.g. 8r4t11f is demux by 8, 4 taps, and 2^11 pt fft)
+
+v01_aa_ri_8r4t11f_ver101.mdl -- this is simply a copy of v01_na_ri_8r4t11f_ver102.mdl with 
+				the national adc switched out for the asiaa adc
+
+v01_na_ri_8r4t11f_ver101.mdl -- functional mode 1 design mostly functional at low clock 
+				rates.  Some optimizations for speed have not been made
+
+v01_na_ri_8r4t11f_ver102.mdl -- functional mode 1 design, optimized for speeds up to 360MHz
+
+v01_na_ri_8r4t11f_ver103.mdl -- (TESTING) functional mode 1 containing snap blocks for adc 
+				and packet headers.  Low clock speeds.. probably no longer 
+				useful
+
+v01_na_ri_8r4t11f_ver104.mdl -- (TESTING) functional mode 1 containing snaps for adc and a 
+				mux of the input to the pfb.  This was added to test the 
+				sync pulse
+
+v01_na_ri_8r4t11f_ver105.mdl -- (TESTING) functional mode 1 copy of ver4 with register to
+				test SSG
+
