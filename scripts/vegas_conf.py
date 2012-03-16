@@ -1,6 +1,6 @@
 import corr,time
 
-roach = 'roach03'
+roach = 'vegas-r9'
 
 ## IPs at Greenbank
 #dest_ip = 192*(2**24)+168*(2**16)+3*(2**8)+15
@@ -31,7 +31,8 @@ time.sleep(1)
 #boffile='vegas01_8b_snaps_2012_Feb_19_1129.bof'
 
 ## 150MHz /w ASIAA adc
-boffile='vegas01_4tap_1024ch_220_r10a_2012_Mar_06_1341.bof'
+#boffile='vegas01_4tap_1024ch_220_r10a_2012_Mar_06_1341.bof'
+boffile='vegas01_4tap_1024ch_220_r10a_2012_Mar_07_1324.bof'
 
 # Unprogram the device
 fpga.progdev('')

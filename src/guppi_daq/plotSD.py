@@ -18,31 +18,37 @@ def getLastSD(home='.',nspectra=None):
     return data
     
 def getSDdata(fname):
-    pf = pyfits.open(fname)[1]
-    data = pf.data.field('DATA')
-    print "Found data with shape:",data.shape
-    return data
+    pf = pyfits.open(fname)
+    bt = pf[1]
+    data = bt.data.field('DATA')
+    cf = bt.header['OBSFREQ']
+    bw = bt.header['CHAN_BW']*1024
+    print "Found data with shape:",data.shape, "cf=",cf,"bw=",bw
+    return data,cf,bw
     
-def plotSDfile(fname,nplot=1,fadc=600.0):
-    d = getSDdata(fname)
+def plotSDfile(fname,nplot=1):
+    d,cf,bw = getSDdata(fname)
     nspec = d.shape[0]
+    freqs = cf + bw*np.arange(1024)/1024.0  - bw/2.0
+    freqs = freqs/1e6
     for pn in range(nplot):
         f,axs = plt.subplots(4,1,squeeze=True,sharex=True)
         sidx = pn*nspec/nplot + nspec/(2*nplot)
         for offs in range(4):
-	    data = d[sidx,offs::4]
+            data = d[sidx,offs::4]
 #	    data = data.reshape((256,4))[:,::-1].flatten() # uncomment this line for designs before r8a
 #            axs[offs].plot(d[sidx,offs::4])
-	    axs[offs].plot(data)
+            axs[offs].plot(freqs,data)
             axs[offs].text(0.1,0.99,("idx=%d:%d" % (sidx,offs)),va='top',transform=axs[offs].transAxes)
-            if offs ==0:
-                ax2 = plt.twiny(axs[offs])
-                ax2.set_xlim(0,fadc)
-                ax2.set_xlabel('MHz (assuiming %.1fMHz clk)'%fadc)
             if offs ==3:
-                axs[offs].set_xlabel('bin')
-            
-            axs[offs].set_xlim(0,1024)
+                axs[offs].set_xlabel('MHz')
+    f,axs = plt.subplots(4,1,squeeze=True,sharex=True)
+    for offs in range(4):
+        data = d[:,offs::4].mean(0)
+        axs[offs].plot(freqs,data)
+        axs[offs].text(0.1,0.99,("idx=%d:%d" % (sidx,offs)),va='top',transform=axs[offs].transAxes)
+        if offs ==3:
+            axs[offs].set_xlabel('bin')
             
 if __name__ == "__main__":
     import sys

@@ -1,6 +1,6 @@
 import corr,time
 
-roach = 'roach03'
+roach = 'vegas-r9'
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 
 tick = time.time()

@@ -153,6 +153,8 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+    fprintf(stderr,"Started vegas_hpc_hbw...\n");
+
     /* Wait for end */
     run=1;
     while (run) { 

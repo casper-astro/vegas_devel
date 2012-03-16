@@ -1,10 +1,29 @@
+import os
 import numpy as np
 from matplotlib import pyplot as plt
 from corr import katcp_wrapper
 import time
 import Pyro.naming
+import astro_utils # for current_MJD
 Pyro.config.PYRO_NS_HOSTNAME='vegas-hpc1.gb.nrao.edu'
 ns = Pyro.naming.NameServerLocator().getNS()
+
+# this dictionary maps hpc number to final octet of hpc tenge ip address
+tgedict = {1: 32,
+           2: 33,
+           3: 39,
+           4: 37,
+           5: 36,
+           6: 38,
+           7: 34,
+           8: 35}
+def remoteExec(node,cmd):
+    os.system("ssh vegas-hpc%d 'source myvegas.bash; %s'" %  (node,cmd))
+def remoteExecAll(cmd):
+    for node in range(1,9):
+        remoteExec(node,cmd)
+
+
 if 'vsd' not in globals():
     vsd = {}
 for rn in range(1,9):
@@ -13,7 +32,7 @@ for rn in range(1,9):
         try:
             print "connecting to VegasServer",rn
             vs = ns.resolve('VegasServer%d' % rn).getProxy()
-            vs._setTimeout(1)
+            vs._setTimeout(2)
             globals()[rv] = vs
             vsd[rn] = vs
         except Exception, e:
@@ -55,17 +74,19 @@ def setSynths(freq):
 subnet = 10*2**24 + 17*2**16 #10.17.0.0
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
-def startTap(rns = range(1,9)):
+def setupNet(rns = range(1,9),starttap=False):
     for rn in rns:
         roach = roachd[rn]
-        hostip = subnet + 32 + rn -1
+        hostip = subnet + tgedict[rn]
         roachip = subnet + 64 + rn -1
-        roach.tap_start('tap0','gbe0',mac_base + roachip, roachip, fabric_port)
+        if starttap:
+            roach.tap_start('tap0','gbe0',mac_base + roachip, roachip, fabric_port)
         roach.write_int('dest_ip',hostip)
         roach.write_int('dest_port',60000)
         if vsd.has_key(rn):
             ip = '10.17.0.%d' % (64+rn-1)
-            vsd[rn].setParams(DATAHOST=ip)
+            vsd[rn].setParams(DATAHOST=ip,DATAPORT=60000)
+            
 def reset(rns = range(1,9),acc_len=768):
     for rn in rns:
         roach = roachd[rn]
@@ -77,10 +98,8 @@ def reset(rns = range(1,9),acc_len=768):
         roach.write_int('arm',0)
         
         roach.write_int('sg_sync',0x11)
-        
-def startHPC(node):
-    os.system("blah &> /home/sandboxes/vegastest/logs/node%d" % node)
-    
+
+            
 
 
 def getAdcSnap(roach):
@@ -96,10 +115,10 @@ def getAdcSnap(roach):
     x = np.empty((16384,),dtype='float')
     y = np.empty((16384,),dtype='float')    
     for k in range(4):
-        x[k::8] = a1[k::4]
-        x[k+4::8] = a0[k::4]
-        y[k::8] = b1[k::4]
-        y[k+4::8] = b0[k::4]
+        x[k::8] = a0[k::4]
+        x[k+4::8] = a1[k::4]
+        y[k::8] = b0[k::4]
+        y[k+4::8] = b1[k::4]
     return x,y
 
 def getAdcSnap9b(roach):
@@ -118,14 +137,62 @@ def getAdcSnap9b(roach):
         y[k+4::8] = b0[k::4]
     return x,y
 
+def sync(rns=range(1,9)):
+    print "Preparing"
+    for rn in rns:
+        roachd[rn].write_int('sg_sync',0x12) #disable pps and sync
+        roachd[rn].write_int('arm',0)
+    print "Waiting for even second...",
+    while np.mod(time.time(),1) > 0.1:
+        pass
+    while np.mod(time.time(),1) < 0.1:
+        pass
+    tic = time.time()
+    print tic
+    print "Arming Roaches"
+    for rn in rns:
+        roachd[rn].write_int('sg_sync',0x14)
+        roachd[rn].write_int('arm',1)
+        roachd[rn].write_int('arm',0)
+        
+    print "Done in", (time.time()-tic)
+    print "Setting STTMJD"
+    mjd = astro_utils.current_MJD()
+    for rn in rns:
+        vsd[rn].setParams(STTMJD=mjd)
+    print "Done in", (time.time() - tic)
+    while (time.time()-tic) <1.2:
+        pass
+    print "Should have PPS now, disarming roaches"
+    for rn in rns:
+        roachd[rn].write_int('sg_sync',0x10)
+#        roachd[rn].write_int('arm',0)
+
+def adcSummary(rns=range(1,9)):
+    
+    for rn in rns:
+        try:
+            x,y = getAdcSnap(roachd[rn])
+        except:
+            try:
+                x,y = getAdcSnap9b(roachd[rn])
+            except:
+                pass
+        xrms = x.std()
+        yrms = y.std()
+        xdb = 20*np.log10(xrms/20.0)
+        ydb = 20*np.log10(yrms/20.0)
+        print "ROACH %d : %5.1f  %5.1f dB  ||  %5.1f  %5.1f dB" % (rn,xrms,xdb,yrms,ydb)
 def plotAdcs(rns=range(1,9)):
     data = {}
     for rn in rns:
         try:
             data[rn] = getAdcSnap(roachd[rn])
-        except Exception,e:
-            print "failed to get data from roach",rn
-            print e
+        except:
+            try:
+                data[rn] = getAdcSnap9b(roachd[rn])
+            except:
+                pass
     (f1,haxs) = plt.subplots(nrows=4,ncols=2)
     haxs = haxs.flatten()
 
@@ -159,11 +226,13 @@ def plotAdcs(rns=range(1,9)):
     f1.suptitle('Histograms')
     f2.suptitle('Power spectrum')
     f3.suptitle('Time domain')      
-def programAll(boffile):
-    raw_input("are you sure you want to reprogram all roaches?")
-    for rn,roach in roachd.items():
+def programAll(boffile,rns = range(1,9)):
+    raw_input("are you sure you want to reprogram?")
+    for rn in rns:
+        roach = roachd[rn]
         print "programming",rn
         try:
+            roach.progdev('')
             roach.progdev(boffile)
         except Exception,e:
             print "failed to program roach",rn
@@ -194,3 +263,108 @@ def checkClocks():
         except:
             print "<unavailable> ",
         print "Roach",rn,":",roach.est_brd_clk(),"MHz"
+
+
+cfs = np.array([18.55,19.8,21.05,22.3,23.55,24.8,18.55,17.0])*1e3 - 775 + 720.0
+cfs = cfs*1e6
+def setupFakePulsar(nodes=range(1,9),fpgaclk=360e6,frqs=cfs,sideband=-1):
+    n = np.arange(8)
+    clk = fpgaclk
+    if frqs is None:
+        frqs = 18e9 - (np.ceil(150e6/(clk*4/1024.0))*clk*4/1024.0) + ((clk*2)*(2*n+1))-((np.ceil(150e6/(clk*4/1024.))*clk*4/1024.0)*n)
+    frqd = dict(zip(n+1,frqs))
+    esr = fpgaclk*8 # effective sample rate
+    
+    pfb_rate = sideband*esr/(2*1024.0)
+    for node in nodes:
+        vsd[node].setParams(EFSAMPFR=esr,
+                            NCHAN=1024,
+                            EXPOSURE=1e-6,
+                            SUB0FREQ=frqd[node],
+                            OBSFREQ=frqd[node],
+                            CHAN_BW = pfb_rate,
+                            FPGACLK = fpgaclk
+                            ) #exposure should be ~0 to get every single spectrum
+        
+    pass
+def checkNTP(nodes=range(1,9)):
+    tset = {}
+    for node in nodes:
+        tset[node] = vsd[node].getTime()
+    print "Time offsets relative to node:", nodes[0]
+    t0 = tset[nodes[0]]
+    for node,t in tset.items():
+        print "Node",node, " delta : ",(t0-t)
+def startHPC(nodes=range(1,9),basedir='/mnt/bdata1'):
+    dname = os.path.join(basedir,time.strftime('%Y.%m.%d_%H%M%S',time.gmtime()))
+    for node in nodes:
+        vsd[node].setParams(DATADIR=dname,FILENUM=0)
+        cmd = "ssh vegas-hpc%d 'source myvegas.bash; pkill -SIGINT vegas_hpc_hbw; touch $VEGAS/logs/node%d_hpc_hbw.log; chmod a+rw $VEGAS/logs/node%d_hpc_hbw.log; mkdir %s; chmod a+rwx %s; nohup vegas_hpc_hbw &> $VEGAS/logs/node%d_hpc_hbw.log < /dev/null &'" % (node,node,node,dname,dname,node)
+        print cmd
+        os.system(cmd)
+	
+    print "Created data directories:",dname
+
+def updateFromGBT(nodes=range(1,9)):
+    for node in nodes:
+        vsd[node].updateFromGBT()
+def setupShmemDefaults(nodes=range(1,9)):
+    for node in nodes:
+        vs = vsd[node]
+        vs.setParams(PKTFMT='SPEAD',NPOL=2,
+                     NCHAN=1024, NSUBBAND=1,
+                     SUB0FREQ=1e9,
+                     SUB1FREQ=1e9,
+                     SUB2FREQ=1e9,
+                     SUB3FREQ=1e9,
+                     SUB4FREQ=1e9,
+                     SUB5FREQ=1e9,
+                     SUB6FREQ=1e9,
+                     SUB7FREQ=1e9,
+                     EXPOSURE=1e-6,
+                     FPGACLK=360e6,
+                     EFSAMPFR=360e6*8,
+                     INSTRUME="VEGAS",
+                     ELEV = 0.0,
+                     OBJECT = "unknown_obj",
+                     FILENUM = 0
+                     )
+    updateFromGBT(nodes)
+                     
+def stopHPC(nodes=range(1,9)):
+    for node in nodes:
+        os.system("ssh vegas-hpc%d 'pkill -SIGINT vegas_hpc_hbw'" % node)
+
+
+def Reinit(nodes=range(1,9)):
+    for k in nodes:
+        print "Killing VegasServer, hpc_hbw node:",k
+        cmd = "pkill -SIGINT vegas_hpc_hbw; pkill -f VegasServer;"
+        remoteExec(k,cmd)
+        
+        print "ipcclean",k
+        cmd = "ipcclean &> $VEGAS/logs/ipcclean.%d.log" % k
+        remoteExec(k,cmd)
+        
+        print "check guppi status",k
+        cmd = "$VEGAS_DIR/bin/check_guppi_status &> $VEGAS/logs/check_guppi_status.%d.log" % k
+        remoteExec(k,cmd)
+        
+        print "dbuf1  ",k
+        cmd = "$VEGAS_DIR/bin/check_guppi_databuf -c -i1 -n2 -s32 -t1 &> $VEGAS/logs/check_guppi_databuf1.%d.log" % k
+        remoteExec(k,cmd)
+        print "dbuf2  ",k
+        cmd = "$VEGAS_DIR/bin/check_guppi_databuf -c -i2 -n8 -s16 -t2 &> $VEGAS/logs/check_guppi_databuf2.%d.log" % k
+        remoteExec(k,cmd)
+        print "dbuf3  ",k
+        cmd = "$VEGAS_DIR/bin/check_guppi_databuf -c -i3 -n8 -s16 -t2 &> $VEGAS/logs/check_guppi_databuf3.%d.log" % k
+        remoteExec(k,cmd)
+        
+#        print "setup shmem",k
+#        cmd = "$VEGAS_DIR/bin/vegas_setup_shmem_mode01"
+#        remoteExec(k,cmd)
+        
+        print "starting vegasserver",k
+        cmd = "nohup python2.7 VegasServer.py %d &> $VEGAS/logs/VegasServer%d.log </dev/null &" % (k,k)
+        remoteExec(k,cmd)
+        print "done with node",k
