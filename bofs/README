@@ -1,0 +1,6 @@
+####
+v01_aa_ri_8r4t11f_ver102_2012_Mar_17_1554.bof - compiled with commit bdbd3921af2646e237e78681ff6831864cf12737 And the sma-wideband repository:
+url = https://github.com/sma-wideband/mlib_devel
+
+This boffile uses the ASIAA adc and has a conversion from fixed 8_0 to signed 8_7
+####
