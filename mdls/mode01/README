@@ -24,3 +24,6 @@ v01_na_ri_8r4t11f_ver104.mdl -- (TESTING) functional mode 1 containing snaps for
 v01_na_ri_8r4t11f_ver105.mdl -- (TESTING) functional mode 1 copy of ver4 with register to
 				test SSG
 
+v01_na_ri_8r4t11f_ver106.mdl -- Updated version of v01_na_ri_8r4t11f_ver102.mdl with (hopefully) 
+        correct SSG and status bit orders. Should be compatible with system.ucf constraints from 
+        ver102 for DSP, thus able to compile at full speed.
