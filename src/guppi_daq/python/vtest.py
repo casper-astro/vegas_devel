@@ -2,6 +2,9 @@
 vtest.py - convenience routines for running Vegas mode 1 testing at Green Bank
 --------
 
+*NOTE* Reinit() expects that VegasServer.py is in your home directory and that you have passwordless
+ssh access to all HPC nodes setup.
+
 I've been using this by starting ipython --pylab and then
 run -i vtest.py
 to provide all functions conveniently from the ipython prompt.
