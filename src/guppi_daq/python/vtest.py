@@ -490,13 +490,14 @@ def setupSlaves(rns=range(2,9),mss=0x2):
     for rn in rns:
         roachd[rn].write_int('ssg_master_slave_sel',mss)
 
-def execAll(cmd,*args,rns=range(1,9)):
+def execAll(cmd,*args,**kwargs):
     """
     Execute a function on each ROACH
     
     cmd : str
         Function to execute. I.e. 'listbof', 'write_int', etc
     *args : positional arguments for cmd
+    **kwargs : name based arguments for cmd. Also can contain rns (below)
     rns : list of ints
         Node numbers (1-8 for vega-hpc, 9 for tofu)    
     
@@ -505,7 +506,9 @@ def execAll(cmd,*args,rns=range(1,9)):
     execAll('write_int','acc_len',767,rns=[1,3,5])
     """
     results = {}
-    for rn, roach in roachd.items():
+    rns = kwargs.pop('rns',range(1,9))
+    for rn in rns:
+        roach = roachd[rn]
         try:
             fun = getattr(roach,cmd)
             results[rn] = fun(*args)
