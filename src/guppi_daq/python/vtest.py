@@ -392,7 +392,7 @@ def doAdcTest(bof,clks=[800,1200,1440,1500],basedir='/home/sandboxes/vegastest/d
         plt.close('all')
         
         
-def plotAdcs(rns=range(1,9),fn = None):
+def plotAdcs(rns=range(1,9),fn = None,Fs = 2880.0):
     """
     Prepare summary plots of ADC snapshots
     
@@ -402,6 +402,7 @@ def plotAdcs(rns=range(1,9),fn = None):
         Node numbers (1-8 for vega-hpc) NOTE: Does not work for node 9, tofu currently
     fn : string (optional)
         Start of file location to save plots. _hist.png etc will be appended to form final filenames
+    Fs : Adc sampling clock rate in MHz (twice the Valon value) (only for plotting PSD doesn't actually matter.)
     """
     data = {}
     for rn in rns:
@@ -436,8 +437,8 @@ def plotAdcs(rns=range(1,9),fn = None):
             hax.set_xlim(-128,128)
             hax.set_ylim(-3,3)
             spax = spaxs[rx]
-            spax.psd(x,Fs=3000.0,NFFT=256,lw=1.5,label='ADC0',color='b')
-            spax.psd(y,Fs=3000.0,NFFT=256,lw=1.5,label='ADC1',color='r')
+            spax.psd(x,Fs=Fs,NFFT=256,lw=1.5,label='ADC0',color='b')
+            spax.psd(y,Fs=Fs,NFFT=256,lw=1.5,label='ADC1',color='r')
             spax.set_ylabel('dB')
             spax.legend(loc='upper right',prop=dict(size='x-small'),title=('Roach %d' % (rx+1))) 
             
