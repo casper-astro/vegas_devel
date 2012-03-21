@@ -418,6 +418,7 @@ int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *header_addr,
     int i, num_items;
     char* pkt_payload;
     int payload_size, offset;
+    int bw = (strncmp(bw_mode, "high", 4) == 0);
 
     num_items = p->data[6]<<8 | p->data[7];
 
@@ -432,9 +433,14 @@ int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *header_addr,
                 = guppi_spead_packet_data(p)[i*8 + 3];                              //pad byte
         *((unsigned int *)(header_addr + 4))
                 = ntohl(*(unsigned int *)(guppi_spead_packet_data(p) + i*8 + 4));   //value (32 bits)
-
+        if (bw && (*((unsigned short *)(header_addr + 1)) == 0x22)) {    // 0x22 is Integration_size
+            *((unsigned int *)(header_addr + 4)) += 1;                  // for hbw modes add 1 here so FPGA doesn't have to
+        }
+//        printf("%d : %d  ",*((unsigned short *)(header_addr + 1)),*((unsigned int *)(header_addr + 4)));
         header_addr = (char*)(header_addr + 8);
     }
+//    printf("\n");
+    
 
     /* Copy payload */
     
@@ -442,7 +448,7 @@ int guppi_spead_packet_copy(struct guppi_udp_packet *p, char *header_addr,
     payload_size = guppi_spead_packet_datasize(p) - (num_items - 4) * 8;
 
     /* If high-bandwidth mode */
-    if(strncmp(bw_mode, "high", 4) == 0)
+    if(bw)
     {
         for(offset = 0; offset < payload_size; offset += 4)
         {
