@@ -26,4 +26,22 @@ v01_na_ri_8r4t11f_ver105.mdl -- (TESTING) functional mode 1 copy of ver4 with re
 
 v01_na_ri_8r4t11f_ver106.mdl -- Updated version of v01_na_ri_8r4t11f_ver102.mdl with (hopefully) 
         correct SSG and status bit orders. Should be compatible with system.ucf constraints from 
-        ver102 for DSP, thus able to compile at full speed.
+        ver102 for DSP, thus able to compile at full speed. This design has an error: the spectral
+        tick in the SSG block is connected to bit 3 of the counter, so the tick marks every 16 FPGA
+        clocks. This will be fixed in ver107
+        
+v01_na_ri_8r4t11f_ver107.mdl -- Updated version of v01_na_ri_8r4t11f_ver106.mdl 
+        * corrected spectral tick to 256 FPGA cycles. 
+        * moved LEDs to status bits that go into spead header so that it can be
+            seen if they are making it to the slaves from the master. 
+        * added gpio_oe_n ports as described on the GPIO block documentation wiki page
+            without these it seems port b was defaulting to output thus switching signals
+            were not making it into slaves.
+        * verified 2012.03.20 that slaves are able to read switching signals correctly.
+        * associated bof file has some alarming timing errors.
+        * KNOWN ISSUE: SSG reset is tied to positive edge of spead_rst which means it gets reset when
+            arm is asserted, not when the PPS comes. This should be fixed in v01_na_ri_8r4t11f_ver108.mdl
+            
+v01_na_ri_8r4t11f_ver108.mdl -- Updated version of v01_na_ri_8r4t11f_ver107.mdl
+        * corrected SSG reset. Now connected to master_rst2.
+            
