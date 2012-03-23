@@ -176,7 +176,7 @@ def setSynths(freq,rns = range(1,9)):
 subnet = 10*2**24 + 17*2**16 #10.17.0.0
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
-def setupNet(rns = range(1,9),starttap=False):
+def setupNet(rns = range(1,9),starttap=True):
     """
     Configure networking for roach and associated HPC.
     
@@ -221,6 +221,18 @@ def reset(rns = range(1,9),acc_len=768):
         
         roach.write_int('sg_sync',0x11)
 
+def getSnap64(roach,name='adcsnap'):
+    roach.write_int(name + '_ctrl',0)
+    roach.write_int(name + '_ctrl',7)
+    m = np.fromstring(roach.read(name+'_bram_msb',8192),dtype='int8')
+    l = np.fromstring(roach.read(name+'_bram_lsb',8192),dtype='int8')
+    x = np.empty((16384,),dtype='float')
+    for k in range(4):
+        x[k::8] = m[k::4]
+        x[k+4::8] = l[k::4]
+    return x
+    
+
 def getAdcSnap(roach):
     """
     get ADC snapshot from ROACHes with mainline high speed bof files
@@ -237,6 +249,7 @@ def getAdcSnap(roach):
         roach.write_int(ctrl,0)
         roach.write_int(ctrl,5)
     roach.write_int('raw_snap_trig',1)
+    print roach.read_int('adc0_snap0_addr')
     a0 = np.fromstring(roach.read('adc0_snap0_bram',8192),dtype='int8')
     a1 = np.fromstring(roach.read('adc0_snap1_bram',8192),dtype='int8')
     b0 = np.fromstring(roach.read('adc1_snap0_bram',8192),dtype='int8')
@@ -307,6 +320,15 @@ def getAdcSnap9b(roach):
         y[k::8] = b1[k::4]
         y[k+4::8] = b0[k::4]
     return x,y
+    
+def netstat(nodes=range(1,9)):
+    return [vsd[node].getParam('NETSTAT') for node in nodes]
+
+def npkt(nodes=range(1,9)):
+    return [vsd[node].getParam('NPKT') for node in nodes]
+
+def filenum(nodes=range(1,9)):
+    return [vsd[node].getParam('FILENUM') for node in nodes]
 
 def sync(rns=range(1,9)):
     """
@@ -337,6 +359,7 @@ def sync(rns=range(1,9)):
     print "Done in", (time.time()-tic)
     print "Setting STTMJD"
     mjd = astro_utils.current_MJD()
+    mjd += 1/86400.0 # add one second because mjd was requested before PPS that starts integration
     for rn in rns:
         vsd[rn].setParams(STTMJD=mjd)
     print "Done in", (time.time() - tic)
@@ -482,6 +505,31 @@ def programAll(boffile,rns = range(1,9),force=True):
             print "failed to program roach",rn
             print e
 
+def setupMasterSSG(ondur=5e-3,period=50e-3,fpgaclk=360e6,rn=1,onbits=0x04):
+    roach = roachd[rn]
+    acclen = roach.read_int('acc_len') + 1
+    inttime = acclen*256/fpgaclk
+    print "integration time: %.3f mus" % (inttime*1e6)
+    oncyc = int(ondur/inttime)
+    if oncyc < 1:
+        oncyc = 1
+        print "warning: on time less than one integration, increased to 1 integration"
+    percyc = int(period/inttime)
+    offcyc = percyc - oncyc
+    oncyc = oncyc * acclen
+    offcyc = offcyc * acclen
+    print "on:",oncyc,"off:",offcyc
+    print "ontime:",(oncyc*256/fpgaclk),"offtime:",(offcyc*256/fpgaclk)
+    for k in range(1024):
+        roach.write_int('ssg_lut_bram',0x1f,offset=k)
+    offval = offcyc*32
+    print "off value: %08x" % offval
+    roach.write_int('ssg_lut_bram',offval,offset=0)
+    onval = oncyc*32 + onbits
+    print "on value: %08x" % onval
+    roach.write_int('ssg_lut_bram',onval,offset=1)
+    roach.write_int('ssg_length',oncyc + offcyc)
+    
 def setupSlaves(rns=range(2,9),mss=0x2):
     """
     Configure given ROACHes as switching signal slaves.
@@ -545,6 +593,30 @@ def checkClocks():
 
 
 cfs = np.array([18.55,19.8,21.05,22.3,23.55,24.8,18.55,17.0])*1e3 - 775 + 720.0
+
+#oops i forgot to flip the order fo the bands to match anish's script
+#cfs = np.array([
+#25.22500000000000,
+#23.92703125000000,
+#22.62906250000000,
+#21.33109375000000,
+#20.03312500000000, 
+#18.73515625000000,
+#18.73515625000000,
+#18.73515625000000])*1e3 + 775 - 720 #these are andrew's center frequencies already in GHz, and for a band center at 775 MHz
+
+#here they are flipped to the correct order we hope.
+cfs = np.array([
+18.73515625000000,
+20.03312500000000, 
+21.33109375000000,
+22.62906250000000,
+23.92703125000000,
+25.22500000000000,
+18.73515625000000,
+18.73515625000000])*1e3 + 775 - 720 #these are andrew's center frequencies already in GHz, and for a band center at 775 MHz
+
+
 cfs = cfs*1e6
 def setupFakePulsar(nodes=range(1,9),fpgaclk=360e6,frqs=cfs,sideband=-1):
     """
@@ -570,10 +642,11 @@ def setupFakePulsar(nodes=range(1,9),fpgaclk=360e6,frqs=cfs,sideband=-1):
                             NCHAN=1024,
                             EXPOSURE=1e-6,
                             SUB0FREQ=frqd[node],
-                            OBSFREQ=frqd[node],
                             CHAN_BW = pfb_rate,
                             FPGACLK = fpgaclk
                             ) #exposure should be ~0 to get every single spectrum
+                            #removed OBSFREQ=frqd[node] since OBSFREQ is clobbered by gbtstatus
+
         
     pass
 def checkNTP(nodes=range(1,9)):
@@ -590,7 +663,7 @@ def checkNTP(nodes=range(1,9)):
     for node,t in tset.items():
         print "Node",node, " delta : ",(t0-t)
         
-def startHPC(nodes=range(1,9),basedir='/mnt/bdata1'):
+def startHPC(nodes=range(1,9),basedir='/mnt/bdata1',hpcexe='vegas_hpc_hbw'):
     """
     Start the vegas_hpc_hbw code on hpc nodes
     
@@ -611,7 +684,7 @@ def startHPC(nodes=range(1,9),basedir='/mnt/bdata1'):
             nodename = 'tofu'
         else:
             nodename = 'vegas-hpc%d' % node
-        cmd = "ssh %s 'source myvegas.bash; pkill -SIGINT vegas_hpc_hbw; touch $VEGAS/logs/node%d_hpc_hbw.log; chmod a+rw $VEGAS/logs/node%d_hpc_hbw.log; mkdir %s; chmod a+rwx %s; nohup vegas_hpc_hbw &> $VEGAS/logs/node%d_hpc_hbw.log < /dev/null &'" % (nodename,node,node,dname,dname,node)
+        cmd = "ssh %s 'source myvegas.bash; pkill -SIGINT %s; touch $VEGAS/logs/node%d_hpc_hbw.log; chmod a+rw $VEGAS/logs/node%d_hpc_hbw.log; mkdir %s; chmod a+rwx %s; nohup %s &> $VEGAS/logs/node%d_hpc_hbw.log < /dev/null &'" % (nodename,hpcexe,node,node,dname,dname,hpcexe,node)
         print cmd
         os.system(cmd)
 	
