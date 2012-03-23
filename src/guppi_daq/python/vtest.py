@@ -118,7 +118,7 @@ def remoteExecAll(cmd,nodes=range(1,9)):
 
 if 'vsd' not in globals():
     vsd = {}
-for rn in range(1,10):
+for rn in range(1,9):
     rv = 'vs%d' % rn #each VegasServer will be accessed by vs1, vs2, etc
     if rv not in globals():
         try:
@@ -134,7 +134,7 @@ vses = vsd.values()
 
 if 'roachd' not in globals():
     roachd = {}
-for rn in range(1,10):
+for rn in range(1,9):
     rv = 'r%d' % rn #each roach will be accessed by r1, r2, etc
     if rv not in globals():
         try:
