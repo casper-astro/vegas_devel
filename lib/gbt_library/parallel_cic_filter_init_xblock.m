@@ -101,6 +101,9 @@ for i =1:n_outputs
     outports{i} = xOutport(['out',num2str(i)]);
 end
 
+sync_in = xInport('sync_in');
+sync_out = xOutport('sync_out');
+
 n_ins=cell(1,len+1);
 n_ins{1} = n_inputs;
 ninputs = n_inputs;
@@ -136,8 +139,10 @@ stage_blks=cell(1,len);
 stage_config = cell(1,len);
 % clk_rates = cell(1,len+1);
 % clk_rates{1} = input_clk_rate;
+stage_sync_outs = cell(1,len);
 for i=1:len
    %terminator_ins{i}=xSignal(['ter',num2str(i)]);
+   stage_sync_outs{i} = xSignal(['stage_sync_out',num2str(i)]);
    stage_config{i}.source = str2func('parallel_polynomial_dec_stage_init_xblock');
    stage_config{i}.name = ['Stage',num2str(i),'_dec',num2str(f(i))];
    stage_blks{i}=xBlock(stage_config{i}(1), ...
@@ -154,14 +159,16 @@ for i=1:len
                         'bin_pt', bin_pt,...
                         'reduced_crtc_path', reduced_crtc_path, ...
                         'recursive', recursives(i)}, ...
-                          sigs{i}, ...
-                          sigs{i+1});
+                          [sigs{i},{sync_in}], ...
+                          [sigs{i+1},stage_sync_outs(i)]);
                       
    n_bits = ceil(n_stages*log2(f(i)*1) + n_bits);
    
   % clk_rates{i+1} = clk_rates{i}*f(i);
    disp(['stage ',num2str(i),' completed!']);
 end
+
+sync_out.bind(stage_sync_outs{len});
 
 % for i =1:len
 %     terminators{i} =xBlock(struct('source', 'Terminator', 'name', ['Terminator',num2str(i)]), ...
