@@ -35,6 +35,7 @@
 % reduced_crtc_path:   Whether to use the reduced critical path structure;
 %                       this designed is abandoned since we don't want the
 %                       add_latency to be zero, so it's forced to be 'off'
+% This CIC doesn't use the xilinx Down Sample block
 function parallel_polynomial_dec_stage_init_xblock(blk, varargin)
 
 defaults = {'n_stages', 3, ...
@@ -47,7 +48,8 @@ defaults = {'n_stages', 3, ...
             'bin_pt', 16, ...
             'reduced_crtc_path', 'off', ...
             'recursive', 1, ...
-            'input_clk_rate', 4};
+            'input_clk_rate', 4, ...
+            'explicit_delay_length', 1};
 
 
 n_inputs = get_var('n_inputs', 'defaults', defaults, varargin{:});
@@ -60,6 +62,7 @@ polyphase = get_var('polyphase', 'defaults', defaults, varargin{:});
 recursive = get_var('recursive', 'defaults', defaults, varargin{:});
 dec2_halfout = get_var('dec2_halfout', 'defaults', defaults, varargin{:});
 input_clk_rate = get_var('input_clk_rate', 'defaults', defaults, varargin{:});
+explicit_delay_length = get_var('explicit_delay_length', 'defaults', defaults, varargin{:});
 reduced_crtc_path = get_var('reduced_crtc_path', 'defaults', defaults, varargin{:});   
 reduced_crtc_path = 'off';
         
@@ -71,26 +74,44 @@ if ~isprime(dec_rate) && dec_rate~=1
     return;
 end
 
+%%%% put this in parallel_cic_filter_init_xblock.m?
+if n_inputs == 1 && recursive
+    diff_length = dec_rate;
+elseif recursive && input_clk_rate ~=1
+    if dec_rate ==2 && strcmp(dec2_halfout,'on')
+        diff_length = 1;
+    else
+        recursive = 0;  % force to be non-recursive
+    end
+else
+    diff_length = 1;
+end
+diff_length
+
 if dec_rate==2 
     %parallel_polynomial_dec2_stage_init_xblock(m,n_inputs,polyphase,add_latency,0, n_bits, bin_pt,strcmp(dec2_halfout,'on'));
 
     %parallel_polynomial_dec2_stage_init_xblock(m,n_inputs,polyphase,add_latency,0, n_bits, bin_pt,dec2_halfout, recursive);
     if recursive
         func_handler = @parallel_dec2_stage_recursive_init_xblock;
-        func_handler(blk, n_stages,n_inputs,add_latency,0, n_bits, bin_pt,dec2_halfout, reduced_crtc_path, input_clk_rate); 
+        func_handler(blk, n_stages,n_inputs,add_latency,0, n_bits, bin_pt,dec2_halfout, reduced_crtc_path,...
+            input_clk_rate,diff_length,explicit_delay_length); 
     else
         func_handler = @parallel_dec2_stage_nonrecursive_init_xblock;
-        func_handler(blk, n_stages,n_inputs,polyphase,add_latency,0, n_bits, bin_pt,dec2_halfout, input_clk_rate);
+        func_handler(blk, n_stages,n_inputs,polyphase,add_latency,0, n_bits, bin_pt,dec2_halfout,...
+            input_clk_rate,explicit_delay_length);
     end
 
 else
     
     if recursive
         func_handler = @parallel_decN_stage_recursive_init_xblock;
-        func_handler(blk,n_stages,dec_rate, n_inputs,add_latency, n_bits, bin_pt,reduced_crtc_path, input_clk_rate);
+        func_handler(blk,n_stages,dec_rate, n_inputs,add_latency, n_bits, bin_pt,reduced_crtc_path,...
+            input_clk_rate, diff_length,explicit_delay_length);
     else
         func_handler = @parallel_decN_stage_nonrecursive_init_xblock;
-        func_handler(blk, n_stages,dec_rate,n_inputs,polyphase,add_latency,0, n_bits, bin_pt, input_clk_rate); 
+        func_handler(blk, n_stages,dec_rate,n_inputs,polyphase,add_latency,0, n_bits, bin_pt, ...
+            input_clk_rate,explicit_delay_length); 
     end
 end
 
@@ -103,7 +124,8 @@ end
 
 
 
-function parallel_dec2_stage_nonrecursive_init_xblock(blk, n_stages,n_inputs,polyphase,add_latency,skip, n_bits, bin_pt,dec2_halfout, input_clk_rate)
+function parallel_dec2_stage_nonrecursive_init_xblock(blk, n_stages,n_inputs,polyphase,...
+    add_latency,skip, n_bits, bin_pt,dec2_halfout, input_clk_rate, explicit_delay_length)
 
 coeffs = zeros(1,n_stages+1);
 for i = 1:n_stages+1
@@ -115,7 +137,8 @@ if n_inputs==1 && strcmp(polyphase,'off') % only one input
     
    
     %parallel_polynomial_decN_stage_init_xblock(n_stages,2,n_inputs,polyphase,add_latency,skip, n_bits, bin_pt)
-    parallel_decN_stage_nonrecursive_init_xblock(blk, n_stages, 2,n_inputs,polyphase,add_latency,skip, n_bits, bin_pt, input_clk_rate)
+    parallel_decN_stage_nonrecursive_init_xblock(blk, n_stages, 2,n_inputs,polyphase,add_latency,skip, n_bits, bin_pt, ...
+        input_clk_rate, explicit_delay_length)
 
 
 elseif n_inputs ==1 && strcmp(polyphase,'on')
@@ -288,7 +311,8 @@ end
 end
 
 
-function parallel_dec2_stage_recursive_init_xblock(blk,n_stages,n_inputs,add_latency,skip, input_bits, bin_pt,dec2_halfout, reduced_crtc_path, input_clk_rate)
+function parallel_dec2_stage_recursive_init_xblock(blk,n_stages,n_inputs,add_latency,skip, ...
+    input_bits, bin_pt,dec2_halfout, reduced_crtc_path, input_clk_rate,diff_length)
 
 coeffs = zeros(1,n_stages+1);
 for i = 1:n_stages+1
@@ -297,28 +321,47 @@ end
  
 n_bits = ceil(n_stages*log2(2*1) + input_bits);
 
-
 if n_inputs ==1 && strcmp(reduced_crtc_path, 'off')
     
     inport = xInport('in');
     outport = xOutport('out');
     
-    if add_latency >0
-        on_off_setting = 'on';
-    else
-        on_off_setting = 'off';
+    % draw integrator section
+    int_ins = cell(1,n_stages+1);
+    int_blks = cell(1,n_stages);
+    int_ins{1} = inport;
+    for i =1:n_stages
+        int_ins{i+1} = xSignal(['int_in',num2str(i+1)]);
+        int_blks{i} = xBlock(struct('source','xbsIndex/Accumulator','name',['Accumulator',num2str(i)]),...
+                            struct('n_bits', n_bits, ...
+                                    'rst', 'off', ...
+                                    'overflow', 'Wrap'), ...
+                            {int_ins{i}}, ...
+                            {int_ins{i+1}});
     end
-    cic_blk = xBlock(struct('source','xrbsDSP_r4/CIC Filter','name','cic_blk'), ...
-                     {'input_bitwidth', input_bits,  ...
-                      'input_binpt', bin_pt, ...
-                      'filter_type', 'Decimator', ...
-                      'rate_change', 2, ...
-                      'stages', n_stages, ...
-                      'm', 1, ...
-                      'pipeline', on_off_setting}, ...
-                      {inport}, ...
-                      {outport});
-    disp('what''s going on');
+    
+    % add down sampler
+    ds_out = xSignal('ds_out');
+    downsampler = xBlock(struct('source', str2func('downsample_init_xblock'), 'name', 'Down_sample1'), ...
+                          {[blk,'/','Down_sample1'],'dec_rate', 2,'input_clk_rate',input_clk_rate},...
+                      {int_ins{n_stages+1}}, ...
+                      {ds_out});
+                  
+    % add comb section
+    comb_ins = cell(1,n_stages+1);
+    comb_blks = cell(1,n_stages+1);
+    comb_ins{1} = ds_out;
+    for i = 1:n_stages
+        comb_ins{i+1} = xSignal(['comb_in',num2str(i+1)]);
+        comb_blks{i} = xBlock(struct('source',str2func('parallel_differentiator_init_xblock'), ...
+                                    'name',['comb_',num2str(i)]), ...
+                              {strcat(blk,['/comb_',num2str(i)]), ...
+                               'n_inputs', 1,'n_bits',n_bits, 'bin_pt',bin_pt, 'diff_length', diff_length, 'latency',add_latency}, ...
+                               {ds_out, comb_ins{i}}, ...
+                               {[], comb_ins{i+1}});
+    end
+    
+    outport.bind(comb_ins{n_stages+1});
                                                               
 elseif n_inputs ==1 && strcmp(reduced_crtc_path, 'on')
     
@@ -353,7 +396,7 @@ elseif n_inputs ==1 && strcmp(reduced_crtc_path, 'on')
         comb_blks{i} = xBlock(struct('source',str2func('parallel_differentiator_init_xblock'), ...
                                     'name',['comb_',num2str(i)]), ...
                               {strcat(blk,['/comb_',num2str(i)]), ...
-                               'n_inputs', 1,'n_bits',n_bits, 'bin_pt',bin_pt, 'diff_length',1, 'latency',add_latency}, ...
+                               'n_inputs', 1,'n_bits',n_bits, 'bin_pt',bin_pt, 'diff_length', diff_length, 'latency',add_latency}, ...
                                {ds_out, comb_ins{i}}, ...
                                {[], comb_ins{i+1}});
     end
@@ -414,7 +457,7 @@ elseif strcmp(dec2_halfout,'on')
                                      'name',['comb_',num2str(i)]), ...
                               {strcat(blk,['/comb_',num2str(i)]), ...
                                'n_inputs', n_inputs/2,'n_bits', n_bits, 'bin_pt', bin_pt, ...
-                               'diff_length', 1, 'latency', add_latency}, ...
+                               'diff_length', diff_length, 'latency', add_latency}, ...
                                [{comb_ins{i}{1}}, comb_ins{i}], ...   % the sync ports are kind of awkward
                                [{[]}, comb_ins{i+1}]);
     end
@@ -481,7 +524,7 @@ else
                                     'name',['comb_',num2str(i)]), ...
                               {strcat(blk,['/comb_',num2str(i)]), ...
                                'n_inputs', n_inputs, 'n_bits', n_bits, 'bin_pt', bin_pt, ...
-                               'diff_length', 1, 'latency', add_latency}, ...
+                               'diff_length', diff_length, 'latency', add_latency}, ...
                                [{comb_ins{i}{1}}, comb_ins{i}], ...   % the sync ports are kind of awkward
                                [{[]}, comb_ins{i+1}]);
     end
@@ -501,7 +544,8 @@ end
 
 end
 
-function parallel_decN_stage_nonrecursive_init_xblock(blk, m,dec_rate,n_inputs,polyphase,add_latency,skip, n_bits, bin_pt, input_clk_rate)
+function parallel_decN_stage_nonrecursive_init_xblock(blk, m,dec_rate,n_inputs,polyphase, ...
+    add_latency,skip, n_bits, bin_pt, input_clk_rate, explicit_delay_length)
 
 coeffs = cic_coefficient_generator(m,dec_rate);
 
@@ -533,7 +577,7 @@ if n_inputs==1 && strcmp(polyphase,'off') % only one input
         for j = 1:dec_rate-1
             delay_outports{i,j+1} = xSignal(['delay_out',num2str(i),'_',num2str(j+1)]);
             delay_blks{i,j} = xBlock(struct('source','Delay','name', ['delay',num2str(i),'_',num2str(j)]), ...
-                              struct('latency', 1), ...   
+                              struct('latency', explicit_delay_length), ...   % to solve the clk rate mess caused by manual downsampling
                               {delay_outports{i,j}}, ...
                               {delay_outports{i,j+1}});
         end
@@ -675,7 +719,8 @@ end
 
 end
 
-function parallel_decN_stage_recursive_init_xblock(blk,n_stages,rate_change, n_inputs,add_latency, input_bits, bin_pt, reduced_crtc_path, input_clk_rate)
+function parallel_decN_stage_recursive_init_xblock(blk,n_stages,rate_change, n_inputs, ...
+    add_latency, input_bits, bin_pt, reduced_crtc_path, input_clk_rate, diff_length)
 % rate_change is just dec_rate, as the xilinx CIC block use this
 coeffs = zeros(1,n_stages+1);
 
@@ -687,20 +732,46 @@ n_bits = ceil(n_stages*log2(rate_change*1) + input_bits);
  
 if n_inputs ==1 && strcmp(reduced_crtc_path, 'off')
     
+        
     inport = xInport('in');
     outport = xOutport('out');
     
-    on_off = {'off','on'};
-    cic_blk = xBlock(struct('source','xrbsDSP_r4/CIC Filter','name','cic_blk'), ...
-                     {'input_bitwidth', input_bits,  ...
-                      'input_binpt', bin_pt, ...
-                      'filter_type', 'Decimator', ...
-                      'rate_change', rate_change, ...
-                      'stages', n_stages, ...
-                      'm', 1, ...
-                      'pipeline', on_off{(add_latency>0)+1}}, ...
-                      {inport}, ...
-                      {outport});
+    % draw integrator section
+    int_ins = cell(1,n_stages+1);
+    int_blks = cell(1,n_stages);
+    int_ins{1} = inport;
+    for i =1:n_stages
+        int_ins{i+1} = xSignal(['int_in',num2str(i+1)]);
+        int_blks{i} = xBlock(struct('source','xbsIndex/Accumulator','name',['Accumulator',num2str(i)]),...
+                            struct('n_bits', n_bits, ...
+                                    'rst', 'off', ...
+                                    'overflow', 'Wrap'), ...
+                            {int_ins{i}}, ...
+                            {int_ins{i+1}});
+    end
+    
+    % add down sampler
+    ds_out = xSignal('ds_out');
+    downsampler = xBlock(struct('source', str2func('downsample_init_xblock'), 'name', 'Down_sample1'), ...
+                          {[blk,'/','Down_sample1'],'dec_rate', rate_change,'input_clk_rate',input_clk_rate},...
+                      {int_ins{n_stages+1}}, ...
+                      {ds_out});
+                  
+    % add comb section
+    comb_ins = cell(1,n_stages+1);
+    comb_blks = cell(1,n_stages+1);
+    comb_ins{1} = ds_out;
+    for i = 1:n_stages
+        comb_ins{i+1} = xSignal(['comb_in',num2str(i+1)]);
+        comb_blks{i} = xBlock(struct('source',str2func('parallel_differentiator_init_xblock'), ...
+                                    'name',['comb_',num2str(i)]), ...
+                              {strcat(blk,['/comb_',num2str(i)]), ...
+                               'n_inputs', 1,'n_bits',n_bits, 'bin_pt',bin_pt, 'diff_length', diff_length, 'latency',add_latency}, ...
+                               {ds_out, comb_ins{i}}, ...
+                               {[], comb_ins{i+1}});
+    end
+    
+    outport.bind(comb_ins{n_stages+1});
                                                               
 elseif n_inputs ==1 && strcmp(reduced_crtc_path, 'on')
     
@@ -735,7 +806,7 @@ elseif n_inputs ==1 && strcmp(reduced_crtc_path, 'on')
         comb_blks{i} = xBlock(struct('source',str2func('parallel_differentiator_init_xblock'), ...
                                     'name',['comb_',num2str(i)]), ...
                               {strcat(blk,['/comb_',num2str(i)]), ...
-                               'n_inputs', 1,'n_bits', n_bits, 'bin_pt', bin_pt, 'diff_length', 1, 'latency', add_latency}, ...
+                               'n_inputs', input_clk_rate,'n_bits', n_bits, 'bin_pt', bin_pt, 'diff_length', diff_length, 'latency', add_latency}, ...
                                {[], comb_ins{i}}, ...
                                {[], comb_ins{i+1}});   % the sync ports are kind of awkward
     end
@@ -805,7 +876,7 @@ else
                                     'name',['comb_',num2str(i)]), ...
                               {strcat(blk,['/comb_',num2str(i)]), ...
                                'n_inputs', n_inputs, 'n_bits', n_bits, 'bin_pt', bin_pt, ...
-                               'diff_length', 1, 'latency', add_latency}, ...
+                               'diff_length', diff_length, 'latency', add_latency}, ...
                                [{comb_sync_ins{i}}, comb_ins{i}], ...
                                [{comb_sync_ins{i+1}}, comb_ins{i+1}]);     % the sync ports are kind of awkward
     end

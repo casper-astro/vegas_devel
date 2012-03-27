@@ -1,6 +1,6 @@
 %% Jan 19, 2012
 %% Jan 20, 2012
-%% This script works with cic_filter_test2.mdl to test the behavior of the
+%% This script works with cic_filter_testing_2.mdl to test the behavior of the
 %% multi-stage parallel cic filter
 %% 8 parallel input in this case
 %%

@@ -134,8 +134,9 @@ end
 
 stage_blks=cell(1,len);
 stage_config = cell(1,len);
-% clk_rates = cell(1,len+1);
-% clk_rates{1} = input_clk_rate;
+clk_rates = cell(1,len+1);
+clk_rates{1} = input_clk_rate;
+explicit_delay_length = 1;
 for i=1:len
    %terminator_ins{i}=xSignal(['ter',num2str(i)]);
    stage_config{i}.source = str2func('parallel_polynomial_dec_stage_init_xblock');
@@ -145,7 +146,8 @@ for i=1:len
                        'n_stages',n_stages, ...
                         'dec_rate', f(i), ...
                         'n_inputs', n_ins{i},...
-                        'input_clk_rate', input_clk_rate, ...  %clk_rates{i}, ...
+                        'input_clk_rate',clk_rates{i}, ... %   input_clk_rate, ... 
+                        'explicit_delay_length', explicit_delay_length, ...
                         'polyphase', polyphase,...
                         'add_latency',add_latency,...
                         'dec2_halfout', dec2_halfout, ...
@@ -157,9 +159,14 @@ for i=1:len
                           sigs{i}, ...
                           sigs{i+1});
                       
-   n_bits = ceil(n_stages*log2(f(i)*1) + n_bits);
-   
-  % clk_rates{i+1} = clk_rates{i}*f(i);
+    n_bits = ceil(n_stages*log2(f(i)*1) + n_bits);
+   if n_ins{i}~=1 && f(i)==2 && strcmp(dec2_halfout,'on')
+       clk_rates{i+1} = clk_rates{i};
+   else
+       clk_rates{i+1} = clk_rates{i}*f(i);
+       explicit_delay_length = explicit_delay_length*f(i);
+   end
+   clk_rates{i}
    disp(['stage ',num2str(i),' completed!']);
 end
 
