@@ -104,6 +104,9 @@ void guppi_sdfits_thread(void *_args) {
     char *ptr;
     char tmpstr[256];
     int scan_finished=0, first_heap_in_blk, old_filenum;
+    int num_exposures_written = 0;
+    int old_integ_num = -1;
+
     signal(SIGINT, cc);
     do {
         /* Note waiting status */
@@ -167,7 +170,19 @@ void guppi_sdfits_thread(void *_args) {
             if(sf.filenum != old_filenum)
                 hputi4(st.buf, "FILENUM", sf.filenum);
 
+            /* If a new integration number, increment the number of exposures written */
+            if(data_cols->integ_num != old_integ_num)
+            {
+                num_exposures_written += 1;
+                old_integ_num = data_cols->integ_num;
+            }
+
         }
+
+        /* Indicate number of exposures written */
+        guppi_status_lock_safe(&st);
+        hputi4(st.buf, "DSKEXPWR", num_exposures_written);
+        guppi_status_unlock_safe(&st);
 
         /* For debugging... */
         if (gp.drop_frac > 0.0) {
