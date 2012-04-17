@@ -124,7 +124,7 @@ void guppi_accum_thread(void *_args) {
     float **accumulator;      //indexed accumulator[accum_id][chan][subband][stokes]
     char accum_dirty[NUM_SW_STATES];
     struct sdfits_data_columns data_cols[NUM_SW_STATES];
-    int payload_type;
+    int payload_type = 0;
     int i, j, k, rv;
 
     /* Get arguments */
@@ -223,8 +223,8 @@ void guppi_accum_thread(void *_args) {
     int first=1;
     float reqd_exposure=0;
     double accum_time=0;
-    int integ_num;
-    float pfb_rate;
+    int integ_num = 0;
+    float pfb_rate = 0.0;
     int heap, accumid, struct_offset, array_offset;
     char *hdr_in=NULL, *hdr_out=NULL;
     struct databuf_index *index_in, *index_out;
@@ -267,7 +267,7 @@ void guppi_accum_thread(void *_args) {
 
             /* Read required exposure and PFB rate from status shared memory */
             reqd_exposure = sf.data_columns.exposure;
-            pfb_rate = sf.hdr.efsampfr / (2 * sf.hdr.nchan);
+            pfb_rate = abs(sf.hdr.efsampfr) / (2 * sf.hdr.nchan);
 
             /* Initialise the index in the output block */
             index_out = (struct databuf_index*)guppi_databuf_index(db_out, curblock_out);

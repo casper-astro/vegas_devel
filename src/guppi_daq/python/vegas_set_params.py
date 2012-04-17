@@ -275,7 +275,6 @@ if (opt.update == False):
     g.update("BMIN", 0)
     g.update("BPA", 0)
     g.update("EXPOSURE", 1e0)
-    g.update("PFBRATE", 10e6)
     g.update("SUB0FREQ", 1e9)
     g.update("SUB1FREQ", 1e9)
     g.update("SUB2FREQ", 1e9)
