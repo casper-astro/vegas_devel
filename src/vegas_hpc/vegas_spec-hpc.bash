@@ -1,13 +1,11 @@
 #!/bin/bash
-# Set environment variables for GUPPI, bash version
-# Lines that have been commented out are lines that were either modified
-# or removed by Simon Scott, to allow installation on otto.
+# Set environment variables for VEGAS, bash version
 echo "This script is specific to spec-hpc-xx"
 echo "Setting GUPPI, VEGAS_DIR, CUDA, PYSLALIB, VEGAS_INCL/BIN/LIB, PATH, PYTHONPATH and LD_LIBRARY_PATH for VEGAS..."
 
 # Note: user must set the VEGAS variable in their bash startup script
 
-export VEGAS_DIR=$VEGAS/guppi_daq
+export VEGAS_DIR=$VEGAS/vegas_hpc
 
 export CUDA=/opt/local/cuda
 
