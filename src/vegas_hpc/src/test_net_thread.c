@@ -14,13 +14,13 @@
 #include <getopt.h>
 #include <errno.h>
 
-#include "guppi_error.h"
-#include "guppi_status.h"
-#include "guppi_databuf.h"
-#include "guppi_params.h"
+#include "vegas_error.h"
+#include "vegas_status.h"
+#include "vegas_databuf.h"
+#include "vegas_params.h"
 
-#include "guppi_thread_main.h"
-#include "guppi_defines.h"
+#include "vegas_thread_main.h"
+#include "vegas_defines.h"
 
 void usage() {
     fprintf(stderr,
@@ -29,14 +29,14 @@ void usage() {
             "Options:\n"
             "  -h, --help        This message\n"
             "  -d, --disk        Write raw data to disk (default no)\n"
-            "  -o, --only_net    Run only guppi_net_thread\n"
+            "  -o, --only_net    Run only vegas_net_thread\n"
            );
 }
 
 /* Thread declarations */
-void *guppi_net_thread(void *_up);
-void *guppi_rawdisk_thread(void *args);
-void *guppi_null_thread(void *args);
+void *vegas_net_thread(void *_up);
+void *vegas_rawdisk_thread(void *args);
+void *vegas_null_thread(void *args);
 
 int main(int argc, char *argv[]) {
 
@@ -65,39 +65,39 @@ int main(int argc, char *argv[]) {
     }
 
     /* Net thread args */
-    struct guppi_thread_args net_args;
-    guppi_thread_args_init(&net_args);
+    struct vegas_thread_args net_args;
+    vegas_thread_args_init(&net_args);
     net_args.output_buffer = 1;
 
     /* Init shared mem */
-    struct guppi_status stat;
-    struct guppi_databuf *dbuf=NULL;
-    int rv = guppi_status_attach(&stat);
-    if (rv!=GUPPI_OK) {
-        fprintf(stderr, "Error connecting to guppi_status\n");
+    struct vegas_status stat;
+    struct vegas_databuf *dbuf=NULL;
+    int rv = vegas_status_attach(&stat);
+    if (rv!=VEGAS_OK) {
+        fprintf(stderr, "Error connecting to vegas_status\n");
         exit(1);
     }
-    dbuf = guppi_databuf_attach(net_args.output_buffer);
+    dbuf = vegas_databuf_attach(net_args.output_buffer);
     /* If attach fails, first try to create the databuf */
     if (dbuf==NULL) 
 #ifdef NEW_GBT
-        dbuf = guppi_databuf_create(24, 32*1024*1024, net_args.output_buffer, CPU_INPUT_BUF);
+        dbuf = vegas_databuf_create(24, 32*1024*1024, net_args.output_buffer, CPU_INPUT_BUF);
 #else
-        dbuf = guppi_databuf_create(24, 32*1024*1024, net_args.output_buffer);
+        dbuf = vegas_databuf_create(24, 32*1024*1024, net_args.output_buffer);
 #endif
      /* If that also fails, exit */
     if (dbuf==NULL) {
-        fprintf(stderr, "Error connecting to guppi_databuf\n");
+        fprintf(stderr, "Error connecting to vegas_databuf\n");
         exit(1);
     }
-    guppi_databuf_clear(dbuf);
+    vegas_databuf_clear(dbuf);
 
     run=1;
     signal(SIGINT, cc);
 
     /* Launch net thread */
     pthread_t net_thread_id;
-    rv = pthread_create(&net_thread_id, NULL, guppi_net_thread,
+    rv = pthread_create(&net_thread_id, NULL, vegas_net_thread,
             (void *)&net_args);
     if (rv) { 
         fprintf(stderr, "Error creating net thread.\n");
@@ -106,16 +106,16 @@ int main(int argc, char *argv[]) {
     }
 
     /* Launch raw disk (or null) thread */
-    struct guppi_thread_args null_args;
-    guppi_thread_args_init(&null_args);
+    struct vegas_thread_args null_args;
+    vegas_thread_args_init(&null_args);
     null_args.input_buffer = net_args.output_buffer;
     pthread_t disk_thread_id=0;
     if (only_net==0) {
         if (disk)
-            rv = pthread_create(&disk_thread_id, NULL, guppi_rawdisk_thread, 
+            rv = pthread_create(&disk_thread_id, NULL, vegas_rawdisk_thread, 
                     (void *)&null_args);
         else
-            rv = pthread_create(&disk_thread_id, NULL, guppi_null_thread, 
+            rv = pthread_create(&disk_thread_id, NULL, vegas_null_thread, 
                     (void *)&null_args);
         if (rv) { 
             fprintf(stderr, "Error creating null thread.\n");
@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
         printf("Joined disk thread\n"); fflush(stdout); fflush(stderr);
     }
 
-    guppi_thread_args_destroy(&null_args);
+    vegas_thread_args_destroy(&null_args);
 
     exit(0);
 }

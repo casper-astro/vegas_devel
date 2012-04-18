@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-"""GUPPI DAQ package
+"""VEGAS HPC package
 
-Data acquisition Python package for the Green Bank Ultimate Pulsar Processing
-Instrument (GUPPI).
+Data acquisition Python package for VEGAS.
 """
 
 from distutils.core import setup, Extension
@@ -14,10 +13,10 @@ srcdir = 'python'
 doclines = __doc__.split("\n")
 
 setup(
-    name        = 'guppi_daq'
+    name        = 'vegas_hpc'
   , version     = '0.1'
-  , packages    = ['guppi_daq']
-  , package_dir = {'guppi_daq' : srcdir}
+  , packages    = ['vegas_hpc']
+  , package_dir = {'vegas_hpc' : srcdir}
   , maintainer = "NRAO"
   , ext_modules=[Extension('_possem',
                            [os.path.join(srcdir, 'possem.i')])]

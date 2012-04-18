@@ -1,5 +1,5 @@
 import os, sys
-from guppi_utils import *
+from vegas_utils import *
 from astro_utils import current_MJD
 from optparse import OptionParser
 
@@ -38,7 +38,7 @@ par.add_option("-D", "--default", dest="default",
         help="Use all default values",
         action="store_true", default=True)
 par.add_option("-f", "--force", dest="force",
-        help="Force guppi_set_params to run even if unsafe",
+        help="Force vegas_set_params to run even if unsafe",
         action="store_true", default=False)
 par.add_option("-c", "--cal", dest="cal", 
                help="Setup for cal scan (folding mode)",
@@ -190,7 +190,7 @@ par.add_option("--fake", dest="fake",
 if (len(arg)>0):
     par.print_help()
     print
-    print "guppi_set_params: Unrecognized command line values", arg
+    print "vegas_set_params: Unrecognized command line values", arg
     print
     sys.exit(0)
 
@@ -198,19 +198,19 @@ if (len(arg)>0):
 if (nargs==0):
     par.print_help()
     print 
-    print "guppi_set_params: No command line options were given, exiting."
+    print "vegas_set_params: No command line options were given, exiting."
     print "  Either specifiy some options, or to use all default parameter" 
     print "  values, run with the -D flag."
     print
     sys.exit(0)
 
 # Check for ongoing observations
-if (os.popen("pgrep guppi_daq").read() != ""):
+if (os.popen("pgrep vegas_hpc").read() != ""):
     if (opt.force):
         print "Warning: Proceeding to set params even though datataking is currently running!"
     else:
         print """
-guppi_set_params: A GUPPI datataking process appears to be running, exiting.
+vegas_set_params: A VEGAS datataking process appears to be running, exiting.
   If you really want to change the parameters, run again with the --force 
   option.  Note that this will likely cause problems with the current 
   observation.
@@ -226,7 +226,7 @@ if (opt.fake):
     opt.gbt = False
 
 # Attach to status shared mem
-g = guppi_status()
+g = vegas_status()
 
 # read what's currently in there
 g.read()
@@ -354,7 +354,7 @@ g.write()
 
 # Base file name
 if (opt.cal):
-    base = "guppi_%5d_%s_%04d_cal" % (g['STTMJD'], 
+    base = "vegas_%5d_%s_%04d_cal" % (g['STTMJD'], 
             g['SRC_NAME'], g['SCANNUM'])
 else:
     base = "vegas_%5d_%s_%04d" % (g['STTMJD'], 

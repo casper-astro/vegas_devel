@@ -18,16 +18,16 @@
 #include <sys/types.h>
 
 #include "fitshead.h"
-#include "guppi_params.h"
-#include "guppi_error.h"
-#include "guppi_status.h"
-#include "guppi_databuf.h"
-#include "guppi_udp.h"
-#include "guppi_time.h"
+#include "vegas_params.h"
+#include "vegas_error.h"
+#include "vegas_status.h"
+#include "vegas_databuf.h"
+#include "vegas_udp.h"
+#include "vegas_time.h"
 
-#define STATUS_KEY "NETSTAT"  /* Define before guppi_threads.h */
-#include "guppi_threads.h"
-#include "guppi_defines.h"
+#define STATUS_KEY "NETSTAT"  /* Define before vegas_threads.h */
+#include "vegas_threads.h"
+#include "vegas_defines.h"
 
 /* This file will only compile if the FITS_TYPE is set to SDFITS */
 #if FITS_TYPE != SDFITS
@@ -40,15 +40,15 @@
 #define DEBUG_NET
 
 // Read a status buffer all of the key observation paramters
-extern void guppi_read_obs_params(char *buf, 
-                                  struct guppi_params *g, 
+extern void vegas_read_obs_params(char *buf, 
+                                  struct vegas_params *g, 
                                   struct sdfits *p);
 
 /* Structs/functions to more easily deal with multiple 
  * active blocks being filled
  */
 struct datablock_stats {
-    struct guppi_databuf *db;       // Pointer to overall shared mem databuf
+    struct vegas_databuf *db;       // Pointer to overall shared mem databuf
     int block_idx;                  // Block index number in databuf
     unsigned int heap_idx;          // Index of first heap in block
     size_t heap_size;               // Size of each heap
@@ -75,7 +75,7 @@ void reset_block(struct datablock_stats *d) {
 }
 
 /* Initialize block struct */
-void init_block(struct datablock_stats *d, struct guppi_databuf *db, 
+void init_block(struct datablock_stats *d, struct vegas_databuf *db, 
         size_t heap_size, size_t spead_hdr_size, int heaps_per_block) {
     d->db = db;
     d->heap_size = heap_size;
@@ -86,18 +86,18 @@ void init_block(struct datablock_stats *d, struct guppi_databuf *db,
 
 /* Update block header info, set filled status */
 void finalize_block(struct datablock_stats *d) {
-    char *header = guppi_databuf_header(d->db, d->block_idx);
+    char *header = vegas_databuf_header(d->db, d->block_idx);
     hputi4(header, "HEAPIDX", d->heap_idx);
     hputi4(header, "HEAPSIZE", d->heap_size);
     hputi4(header, "NHEAPS", d->nheaps);
     hputi4(header, "NDROP", d->pkts_dropped);
 
     struct databuf_index* index = (struct databuf_index*)
-                                guppi_databuf_index(d->db, d->block_idx);
+                                vegas_databuf_index(d->db, d->block_idx);
     index->num_heaps = d->nheaps;
     index->heap_size = d->heap_size;
 
-    guppi_databuf_set_filled(d->db, d->block_idx);
+    vegas_databuf_set_filled(d->db, d->block_idx);
 }
 
 /* Push all blocks down a level, losing the first one */
@@ -132,7 +132,7 @@ unsigned int prev_heap_cntr;
 unsigned int prev_heap_offset;
 char pkts_dropped_in_heap;
 
-void write_spead_packet_to_block(struct datablock_stats *d, struct guppi_udp_packet *p,
+void write_spead_packet_to_block(struct datablock_stats *d, struct vegas_udp_packet *p,
                                 unsigned int heap_cntr, unsigned int heap_offset,
                                 unsigned int pkts_per_heap, char bw_mode[])
 {
@@ -143,30 +143,30 @@ void write_spead_packet_to_block(struct datablock_stats *d, struct guppi_udp_pac
     /*Determine packet's address within block */
     block_heap_idx = heap_cntr - d->heap_idx;
 
-    spead_header_addr = guppi_databuf_data(d->db, d->block_idx) + 
+    spead_header_addr = vegas_databuf_data(d->db, d->block_idx) + 
                 block_heap_idx * d->spead_hdr_size;
-    spead_payload_addr = guppi_databuf_data(d->db, d->block_idx) +
+    spead_payload_addr = vegas_databuf_data(d->db, d->block_idx) +
                 MAX_HEAPS_PER_BLK * d->spead_hdr_size +
                 block_heap_idx * (d->heap_size - d->spead_hdr_size) +
                 heap_offset;
 
     /* Copy packet to address, while reversing the byte ordering */
-    guppi_spead_packet_copy(p, spead_header_addr, spead_payload_addr, bw_mode);
+    vegas_spead_packet_copy(p, spead_header_addr, spead_payload_addr, bw_mode);
 
     /*Update block statistics */
     d->nheaps = block_heap_idx + 1;
     d->last_heap = heap_cntr;
 
     //Determine if we dropped any packets while in same heap
-    if( guppi_spead_packet_seq_num(heap_cntr, heap_offset, pkts_per_heap) - 
-        guppi_spead_packet_seq_num(prev_heap_cntr, prev_heap_offset, pkts_per_heap) > 1 &&
+    if( vegas_spead_packet_seq_num(heap_cntr, heap_offset, pkts_per_heap) - 
+        vegas_spead_packet_seq_num(prev_heap_cntr, prev_heap_offset, pkts_per_heap) > 1 &&
         prev_heap_cntr == heap_cntr)
     {
         pkts_dropped_in_heap = 1;
     }
 
     struct databuf_index* index = (struct databuf_index*)
-                            guppi_databuf_index(d->db, d->block_idx);
+                            vegas_databuf_index(d->db, d->block_idx);
 
     //If start of new heap, write it to index
     if(heap_cntr != prev_heap_cntr)
@@ -194,14 +194,14 @@ void write_spead_packet_to_block(struct datablock_stats *d, struct guppi_udp_pac
 
 
 /* This thread is passed a single arg, pointer
- * to the guppi_udp_params struct.  This thread should 
+ * to the vegas_udp_params struct.  This thread should 
  * be cancelled and restarted if any hardware params
  * change, as this potentially affects packet size, etc.
  */
-void *guppi_net_thread(void *_args) {
+void *vegas_net_thread(void *_args) {
 
     /* Get arguments */
-    struct guppi_thread_args *args = (struct guppi_thread_args *)_args;
+    struct vegas_thread_args *args = (struct vegas_thread_args *)_args;
     int rv;
 
     /* Set cpu affinity */
@@ -211,56 +211,56 @@ void *guppi_net_thread(void *_args) {
     CPU_SET(13, &cpuset);
     rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
-        guppi_error("guppi_net_thread", "Error setting cpu affinity.");
+        vegas_error("vegas_net_thread", "Error setting cpu affinity.");
         perror("sched_setaffinity");
     }
 
     /* Set priority */
     rv = setpriority(PRIO_PROCESS, 0, args->priority);
     if (rv<0) {
-        guppi_error("guppi_net_thread", "Error setting priority level.");
+        vegas_error("vegas_net_thread", "Error setting priority level.");
         perror("set_priority");
     }
 
     /* Attach to status shared mem area */
-    struct guppi_status st;
-    rv = guppi_status_attach(&st);
-    if (rv!=GUPPI_OK) {
-        guppi_error("guppi_net_thread", 
+    struct vegas_status st;
+    rv = vegas_status_attach(&st);
+    if (rv!=VEGAS_OK) {
+        vegas_error("vegas_net_thread", 
                 "Error attaching to status shared memory.");
         pthread_exit(NULL);
     }
-    pthread_cleanup_push((void *)guppi_status_detach, &st);
+    pthread_cleanup_push((void *)vegas_status_detach, &st);
     pthread_cleanup_push((void *)set_exit_status, &st);
 
     /* Init status, read info */
-    guppi_status_lock_safe(&st);
+    vegas_status_lock_safe(&st);
     hputs(st.buf, STATUS_KEY, "init");
-    guppi_status_unlock_safe(&st);
+    vegas_status_unlock_safe(&st);
 
     /* Read in general parameters */
-    struct guppi_params gp;
+    struct vegas_params gp;
     struct sdfits pf;
-    char status_buf[GUPPI_STATUS_SIZE];
-    guppi_status_lock_safe(&st);
-    memcpy(status_buf, st.buf, GUPPI_STATUS_SIZE);
-    guppi_status_unlock_safe(&st);
-    guppi_read_obs_params(status_buf, &gp, &pf);
-    pthread_cleanup_push((void *)guppi_free_sdfits, &pf);
+    char status_buf[VEGAS_STATUS_SIZE];
+    vegas_status_lock_safe(&st);
+    memcpy(status_buf, st.buf, VEGAS_STATUS_SIZE);
+    vegas_status_unlock_safe(&st);
+    vegas_read_obs_params(status_buf, &gp, &pf);
+    pthread_cleanup_push((void *)vegas_free_sdfits, &pf);
 
     /* Read network params */
-    struct guppi_udp_params up;
-    guppi_read_net_params(status_buf, &up);
+    struct vegas_udp_params up;
+    vegas_read_net_params(status_buf, &up);
 
     /* Attach to databuf shared mem */
-    struct guppi_databuf *db;
-    db = guppi_databuf_attach(args->output_buffer); 
+    struct vegas_databuf *db;
+    db = vegas_databuf_attach(args->output_buffer); 
     if (db==NULL) {
-        guppi_error("guppi_net_thread",
+        vegas_error("vegas_net_thread",
                 "Error attaching to databuf shared memory.");
         pthread_exit(NULL);
     }
-    pthread_cleanup_push((void *)guppi_databuf_detach, db);
+    pthread_cleanup_push((void *)vegas_databuf_detach, db);
 
     /* Time parameters */
     double meas_stt_mjd=0.0;
@@ -276,7 +276,7 @@ void *guppi_net_thread(void *_args) {
      * recommended.
      */
     int block_size;
-    struct guppi_udp_packet p;
+    struct vegas_udp_packet p;
     size_t heap_size, spead_hdr_size;
     unsigned int heaps_per_block, packets_per_heap; 
     char bw_mode[16];
@@ -296,17 +296,17 @@ void *guppi_net_thread(void *_args) {
             packets_per_heap = 1;
         }
         else
-            guppi_error("guppi_net_thread", "Unsupported bandwidth mode");
+            vegas_error("vegas_net_thread", "Unsupported bandwidth mode");
     }
     else
-        guppi_error("guppi_net_thread", "BW_MODE not set");
+        vegas_error("vegas_net_thread", "BW_MODE not set");
 
     if (hgeti4(status_buf, "BLOCSIZE", &block_size)==0) {
             block_size = db->block_size;
             hputi4(status_buf, "BLOCSIZE", block_size);
     } else {
         if (block_size > db->block_size) {
-            guppi_error("guppi_net_thread", "BLOCSIZE > databuf block_size");
+            vegas_error("vegas_net_thread", "BLOCSIZE > databuf block_size");
             block_size = db->block_size;
             hputi4(status_buf, "BLOCSIZE", block_size);
         }
@@ -344,13 +344,13 @@ void *guppi_net_thread(void *_args) {
     sleep(1);
 
     /* Set up UDP socket */
-    rv = guppi_udp_init(&up);
-    if (rv!=GUPPI_OK) {
-        guppi_error("guppi_net_thread",
+    rv = vegas_udp_init(&up);
+    if (rv!=VEGAS_OK) {
+        vegas_error("vegas_net_thread",
                 "Error opening UDP socket.");
         pthread_exit(NULL);
     }
-    pthread_cleanup_push((void *)guppi_udp_close, &up);
+    pthread_cleanup_push((void *)vegas_udp_close, &up);
 
     /* Main loop */
     unsigned force_new_block=0, waiting=-1;
@@ -358,53 +358,53 @@ void *guppi_net_thread(void *_args) {
     while (run) {
 
         /* Wait for data */
-        rv = guppi_udp_wait(&up);
-        if (rv!=GUPPI_OK) {
-            if (rv==GUPPI_TIMEOUT) { 
+        rv = vegas_udp_wait(&up);
+        if (rv!=VEGAS_OK) {
+            if (rv==VEGAS_TIMEOUT) { 
                 /* Set "waiting" flag */
                 if (waiting!=1) {
-                    guppi_status_lock_safe(&st);
+                    vegas_status_lock_safe(&st);
                     hputs(st.buf, STATUS_KEY, "waiting");
-                    guppi_status_unlock_safe(&st);
+                    vegas_status_unlock_safe(&st);
                     waiting=1;
                 }
                 continue; 
             } else {
-                guppi_error("guppi_net_thread", 
-                        "guppi_udp_wait returned error");
-                perror("guppi_udp_wait");
+                vegas_error("vegas_net_thread", 
+                        "vegas_udp_wait returned error");
+                perror("vegas_udp_wait");
                 pthread_exit(NULL);
             }
         }
 	
         /* Read packet */
-        rv = guppi_udp_recv(&up, &p);
-        if (rv!=GUPPI_OK) {
-            if (rv==GUPPI_ERR_PACKET) {
+        rv = vegas_udp_recv(&up, &p);
+        if (rv!=VEGAS_OK) {
+            if (rv==VEGAS_ERR_PACKET) {
                 #ifdef DEBUG_NET
-                guppi_warn("guppi_net_thread", "Incorrect pkt size");
+                vegas_warn("vegas_net_thread", "Incorrect pkt size");
                 #endif
                 continue; 
             } else {
-                guppi_error("guppi_net_thread", 
-                        "guppi_udp_recv returned error");
-                perror("guppi_udp_recv");
+                vegas_error("vegas_net_thread", 
+                        "vegas_udp_recv returned error");
+                perror("vegas_udp_recv");
                 pthread_exit(NULL);
             }
         }
 	
         /* Update status if needed */
         if (waiting!=0) {
-            guppi_status_lock_safe(&st);
+            vegas_status_lock_safe(&st);
             hputs(st.buf, STATUS_KEY, "receiving");
-            guppi_status_unlock_safe(&st);
+            vegas_status_unlock_safe(&st);
             waiting=0;
         }
 
         /* Check seq num diff */
-        heap_cntr = guppi_spead_packet_heap_cntr(&p);
-        heap_offset = guppi_spead_packet_heap_offset(&p);
-        seq_num = guppi_spead_packet_seq_num(heap_cntr, heap_offset, packets_per_heap);
+        heap_cntr = vegas_spead_packet_heap_cntr(&p);
+        heap_offset = vegas_spead_packet_heap_offset(&p);
+        seq_num = vegas_spead_packet_seq_num(heap_cntr, heap_offset, packets_per_heap);
 
         heap_cntr_diff = heap_cntr - last_heap_cntr;
         seq_num_diff = (int)(seq_num - last_seq_num);
@@ -425,12 +425,12 @@ void *guppi_net_thread(void *_args) {
             }
             else if (seq_num_diff==0) {
                 sprintf(msg, "Received duplicate packet (seq_num=%d)", seq_num);
-                guppi_warn("vegas_net_thread", msg);
+                vegas_warn("vegas_net_thread", msg);
             }
             else  {
                 #ifdef DEBUG_NET
                 sprintf(msg, "out of order packet. Diff = %d", seq_num_diff);
-                guppi_warn("vegas_net_thread", msg);
+                vegas_warn("vegas_net_thread", msg);
                 #endif
                 continue;   /* No going backwards */
             }
@@ -445,7 +445,7 @@ void *guppi_net_thread(void *_args) {
             if(seq_num_diff > 1)
             {
                 sprintf(msg, "Missing packet. seq_num_diff = %d", seq_num_diff);
-                guppi_warn("vegas_net_thread", msg);
+                vegas_warn("vegas_net_thread", msg);
             }
             #endif
 
@@ -471,7 +471,7 @@ void *guppi_net_thread(void *_args) {
                     + drop_lpf *
                     (double)fblock->pkts_dropped / (double)npacket_this_block;
 
-            guppi_status_lock_safe(&st);
+            vegas_status_lock_safe(&st);
             hputi8(st.buf, "NPKT", npacket_total);
             hputi8(st.buf, "NDROP", ndropped_total);
             hputr8(st.buf, "DROPAVG", drop_frac_avg);
@@ -480,7 +480,7 @@ void *guppi_net_thread(void *_args) {
                     (double)ndropped_total/(double)npacket_total 
                     : 0.0);
             hputi4(st.buf, "NETBLKOU", fblock->block_idx);
-            guppi_status_unlock_safe(&st);
+            vegas_status_unlock_safe(&st);
             
             /* Finalize first block, and push it off the list.
              * Then grab next available block.
@@ -488,9 +488,9 @@ void *guppi_net_thread(void *_args) {
             if (fblock->block_idx>=0) finalize_block(fblock);
             block_stack_push(blocks, nblock);
             increment_block(lblock, heap_cntr);
-            curdata = guppi_databuf_data(db, lblock->block_idx);
-            curheader = guppi_databuf_header(db, lblock->block_idx);
-            curindex = guppi_databuf_index(db, lblock->block_idx);
+            curdata = vegas_databuf_data(db, lblock->block_idx);
+            curheader = vegas_databuf_header(db, lblock->block_idx);
+            curindex = vegas_databuf_index(db, lblock->block_idx);
             nextblock_heap_cntr = lblock->heap_idx + heaps_per_block;
             npacket_this_block = 0;
 
@@ -517,49 +517,49 @@ void *guppi_net_thread(void *_args) {
                     sprintf(msg, 
                             "Second fraction = %3.1f ms > +/-100 ms",
                             meas_stt_offs*1e3);
-                    guppi_warn("guppi_net_thread", msg);
+                    vegas_warn("vegas_net_thread", msg);
                 }
 
-                guppi_status_lock_safe(&st);
+                vegas_status_lock_safe(&st);
                 hputnr8(st.buf, "M_STTMJD", 8, meas_stt_mjd);
                 hputr8(st.buf, "M_STTOFF", meas_stt_offs);
-                guppi_status_unlock_safe(&st);
+                vegas_status_unlock_safe(&st);
 
                 /* Warn if 1st packet number is not zero */
                 if (seq_num!=0) {
                     char msg[256];
                     sprintf(msg, "First packet number is not 0 (seq_num=%d)", seq_num);
-                    guppi_warn("guppi_net_thread", msg);
+                    vegas_warn("vegas_net_thread", msg);
                 }
             
             }
             
             /* Read current status shared mem */
-            guppi_status_lock_safe(&st);
-            memcpy(status_buf, st.buf, GUPPI_STATUS_SIZE);
-            guppi_status_unlock_safe(&st);
+            vegas_status_lock_safe(&st);
+            memcpy(status_buf, st.buf, VEGAS_STATUS_SIZE);
+            vegas_status_unlock_safe(&st);
 
             /* Wait for new block to be free, then clear it
              * if necessary and fill its header with new values.
              */
-            while ((rv=guppi_databuf_wait_free(db, lblock->block_idx)) 
-                    != GUPPI_OK) {
-                if (rv==GUPPI_TIMEOUT) {
+            while ((rv=vegas_databuf_wait_free(db, lblock->block_idx)) 
+                    != VEGAS_OK) {
+                if (rv==VEGAS_TIMEOUT) {
                     waiting=1;
-                    guppi_warn("vegas_net_thread", "timeout while waiting for output block\n");
-                    guppi_status_lock_safe(&st);
+                    vegas_warn("vegas_net_thread", "timeout while waiting for output block\n");
+                    vegas_status_lock_safe(&st);
                     hputs(st.buf, STATUS_KEY, "blocked");
-                    guppi_status_unlock_safe(&st);
+                    vegas_status_unlock_safe(&st);
                     continue;
                 } else {
-                    guppi_error("guppi_net_thread", 
+                    vegas_error("vegas_net_thread", 
                             "error waiting for free databuf");
                     run=0;
                     pthread_exit(NULL);
                     break;
                 }
             }
-            memcpy(curheader, status_buf, GUPPI_STATUS_SIZE);
+            memcpy(curheader, status_buf, VEGAS_STATUS_SIZE);
             memset(curdata, 0, block_size);
             memset(curindex, 0, db->index_size);
         }
@@ -584,9 +584,9 @@ void *guppi_net_thread(void *_args) {
     pthread_exit(NULL);
 
     /* Have to close all push's */
-    pthread_cleanup_pop(0); /* Closes push(guppi_udp_close) */
+    pthread_cleanup_pop(0); /* Closes push(vegas_udp_close) */
     pthread_cleanup_pop(0); /* Closes set_exit_status */
-    pthread_cleanup_pop(0); /* Closes guppi_free_psrfits */
-    pthread_cleanup_pop(0); /* Closes guppi_status_detach */
-    pthread_cleanup_pop(0); /* Closes guppi_databuf_detach */
+    pthread_cleanup_pop(0); /* Closes vegas_free_psrfits */
+    pthread_cleanup_pop(0); /* Closes vegas_status_detach */
+    pthread_cleanup_pop(0); /* Closes vegas_databuf_detach */
 }

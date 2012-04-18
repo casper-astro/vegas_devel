@@ -44,15 +44,15 @@ int sdfits_create(struct sdfits *sf) {
     sprintf(sf->filename, "%s_%04d.fits", sf->basefilename, sf->filenum);
 
     // Create basic FITS file from our template
-    char *guppi_dir = getenv("VEGAS_DIR");
+    char *vegas_dir = getenv("VEGAS_DIR");
     char template_file[1024];
-    if (guppi_dir==NULL) {
+    if (vegas_dir==NULL) {
         fprintf(stderr, 
-                "Error: GUPPI_DIR environment variable not set, exiting.\n");
+                "Error: VEGAS_DIR environment variable not set, exiting.\n");
         exit(1);
     }
     printf("Opening file '%s' ", sf->filename);
-    sprintf(template_file, "%s/%s", guppi_dir, SDFITS_TEMPLATE);
+    sprintf(template_file, "%s/%s", vegas_dir, SDFITS_TEMPLATE);
     fits_create_template(&(sf->fptr), sf->filename, template_file, status);
 
     // Check to see if file was successfully created

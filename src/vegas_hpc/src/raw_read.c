@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include "fitsio.h"
 #include "psrfits.h"
-#include "guppi_params.h"
+#include "vegas_params.h"
 #include "fitshead.h"
 #include <math.h>
 #include <arpa/inet.h>
 #include <string.h>
 
 /* Parse info from buffer into param struct */
-extern void guppi_read_obs_params(char *buf, 
-                                     struct guppi_params *g,
+extern void vegas_read_obs_params(char *buf, 
+                                     struct vegas_params *g,
                                      struct psrfits *p);
 double round(double x);
                        
@@ -46,7 +46,7 @@ int nbytes;     /* Number of bytes to reverse */
           
               
 int main(int argc, char *argv[]) {
-	struct guppi_params gf;
+	struct vegas_params gf;
     struct psrfits pf;
     char buf[32768];
     char partfilename[250]; //file name for first part of file
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
 		 //printf("lhead: %d", lhead0);
 		 fprintf(stderr, "length: %d\n", gethlength(buf));
 
-		 guppi_read_obs_params(buf, &gf, &pf);
+		 vegas_read_obs_params(buf, &gf, &pf);
 	 
 		 //printf("%d\n", pf.hdr.nchan);    
 		 fprintf(stderr, "size %d\n",pf.sub.bytes_per_subint + gethlength(buf));

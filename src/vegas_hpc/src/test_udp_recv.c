@@ -12,12 +12,12 @@
 #include <getopt.h>
 #include <errno.h>
 
-#include "guppi_udp.h"
-#include "guppi_error.h"
+#include "vegas_udp.h"
+#include "vegas_error.h"
 
 void usage() {
     fprintf(stderr,
-            "Usage: guppi_udp [options] sender_hostname\n"
+            "Usage: vegas_udp [options] sender_hostname\n"
             "Options:\n"
             "  -p n, --port=n    Port number\n"
             "  -h, --help        This message\n"
@@ -31,7 +31,7 @@ void stop_running(int sig) { run=0; }
 int main(int argc, char *argv[]) {
 
     int rv;
-    struct guppi_udp_params p;
+    struct vegas_udp_params p;
 
     static struct option long_opts[] = {
         {"help",   0, NULL, 'h'},
@@ -62,8 +62,8 @@ int main(int argc, char *argv[]) {
     }
 
     /* Init udp params */
-    rv = guppi_udp_init(&p);
-    if (rv!=GUPPI_OK) { 
+    rv = vegas_udp_init(&p);
+    if (rv!=VEGAS_OK) { 
         fprintf(stderr, "Error setting up networking\n");
         exit(1);
     }
@@ -71,20 +71,20 @@ int main(int argc, char *argv[]) {
 
     int rv2;
     unsigned long long packet_count=0, max_id=0, seq_num;
-    struct guppi_udp_packet packet;
+    struct vegas_udp_packet packet;
     int first=1;
     signal(SIGINT, stop_running);
     printf("Waiting for data (sock=%d).\n", p.sock);
     while (run) {
-        rv = guppi_udp_wait(&p);
-        if (rv==GUPPI_OK) {
+        rv = vegas_udp_wait(&p);
+        if (rv==VEGAS_OK) {
             /* recv data ,etc */
-            rv2 = guppi_udp_recv(&p, &packet);
-            if (rv2!=GUPPI_OK) {
-                if (rv2==GUPPI_ERR_PACKET) { 
+            rv2 = vegas_udp_recv(&p, &packet);
+            if (rv2!=VEGAS_OK) {
+                if (rv2==VEGAS_ERR_PACKET) { 
                     fprintf(stderr, "unexpected packet size (%zd)\n",
                             packet.packet_size);
-                } else if (rv2==GUPPI_ERR_SYS) {
+                } else if (rv2==VEGAS_ERR_SYS) {
                     if (errno!=EAGAIN) {
                         printf("sock=%d\n", p.sock);
                         perror("recv");
@@ -99,15 +99,15 @@ int main(int argc, char *argv[]) {
                     first=0;
                 } 
                 packet_count++;
-                seq_num = guppi_udp_packet_seq_num(&packet);
+                seq_num = vegas_udp_packet_seq_num(&packet);
                 if (seq_num>max_id) { max_id=seq_num; }
             }
-        } else if (rv==GUPPI_TIMEOUT) {
+        } else if (rv==VEGAS_TIMEOUT) {
             if (first==0) { run=0; }
         } else {
             if (run) {
                 perror("poll");
-                guppi_udp_close(&p);
+                vegas_udp_close(&p);
                 exit(1);
             } else {
                 printf("Caught SIGINT, exiting.\n");
@@ -121,6 +121,6 @@ int main(int argc, char *argv[]) {
 
 
 
-    guppi_udp_close(&p);
+    vegas_udp_close(&p);
     exit(0);
 }

@@ -2,8 +2,8 @@
  * Functions for PFB and FFT in CUDA/GPUs
  */
 
-#include "guppi_defines.h"
-#include "guppi_databuf.h"
+#include "vegas_defines.h"
+#include "vegas_databuf.h"
 #include "spead_heap.h"
 #include "pfb_gpu.h"
 

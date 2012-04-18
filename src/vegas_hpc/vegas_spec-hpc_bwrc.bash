@@ -1,7 +1,7 @@
 #!/bin/bash
 # Set environment variables for VEGAS, bash version
 echo "This script is specific to spec-hpc-xx at the BWRC"
-echo "Setting GUPPI, VEGAS_DIR, CUDA, PYSLALIB, VEGAS_INCL/BIN/LIB, PATH, PYTHONPATH and LD_LIBRARY_PATH for VEGAS..."
+echo "Setting VEGAS_DIR, CUDA, PYSLALIB, VEGAS_INCL/BIN/LIB, PATH, PYTHONPATH and LD_LIBRARY_PATH for VEGAS..."
 
 # Note: user must set the VEGAS variable in their bash startup script
 

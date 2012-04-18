@@ -1,7 +1,0 @@
-#! /bin/bash
-if test "${VEGAS_DIR}zz" = zz; then
-	echo "Error: VEGAS_DIR environment variable not set, exiting."
-	exit 1
-fi
-echo "`date` `whoami`: `basename $0` $*" >> /tmp/guppi_set_params.log
-python $VEGAS_DIR/python/guppi_set_params.py $@

@@ -10,16 +10,16 @@
 #include <unistd.h>
 
 #include "fitshead.h"
-#include "guppi_error.h"
+#include "vegas_error.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "guppi_status.h"
-#include "guppi_databuf.h"
+#include "vegas_status.h"
+#include "vegas_databuf.h"
 #ifdef __cplusplus
 }
 #endif
-#include "guppi_defines.h"
+#include "vegas_defines.h"
 #include "pfb_gpu.h"
 #include "pfb_gpu_kernels.h"
 #include "spead_heap.h"
@@ -225,11 +225,11 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, in
 
 /* Actually do the PFB by calling CUDA kernels */
 extern "C"
-void do_pfb(struct guppi_databuf *db_in,
+void do_pfb(struct vegas_databuf *db_in,
             int curblock_in,
-            struct guppi_databuf *db_out,
+            struct vegas_databuf *db_out,
             int first,
-            struct guppi_status st,
+            struct vegas_status st,
             int acc_len)
 {
     /* Declare local variables */
@@ -243,7 +243,7 @@ void do_pfb(struct guppi_databuf *db_in,
     struct freq_spead_heap* freq_heap_out = NULL;
     int iProcData = 0;
     cudaError_t iCUDARet = cudaSuccess;
-    int iRet = GUPPI_OK;
+    int iRet = VEGAS_OK;
     char* payload_addr_in = NULL;
     char* payload_addr_out = NULL;
     int num_in_heaps_per_proc = 0;
@@ -253,7 +253,7 @@ void do_pfb(struct guppi_databuf *db_in,
     int i = 0;
 
     /* Setup input and first output data block stuff */
-    index_in = (struct databuf_index*)guppi_databuf_index(db_in, curblock_in);
+    index_in = (struct databuf_index*)vegas_databuf_index(db_in, curblock_in);
     /* Get the number of heaps per block of data that will be processed by the GPU */
     num_in_heaps_per_proc = (g_iNumSubBands * g_nchan * sizeof(char4)) / (index_in->heap_size - sizeof(struct time_spead_heap));
     g_iBlockInDataSize = (index_in->num_heaps * index_in->heap_size) - (index_in->num_heaps * sizeof(struct time_spead_heap));
@@ -265,15 +265,15 @@ void do_pfb(struct guppi_databuf *db_in,
     /* Calculate the maximum number of output heaps per block */
     g_iMaxNumHeapOut = (g_buf_out_block_size - (sizeof(struct time_spead_heap) * MAX_HEAPS_PER_BLK)) / (g_iNumSubBands * g_nchan * sizeof(float4)); 
 
-    hdr_out = guppi_databuf_header(db_out, g_iPFBCurBlockOut);
-    index_out = (struct databuf_index*)guppi_databuf_index(db_out, g_iPFBCurBlockOut);
-    memcpy(hdr_out, guppi_databuf_header(db_in, curblock_in),
-            GUPPI_STATUS_SIZE);
+    hdr_out = vegas_databuf_header(db_out, g_iPFBCurBlockOut);
+    index_out = (struct databuf_index*)vegas_databuf_index(db_out, g_iPFBCurBlockOut);
+    memcpy(hdr_out, vegas_databuf_header(db_in, curblock_in),
+            VEGAS_STATUS_SIZE);
 
     /* Set basic params in output index */
     index_out->heap_size = sizeof(struct freq_spead_heap) + (g_iNumSubBands * g_nchan * sizeof(float4));
     /* Read in heap from buffer */
-    heap_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
+    heap_addr_in = (char*)(vegas_databuf_data(db_in, curblock_in) +
                         sizeof(struct time_spead_heap) * heap_in);
     first_time_heap_in_accum = (struct time_spead_heap*)(heap_addr_in);
     if (first)
@@ -283,7 +283,7 @@ void do_pfb(struct guppi_databuf *db_in,
     }
     /* Here, the payload_addr_in is the start of the contiguous block of data that will be
        copied to the GPU (heap_in = 0) */
-    payload_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
+    payload_addr_in = (char*)(vegas_databuf_data(db_in, curblock_in) +
                         sizeof(struct time_spead_heap) * MAX_HEAPS_PER_BLK +
                         (index_in->heap_size - sizeof(struct time_spead_heap)) * heap_in );
 
@@ -311,7 +311,7 @@ void do_pfb(struct guppi_databuf *db_in,
         /* copy the status bits and valid flags for all heaps to arrays separate
            from the index, so that it can be combined with the corresponding
            values from the previous block */
-        struct time_spead_heap* time_heap = (struct time_spead_heap*) guppi_databuf_data(db_in, curblock_in);
+        struct time_spead_heap* time_heap = (struct time_spead_heap*) vegas_databuf_data(db_in, curblock_in);
         for (i = 0; i < index_in->num_heaps; ++i)
         {
             g_auiStatusBits[i] = time_heap->status_bits;
@@ -345,7 +345,7 @@ void do_pfb(struct guppi_databuf *db_in,
             g_auiStatusBits[i] = g_auiStatusBits[index_in->num_heaps+i];
             g_auiHeapValid[i] = g_auiHeapValid[index_in->num_heaps+i];
         }
-        struct time_spead_heap* time_heap = (struct time_spead_heap*) guppi_databuf_data(db_in, curblock_in);
+        struct time_spead_heap* time_heap = (struct time_spead_heap*) vegas_databuf_data(db_in, curblock_in);
         for ( ; i < num_in_heaps_tail + index_in->num_heaps; ++i)
         {
             g_auiStatusBits[i] = time_heap->status_bits;
@@ -383,7 +383,7 @@ void do_pfb(struct guppi_databuf *db_in,
                                    heap_in,
                                    num_in_heaps_gpu_buffer);
                 }
-                heap_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
+                heap_addr_in = (char*)(vegas_databuf_data(db_in, curblock_in) +
                                     sizeof(struct time_spead_heap) * heap_in);
                 continue;
             }
@@ -407,7 +407,7 @@ void do_pfb(struct guppi_databuf *db_in,
         }
          
         iRet = do_fft();
-        if (iRet != GUPPI_OK)
+        if (iRet != VEGAS_OK)
         {
             (void) fprintf(stderr, "ERROR: FFT failed!\n");
             run = 0;
@@ -419,7 +419,7 @@ void do_pfb(struct guppi_databuf *db_in,
         if (!(is_blanked(heap_in, num_in_heaps_per_proc)))
         {
             iRet = accumulate();
-            if (iRet != GUPPI_OK)
+            if (iRet != VEGAS_OK)
             {
                 (void) fprintf(stderr, "ERROR: Accumulation failed!\n");
                 run = 0;
@@ -434,10 +434,10 @@ void do_pfb(struct guppi_databuf *db_in,
             if (FALSE == g_iPrevBlankingState)
             {
                 /* dump to buffer */
-                heap_addr_out = (char*)(guppi_databuf_data(db_out, g_iPFBCurBlockOut) +
+                heap_addr_out = (char*)(vegas_databuf_data(db_out, g_iPFBCurBlockOut) +
                                     sizeof(struct freq_spead_heap) * g_iHeapOut);
                 freq_heap_out = (struct freq_spead_heap*)(heap_addr_out);
-                payload_addr_out = (char*)(guppi_databuf_data(db_out, g_iPFBCurBlockOut) +
+                payload_addr_out = (char*)(vegas_databuf_data(db_out, g_iPFBCurBlockOut) +
                                     sizeof(struct freq_spead_heap) * MAX_HEAPS_PER_BLK +
                                     (index_out->heap_size - sizeof(struct freq_spead_heap)) * g_iHeapOut);
          
@@ -463,7 +463,7 @@ void do_pfb(struct guppi_databuf *db_in,
                          index_in->cpu_gpu_buf[g_iFirstHeapIn].heap_rcvd_mjd ;
 
                 iRet = get_accumulated_spectrum_from_device(payload_addr_out);
-                if (iRet != GUPPI_OK)
+                if (iRet != VEGAS_OK)
                 {
                     (void) fprintf(stderr, "ERROR: Getting accumulated spectrum failed!\n");
                     run = 0;
@@ -484,10 +484,10 @@ void do_pfb(struct guppi_databuf *db_in,
         if (g_iSpecPerAcc == acc_len)
         {
             /* dump to buffer */
-            heap_addr_out = (char*)(guppi_databuf_data(db_out, g_iPFBCurBlockOut) +
+            heap_addr_out = (char*)(vegas_databuf_data(db_out, g_iPFBCurBlockOut) +
                                 sizeof(struct freq_spead_heap) * g_iHeapOut);
             freq_heap_out = (struct freq_spead_heap*)(heap_addr_out);
-            payload_addr_out = (char*)(guppi_databuf_data(db_out, g_iPFBCurBlockOut) +
+            payload_addr_out = (char*)(vegas_databuf_data(db_out, g_iPFBCurBlockOut) +
                                 sizeof(struct freq_spead_heap) * MAX_HEAPS_PER_BLK +
                                 (index_out->heap_size - sizeof(struct freq_spead_heap)) * g_iHeapOut);
      
@@ -513,7 +513,7 @@ void do_pfb(struct guppi_databuf *db_in,
                      index_in->cpu_gpu_buf[g_iFirstHeapIn].heap_rcvd_mjd ;
 
             iRet = get_accumulated_spectrum_from_device(payload_addr_out);
-            if (iRet != GUPPI_OK)
+            if (iRet != VEGAS_OK)
             {
                 (void) fprintf(stderr, "ERROR: Getting accumulated spectrum failed!\n");
                 run = 0;
@@ -535,7 +535,7 @@ void do_pfb(struct guppi_databuf *db_in,
 
         /* Calculate input heap addresses for the next round of processing */
         heap_in += num_in_heaps_per_proc;
-        heap_addr_in = (char*)(guppi_databuf_data(db_in, curblock_in) +
+        heap_addr_in = (char*)(vegas_databuf_data(db_in, curblock_in) +
                             sizeof(struct time_spead_heap) * heap_in);
         if (0 == g_iSpecPerAcc)
         {
@@ -551,40 +551,40 @@ void do_pfb(struct guppi_databuf *db_in,
             index_out->num_heaps = g_iHeapOut;
 
             /* Mark output buffer as filled */
-            guppi_databuf_set_filled(db_out, g_iPFBCurBlockOut);
+            vegas_databuf_set_filled(db_out, g_iPFBCurBlockOut);
 
             printf("Debug: vegas_pfb_thread going to next output block\n");
 
             /* Note current output block */
-            /* NOTE: guppi_status_lock_safe() and guppi_status_unlock_safe() are macros
+            /* NOTE: vegas_status_lock_safe() and vegas_status_unlock_safe() are macros
                that have been explicitly expanded here, due to compilation issues */
-            //guppi_status_lock_safe(&st);
-                pthread_cleanup_push((void (*) (void *))&guppi_status_unlock, (void *) &st);
-                guppi_status_lock(&st);
+            //vegas_status_lock_safe(&st);
+                pthread_cleanup_push((void (*) (void *))&vegas_status_unlock, (void *) &st);
+                vegas_status_lock(&st);
             hputi4(st.buf, "PFBBLKOU", g_iPFBCurBlockOut);
-            //guppi_status_unlock_safe(&st);
-                guppi_status_unlock(&st);
+            //vegas_status_unlock_safe(&st);
+                vegas_status_unlock(&st);
                 pthread_cleanup_pop(0);
 
             /*  Wait for next output block */
             g_iPFBCurBlockOut = (g_iPFBCurBlockOut + 1) % db_out->n_block;
-            while ((guppi_databuf_wait_free(db_out, g_iPFBCurBlockOut)!=0) && run) {
-                //guppi_status_lock_safe(&st);
-                    pthread_cleanup_push((void (*)(void *))&guppi_status_unlock, (void *) &st);
-                    guppi_status_lock(&st);
+            while ((vegas_databuf_wait_free(db_out, g_iPFBCurBlockOut)!=0) && run) {
+                //vegas_status_lock_safe(&st);
+                    pthread_cleanup_push((void (*)(void *))&vegas_status_unlock, (void *) &st);
+                    vegas_status_lock(&st);
 
                 hputs(st.buf, STATUS_KEY, "blocked");
-                //guppi_status_unlock_safe(&st);
-                    guppi_status_unlock(&st);
+                //vegas_status_unlock_safe(&st);
+                    vegas_status_unlock(&st);
                     pthread_cleanup_pop(0);
             }
 
             g_iHeapOut = 0;
 
-            hdr_out = guppi_databuf_header(db_out, g_iPFBCurBlockOut);
-            index_out = (struct databuf_index*)guppi_databuf_index(db_out, g_iPFBCurBlockOut);
-            memcpy(hdr_out, guppi_databuf_header(db_in, curblock_in),
-                    GUPPI_STATUS_SIZE);
+            hdr_out = vegas_databuf_header(db_out, g_iPFBCurBlockOut);
+            index_out = (struct databuf_index*)vegas_databuf_index(db_out, g_iPFBCurBlockOut);
+            memcpy(hdr_out, vegas_databuf_header(db_in, curblock_in),
+                    VEGAS_STATUS_SIZE);
 
             /* Set basic params in output index */
             index_out->heap_size = sizeof(struct freq_spead_heap) + (g_iNumSubBands * g_nchan * sizeof(float4));
@@ -610,10 +610,10 @@ int do_fft()
     {
         (void) fprintf(stderr, "ERROR: FFT failed!");
         run = 0;
-        return GUPPI_ERR_GEN;
+        return VEGAS_ERR_GEN;
     }
 
-    return GUPPI_OK;
+    return VEGAS_OK;
 }
 
 int accumulate()
@@ -628,10 +628,10 @@ int accumulate()
     {
         (void) fprintf(stderr, cudaGetErrorString(iCUDARet));
         run = 0;
-        return GUPPI_ERR_GEN;
+        return VEGAS_ERR_GEN;
     }
 
-    return GUPPI_OK;
+    return VEGAS_OK;
 }
 
 void zero_accumulator()
@@ -654,7 +654,7 @@ int get_accumulated_spectrum_from_device(char *out)
                                         * sizeof(float4)),
                                        cudaMemcpyDeviceToHost));
 
-    return GUPPI_OK;
+    return VEGAS_OK;
 }
 
 /*

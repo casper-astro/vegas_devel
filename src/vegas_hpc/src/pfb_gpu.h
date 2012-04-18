@@ -1,7 +1,7 @@
 #ifndef _PFB_GPU_H
 #define _PFB_GPU_H
 
-#include "guppi_databuf.h"
+#include "vegas_databuf.h"
 
 #define FALSE               0
 #define TRUE                1
@@ -27,11 +27,11 @@ int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, in
 #if defined __cplusplus
 extern "C"
 #endif
-void do_pfb(struct guppi_databuf *db_in,
+void do_pfb(struct vegas_databuf *db_in,
             int curblock_in,
-            struct guppi_databuf *db_out,
+            struct vegas_databuf *db_out,
             int first,
-            struct guppi_status st,
+            struct vegas_status st,
             int acc_len);
 
 int do_fft();

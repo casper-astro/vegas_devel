@@ -16,27 +16,27 @@
 
 #include "fitshead.h"
 #include "sdfits.h"
-#include "guppi_error.h"
-#include "guppi_status.h"
-#include "guppi_databuf.h"
-#include "guppi_params.h"
+#include "vegas_error.h"
+#include "vegas_status.h"
+#include "vegas_databuf.h"
+#include "vegas_params.h"
 #include "pfb_gpu.h"
 
 #define STATUS_KEY "GPUSTAT"
-#include "guppi_threads.h"
+#include "vegas_threads.h"
 
 /* Parse info from buffer into param struct */
-extern void guppi_read_subint_params(char *buf, 
-                                     struct guppi_params *g,
+extern void vegas_read_subint_params(char *buf, 
+                                     struct vegas_params *g,
                                      struct sdfits *p);
-extern void guppi_read_obs_params(char *buf, 
-                                     struct guppi_params *g,
+extern void vegas_read_obs_params(char *buf, 
+                                     struct vegas_params *g,
                                      struct sdfits *p);
 
 void vegas_pfb_thread(void *_args) {
 
     /* Get args */
-    struct guppi_thread_args *args = (struct guppi_thread_args *)_args;
+    struct vegas_thread_args *args = (struct vegas_thread_args *)_args;
     int rv;
 
     /* Set cpu affinity */
@@ -47,59 +47,59 @@ void vegas_pfb_thread(void *_args) {
     CPU_SET(11, &cpuset);
     rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
-        guppi_error("vegas_pfb_thread", "Error setting cpu affinity.");
+        vegas_error("vegas_pfb_thread", "Error setting cpu affinity.");
         perror("sched_setaffinity");
     }
 
     /* Set priority */
     rv = setpriority(PRIO_PROCESS, 0, args->priority);
     if (rv<0) {
-        guppi_error("vegas_pfb_thread", "Error setting priority level.");
+        vegas_error("vegas_pfb_thread", "Error setting priority level.");
         perror("set_priority");
     }
 
     /* Attach to status shared mem area */
-    struct guppi_status st;
-    rv = guppi_status_attach(&st);
-    if (rv!=GUPPI_OK) {
-        guppi_error("vegas_pfb_thread", 
+    struct vegas_status st;
+    rv = vegas_status_attach(&st);
+    if (rv!=VEGAS_OK) {
+        vegas_error("vegas_pfb_thread", 
                 "Error attaching to status shared memory.");
         pthread_exit(NULL);
     }
-    pthread_cleanup_push((void *)guppi_status_detach, &st);
+    pthread_cleanup_push((void *)vegas_status_detach, &st);
     pthread_cleanup_push((void *)set_exit_status, &st);
-    pthread_cleanup_push((void *)guppi_thread_set_finished, args);
+    pthread_cleanup_push((void *)vegas_thread_set_finished, args);
 
     /* Init status */
-    guppi_status_lock_safe(&st);
+    vegas_status_lock_safe(&st);
     hputs(st.buf, STATUS_KEY, "init");
-    guppi_status_unlock_safe(&st);
+    vegas_status_unlock_safe(&st);
 
     /* Init structs */
-    struct guppi_params gp;
+    struct vegas_params gp;
     struct sdfits sf;
-    pthread_cleanup_push((void *)guppi_free_sdfits, &sf);
+    pthread_cleanup_push((void *)vegas_free_sdfits, &sf);
 
     /* Attach to databuf shared mem */
-    struct guppi_databuf *db_in, *db_out;
-    db_in = guppi_databuf_attach(args->input_buffer);
+    struct vegas_databuf *db_in, *db_out;
+    db_in = vegas_databuf_attach(args->input_buffer);
     if (db_in==NULL) {
         char msg[256];
         sprintf(msg, "Error attaching to databuf(%d) shared memory.",
                 args->input_buffer);
-        guppi_error("vegas_pfb_thread", msg);
+        vegas_error("vegas_pfb_thread", msg);
         pthread_exit(NULL);
     }
-    pthread_cleanup_push((void *)guppi_databuf_detach, db_in);
-    db_out = guppi_databuf_attach(args->output_buffer);
+    pthread_cleanup_push((void *)vegas_databuf_detach, db_in);
+    db_out = vegas_databuf_attach(args->output_buffer);
     if (db_out==NULL) {
         char msg[256];
         sprintf(msg, "Error attaching to databuf(%d) shared memory.",
                 args->output_buffer);
-        guppi_error("vegas_pfb_thread", msg);
+        vegas_error("vegas_pfb_thread", msg);
         pthread_exit(NULL);
     }
-    pthread_cleanup_push((void *)guppi_databuf_detach, db_out);
+    pthread_cleanup_push((void *)vegas_databuf_detach, db_out);
 
     /* Loop */
     char *hdr_in = NULL;
@@ -110,14 +110,14 @@ void vegas_pfb_thread(void *_args) {
     int nsubband = 0;
     signal(SIGINT,cc);
 
-    guppi_status_lock_safe(&st);
+    vegas_status_lock_safe(&st);
     if (hgeti4(st.buf, "NCHAN", &nchan)==0) {
         fprintf(stderr, "ERROR: %s not in status shm!\n", "NCHAN");
     }
     if (hgeti4(st.buf, "NSUBBAND", &nsubband)==0) {
         fprintf(stderr, "ERROR: %s not in status shm!\n", "NSUBBAND");
     }
-    guppi_status_unlock_safe(&st);
+    vegas_status_unlock_safe(&st);
     if (EXIT_SUCCESS != init_gpu(db_in->block_size,
                                  db_out->block_size,
                                  nsubband,
@@ -130,37 +130,37 @@ void vegas_pfb_thread(void *_args) {
     while (run) {
 
         /* Note waiting status */
-        guppi_status_lock_safe(&st);
+        vegas_status_lock_safe(&st);
         hputs(st.buf, STATUS_KEY, "waiting");
-        guppi_status_unlock_safe(&st);
+        vegas_status_unlock_safe(&st);
 
         /* Wait for buf to have data */
-        rv = guppi_databuf_wait_filled(db_in, curblock_in);
+        rv = vegas_databuf_wait_filled(db_in, curblock_in);
         if (rv!=0) continue;
 
         /* Note waiting status, current input block */
-        guppi_status_lock_safe(&st);
+        vegas_status_lock_safe(&st);
         hputs(st.buf, STATUS_KEY, "processing");
         hputi4(st.buf, "PFBBLKIN", curblock_in);
-        guppi_status_unlock_safe(&st);
+        vegas_status_unlock_safe(&st);
 
-        hdr_in = guppi_databuf_header(db_in, curblock_in);
+        hdr_in = vegas_databuf_header(db_in, curblock_in);
         
         /* Get params */
         if (first)
         {
-            guppi_read_obs_params(hdr_in, &gp, &sf);
+            vegas_read_obs_params(hdr_in, &gp, &sf);
             /* Read required exposure from status shared memory, and calculate
                corresponding accumulation length */
             acc_len = (abs(sf.hdr.chan_bw) * sf.hdr.hwexposr);
         }
-        guppi_read_subint_params(hdr_in, &gp, &sf);
+        vegas_read_subint_params(hdr_in, &gp, &sf);
 
         /* Call PFB function */
         do_pfb(db_in, curblock_in, db_out, first, st, acc_len);
 
         /* Mark input block as free */
-        guppi_databuf_set_free(db_in, curblock_in);
+        vegas_databuf_set_free(db_in, curblock_in);
         /* Go to next input block */
         curblock_in = (curblock_in + 1) % db_in->n_block;
 
@@ -178,12 +178,12 @@ void vegas_pfb_thread(void *_args) {
 
     cleanup_gpu();
 
-    pthread_cleanup_pop(0); /* Closes guppi_databuf_detach(out) */
-    pthread_cleanup_pop(0); /* Closes guppi_databuf_detach(in) */
-    pthread_cleanup_pop(0); /* Closes guppi_free_sdfits */
-    pthread_cleanup_pop(0); /* Closes guppi_thread_set_finished */
+    pthread_cleanup_pop(0); /* Closes vegas_databuf_detach(out) */
+    pthread_cleanup_pop(0); /* Closes vegas_databuf_detach(in) */
+    pthread_cleanup_pop(0); /* Closes vegas_free_sdfits */
+    pthread_cleanup_pop(0); /* Closes vegas_thread_set_finished */
     pthread_cleanup_pop(0); /* Closes set_exit_status */
-    pthread_cleanup_pop(0); /* Closes guppi_status_detach */
+    pthread_cleanup_pop(0); /* Closes vegas_status_detach */
 
 }
 

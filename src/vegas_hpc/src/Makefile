@@ -1,4 +1,4 @@
-# Makefile to install GUPPI C code
+# Makefile to install VEGAS C code
 # Commented lines are lines that were modified by Simon Scott to allow installation on otto.
 
 OPT_FLAGS =
@@ -27,15 +27,15 @@ NVCCFLAGS = -arch=sm_20 -I$(CUDA)/include -I$(VEGAS_INCL)
 LIBS = -L. -L$(PYSLALIB) -L$(VEGAS_LIB) -L$(VEGAS_LIB_GCC) -lcfitsio -lsla -lm -lpthread -lg2c
 CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm -lpthread
 
-PROGS = check_guppi_databuf check_guppi_status clean_guppi_shmem
-OBJS  = guppi_status.o guppi_databuf.o guppi_udp.o guppi_error.o \
-	guppi_params.o guppi_time.o guppi_thread_args.o \
+PROGS = check_vegas_databuf check_vegas_status clean_vegas_shmem
+OBJS  = vegas_status.o vegas_databuf.o vegas_udp.o vegas_error.o \
+	vegas_params.o vegas_time.o vegas_thread_args.o \
 	write_sdfits.o misc_utils.o \
 	hget.o hput.o sla.o
 THREAD_PROGS = test_net_thread vegas_hpc_hbw
 THREAD_OBJS  = vegas_net_thread.o vegas_rawdisk_thread.o \
-	        guppi_sdfits_thread.o guppi_accum_thread.o \
-	        guppi_null_thread.o guppi_fake_net_thread.o
+	        vegas_sdfits_thread.o vegas_accum_thread.o \
+	        vegas_null_thread.o vegas_fake_net_thread.o
 CUDA_OBJS = pfb_gpu.o pfb_gpu_kernels.o vegas_pfb_thread.o
 
 all: $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw 
@@ -46,7 +46,7 @@ install: $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw
 	mkdir -p $(INSTALL_DIR) && \
 	cp -f $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw $(INSTALL_DIR)
 sdfits.tgz: sdfits.h read_sdfits.c \
-    guppi_SDFITS_template.txt \
+    vegas_SDFITS_template.txt \
 	tar cvzf $@ $^
 find_dropped_blocks: find_dropped_blocks.o 
 #	$(CC) $(CFLAGS) $< -o $@ -L$(OPT64)/lib -lcfitsio -lm
