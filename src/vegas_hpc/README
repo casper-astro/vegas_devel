@@ -1,8 +1,4 @@
-guppi_daq - Data aquisition software for GUPPI
+vegas_hpc - Data aquisition software for VEGAS
 
-How to run setup.py:
-python setup.py install --install-lib=/opt/64bit/guppi/lib/python
-
-This will put all the guppi_daq python code in 
-/opt/64bit/guppi/lib/python/guppi_daq.  It can then be imported using 
-"from guppi_daq import guppi_utils", etc.
+See https://casper.berkeley.edu/wiki/GBT_guppi_installattion for 
+installation instructions.
