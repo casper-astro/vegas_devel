@@ -237,6 +237,7 @@ elseif strcmp(dec2_halfout,'on')
     for i =1:n_inputs/2
         outports{i}.bind(parallel_adder_ins{n_stages+1,i*2-skip});
     end
+    sync_out.bind(parallel_adder_sync_ins{n_stages+1});
 
 
 else  % dec2_halfout 'off', n_outputs = n_inputs
