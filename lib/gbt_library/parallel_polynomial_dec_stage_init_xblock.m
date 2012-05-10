@@ -121,7 +121,9 @@ if n_inputs==1 && strcmp(polyphase,'off') % only one input
 elseif n_inputs ==1 && strcmp(polyphase,'on')
     % polyphase structure
     inport = xInport('in');
+    sync_in = xInport('sync_in');
     outport = xOutport('out');
+    sync_out = xOutport('sync_out');
 
     first_delay_out = xSignal('delay1');
     first_delay = xBlock(struct('source','Delay','name', 'first_delay'), ...
@@ -134,28 +136,28 @@ elseif n_inputs ==1 && strcmp(polyphase,'on')
     ds_out1 = xSignal('downsample_out1');
     downsampling0 = xBlock(struct('source', str2func('downsample_init_xblock'), 'name', 'Down_sample0'), ...
                                {[blk, '/', 'Down_sample0'],'dec_rate',2, 'input_clk_rate',input_clk_rate}, ...
-                          {inport}, ...
-                          {ds_out0});  
+                          {inport, sync_in}, ...
+                          {ds_out0,sync_out});  
+    sync_poly = xSignal('sync_poly');
     downsampling1 = xBlock(struct('source', str2func('downsample_init_xblock'), 'name', 'Down_sample1'), ...
                                {[blk, '/', 'Down_sample1'],'dec_rate',2,'input_clk_rate',input_clk_rate}, ...
-                          {first_delay_out}, ...
-                          {ds_out1}); 
+                          {first_delay_out,sync_in}, ...
+                          {ds_out1,sync_poly}); 
 
     poly_out0 = xSignal('poly_out0');
     poly_out1 = xSignal('poly_out1');
-    sync_poly = xSignal('sync_poly');
 
     delay_max = find_delay_max(coeffs,add_latency);
     polynomial_blk0 = xBlock(struct('source',str2func('polynomial_shift_mult_transpose_init_xblock'), ...
                                     'name','polynomial0'), ...
                             {[blk,'/','/polynomial0'], coeffs(1:2:end), add_latency,n_bits, bin_pt,'off',delay_max}, ...
-                            {ds_out0, ds_out0}, ...
-                            {poly_out0, []});      
+                            {ds_out0, sync_poly}, ...
+                            {poly_out0, sync_out});      
 
     polynomial_blk1 = xBlock(struct('source', str2func('polynomial_shift_mult_transpose_init_xblock'), ...
                                     'name','polynomial1'), ...
                             {[blk,'/','/polynomial1'], coeffs(2:2:end), add_latency,n_bits, bin_pt,'off',delay_max}, ...
-                            {ds_out1, ds_out1}, ...
+                            {ds_out1, sync_poly}, ...
                             {poly_out1,[]});                              
 
     final_adder = xBlock(struct('source','AddSub', 'name', 'final_adder'), ...
@@ -207,6 +209,8 @@ elseif strcmp(dec2_halfout,'on')
     for i=1:n_inputs/2
         outports{i} = xOutport(['out',num2str(i)]);
     end
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
 
     parallel_adder_blks = cell(1,n_stages);
     parallel_adder_ins = cell(n_stages+1,n_inputs);
@@ -214,7 +218,7 @@ elseif strcmp(dec2_halfout,'on')
         parallel_adder_ins{1,i} = inports{i};
     end
     parallel_adder_sync_ins = cell(1,n_stages+1);
-    parallel_adder_sync_ins{1} = inports{1};  % fake sync signal
+    parallel_adder_sync_ins{1} = sync_in; 
     for i =1:n_stages
         for j = 1:n_inputs
             parallel_adder_ins{i+1,j} = xSignal(['pa_i',num2str(i+1),'_',num2str(j)]);
@@ -223,7 +227,7 @@ elseif strcmp(dec2_halfout,'on')
         parallel_adder_blks{i} = xBlock(struct('source',str2func('parallel_accumulator_init_xblock'), ...
                                                 'name',['p_adder',num2str(i)]), ...
                                         {[blk,'/','p_adder',num2str(i)],'n_inputs', n_inputs,'len', 2,'add_latency', add_latency}, ...
-                                        {parallel_adder_sync_ins{i},parallel_adder_ins{i,:}}, ...
+                                        {sync_in,parallel_adder_ins{i,:}}, ...
                                         {parallel_adder_sync_ins{i+1},parallel_adder_ins{i+1,:}});
 
 
@@ -233,6 +237,7 @@ elseif strcmp(dec2_halfout,'on')
     for i =1:n_inputs/2
         outports{i}.bind(parallel_adder_ins{n_stages+1,i*2-skip});
     end
+    sync_out.bind(parallel_adder_sync_ins{n_stages+1});
 
 
 else  % dec2_halfout 'off', n_outputs = n_inputs
@@ -243,6 +248,8 @@ else  % dec2_halfout 'off', n_outputs = n_inputs
         inports{i} = xInport(['in',num2str(i)]);
         outports{i} = xOutport(['out',num2str(i)]);
     end 
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
 
     parallel_adder_blks = cell(1,n_stages);
     parallel_adder_ins = cell(n_stages+1,n_inputs);
@@ -250,7 +257,7 @@ else  % dec2_halfout 'off', n_outputs = n_inputs
         parallel_adder_ins{1,i} = inports{i};
     end
     parallel_adder_sync_ins = cell(1,n_stages+1);
-    parallel_adder_sync_ins{1} = inports{1};  % fake sync signal
+    parallel_adder_sync_ins{1} = sync_in;  % fake sync signal
     for i =1:n_stages
         for j = 1:n_inputs
             parallel_adder_ins{i+1,j} = xSignal(['pa_i',num2str(i+1),'_',num2str(j)]);
@@ -259,7 +266,7 @@ else  % dec2_halfout 'off', n_outputs = n_inputs
         parallel_adder_blks{i} = xBlock(struct('source',str2func('parallel_accumulator_init_xblock'), ...
                                                 'name',['p_adder',num2str(i)]), ...
                                         {[blk,'/','p_adder',num2str(i)], 'n_inputs', n_inputs,'len', 2,'add_latency', add_latency}, ...
-                                        {parallel_adder_sync_ins{i},parallel_adder_ins{i,:}}, ...
+                                        {sync_in,parallel_adder_ins{i,:}}, ...
                                         {parallel_adder_sync_ins{i+1},parallel_adder_ins{i+1,:}});
 
 
@@ -269,8 +276,8 @@ else  % dec2_halfout 'off', n_outputs = n_inputs
     decimator = xBlock(struct('source',str2func('parallel_downsampler_init_xblock'), ...
                                 'name', 'decimator_2'), ...
                         {[blk, '/', 'decimator_',num2str(2)], 'dec_rate', 2,'n_inputs', n_inputs,'input_clk_rate',input_clk_rate}, ...
-                        {parallel_adder_sync_ins{n_stages+1},parallel_adder_ins{n_stages+1,:}}, ...
-                        [{[]}, outports]);
+                        {parallel_adder_ins{n_stages+1,:}, sync_in}, ...
+                        [outports, {sync_out}]);
 
     
 
@@ -324,6 +331,8 @@ elseif n_inputs ==1 && strcmp(reduced_crtc_path, 'on')
     
     inport = xInport('in');
     outport = xOutport('out');
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
     
     % draw integrator section
     int_ins = cell(1,n_stages+1);
@@ -333,16 +342,16 @@ elseif n_inputs ==1 && strcmp(reduced_crtc_path, 'on')
         int_ins{i+1} = xSignal(['int_in',num2str(i+1)]);
         int_blks{i} = xBlock(struct('source',@my_accumulator_init_xblock, 'name', ['integrator_',num2str(i)]), ...
                             {n_bits,bin_pt, reduced_crtc_path}, ...
-                            {int_ins{i}}, ...
-                            {int_ins{i+1}});
+                            int_ins(i), ...
+                            int_ins(i+1));
     end
     
     % add down sampler
     ds_out = xSignal('ds_out');
     downsampler = xBlock(struct('source', str2func('downsample_init_xblock'), 'name', 'Down_sample1'), ...
                           {[blk,'/','Down_sample1'],'dec_rate', 2,'input_clk_rate',input_clk_rate},...
-                      {int_ins{n_stages+1}}, ...
-                      {ds_out});
+                      [int_ins(n_stages+1),{sync_in}], ...
+                      {ds_out,sync_out});
                   
     % add comb section
     comb_ins = cell(1,n_stages+1);
@@ -371,6 +380,8 @@ elseif strcmp(dec2_halfout,'on')
             outports{int32(i/2)}=xOutport(['out',num2str(int32(i/2))]);
         end
     end
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
     
     % add parallel integrator
     int_ins = cell(1,n_stages+1);
@@ -386,7 +397,7 @@ elseif strcmp(dec2_halfout,'on')
                               {strcat(blk,['/int_',num2str(i)]), ...
                                 'n_inputs', n_inputs, 'n_bits', n_bits, 'bin_pt', bin_pt, ...
                                 'add_latency', add_latency, 'reduced_crtc_path', reduced_crtc_path}, ...
-                               [{int_ins{i}{1}},int_ins{i}], ...
+                               [{sync_in},int_ins{i}], ...
                                [{[]},int_ins{i+1}]);
     end
     
@@ -394,7 +405,7 @@ elseif strcmp(dec2_halfout,'on')
     for i=1+mod(skip+1,2):2:n_inputs
         xBlock(struct('source','Terminator','name',['terminator',num2str(i)]), ...
                 [], ...
-                {int_ins{n_stages+1}{i}}, ...
+                int_ins{n_stages+1}(i), ...
                 {[]});
     end
     
@@ -404,7 +415,7 @@ elseif strcmp(dec2_halfout,'on')
     % and add comb section
     comb_ins = cell(1,n_stages+1);
     comb_blks = cell(1,n_stages);
-    comb_ins{1} = {int_ins{n_stages+1}{1+skip:2:end}};
+    comb_ins{1} = int_ins{n_stages+1}(1+skip:2:end);
     for i =1:n_stages
         comb_ins{i+1} = cell(1,n_inputs/2);
         for j=1:n_inputs/2
@@ -415,7 +426,7 @@ elseif strcmp(dec2_halfout,'on')
                               {strcat(blk,['/comb_',num2str(i)]), ...
                                'n_inputs', n_inputs/2,'n_bits', n_bits, 'bin_pt', bin_pt, ...
                                'diff_length', 1, 'latency', add_latency}, ...
-                               [{comb_ins{i}{1}}, comb_ins{i}], ...   % the sync ports are kind of awkward
+                               [{sync_in}, comb_ins{i}], ...   % the sync ports are kind of awkward
                                [{[]}, comb_ins{i+1}]);
     end
     
@@ -434,6 +445,8 @@ else
         inports{i} = xInport(['in',num2str(i)]);
         outports{i} = xOutport(['out', num2str(i)]);
     end
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
     
     % add parallel integrator
     int_ins = cell(1,n_stages+1);
@@ -449,7 +462,7 @@ else
                               {strcat(blk,['/int_',num2str(i)]), ...
                                 'n_inputs', n_inputs, 'n_bits', n_bits, 'bin_pt', bin_pt, ...
                                 'add_latency', add_latency, 'reduced_crtc_path', reduced_crtc_path}, ...
-                               [{int_ins{i}{1}},int_ins{i}], ...
+                               [{sync_in},int_ins{i}], ...
                                [{[]},int_ins{i+1}]);
     end
 
@@ -462,8 +475,8 @@ else
     downsampler=xBlock(struct('source',str2func('parallel_downsampler_init_xblock'), ...
                                 'name','downsample_2'),...
                         {[blk, '/', 'downsample_2'], 'dec_rate', 2, 'n_inputs', n_inputs, 'input_clk_rate',input_clk_rate}, ...
-                        [{int_ins{1}{1}}, int_ins{n_stages+1}],...
-                        [{[]},ds_outs]);
+                        [int_ins{n_stages+1},{sync_in}],...
+                        [ds_outs, {sync_out}]);
     
     
     
@@ -482,7 +495,7 @@ else
                               {strcat(blk,['/comb_',num2str(i)]), ...
                                'n_inputs', n_inputs, 'n_bits', n_bits, 'bin_pt', bin_pt, ...
                                'diff_length', 1, 'latency', add_latency}, ...
-                               [{comb_ins{i}{1}}, comb_ins{i}], ...   % the sync ports are kind of awkward
+                               [comb_ins{i}(1), comb_ins{i}], ...   % the sync ports are kind of awkward
                                [{[]}, comb_ins{i+1}]);
     end
     
@@ -518,6 +531,8 @@ if n_inputs==1 && strcmp(polyphase,'off') % only one input
     % non-polyphase structure
     inport = xInport('in');
     outport = xOutport('out');
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
     
     delay_blks = cell(m,dec_rate-1);
     delay_inports = cell(m+1);
@@ -554,8 +569,8 @@ if n_inputs==1 && strcmp(polyphase,'off') % only one input
     else
         downsampler = xBlock(struct('source', str2func('downsample_init_xblock'), 'name', 'Down_sample1'), ...
                                    {[blk,'/','Down_sample1'], 'dec_rate', dec_rate,'input_clk_rate',input_clk_rate}, ...
-                              {delay_inports{m+1}}, ...
-                              {outport}); 
+                              [delay_inports(m+1), {sync_in}], ...
+                              {outport,sync_out}); 
     end
 
 
@@ -565,6 +580,8 @@ elseif n_inputs ==1 && strcmp(polyphase,'on')
     
     inport = xInport('in');
     outport = xOutport('out');
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
     
     delay_blks = cell(1,dec_rate-1);
     delay_ins = cell(1,dec_rate);
@@ -586,8 +603,8 @@ elseif n_inputs ==1 && strcmp(polyphase,'on')
         else
             downsampling{i} = xBlock(struct('source', str2func('downsample_init_xblock'), 'name', ['Down_sample',num2str(i)]), ...
                                       {[blk,'/','Down_sample',num2str(i)], 'dec_rate', dec_rate,'input_clk_rate',input_clk_rate}, ...
-                                     {delay_ins{i}}, ...
-                                     {ds_out{i}});
+                                     [delay_ins(i),{sync_in}], ...
+                                     [ds_out(i),{sync_out}]);
         end
     end
 
@@ -633,6 +650,8 @@ else
         inports{i} = xInport(['in',num2str(i)]);
         outports{i} = xOutport(['out',num2str(i)]);
     end
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
     
     parallel_adder_blks = cell(1,m);
     parallel_adder_ins = cell(m+1,n_inputs);
@@ -640,7 +659,7 @@ else
         parallel_adder_ins{1,i} = inports{i};
     end
     parallel_adder_sync_ins = cell(1,m+1);
-    parallel_adder_sync_ins{1} = inports{1};  %fake sync singal
+    parallel_adder_sync_ins{1} = sync_in;
     for i =1:m
         for j = 1:n_inputs
             parallel_adder_ins{i+1,j} = xSignal(['pa_i',num2str(i+1),'_',num2str(j)]);
@@ -660,8 +679,8 @@ else
     decimator = xBlock(struct('source',str2func('parallel_downsampler_init_xblock'), ...
                                 'name', ['decimator_',num2str(dec_rate)]), ...
                         {[blk, '/', 'decimator_',num2str(dec_rate)], 'dec_rate', dec_rate,'n_inputs', n_inputs,'input_clk_rate',input_clk_rate}, ...
-                        {parallel_adder_sync_ins{m+1},parallel_adder_ins{m+1,:}}, ...
-                        [{[]}, outports]);
+                        {parallel_adder_ins{m+1,:},sync_in}, ...
+                        [outports,{sync_out}]);
     
     
     
@@ -706,6 +725,8 @@ elseif n_inputs ==1 && strcmp(reduced_crtc_path, 'on')
     
     inport = xInport('in');
     outport = xOutport('out');
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
     
     % draw integrator section
     int_ins = cell(1,n_stages+1);
@@ -715,16 +736,16 @@ elseif n_inputs ==1 && strcmp(reduced_crtc_path, 'on')
         int_ins{i+1} = xSignal(['int_in',num2str(i+1)]);
         int_blks{i} = xBlock(struct('srouce',@my_accumulator_init_xblock, 'name', ['integrator_',num2str(i)]), ...
                             {n_bits,bin_pt, reduced_crtc_path}, ...
-                            {int_ins{i}}, ...
-                            {int_ins{i+1}});
+                            int_ins(i), ...
+                            int_ins(i+1));
     end
     
     % add down sampler
     ds_out = xSignal('ds_out');
     downsampler = xBlock(struct('source', str2func('downsample_init_xblock'), 'name', 'Down_sample1'), ...
                            {[blk,'/Down_sample1'], 'dec_rate', dec_rate,'input_clk_rate',input_clk_rate}, ...
-                      {int_ins{n_stages+1}}, ...
-                      {ds_out});
+                      [int_ins(n_stages+1),{sync_in}], ...
+                      {ds_out,sync_out});
                   
     % add comb section
     comb_ins = cell(1,n_stages+1);
@@ -751,16 +772,21 @@ else
         inports{i} = xInport(['in',num2str(i)]);
         outports{i} = xOutport(['out',num2str(i)]);
     end
+    sync_in = xInport('sync_in');
+    sync_out = xOutport('sync_out');
     
     % add parallel integrator
     int_ins = cell(1,n_stages+1);
     int_blks = cell(1,n_stages);
     int_ins{1} = inports;
+    int_sync_ins = cell(1,n_stages+1);
+    int_sync_ins{1} = sync_in;
     for i =1:n_stages
         int_ins{i+1} = cell(1,n_inputs);
         for j =1:n_inputs
             int_ins{i+1}{j} = xSignal(['int_ins',num2str(i),'_',num2str(j)]);
         end
+        int_sync_ins{i+1} = xSignal(['int_sync_ins', num2str(i)]);
         int_blks{i} = xBlock(struct('source',str2func('parallel_integrator_init_xblock'),...
                                     'name',['int_',num2str(i)]), ...
                               {strcat(blk,['/int_',num2str(i)]), ...
@@ -769,8 +795,8 @@ else
                                 'bin_pt', bin_pt, ...
                                 'add_latency', add_latency, ...
                                 'reduced_crtc_path', reduced_crtc_path}, ...
-                               [{int_ins{i}{1}}, int_ins{i}], ...
-                               [{[]},int_ins{i+1}]);
+                               [{sync_in}, int_ins{i}], ...
+                               [int_sync_ins(i+1),int_ins{i+1}]);
     end
     
     % add down sampler
@@ -782,8 +808,8 @@ else
     downsampler=xBlock(struct('source',str2func('parallel_downsampler_init_xblock'), ...
                                 'name',['downsample_',num2str(rate_change)]),...
                         {[blk, '/', 'downsample_',num2str(rate_change)], 'dec_rate', rate_change, 'n_inputs', n_inputs, 'input_clk_rate',input_clk_rate}, ...
-                        [{int_ins{1}{1}}, int_ins{n_stages+1}],...
-                        [{ds_sync_out},ds_outs]);
+                        [int_ins{n_stages+1},{sync_in}],...
+                        [ds_outs,{ds_sync_out}]);
     
     
     
@@ -806,13 +832,14 @@ else
                               {strcat(blk,['/comb_',num2str(i)]), ...
                                'n_inputs', n_inputs, 'n_bits', n_bits, 'bin_pt', bin_pt, ...
                                'diff_length', 1, 'latency', add_latency}, ...
-                               [{comb_sync_ins{i}}, comb_ins{i}], ...
-                               [{comb_sync_ins{i+1}}, comb_ins{i+1}]);     % the sync ports are kind of awkward
+                               [comb_sync_ins(i), comb_ins{i}], ...
+                               [comb_sync_ins(i+1), comb_ins{i+1}]);     % the sync ports are kind of awkward
     end
     
     for i =1:n_inputs
          outports{i}.bind(comb_ins{n_stages+1}{i});
     end
+    sync_out.bind(comb_sync_ins{n_stages+1});
     
     %disp('hey');
     
