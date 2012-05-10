@@ -44,4 +44,8 @@ v01_na_ri_8r4t11f_ver107.mdl -- Updated version of v01_na_ri_8r4t11f_ver106.mdl
             
 v01_na_ri_8r4t11f_ver108.mdl -- Updated version of v01_na_ri_8r4t11f_ver107.mdl
         * corrected SSG reset. Now connected to master_rst2.
+
+v01_na_ri_8r4t11f_ver109.mdl -- Updated version of v01_na_ri_8r4t11f_ver108.mdl
+        * Added first draft of allowing external blank to be ORed with internal blank.
+            This is controlled by bit 6 of ssg_master_slave_sel
             
