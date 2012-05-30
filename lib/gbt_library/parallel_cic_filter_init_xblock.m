@@ -163,8 +163,6 @@ for i=1:len
                           [sigs{i+1},stage_sync_outs(i)]);
                       
    n_bits = ceil(n_stages*log2(f(i)*1) + n_bits);
-   
-  % clk_rates{i+1} = clk_rates{i}*f(i);
    disp(['stage ',num2str(i),' completed!']);
 end
 

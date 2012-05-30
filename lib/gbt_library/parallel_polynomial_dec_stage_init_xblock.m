@@ -64,7 +64,6 @@ reduced_crtc_path = get_var('reduced_crtc_path', 'defaults', defaults, varargin{
 reduced_crtc_path = 'off';
         
 
-
 % actually should be able to support any integer
 if ~isprime(dec_rate) && dec_rate~=1
     disp('Only supports decimation rate that is a prime number or 1');
