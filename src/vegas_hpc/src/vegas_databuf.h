@@ -13,6 +13,7 @@
 struct vegas_databuf {
     char data_type[64]; /* Type of data in buffer */
     unsigned int buf_type;  /* GPU_INPUT_BUF or CPU_INPUT_BUF */
+    size_t databuf_size; /* Size for the entire buffer (bytes) */
     size_t struct_size; /* Size alloced for this struct (bytes) */
     size_t block_size;  /* Size of each data block (bytes) */
     size_t header_size; /* Size of each block header (bytes) */
@@ -38,6 +39,7 @@ union semun {
 #define CPU_INPUT_BUF       2
 #define DISK_INPUT_BUF      3
 
+#define MAX_BLKS_PER_BUF    1024
 #define MAX_HEAPS_PER_BLK   4096
 
 // Single element of the index for the GPU or CPU input buffer
@@ -89,6 +91,7 @@ struct vegas_databuf *vegas_databuf_create(int n_block, size_t block_size,
 #else
 struct vegas_databuf *vegas_databuf_create(int n_block, size_t block_size,
         int databuf_id, int buf_type);
+void vegas_conf_databuf_size(struct vegas_databuf *d, size_t new_block_size);
 #endif
 
 /* Return a pointer to a existing shmem segment with given id.

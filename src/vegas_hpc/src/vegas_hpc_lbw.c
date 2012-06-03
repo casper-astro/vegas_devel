@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
 
     /* If attach fails, first try to create the databuf */
     if (disk_input_dbuf==NULL) 
-        disk_input_dbuf = vegas_databuf_create(16, 32*1024*1024,
+        disk_input_dbuf = vegas_databuf_create(16, 16*1024*1024,
                             disk_args.input_buffer, DISK_INPUT_BUF);
 
     /* If that also fails, exit */
@@ -122,6 +122,17 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+    /* Resize the blocks in the disk input buffer, based on the exposure parameter */
+    struct vegas_params vegas_p;
+    struct sdfits sf;
+    vegas_read_obs_params(stat.buf, &vegas_p, &sf);
+    vegas_read_subint_params(stat.buf, &vegas_p, &sf);
+
+    long long int num_exp_per_blk = (int)(ceil(DISK_WRITE_INTERVAL / sf.data_columns.exposure));
+    long long int disk_block_size = num_exp_per_blk * (sf.hdr.nchan * sf.hdr.nsubband * 4 * 4);
+    disk_block_size = disk_block_size > (long long int)(32*1024*1024) ? (long long int)(32*1024*1024) : disk_block_size;
+
+    vegas_conf_databuf_size(disk_input_dbuf, disk_block_size);
     vegas_databuf_clear(disk_input_dbuf);
 
     signal(SIGINT, cc);

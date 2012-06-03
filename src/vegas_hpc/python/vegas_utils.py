@@ -157,12 +157,12 @@ class vegas_databuf:
         self.data_type = self.buf.read(NumberOfBytes=64, offset=0)
         
         if NEW_GBT:
-            packed = self.buf.read(NumberOfBytes=8+4*8+3*4, offset=64)
+            packed = self.buf.read(NumberOfBytes=8+5*8+3*4, offset=64)
             self.buf_type = n.fromstring(packed[0:8], dtype=n.int64)
-            self.struct_size, self.block_size, self.header_size, self.index_size = \
-                    n.fromstring(packed[8:40], dtype=n.int64)
+            self.databuf_size, self.struct_size, self.block_size, self.header_size, \
+                    self.index_size = n.fromstring(packed[8:48], dtype=n.int64)
             self.shmid, self.semid, self.n_block= \
-                    n.fromstring(packed[40:52], dtype=n.int32)
+                    n.fromstring(packed[48:60], dtype=n.int32)
         else:
             packed = self.buf.read(NumberOfBytes=3*8+3*4, offset=64)
             self.struct_size, self.block_size, self.header_size = \

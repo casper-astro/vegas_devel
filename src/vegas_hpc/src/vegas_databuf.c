@@ -18,80 +18,6 @@
 #include "vegas_databuf.h"
 #include "vegas_error.h"
 
-#ifndef NEW_GBT
-
-struct vegas_databuf *vegas_databuf_create(int n_block, size_t block_size,
-        int databuf_id) {
-
-    /* Calc databuf size */
-    const size_t header_size = VEGAS_STATUS_SIZE;
-    size_t struct_size = sizeof(struct vegas_databuf);
-    struct_size = 8192 * (1 + struct_size/8192); /* round up */
-    size_t databuf_size = (block_size+header_size) * n_block + struct_size;
-
-    /* Get shared memory block, error if it already exists */
-    int shmid;
-    shmid = shmget(VEGAS_DATABUF_KEY + databuf_id - 1, 
-            databuf_size, 0666 | IPC_CREAT | IPC_EXCL);
-    if (shmid==-1) {
-        vegas_error("vegas_databuf_create", "shmget error");
-        return(NULL);
-    }
-
-    /* Attach */
-    struct vegas_databuf *d;
-    d = shmat(shmid, NULL, 0);
-    if (d==(void *)-1) {
-        vegas_error("vegas_databuf_create", "shmat error");
-        return(NULL);
-    }
-
-    /* Try to lock in memory */
-    int rv = shmctl(shmid, SHM_LOCK, NULL);
-    if (rv==-1) {
-        vegas_error("vegas_databuf_create", "Error locking shared memory.");
-        perror("shmctl");
-    }
-
-    /* Zero out memory */
-    memset(d, 0, databuf_size);
-
-    /* Fill params into databuf */
-    int i;
-    char end_key[81];
-    memset(end_key, ' ', 80);
-    strncpy(end_key, "END", 3);
-    end_key[80]='\0';
-    d->shmid = shmid;
-    d->semid = 0;
-    d->n_block = n_block;
-    d->struct_size = struct_size;
-    d->block_size = block_size;
-    d->header_size = header_size;
-    sprintf(d->data_type, "unknown");
-    for (i=0; i<n_block; i++) { 
-        memcpy(vegas_databuf_header(d,i), end_key, 80); 
-    }
-
-    /* Get semaphores set up */
-    d->semid = semget(VEGAS_DATABUF_KEY + databuf_id - 1, 
-            n_block, 0666 | IPC_CREAT);
-    if (d->semid==-1) { 
-        vegas_error("vegas_databuf_create", "semget error");
-        return(NULL);
-    }
-
-    /* Init semaphores to 0 */
-    union semun arg;
-    arg.array = (unsigned short *)malloc(sizeof(unsigned short)*n_block);
-    memset(arg.array, 0, sizeof(unsigned short)*n_block);
-    rv = semctl(d->semid, 0, SETALL, arg);
-    free(arg.array);
-
-    return(d);
-}
-
-#else
 
 struct vegas_databuf *vegas_databuf_create(int n_block, size_t block_size,
         int databuf_id, int buf_type) {
@@ -139,6 +65,7 @@ struct vegas_databuf *vegas_databuf_create(int n_block, size_t block_size,
     d->shmid = shmid;
     d->semid = 0;
     d->n_block = n_block;
+    d->databuf_size = databuf_size;
     d->struct_size = struct_size;
     d->block_size = block_size;
     d->header_size = header_size;
@@ -150,9 +77,14 @@ struct vegas_databuf *vegas_databuf_create(int n_block, size_t block_size,
         memcpy(vegas_databuf_header(d,i), end_key, 80); 
     }
 
-    /* Get semaphores set up */
-    d->semid = semget(VEGAS_DATABUF_KEY + databuf_id - 1, 
-            n_block, 0666 | IPC_CREAT);
+    /* Get semaphores set up.
+       If the disk buffer (type=3), we make 1024 semaphores, as the blocks
+       may be resized later. */
+    if(buf_type == DISK_INPUT_BUF)
+        d->semid = semget(VEGAS_DATABUF_KEY + databuf_id - 1, MAX_BLKS_PER_BUF, 0666 | IPC_CREAT);
+    else
+        d->semid = semget(VEGAS_DATABUF_KEY + databuf_id - 1, n_block, 0666 | IPC_CREAT);
+
     if (d->semid==-1) { 
         vegas_error("vegas_databuf_create", "semget error");
         return(NULL);
@@ -160,15 +92,50 @@ struct vegas_databuf *vegas_databuf_create(int n_block, size_t block_size,
 
     /* Init semaphores to 0 */
     union semun arg;
-    arg.array = (unsigned short *)malloc(sizeof(unsigned short)*n_block);
-    memset(arg.array, 0, sizeof(unsigned short)*n_block);
+
+    if(buf_type == DISK_INPUT_BUF)
+    {
+        arg.array = (unsigned short *)malloc(sizeof(unsigned short)*MAX_BLKS_PER_BUF);
+        memset(arg.array, 0, sizeof(unsigned short)*MAX_BLKS_PER_BUF);
+    }
+    else
+    {
+        arg.array = (unsigned short *)malloc(sizeof(unsigned short)*n_block);
+        memset(arg.array, 0, sizeof(unsigned short)*n_block);
+    }
+
     rv = semctl(d->semid, 0, SETALL, arg);
     free(arg.array);
 
     return(d);
 }
 
-#endif
+
+/** 
+ * Resizes the blocks within the specified databuf. The number of blocks
+ * are automatically changed, so that the total buffer size remains constant.
+ */
+void vegas_conf_databuf_size(struct vegas_databuf *d, size_t new_block_size)
+{
+
+    /* Calculate number of data blocks that can fit into the existing buffer */
+    int new_n_block = (d->databuf_size - d->struct_size) / (new_block_size + d->header_size + d->index_size);
+    
+    /* Make sure that there won't be more data blocks than semaphores */
+    if(new_n_block > MAX_BLKS_PER_BUF)
+    {
+        printf("Warning: the disk buffer contains more than %d blocks. Only %d blocks will be used\n",
+                MAX_BLKS_PER_BUF, MAX_BLKS_PER_BUF);
+        new_n_block = MAX_BLKS_PER_BUF;
+    }
+
+    /* Fill params into databuf */
+    d->n_block = new_n_block;
+    d->block_size = new_block_size;
+
+    return;
+}
+
 
 int vegas_databuf_detach(struct vegas_databuf *d) {
     int rv = shmdt(d);
@@ -183,8 +150,17 @@ void vegas_databuf_clear(struct vegas_databuf *d) {
 
     /* Zero out semaphores */
     union semun arg;
-    arg.array = (unsigned short *)malloc(sizeof(unsigned short)*d->n_block);
-    memset(arg.array, 0, sizeof(unsigned short)*d->n_block);
+    if(d->buf_type == DISK_INPUT_BUF)
+    {
+      arg.array = (unsigned short *)malloc(sizeof(unsigned short)*MAX_BLKS_PER_BUF);
+      memset(arg.array, 0, sizeof(unsigned short)*MAX_BLKS_PER_BUF);
+    }
+    else
+    {
+      arg.array = (unsigned short *)malloc(sizeof(unsigned short)*d->n_block);
+      memset(arg.array, 0, sizeof(unsigned short)*d->n_block);
+    }
+
     semctl(d->semid, 0, SETALL, arg);
     free(arg.array);
 
@@ -265,8 +241,9 @@ int vegas_databuf_total_status(struct vegas_databuf *d) {
 
     /* Get all values at once */
     union semun arg;
-    arg.array = (unsigned short *)malloc(sizeof(unsigned short)*d->n_block);
-    memset(arg.array, 0, sizeof(unsigned short)*d->n_block);
+    arg.array = (unsigned short *)malloc(sizeof(unsigned short)*MAX_BLKS_PER_BUF);
+    
+    memset(arg.array, 0, sizeof(unsigned short)*MAX_BLKS_PER_BUF);
     semctl(d->semid, 0, GETALL, arg);
     int i,tot=0;
     for (i=0; i<d->n_block; i++) tot+=arg.array[i];

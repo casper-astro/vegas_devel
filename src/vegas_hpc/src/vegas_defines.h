@@ -30,4 +30,7 @@
     #define PAYLOAD_SIZE    8192
 #endif
 
+// The rate at which data blocks are written to disk (in seconds)
+#define DISK_WRITE_INTERVAL 20
+
 #endif

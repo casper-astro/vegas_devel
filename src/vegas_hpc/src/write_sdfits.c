@@ -51,7 +51,7 @@ int sdfits_create(struct sdfits *sf) {
                 "Error: VEGAS_DIR environment variable not set, exiting.\n");
         exit(1);
     }
-    printf("Opening file '%s' ", sf->filename);
+    printf("Opening file '%s'\n", sf->filename);
     sprintf(template_file, "%s/%s", vegas_dir, SDFITS_TEMPLATE);
     fits_create_template(&(sf->fptr), sf->filename, template_file, status);
 
