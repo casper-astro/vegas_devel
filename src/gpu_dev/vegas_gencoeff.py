@@ -1,4 +1,4 @@
-#!/usr/bin/python2.6
+#!/usr/bin/python
 
 # vegas_gencoeff.py
 # Generate PFB filter coefficients for VEGAS HPC low-bandwidth modes. The
