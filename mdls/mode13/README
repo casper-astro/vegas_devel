@@ -7,5 +7,5 @@ the fourth block is the demux of the adc and the decimation rate (e.g. 8r128dr i
 
 v13_na_ri_8r128dr_ver101.mdl - this is the first incarnation of mode 13 with only one subband.
 
-v13_na_ri_8r128dr_ver102.mdl - the summer 2012 version with one subband (supports up to 8).
+v13_na_ri_8r64dr_ver101.mdl - the summer 2012 version with one subband (supports up to 8).
 
