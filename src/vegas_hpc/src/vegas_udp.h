@@ -60,7 +60,7 @@ int vegas_udp_init(struct vegas_udp_params *p);
 int vegas_udp_wait(struct vegas_udp_params *p); 
 
 /* Read a packet */
-int vegas_udp_recv(struct vegas_udp_params *p, struct vegas_udp_packet *b);
+int vegas_udp_recv(struct vegas_udp_params *p, struct vegas_udp_packet *b, char bw_mode[]);
 
 /* Convert a Parkes-style packet to a VEGAS-style packet */
 void parkes_to_vegas(struct vegas_udp_packet *b, const int acc_len, 

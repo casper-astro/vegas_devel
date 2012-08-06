@@ -378,7 +378,7 @@ void *vegas_net_thread(void *_args) {
         }
 	
         /* Read packet */
-        rv = vegas_udp_recv(&up, &p);
+        rv = vegas_udp_recv(&up, &p, bw_mode);
         if (rv!=VEGAS_OK) {
             if (rv==VEGAS_ERR_PACKET) {
                 #ifdef DEBUG_NET
