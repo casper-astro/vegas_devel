@@ -12,7 +12,7 @@ import numpy, corr, time, struct, sys, logging, pylab, matplotlib, scipy
 
 katcp_port = 7147
 roach = '192.168.40.67'
-fpga = corr.katcp_wrapper.FpgaClient('192.168.40.70', katcp_port)
+fpga = corr.katcp_wrapper.FpgaClient(roach, katcp_port)
 
 time.sleep(1)
 
