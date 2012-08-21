@@ -53,3 +53,7 @@ v01_na_ri_8r4t11f_ver111.mdl -- Updated version of v01_na_ri_8r4t11f_ver110.mdl
         * Added ability to choose between ASR input and BLANK input as external blank
             to be ORed with internal blank. This is controlled by bit 7 of ssg_master_slave_sel
             Default of 0 selects ASR input (VEGAS master configuration)
+            
+v01_na_ri_ssgonly_ver112.mdl -- Based on v01_na_ri_8r4t11f_ver111.mdl
+        * Removed DSP logic for faster builds to improve testing of SSG signals. 
+            This line of development will be moved to ROACH II since the GPIO pinouts will be different (and uniform).
