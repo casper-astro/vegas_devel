@@ -49,3 +49,7 @@ v01_na_ri_8r4t11f_ver109.mdl -- Updated version of v01_na_ri_8r4t11f_ver108.mdl
         * Added first draft of allowing external blank to be ORed with internal blank.
             This is controlled by bit 6 of ssg_master_slave_sel
             
+v01_na_ri_8r4t11f_ver111.mdl -- Updated version of v01_na_ri_8r4t11f_ver110.mdl
+        * Added ability to choose between ASR input and BLANK input as external blank
+            to be ORed with internal blank. This is controlled by bit 7 of ssg_master_slave_sel
+            Default of 0 selects ASR input (VEGAS master configuration)
