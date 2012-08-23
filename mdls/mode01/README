@@ -57,3 +57,18 @@ v01_na_ri_8r4t11f_ver111.mdl -- Updated version of v01_na_ri_8r4t11f_ver110.mdl
 v01_na_ri_ssgonly_ver112.mdl -- Based on v01_na_ri_8r4t11f_ver111.mdl
         * Removed DSP logic for faster builds to improve testing of SSG signals. 
             This line of development will be moved to ROACH II since the GPIO pinouts will be different (and uniform).
+
+v01_aa_rii_8r4t11f_ver113.mdl -- Updated version of v01_na_ri_8r4t11f_ver109.mdl
+	* Compiles for ROACH2
+	* Adds ASIAA ADC (uses every other sample)
+	* Removed switching signal generator, removing the GPIOs which were causing compile issues
+	    under ROACH2
+	
+v01_aa_rii_16r4t11f_ver114.mdl -- Updated version of v01_na_ri_8r4t11f_ver109.mdl
+	* Compiles for ROACH2
+	* Adds ASIAA ADC (uses all 16 samples)
+	* Design was modified to accomodate 16 simultaneous inputs from each of the ADCs 
+	* Removed switching signal generator, removing the GPIOs which were causing compile issues
+	    under ROACH2
+	
+ 
