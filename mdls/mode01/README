@@ -13,6 +13,10 @@ v01_na_ri_8r4t11f_ver101.mdl -- functional mode 1 design mostly functional at lo
 
 v01_na_ri_8r4t11f_ver102.mdl -- functional mode 1 design, optimized for speeds up to 360MHz
 
+v01_aa_ri_8r4t11f_ver102.mdl -- This version updates v01_aa_ri_8r4t11f_ver101.mdl with a 
+				conversion from the adc output of fixed 8_0 to signed 8_7 
+				for proper input into the pfb_fir.
+
 v01_na_ri_8r4t11f_ver103.mdl -- (TESTING) functional mode 1 containing snap blocks for adc 
 				and packet headers.  Low clock speeds.. probably no longer 
 				useful
