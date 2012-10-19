@@ -1,0 +1,15 @@
+Model file naming convention:
+the first block is the mode (e.g. v01 is vegas mode 1);
+the second block is the adc being used (aa is asiaa adc, na is the national adc);
+the third block is the fpga board used (ri is roach 1, rii is roach 2);
+the fourth block is the demux of the adc, the number of taps in the pfb, and the 
+number of pts in the fft (e.g. 8r4t11f is demux by 8, 4 taps, and 2^11 pt fft)
+
+v03_aa_rii_16r4t13f_ver101.mdl -- this is simply a copy of v02_aa_rii_16r412f_ver101.mdl 
+				  with the pfb_fir and fft size changed to 13
+				  changed vector length in the vector accumulators from 8 to 9
+				  changed the output chunk length from 2048 to 4096
+
+
+	
+ 
