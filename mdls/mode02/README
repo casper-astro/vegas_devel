@@ -12,4 +12,4 @@ v02_aa_rii_16r4t12f_ver101.mdl -- this is simply a copy of v01_aa_rii_16r411f_ve
 
 
 	
- 
+v02_aa_rii_16r4t12f_ver102.mdl -- in reshaper, changing Input Length to 256.  In constant going to reshaper heap_size, changing value to 32768+8*6 from 16384+8*6. In spead, changing number of payloads to 4 from 2.
