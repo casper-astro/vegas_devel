@@ -173,18 +173,24 @@ int main(int argc, char *argv[]) {
         if (disk_args.finished) run=0;
     }
  
+#ifndef EXT_DISK
     pthread_cancel(disk_thread_id);
+#endif
     pthread_cancel(accum_thread_id);
     pthread_cancel(net_thread_id);
+#ifndef EXT_DISK
     pthread_kill(disk_thread_id,SIGINT);
+#endif
     pthread_kill(accum_thread_id,SIGINT);
     pthread_kill(net_thread_id,SIGINT);
     pthread_join(net_thread_id,NULL);
     printf("Joined net thread\n"); fflush(stdout);
     pthread_join(accum_thread_id,NULL);
     printf("Joined accumulator thread\n"); fflush(stdout);
+#ifndef EXT_DISK
     pthread_join(disk_thread_id,NULL);
     printf("Joined disk thread\n"); fflush(stdout);
+#endif
 
     vegas_thread_args_destroy(&net_args);
     vegas_thread_args_destroy(&accum_args);

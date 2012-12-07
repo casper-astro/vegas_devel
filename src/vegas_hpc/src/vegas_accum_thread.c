@@ -16,6 +16,7 @@
 #include <sys/resource.h>
 #include <sys/types.h>
 #include <stdint.h>
+#include <math.h>
 
 #include "vegas_defines.h"
 #include "fitshead.h"
@@ -267,7 +268,7 @@ void vegas_accum_thread(void *_args) {
 
             /* Read required exposure and PFB rate from status shared memory */
             reqd_exposure = sf.data_columns.exposure;
-            pfb_rate = abs(sf.hdr.efsampfr) / (2 * sf.hdr.nchan);
+            pfb_rate = fabs(sf.hdr.efsampfr) / (2 * sf.hdr.nchan);
 
             /* Initialise the index in the output block */
             index_out = (struct databuf_index*)vegas_databuf_index(db_out, curblock_out);
