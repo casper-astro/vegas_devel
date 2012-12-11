@@ -5,6 +5,8 @@ the third block is the fpga board used (ri is roach 1, rii is roach 2);
 the fourth block is the demux of the adc, the number of taps in the pfb, and the 
 number of pts in the fft (e.g. 8r4t11f is demux by 8, 4 taps, and 2^11 pt fft)
 
+A trailing 'sa' indicates that the design was compiled against the ska-sa/mlib_devel library
+
 v01_aa_ri_8r4t11f_ver101.mdl -- this is simply a copy of v01_na_ri_8r4t11f_ver102.mdl with 
 				the national adc switched out for the asiaa adc
 
@@ -75,4 +77,19 @@ v01_aa_rii_16r4t11f_ver114.mdl -- Updated version of v01_na_ri_8r4t11f_ver109.md
 	* Removed switching signal generator, removing the GPIOs which were causing compile issues
 	    under ROACH2
 	
- 
+v01_aa_rii_16r4t11f_ver115sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver114.mdl
+	* Changed 10 GbE port to use SFP+ card 1 port 0
+	* The contemporary edition of casper-astro/mlib_devel is outdated with respect to SFP+, so the design was 
+		updated to compile with ska-sa/mlib_devel
+    * SSG not present
+
+v01_aa_rii_16r4t11f_ver116sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver115sa.mdl
+    * Updated adc capture to use snapshot blocks and simplified signal routing
+    * raw_adc_trig is new name for original raw_snap_trig in previous designs.
+    * In this version, accidentally grabbed top bit of raw_adc_trig to trigger snap blocks, fixed in ver117sa
+    * added status and nspec registers for debugging
+
+v01_aa_rii_16r4t11f_ver117sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver116sa.mdl
+    * fixed raw_adc_trig so LSB triggers ADC capture
+    * Added more signals to status register
+    * added debug snapshot block to capture status register signals for debugging
