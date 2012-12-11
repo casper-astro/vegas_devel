@@ -21,7 +21,7 @@ void usage() {
             "  -q, --quiet\n"
             "  -c, --create\n"
             "  -i n, --id=n  (1)\n"
-            "  -s n, --size=n (32M)\n"
+            "  -s n, --size=n (32768)\n"
             "  -n n, --nblock=n (24)\n"
             );
 }
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     int quiet=0;
     int create=0;
     int db_id=1;
-    int blocksize = 32;
+    int blocksize = 32768;
     int nblock = 24;
     int type = 1;
     while ((opt=getopt_long(argc,argv,"hqci:s:n:t:",long_opts,&opti))!=-1) {
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 #ifndef NEW_GBT
         db = vegas_databuf_create(nblock, blocksize*1024*1024, db_id);
 #else
-        db = vegas_databuf_create(nblock, blocksize*1024*1024, db_id, type);
+        db = vegas_databuf_create(nblock, blocksize*1024, db_id, type);
 #endif
         if (db==NULL) {
             fprintf(stderr, "Error creating databuf %d (may already exist).\n",
