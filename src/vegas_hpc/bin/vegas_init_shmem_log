@@ -4,12 +4,12 @@ if test "${VEGAS_DIR}zz" = zz; then
 	exit 1
 fi
 # Set up status buffer
-$VEGAS_DIR/bin/check_vegas_status >& vegas_status.log
+$VEGAS_DIR/bin/check_vegas_status >& $VEGAS/vegas_status.log
 # Set up first (GPU) data buffer
-$VEGAS_DIR/bin/check_vegas_databuf -c -i1 -n32 -s32768 -t1 >& vegas_databuf_1.log
+$VEGAS_DIR/bin/check_vegas_databuf -c -i1 -n32 -s32768 -t1 >& $VEGAS/vegas_databuf_1.log
 # Set up second (CPU_ACCUM) data buffer
-$VEGAS_DIR/bin/check_vegas_databuf -c -i2 -n32 -s32768 -t2 >& vegas_databuf_2.log
+$VEGAS_DIR/bin/check_vegas_databuf -c -i2 -n32 -s32768 -t2 >& $VEGAS/vegas_databuf_2.log
 # Set up third (DISK) data buffer
-$VEGAS_DIR/bin/check_vegas_databuf -c -i3 -n24 -s16384 -t3 >& vegas_databuf_3.log
+$VEGAS_DIR/bin/check_vegas_databuf -c -i3 -n24 -s16384 -t3 >& $VEGAS/vegas_databuf_3.log
 # Display status of buffers
 # $VEGAS_DIR/bin/check_vegas_status
