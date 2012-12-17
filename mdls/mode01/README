@@ -93,3 +93,25 @@ v01_aa_rii_16r4t11f_ver117sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver11
     * fixed raw_adc_trig so LSB triggers ADC capture
     * Added more signals to status register
     * added debug snapshot block to capture status register signals for debugging
+
+v01_aa_rii_16r4t11f_ver118sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver117sa.mdl
+    * this design stalled while compiling
+    * made debug snap longer and 16 bits wide instead of 32 bit (not sure if that had anything to do with stalled compile)
+
+v01_aa_rii_16r4t11f_ver119sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver118sa.mdl
+    * same design as v118 but changed back to 32 bit snap. This design compiled.
+
+v01_aa_rii_16r4t11f_ver120sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver119sa.mdl
+    * this design adds a snap after the stokes block and another after the VACC to debug the problem found in the vector accumulator
+
+v01_aa_rii_16r4t11f_ver121sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver120sa.mdl
+    * this design stalled while compiling so was renamed to ver122
+    * this design is identical to ver120 but the vector accumulator initialization script was updated to fix the problem, so this design should
+        not suffer from the vacc bug
+
+v01_aa_rii_16r4t11f_ver122sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver121sa.mdl
+    * this design is identical to ver121 and is simply a rename because the build stalled during compile.
+    * this design is identical to ver120 but the vector accumulator initialization script was updated to fix the problem, so this design should
+        not suffer from the vacc bug
+
+
