@@ -83,6 +83,8 @@ v01_aa_rii_16r4t11f_ver115sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver11
 		updated to compile with ska-sa/mlib_devel
     * SSG not present
 
+v01_aa_rii_16r4t11f_ver115.mdl -- Added ssg (no 'sa')
+
 v01_aa_rii_16r4t11f_ver116sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver115sa.mdl
     * Updated adc capture to use snapshot blocks and simplified signal routing
     * raw_adc_trig is new name for original raw_snap_trig in previous designs.
