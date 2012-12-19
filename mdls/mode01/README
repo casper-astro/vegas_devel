@@ -114,4 +114,13 @@ v01_aa_rii_16r4t11f_ver122sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver12
     * this design is identical to ver120 but the vector accumulator initialization script was updated to fix the problem, so this design should
         not suffer from the vacc bug
 
+v01_aa_rii_16r4t11f_ver124sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver122sa.mdl
+    * this design fixes a delay discrepancy in the sync passing by the stokes block
+    * found the spectrum to be totall corrupt. Appears to be PFB_FIR or FFT at fault.
+
+v01_md_16r4t11f_ver125sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver124sa.mdl
+    * removed xblocks/pfb_fir_real and replaced with vanilla pfb_fir_real from ska-sa/mlib_devel
+    * spectrum still not 100% correct
+
+
 
