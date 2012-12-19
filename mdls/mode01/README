@@ -122,5 +122,14 @@ v01_md_16r4t11f_ver125sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver124sa.
     * removed xblocks/pfb_fir_real and replaced with vanilla pfb_fir_real from ska-sa/mlib_devel
     * spectrum still not 100% correct
 
+v01_16r4t11f_ver123.mdl -- Updated version v01_aa_rii_16r4t11f_ver122sa.mdl 
+    * addedin switching signal generator
+    * renamed to avoid 64 character maximum naming restraint
+    
+v01_16r4t11f_ver126.mdl -- Update version v01_16r4t11f_ver123.mdl
+    * replaced pfb_fir and fft with standard ones from ska-sa/mlib_devel library
+    * reduced delay past the stokes block by one intended to resolve an off by 8 
+      issue in the spectra
 
+    
 
