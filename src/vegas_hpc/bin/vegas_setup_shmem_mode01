@@ -14,3 +14,4 @@ python2.7 ${VEGAS_DIR}/python/vegas_set_params.py -U --nogbt \
     --fpgaclk=150e6     \
     --efsampfr=1.2e9    \
     --hwexposr=0.5e-3   \
+    --obsmode=HBW       \
