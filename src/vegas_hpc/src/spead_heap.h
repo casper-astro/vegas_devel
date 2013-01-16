@@ -9,7 +9,7 @@
 struct freq_spead_heap {
     unsigned char time_cntr_addr_mode;
     unsigned short time_cntr_id;
-    unsigned char pad0;
+    unsigned char time_cntr_top8;
     unsigned int time_cntr;
     unsigned char spectrum_cntr_addr_mode;
     unsigned short spectrum_cntr_id;
@@ -36,7 +36,7 @@ struct freq_spead_heap {
 struct time_spead_heap {
     unsigned char time_cntr_addr_mode;
     unsigned short time_cntr_id;
-    unsigned char pad0;
+    unsigned char time_cntr_top8;
     unsigned int time_cntr;
     unsigned char mode_addr_mode;
     unsigned short mode_id;

@@ -418,7 +418,8 @@ void vegas_accum_thread(void *_args) {
                 {
                     /*Record SPEAD header fields*/
                     data_cols[accumid].time = index_in->cpu_gpu_buf[heap].heap_rcvd_mjd;
-                    data_cols[accumid].time_counter = freq_heap->time_cntr;
+                    data_cols[accumid].time_counter = (((uint64_t)freq_heap->time_cntr_top8) << 32)
+                                                        + (uint64_t)freq_heap->time_cntr;
                     data_cols[accumid].integ_num = integ_num;
                     data_cols[accumid].sttspec = freq_heap->spectrum_cntr;
                     data_cols[accumid].accumid = accumid;
