@@ -133,5 +133,13 @@ v01_16r4t11f_ver126.mdl -- Update version v01_16r4t11f_ver123.mdl
     * reduced delay past the stokes block by one intended to resolve an off by 8 
       issue in the spectra
 
-    
+v01_16r4t11f_ver127.mdl -- Rename of v01_16r4t11f_ver126.mdl
 
+v01_16r4t11f_ver129.mdl -- Update version v01_16r4t11f_ver127.mdl
+    * add one clock latency to valid signal at output of vacc to try to solve the off by 8 issue.
+
+v01_16r4t11f_ver130.mdl -- Update version v01_16r4t11f_ver129.mdl
+
+v01_16r4t11f_ver131.mdl -- Update version v01_16r4t11f_ver130.mdl
+    * added several changes to attempt to improve arm reliability
+    * BROKE sync generation in doing so. do not use this design
