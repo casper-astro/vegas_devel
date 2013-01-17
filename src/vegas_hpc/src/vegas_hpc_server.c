@@ -308,6 +308,8 @@ int main(int argc, char *argv[]) {
                 // Clear out data bufs
                 vegas_databuf_clear(dbuf_net);
                 vegas_databuf_clear(dbuf_pfb);
+                vegas_databuf_clear(dbuf_acc);
+
 
                 // Do it
                 run = 1;
