@@ -143,3 +143,13 @@ v01_16r4t11f_ver130.mdl -- Update version v01_16r4t11f_ver129.mdl
 v01_16r4t11f_ver131.mdl -- Update version v01_16r4t11f_ver130.mdl
     * added several changes to attempt to improve arm reliability
     * BROKE sync generation in doing so. do not use this design
+    
+v01_16r4t11f_ver132.mdl -- Update version v01_16r4t11f_ver131.mdl
+    * fixed sync generation problem from ver131
+    * this design should have fixed vacc and reshaper problems.
+    * final output spectra looks ok
+    * note snaps triggered on 'valid' signals are off by one.
+    * find that vaccout and rshpout snaps are off by two, one is explained by valid. 
+        This does not match simulation and does not make sense since final output data
+        looks good. Suspect some interpretation/user error.
+    
