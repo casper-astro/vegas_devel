@@ -152,4 +152,13 @@ v01_16r4t11f_ver132.mdl -- Update version v01_16r4t11f_ver131.mdl
     * find that vaccout and rshpout snaps are off by two, one is explained by valid. 
         This does not match simulation and does not make sense since final output data
         looks good. Suspect some interpretation/user error.
+
+v01_16r4t11f_ver134.mdl -- Update version v01_16r4t11f_ver132.mdl
+    * add timesnap debugging to check sync period oddities
+    * add delays to vaccout and rshpout snaps to compensate properly trigger logic
     
+v01_16r4t11f_ver135.mdl -- Update version v01_16r4t11f_ver134.mdl
+    * hopefully fixed 5 ns glitch caused by vacc not properly resetting if sync period varies
+        and by sync_generator not providing consistent sync period when PPS comes
+    * updated most (all?) pos/neg edge blocks to use new edge detect block 
+        to avoid deprecation warnings
