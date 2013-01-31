@@ -173,14 +173,14 @@ int sdfits_write_subint(struct sdfits *sf) {
     //        correcting NAXIS2 and using fits_flush_buffer()
     //        caused occasional hangs (and extrememly large
     //        files due to some infinite loop).
-    fits_flush_file(sf->fptr, status);
+/*    fits_flush_file(sf->fptr, status);
     // Print status if bad
     if (*status) {
         fprintf(stderr, "Error writing subint %d:\n", sf->rownum);
         fits_report_error(stderr, *status);
         fflush(stderr);
     }
-
+*/
     // Now update some key values if no CFITSIO errors
     if (!(*status)) {
         sf->rownum++;
