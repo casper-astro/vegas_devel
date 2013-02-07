@@ -1,4 +1,5 @@
-#!/opt/local/bin/python2.7
+#!/opt/vegas/bin/python2.7
+
 import matplotlib
 #matplotlib.use('TkAgg')
 from matplotlib import pyplot as plt
@@ -31,6 +32,7 @@ def plotSDfile(fname,nplot=1):
     nspec = d.shape[0]
     freqs = cf + bw*np.arange(1024)/1024.0  - bw/2.0
     freqs = freqs/1e6
+
     for pn in range(nplot):
         f,axs = plt.subplots(4,1,squeeze=True,sharex=True)
         sidx = pn*nspec/nplot + nspec/(2*nplot)
@@ -60,6 +62,6 @@ if __name__ == "__main__":
     if len(sys.argv) >3:
 	fadc = float(sys.argv[3])
     else:
-	fadc = 600.0
-    plotSDfile(fn,nplot,fadc=fadc)
+	fadc = 1200.0
+    plotSDfile(fn,nplot)
     plt.show()

@@ -1,4 +1,4 @@
-#!/usr/bin/python2.6
+#!/opt/vegas/bin/python2.6
 
 import numpy, corr, os, time, struct, sys, logging, pylab, matplotlib, scipy, pickle
 from numpy import *
@@ -7,7 +7,7 @@ from scipy import *
 execfile('mixer_funcs.py')
 
 katcp_port = 7147
-roach_name = '192.168.40.67'
+roach_name = '192.168.40.80'
 
 ##################################################################
 # Parameter Setting
