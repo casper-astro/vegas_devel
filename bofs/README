@@ -3,4 +3,12 @@ v01_aa_ri_8r4t11f_ver102_2012_Mar_17_1554.bof - compiled with commit bdbd3921af2
 url = https://github.com/sma-wideband/mlib_devel
 
 This boffile uses the ASIAA adc and has a conversion from fixed 8_0 to signed 8_7
+
+v01_16r4t11f_ver140_2013_Feb_07_0219.bof 
+    -- added in commit fed9e1f
+    -- this bof file is now using the 
+    -- ska-sa/mlib_devel repo as of 2/7/2013
+    -- and version 14.2 Xilinx tools 
+					 
+
 ####

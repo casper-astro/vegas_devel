@@ -162,3 +162,11 @@ v01_16r4t11f_ver135.mdl -- Update version v01_16r4t11f_ver134.mdl
         and by sync_generator not providing consistent sync period when PPS comes
     * updated most (all?) pos/neg edge blocks to use new edge detect block 
         to avoid deprecation warnings
+
+v01_16r4t11f_ver140.mdl -- Update version v01_16r4t11f_ver135.mdl
+    * Removig hard coded shift schedule and adding fftshift software register
+      to allow dynamic setting of fft shift stages
+    * adding switching signal generator logic.  It was completely rewritten,
+      but the block was dropped in without any other changes to the design.
+
+
