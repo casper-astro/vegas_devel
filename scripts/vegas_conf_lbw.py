@@ -1,11 +1,14 @@
 #! /usr/bin/env python2.7
 
 import corr,time,numpy,struct,sys
+execfile('mixercic_funcs.py')
 
 #boffile='v13_aa_rii_16r128dr_ver103_2012_Sep_28_1740.bof'
 #boffile='v13_ver107_2013_Jan_08_0113.bof'
 #boffile='v13_na_ri_8r64dr_ver101_2013_Jan_24_1701.bof'
-boffile='v13_8r64dr_ver101_2013_Feb_04_2012.bof'
+#boffile='v13_8r64dr_ver101_2013_Feb_04_2012.bof'
+boffile='v13_8r64dr_ver101_2013_Feb_05_1731.bof'
+
 
 roach = '192.168.40.80'
 
@@ -28,7 +31,7 @@ else:
 
 print '------------------------'
 print 'Programming FPGA with %s...' % boffile,
-#fpga.progdev(boffile)
+fpga.progdev(boffile)
 print 'ok\n'
 time.sleep(5)
 
@@ -62,4 +65,18 @@ time.sleep(1)
 fpga.write_int('sg_sync', 0b10101)
 fpga.write_int('sg_sync', 0b10100)
 print 'done'
+
+#########################################
+lo_f = 0  # LO in MHz
+lo_setup(fpga, lo_f, bandwidth=400, n_inputs=3, cnt_r_name='mixer_cnt', mixer_name='s1', bramlength=8)
+time.sleep(3)
+
+set_gain_sg(fpga, 's1_quant_gain', '%c%c%c%c'%(0x00, 0x00, 0x01, 0x00))
+print 'Setting gain to: 0x00, 0x00, 0x01, 0x00'
+time.sleep(1)
+
+
+
+
+
 
