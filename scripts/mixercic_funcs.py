@@ -97,20 +97,20 @@ def calc_lof(Fs,bramlength,lof_input,lof_diff_n,lof_diff_m):
 
 def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bramlength):
     """
-	lo_f: LO frequency
+	lo_f: LO frequency (desired value, might not be able to achieve it precisely)
 	bandwidth: ADC working bandwidth
 	n_inputs: 2^n simultaneous inputs
 	cnt_r_name: the name of the software register to control the upper limit of the address of the mixer bram
 	bramlength: the depth of the brams in mixer
     """
-    lof_output,lof_diff_n,lof_diff_num = calc_lof(bandwidth,bramlength,lof_input, 0, 0)
+    lof_output,lof_diff_n,lof_diff_num = calc_lof(bandwidth,bramlength,lo_f, 0, 0)
     if lo_f == 0:
-	lo_input = constant_wave_gen(2**(bramlength+n_inputs))
+	lo_wave = constant_wave_gen(2**(bramlength+n_inputs))
     else:
-	lo_input,tmp_a , tmp_b = wave_gen(lof_output, bandwidth*2, 2**(bramlength+n_inputs))
+	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, 2**(bramlength+n_inputs))
     bramforamt = '>'+str(lof_diff_num)+'I'
-    print size(lo_input)
-    fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num, bramformat, lo_input)
+    print size(lo_wave)
+    fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num, bramformat, lo_wave)
 
 
 def read_snaps(snap_depth = 13, adc_snap_depth = 11, mixer_snap_depth = 11):
