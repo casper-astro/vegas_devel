@@ -81,7 +81,7 @@ def calc_lof(Fs,bramlength,lof_input,lof_diff_n,lof_diff_m):
         Denominator
     """
     lof_diff = 1000
-    for i in range(2,2**bramlength+1):
+    for i in range(2**n_inputs,2**(bramlength+n_inputs)+1, 2**n_inputs):
         for j in range(1,i/2+1):
             diff = abs(lof_input-Fs*j/(i*1.))
             if diff < lof_diff:
@@ -103,14 +103,15 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bram
 	cnt_r_name: the name of the software register to control the upper limit of the address of the mixer bram
 	bramlength: the depth of the brams in mixer
     """
-    lof_output,lof_diff_n,lof_diff_num = calc_lof(bandwidth,bramlength,lo_f, 0, 0)
     if lo_f == 0:
+	lof_diff_num = 2**(bramlength+n_inputs)
 	lo_wave = constant_wave_gen(2**(bramlength+n_inputs))
     else:
-	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, 2**(bramlength+n_inputs))
-    bramformat = '>'+str(lof_diff_num)+'I'
-    print size(lo_wave)
-    fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num, bramformat, lo_wave)
+	lof_output,lof_diff_n,lof_diff_num = calc_lof(bandwidth,bramlength,lo_f, 0, 0)
+	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, lof_diff_num)
+    bramformat = '>'+str(lof_diff_num/(2**n_inputs))+'I'
+    print size(lo_wave), ' bramformat', bramformat
+    fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num/(2**n_inputs), bramformat, lo_wave)
 
 
 def read_snaps(fpgaclient, bram_length = 12):
@@ -173,26 +174,34 @@ def test_plot(fpgaclient, bandwidth, snap_depth, dec_rate, n_inputs, signal_inpu
     pylab.ion()
     pylab.figure()
 
-    pylab.subplot(221)
+    pylab.subplot(231)
     pylab.title('ADC data')
     pylab.xlabel('N')
     pylab.plot(data_dict['adc1'][100:500], '-o')
     pylab.hold(False)
 	
-    pylab.subplot(222)
+    pylab.subplot(232)
     pylab.title('mixer_data')
     pylab.plot(data_dict['s1_mixer'][100:200], '-o')
     pylab.hold(False)
         
-    pylab.subplot(223)
+    pylab.subplot(233)
     pylab.title('cic data')
     pylab.plot(pol1_re[100:200], '-o')
     pylab.hold(False)
 
     pol1_re_fft = fft(pol1_re)
-    pylab.subplot(224)
+    pylab.subplot(234)
     pylab.title('Mixed FFT,  Signal: '+str(signal_input)+'MHz,  LO: '+str(lof)+'MHz')
     pylab.xlabel('Frequency: MHz')
     pylab.semilogy(x,abs(pylab.fftshift((pol1_re_fft))))
 
+    pylab.subplot(235)
+    pylab.title('first cic data')
+    pylab.plot(data_dict['s1_firstcic'][100:200], '-o')
+    pylab.hold(False)
+
+    pylab.subplot(236)
+    pylab.title('halfband data')
+    pylab.plot(data_dict['s1_halfband'][100:200], '-o')
     return pol1_re, x
