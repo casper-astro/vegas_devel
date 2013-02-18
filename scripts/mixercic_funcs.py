@@ -108,7 +108,7 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bram
 	lo_wave = constant_wave_gen(2**(bramlength+n_inputs))
     else:
 	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, 2**(bramlength+n_inputs))
-    bramforamt = '>'+str(lof_diff_num)+'I'
+    bramformat = '>'+str(lof_diff_num)+'I'
     print size(lo_wave)
     fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num, bramformat, lo_wave)
 
