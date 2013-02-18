@@ -113,66 +113,58 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bram
     fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num, bramformat, lo_wave)
 
 
-def read_snaps(snap_depth = 13, adc_snap_depth = 11, mixer_snap_depth = 11):
+def read_snaps(fpgaclient, bram_length = 12):
     """
-	TO DO: Clean up this function
+	As of Feb 18, works for v13_16r128dr_ver104.mdl
+	*** First four (cic*_*_snap) have 1/2 referring to 2 pols
+	cic1_re_snap: 32 bit data, depth = 12
+	cic1_im_snap: ^
+	cic2_re_snap: ^
+	cic2_im_snap: ^
+	adc1_snap: 8 bit data -> 128 bit (16 parallel inputs), depth = 12
+	adc2_snap: ^
+	s1p1re_snap: 8 bit data, depth = 12
+	s1_firstcic_snap: 32 bit data, depth = 12
+	s1_halfband_snap: 32 bit data, depth = 12
+	s1_mixer_snap: 8 bit -> 128 bit data, depth = 12
     """
-    #fpga.write_int('s32_s1p1re_ctrl', 0)
-    fpga.write_int('s32_cicp1re_ctrl', 0)
-    fpga.write_int('s64_adcp1_ctrl', 0)
-    fpga.write_int('s1_mixer_snap64_ctrl', 0)
-    time.sleep(1)
-
-    #fpga.write_int('s32_s1p1re_ctrl', 7)
-    fpga.write_int('s32_cicp1re_ctrl', 7)
-    fpga.write_int('s64_adcp1_ctrl', 7)
-    fpga.write_int('s1_mixer_snap64_ctrl', 7)
-    time.sleep(1)
-
-    #pol1_re = struct.unpack('>'+str(2**snap_depth)+'l',fpga.read('s32_s1p1re_bram', (2**snap_depth)*4))
-    pol1_re = struct.unpack('>'+str(2**snap_depth)+'l',fpga.read('s32_cicp1re_bram', (2**snap_depth)*4))
-    adc_data_m = struct.unpack('>'+str(2**adc_snap_depth*4)+'B',fpga.read('s64_adcp1_bram_msb', (2**adc_snap_depth)*4))
-    adc_data_l = struct.unpack('>'+str(2**adc_snap_depth*4)+'B',fpga.read('s64_adcp1_bram_lsb', (2**adc_snap_depth)*4))
-    mixer_data_m = struct.unpack('>'+str(2**mixer_snap_depth*4)+'b',fpga.read('s1_mixer_snap64_bram_msb', (2**mixer_snap_depth)*4))
-    mixer_data_l = struct.unpack('>'+str(2**mixer_snap_depth*4)+'b',fpga.read('s1_mixer_snap64_bram_lsb', (2**mixer_snap_depth)*4))
-
-    adc_data = arange(0, size(adc_data_m)*2, 1)
-    adc_data[0::8] = adc_data_m[0::4]
-    adc_data[1::8] = adc_data_m[1::4]
-    adc_data[2::8] = adc_data_m[2::4]
-    adc_data[3::8] = adc_data_m[3::4]
-    adc_data[4::8] = adc_data_l[0::4]
-    adc_data[5::8] = adc_data_l[1::4]
-    adc_data[6::8] = adc_data_l[2::4]
-    adc_data[7::8] = adc_data_l[3::4]
-    mixer_data = arange(0, size(mixer_data_m)*2, 1)
-    mixer_data[0::8] = mixer_data_m[0::4]
-    mixer_data[1::8] = mixer_data_m[1::4]
-    mixer_data[2::8] = mixer_data_m[2::4]
-    mixer_data[3::8] = mixer_data_m[3::4]
-    mixer_data[4::8] = mixer_data_l[0::4]
-    mixer_data[5::8] = mixer_data_l[1::4]
-    mixer_data[6::8] = mixer_data_l[2::4]
-    mixer_data[7::8] = mixer_data_l[3::4]
-
-    #pol1_re_np = array(pol1_re)
-    #pol1_re = pol1_re_np.astype(int8)
-    #pol1 = pol1_re[0::16]
-    #print pol1_re[100:200:16]
-    #print pol1_re[100:150]
-
-    return pol1_re, adc_data, mixer_data
+    cic1_re = fromstring(fpgaclient.snapshot_get('cic1re_snap')['data'],dtype='int32')
+    cic1_im = fromstring(fpgaclient.snapshot_get('cic1im_snap')['data'],dtype='int32')  
+    cic2_re = fromstring(fpgaclient.snapshot_get('cic2re_snap')['data'],dtype='int32')
+    cic2_im = fromstring(fpgaclient.snapshot_get('cic2im_snap')['data'],dtype='int32')
+    adc1 = fromstring(fpgaclient.snapshot_get('adc1_snap')['data'], dtype='int8')
+    adc2 = fromstring(fpgaclient.snapshot_get('adc2_snap')['data'], dtype='int8')
+    s1p1re = fromstring(fpgaclient.snapshot_get('s1p1re_snap')['data'], dtype='int8')
+    s1_firstcic = fromstring(fpgaclient.snapshot_get('s1_firstcic_snap')['data'], dtype='int32')
+    s1_halfband = fromstring(fpgaclient.snapshot_get('s1_halfband_snap')['data'], dtype='int32')
+    s1_mixer = fromstring(fpgaclient.snapshot_get('s1_mixer_snap')['data'], dtype='int8')
+    data_dict = {'cic1_re': cic1_re,
+		 'cic1_im': cic1_im,
+		 'cic2_re': cic2_re, 
+		 'cic2_im': cic2_im,
+		 'adc1': adc1,
+		 'adc2': adc2,
+		 's1p1re': s1p1re, 
+		 's1_firstcic': s1_firstcic,
+		 's1_halfband': s1_halfband,
+		 's1_mixer': s1_mixer}
+    return data_dict
 
 
-
-def test_plot(bandwidth, snap_deapth, dec_rate):
+def test_plot(fpgaclient, bandwidth, snap_depth, dec_rate, n_inputs, signal_input, lof):
     """
+	fpgaclient: 
 	bandwidth: ADC working badnwidth
 	snap_depth: depth of the snap blocks
 	dec_rate: decimation rate
+	n_inputs: number of simutaneous inputs (2^n)
+	signal_input: known frequency of the test tone
+	lof: lo frequency
     """
-    pol1_re, adc_data, mixer_data = read_snaps(snap_depth)
-    pol1_re = pol1_re[0::(dec_rate/8)]
+    data_dict = read_snaps(fpgaclient, snap_depth)
+
+    pol1_re = data_dict['cic1_re']
+    pol1_re = pol1_re[0::(dec_rate/(2**n_inputs))]
     x = []
     a = -bandwidth*1.0/dec_rate
     for i in range(size(pol1_re)):
@@ -184,12 +176,12 @@ def test_plot(bandwidth, snap_deapth, dec_rate):
     pylab.subplot(221)
     pylab.title('ADC data')
     pylab.xlabel('N')
-    pylab.plot(adc_data[100:500], '-o')
+    pylab.plot(data_dict['adc1'][100:500], '-o')
     pylab.hold(False)
 	
     pylab.subplot(222)
     pylab.title('mixer_data')
-    pylab.plot(mixer_data[100:200], '-o')
+    pylab.plot(data_dict['s1_mixer'][100:200], '-o')
     pylab.hold(False)
         
     pylab.subplot(223)
@@ -199,7 +191,7 @@ def test_plot(bandwidth, snap_deapth, dec_rate):
 
     pol1_re_fft = fft(pol1_re)
     pylab.subplot(224)
-    pylab.title('Mixed FFT,  Signal: '+str(signal_input)+'MHz,  LO: '+str(lof_output)+'MHz')
+    pylab.title('Mixed FFT,  Signal: '+str(signal_input)+'MHz,  LO: '+str(lof)+'MHz')
     pylab.xlabel('Frequency: MHz')
     pylab.semilogy(x,abs(pylab.fftshift((pol1_re_fft))))
 
