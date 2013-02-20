@@ -2,7 +2,7 @@
 
 import corr,time
 
-roach = '192.168.40.67'
+roach = '192.168.40.80'
 
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
