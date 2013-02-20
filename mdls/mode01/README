@@ -169,4 +169,19 @@ v01_16r4t11f_ver140.mdl -- Update version v01_16r4t11f_ver135.mdl
     * adding switching signal generator logic.  It was completely rewritten,
       but the block was dropped in without any other changes to the design.
 
+v01_16r4t11f_ver141.mdl -- Update version v01_16r4t11f_ver140.mdl
+	* renaming ssg1 -> ssg
+	* removing spead_rst signal to reshaper (rst on reshaper is poorly named) to fix arming problem
+	* rename misnamed txack tags to txovf  to clean up.
+	* moved sync_disable circuitry a bit to avoid sync every time sync_disable is deasserted. Not sure if this was happening, but just in case.
+
+v01_16r4t11f_ver141bb.mdl -- Blackboxed version of v01_16r4t11f_ver141.mdl
+    * replaced fft and pfbs with blackboxed version.
+    * built successfully and updates faster after first update.
+
+fft11_bb.mdl -- blackbox model for fft
+
+pfb4t11_bb.mdl -- blackbox model for pfb
+
+
 
