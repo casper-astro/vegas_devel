@@ -12,6 +12,15 @@ v13_na_ri_8r64dr_ver101.mdl - the summer 2012 version with one subband (supports
 v13_aa_rii_8r128dr_ver102.mdl - moved to roach 2 and uses ASIAA ADC taking every other sample
 
 v13_aa_rii_16r128dr_ver103.mdl - increases number of simultaneous inputs to 16 (decimation
-				    rate may be incorrect).
+				    rate may be incorrect). Does not work
 
-v13_aa_rii_16r128dr_ver104.mdl - adds 8 subbands and fixes decimation rate
+v13_aa_rii_16r128dr_ver104.mdl - adds 8 subbands and fixes decimation rate.  Does not work.
+
+v13_8r64dr_ver101.mdl -- takes every other sample from the ASIAA ADC and has 1 subband, seems to be work (decimated by 64a)
+
+v13_16r64dr_ver102.mdl -- basically the same as v13_8r64dr_ver101.mdl,  but taking all 16 imputs, but then taking every other right before mixing
+
+v13_16r64dr_ver103.mdl - adding mixers and filters to allow the full 16x through, but not changing the data rate - does not work or send off packets
+
+v13_16r128dr_ver104.mdl -- changed decimation rate from 16 to 32 in the first CIC stage, for a total decimation rate of 128 - sending off packets, spectra seemed to be good at one point, but now the data after the dec by 32 CIC looks bad.
+
