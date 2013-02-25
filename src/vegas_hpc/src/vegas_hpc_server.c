@@ -12,6 +12,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
+#include <sys/prctl.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <poll.h>
@@ -135,6 +136,8 @@ int main(int argc, char *argv[]) {
                 break;
         }
     }
+    
+    prctl(PR_SET_PDEATHSIG,SIGTERM); /* Ensure that if parent (the manager) dies, to kill this child too. */
 
     /* Create FIFO */
     int rv = mkfifo(vegas_DAQ_CONTROL, 0666);
