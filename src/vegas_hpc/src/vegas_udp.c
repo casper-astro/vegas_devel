@@ -88,6 +88,16 @@ int vegas_udp_init(struct vegas_udp_params *p) {
     /* Poll command */
     p->pfd.fd = p->sock;
     p->pfd.events = POLLIN;
+    
+    /* Try to clear any stale data from the UDP socket buffer */
+    int nclear = 0;
+    int rv = 1;
+    char tempbuf[VEGAS_MAX_PACKET_SIZE];
+    while((vegas_udp_wait(p) == VEGAS_OK) && (rv > 0)) {
+    	rv = recv(p->sock, tempbuf, VEGAS_MAX_PACKET_SIZE, 0);
+    	nclear ++;
+    }
+    printf("Cleared %d stale packets from UDP socket\n", nclear);
 
     return(VEGAS_OK);
 }
