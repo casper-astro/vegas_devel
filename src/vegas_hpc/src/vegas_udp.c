@@ -93,8 +93,7 @@ int vegas_udp_init(struct vegas_udp_params *p) {
     int nclear = 0;
     rv = 1;
     char tempbuf[VEGAS_MAX_PACKET_SIZE];
-    while((vegas_udp_wait(p) == VEGAS_OK) && (rv > 0)) {
-    	rv = recv(p->sock, tempbuf, VEGAS_MAX_PACKET_SIZE, 0);
+    while(recv(p->sock, tempbuf, VEGAS_MAX_PACKET_SIZE, 0)) {
     	nclear ++;
     }
     printf("Cleared %d stale packets from UDP socket\n", nclear);
