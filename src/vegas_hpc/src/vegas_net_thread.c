@@ -509,6 +509,9 @@ void *vegas_net_thread(void *_args) {
 
                 /* Get obs start time */
                 get_current_mjd_double(&meas_stt_mjd);
+                
+                printf("vegas_net_thread: got start packet at MJD %f", meas_stt_mjd);
+                
                 meas_stt_offs = meas_stt_mjd*24*60*60 - floor(meas_stt_mjd*24*60*60);
 
                 if(meas_stt_offs > 0.1 && meas_stt_offs < 0.9)
