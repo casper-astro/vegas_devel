@@ -571,10 +571,15 @@ void *vegas_net_thread(void *_args) {
          * The "write packets" functions also update drop stats 
          * for blocks, etc.
          */
+        int nblocks = 0;
         for (i=0; i<nblock; i++)
         {
             if ((blocks[i].block_idx>=0) && (block_heap_check(&blocks[i],heap_cntr)==0))
             {
+            	if (nblocks > 0) {
+            		printf("vegas_net_thread: Warning! Adding packet to more than one block! heap_cntr= %d, block = %d",heap_cntr,i);
+            	}
+            	nblocks++;
                 write_spead_packet_to_block(&blocks[i], &p, heap_cntr,
                                 heap_offset, packets_per_heap, bw_mode);
             }
