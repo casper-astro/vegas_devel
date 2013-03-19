@@ -16,10 +16,8 @@ def exit_clean():
     except: pass
     exit()
 
-
 def set_gain_sg(fpgaclient, gain_r_name, gain):
     fpgaclient.write(gain_r_name, gain)
-
 
 def wave_gen(lo_f, sample_f, size):
     """
@@ -88,12 +86,13 @@ def calc_lof(Fs,bramlength,lof_input,lof_diff_n,lof_diff_m):
                 lof_diff = diff
                 lof_diff_m = i
                 lof_diff_n = j
-                print lof_diff,lof_diff_n,lof_diff_m,Fs*j/(i*1.)
+                #print lof_diff,lof_diff_n,lof_diff_m,Fs*j/(i*1.)
                 if diff == 0:
                     break
-    return Fs*lof_diff_n/(lof_diff_m*1.), lof_diff_n, lof_diff_m
-
-
+    lof_actual = Fs*lof_diff_n/(lof_diff_m*1.)
+    print 'Mixing frequency (user input): '+str(lof_input)+'MHz'
+    print 'Mixing frequency (actual achivable):'+str(lof_actual)+'MHz'
+    return lof_actual, lof_diff_n, lof_diff_m
 
 def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bramlength):
     """
@@ -103,6 +102,7 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bram
 	cnt_r_name: the name of the software register to control the upper limit of the address of the mixer bram
 	bramlength: the depth of the brams in mixer
     """
+    print 'Setting up subband...'+mixer_name
     if lo_f == 0:
 	lof_diff_num = 2**(bramlength+n_inputs)
 	lo_wave = constant_wave_gen(2**(bramlength+n_inputs))
@@ -110,7 +110,7 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bram
 	lof_output,lof_diff_n,lof_diff_num = calc_lof(bandwidth,bramlength,lo_f, 0, 0)
 	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, lof_diff_num)
     bramformat = '>'+str(lof_diff_num/(2**n_inputs))+'I'
-    print size(lo_wave), ' bramformat', bramformat
+    #print size(lo_wave), ' bramformat', bramformat
     fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num/(2**n_inputs), bramformat, lo_wave)
 
 
