@@ -101,17 +101,21 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bram
 	n_inputs: 2^n simultaneous inputs
 	cnt_r_name: the name of the software register to control the upper limit of the address of the mixer bram
 	bramlength: the depth of the brams in mixer
+    Return:
+	lof_output: tells user what the actual mixing frequency (LO) is
     """
     print 'Setting up subband...'+mixer_name
     if lo_f == 0:
 	lof_diff_num = 2**(bramlength+n_inputs)
 	lo_wave = constant_wave_gen(2**(bramlength+n_inputs))
+	lof_output = 0
     else:
 	lof_output,lof_diff_n,lof_diff_num = calc_lof(bandwidth,bramlength,lo_f, 0, 0)
 	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, lof_diff_num)
     bramformat = '>'+str(lof_diff_num/(2**n_inputs))+'I'
     #print size(lo_wave), ' bramformat', bramformat
     fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num/(2**n_inputs), bramformat, lo_wave)
+    return lof_output
 
 
 def read_snaps(fpgaclient, bram_length = 12):
