@@ -48,8 +48,8 @@ def constant_wave_gen(size):
     result = [0x7fff7fff] * size
     return result
 
-def fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, limit, bramformat, data):
-    fpgaclient.write_int(cnt_r_name, limit - 2 )  # This -2 because of the Rational a = b delay one clock for output and counter begin from 0
+def fill_mixer_bram(fpgaclient, n_inputs, mixer_name, limit, bramformat, data):
+    fpgaclient.write_int(mixer_name+'_mixer_cnt', limit - 2 )  # This -2 because of the Rational a = b delay one clock for output and counter begin from 0
     for i in range(2**n_inputs):
 	fpgaclient.write(mixer_name+'_lo_'+str(i)+'_lo_ram', struct.pack(bramformat, *data[i::(2**n_inputs)]))
 	print('done with '+str(i))
@@ -94,7 +94,7 @@ def calc_lof(Fs,bramlength,lof_input,lof_diff_n,lof_diff_m):
     print 'Mixing frequency (actual achivable):'+str(lof_actual)+'MHz'
     return lof_actual, lof_diff_n, lof_diff_m
 
-def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bramlength):
+def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, mixer_name, bramlength):
     """
 	lo_f: LO frequency (desired value, might not be able to achieve it precisely)
 	bandwidth: ADC working bandwidth
@@ -114,7 +114,7 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, cnt_r_name, mixer_name, bram
 	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, lof_diff_num)
     bramformat = '>'+str(lof_diff_num/(2**n_inputs))+'I'
     #print size(lo_wave), ' bramformat', bramformat
-    fill_mixer_bram(fpgaclient, n_inputs, cnt_r_name, mixer_name, lof_diff_num/(2**n_inputs), bramformat, lo_wave)
+    fill_mixer_bram(fpgaclient, n_inputs, mixer_name, lof_diff_num/(2**n_inputs), bramformat, lo_wave)
     return lof_output
 
 
