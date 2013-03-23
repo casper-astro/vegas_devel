@@ -52,7 +52,7 @@ def fill_mixer_bram(fpgaclient, n_inputs, mixer_name, limit, bramformat, data):
     fpgaclient.write_int(mixer_name+'_mixer_cnt', limit - 2 )  # This -2 because of the Rational a = b delay one clock for output and counter begin from 0
     for i in range(2**n_inputs):
 	fpgaclient.write(mixer_name+'_lo_'+str(i)+'_lo_ram', struct.pack(bramformat, *data[i::(2**n_inputs)]))
-	print('done with '+str(i))
+	#print('done with '+str(i))
 
 
 

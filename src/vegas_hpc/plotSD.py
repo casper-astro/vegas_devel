@@ -24,13 +24,14 @@ def getSDdata(fname):
     data = bt.data.field('DATA')
     cf = bt.header['OBSFREQ']
     bw = bt.header['CHAN_BW']*1024
-    print "Found data with shape:",data.shape, "cf=",cf,"bw=",bw
-    return data,cf,bw
+    nchan = bt.header['NCHAN']
+    print "Found data with shape:",data.shape, "cf=",cf,"bw=",bw,"nchan=",nchan
+    return data,cf,bw,nchan
     
 def plotSDfile(fname,nplot=1):
-    d,cf,bw = getSDdata(fname)
+    d,cf,bw,nchan = getSDdata(fname)
     nspec = d.shape[0]
-    freqs = cf + bw*np.arange(1024)/1024.0  - bw/2.0
+    freqs = cf + bw*np.arange(nchan)/(nchan*1.0)  - bw/2.0
     freqs = freqs/1e6
 
     for pn in range(nplot):
