@@ -1,0 +1,500 @@
+SIMPLE  =                    T / file does conform to FITS standard
+BITPIX  =                    8 / number of bits per data pixel
+NAXIS   =                    0 / number of data axes
+EXTEND  =                    T / FITS dataset may contain extensions
+HDRVER  = '3.4             '   / Header version 
+FITSTYPE= 'PSRFITS'            / FITS definition for pulsar data files
+DATE    = '                '   / File creation date (YYYY-MM-DDThh:mm:ss UTC)
+OBSERVER= '                '   / Observer name(s)
+PROJID  = '                '   / Project name
+TELESCOP= 'GBT'                / Telescope name
+ANT_X   =   882589.65          / [m] Antenna ITRF X-coordinate (D)
+ANT_Y   = -4924872.32          / [m] Antenna ITRF Y-coordinate (D)
+ANT_Z   =  3943729.348         / [m] Antenna ITRF Z-coordinate (D)
+FRONTEND= '                '   / Rx and feed ID
+NRCVR   = 2                    / Number of receiver polarisation channels
+FD_POLN = 'LIN'                / LIN or CIRC
+FD_HAND = -1                   / +/- 1. +1 is LIN:A=X,B=Y, CIRC:A=L,B=R (I)
+FD_SANG = 45.0                 / [deg] FA of E vect for equal sig in A&B (E)
+FD_XYPH = 0.0                  / [deg] Phase of A^* B for injected cal (E)
+BACKEND = 'GUPPI'              / Backend ID
+BECONFIG= 'N/A'                / Backend configuration file name
+BE_PHASE= -1                   / 0/+1/-1 BE cross-phase:0 unknown,+/-1 std/rev
+BE_DCC  = 0                    / 0/1 BE downconversion conjugation corrected
+BE_DELAY= 0.0                  / [s] Backend propn delay from digitiser input 
+TCYCLE  = 0.0                  / [s] On-line cycle time (D)
+OBS_MODE= 'PSR'                / (PSR, CAL, SEARCH)
+DATE-OBS= '                '   / Date of observation (YYYY-MM-DDThh:mm:ss UTC)
+OBSFREQ =                    * / [MHz] Centre frequency for observation
+OBSBW   =                    * / [MHz] Bandwidth for observation
+OBSNCHAN=                    * / Number of frequency channels (original)
+CHAN_DM =                  0.0 / DM used to de-disperse each channel (pc/cm^3)
+SRC_NAME= '                '   / Source or scan ID 
+COORD_MD= 'J2000'              / Coordinate mode (J2000, GAL, ECLIP, etc.)
+EQUINOX = 2000.0               / Equinox of coords (e.g. 2000.0) 
+RA      = '                '   / Right ascension (hh:mm:ss.ssss)
+DEC     = '                '   / Declination (-dd:mm:ss.sss)
+BMAJ    =                    * / [deg] Beam major axis length
+BMIN    =                    * / [deg] Beam minor axis length
+BPA     = 0.0                  / [deg] Beam position angle
+STT_CRD1= '                '   / Start coord 1 (hh:mm:ss.sss or ddd.ddd)
+STT_CRD2= '                '   / Start coord 2 (-dd:mm:ss.sss or -dd.ddd) 
+TRK_MODE= 'TRACK'              / Track mode (TRACK, SCANGC, SCANLAT)
+STP_CRD1= '                '   / Stop coord 1 (hh:mm:ss.sss or ddd.ddd)
+STP_CRD2= '                '   / Stop coord 2 (-dd:mm:ss.sss or -dd.ddd) 
+SCANLEN =                    * / [s] Requested scan length (E)
+FD_MODE = 'FA'                 / Feed track mode - FA, CPA, SPA, TPA
+FA_REQ  = 0.0                  / [deg] Feed/Posn angle requested (E)
+CAL_MODE= 'OFF'                / Cal mode (OFF, SYNC, EXT1, EXT2)
+CAL_FREQ= 0.0                  / [Hz] Cal modulation frequency (E)
+CAL_DCYC= 0.0                  / Cal duty cycle (E)
+CAL_PHS = 0.0                  / Cal phase (wrt start time) (E)
+STT_IMJD=                    * / Start MJD (UTC days) (J - long integer)
+STT_SMJD=                    * / [s] Start time (sec past UTC 00h) (J)
+STT_OFFS=                    * / [s] Start time offset (D)   
+STT_LST =                    * / [s] Start LST (D)
+END
+#
+###############################################################################
+#
+# Ephemeris History Binary Table Extension
+#
+###############################################################################
+#
+# Note: This table has entries which should be sufficient for real-time folding 
+# of pulsar data. Additional parameters can be added to the table in off-line 
+# processing if necessary. Examples are: additional pulse frequency derivatives 
+# (Fn), additional DM derivatives (DMn), additional planets (T0_n, PB_n, A1_n, 
+# OM_n, ECC_n), additional glitches (GLEP_n, GLPH_n, GLF0_n, GLF1_n, GLF0D_n)
+# and additional FITWAVE coefficients (WAVES_n, WAVEC_n).
+#
+XTENSION= BINTABLE             / ***** Pulsar ephemeris history *****
+BITPIX  =                    8 / N/A
+NAXIS   =                    2 / 2-dimensional binary table
+NAXIS1  =                    * / width of table in bytes
+NAXIS2  =                    * / number of rows in table
+PCOUNT  =                    0 / size of special data area
+GCOUNT  =                    1 / one data group (required keyword)
+TFIELDS =                  104 / number of fields per row
+#
+EXTNAME = PSREPHEM             / name of this binary table extension
+#
+TTYPE#  = DATE_PRO             / Processing date and time (UTC)
+TFORM#  = 24A                  / 24-char string
+TTYPE#  = PROC_CMD             / Processing program and command
+TFORM#  = 80A                  / 80-char string
+TTYPE#  = EPHVER               / Version ID for ephemeris data
+TFORM#  = 16A                  / 16-char string
+TTYPE#  = PSR_NAME             / Pulsar Jname
+TFORM#  = 16A                  / 16-char string
+TTYPE#  = RAJ                  / RA (J2000) (hh:mm:ss.ssssssss)
+TFORM#  = 24A                  / 24-char string
+TTYPE#  = DECJ                 / Dec (J2000) (hh:mm:ss.ssssssss)
+TFORM#  = 24A                  / 24-char string
+TTYPE#  = PMRA                 / Proper motion in RA
+TFORM#  = 1D                   / Double
+TUNIT#  = mas/yr               / Units of field
+TTYPE#  = PMDEC                / Proper motion in DEC
+TFORM#  = 1D                   / Double
+TUNIT#  = mas/yr               / Units of field
+TTYPE#  = ELONG                / [deg] Ecliptic longitude
+TFORM#  = 1D                   / Double
+TUNIT#  = deg                  / Units of field
+TTYPE#  = ELAT                 / Ecliptic latitude
+TFORM#  = 1D                   / Double
+TUNIT#  = deg                  / Units of field
+TTYPE#  = PMELONG              / Proper motion in ecliptic longitude 
+TFORM#  = 1D                   / Double
+TUNIT#  = mas/yr               / Units of field
+TTYPE#  = PMELAT               / Proper motion in ecliptic latitude 
+TFORM#  = 1D                   / Double
+TUNIT#  = mas/yr               / Units of field
+TTYPE#  = PX                   / Parallax
+TFORM#  = 1D                   / Double
+TUNIT#  = mas                  / Units of field
+TTYPE#  = POSEPOCH             / Epoch at which the position is measured (MJD)
+TFORM#  = 1D                   / Double
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = IF0                  / Integer mHz barycentric spin freq
+TFORM#  = 1J                   / Long integer
+TUNIT#  = mHz                  / Units of field
+TTYPE#  = FF0                  / Fractional mHz barycentric spin freq
+TFORM#  = 1D                   / Double
+TUNIT#  = mHz                  / Units of field
+TTYPE#  = F1                   / Time deriv of barycentric spin freq
+TFORM#  = 1D                   / Double
+TUNIT#  = s**(-2)              / Units of field
+TTYPE#  = F2                   / 2nd time deriv of barycentric spin freq
+TFORM#  = 1D                   / Double
+TUNIT#  = s**(-3)              / Units of field
+TTYPE#  = F3                   / 3rd time deriv of barycentric spin freq
+TFORM#  = 1D                   / Double
+TUNIT#  = s**(-4)              / Units of field
+TTYPE#  = PEPOCH               / Epoch of period/frequency determination
+TFORM#  = 1D                   / Double
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = DM                   / Dispersion measure
+TFORM#  = 1D                   / Double
+TUNIT#  = cm**(-3) pc          / Units of field
+TTYPE#  = DM1                  / Time deriv of dispersion measure
+TFORM#  = 1D                   / Double
+TUNIT#  = cm**(-3) pc/yr       / Units of field
+TTYPE#  = RM                   / Rotation measure
+TFORM#  = 1D                   / Double
+TUNIT#  = rad m**(-2)          / Units of field
+TTYPE#  = BINARY               / Binary model
+TFORM#  = 8A                   / 8-char string
+TTYPE#  = T0                   / Epoch of periastron 
+TFORM#  = 1D                   / Double
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = PB                   / Binary period of pulsar 
+TFORM#  = 1D                   / Double
+TUNIT#  = d                    / Units of field
+TTYPE#  = A1                   / Projected semi-major axis of orbit
+TFORM#  = 1D                   / Double
+TUNIT#  = s                    / Units of field
+TTYPE#  = OM                   / Longitude of periastron
+TFORM#  = 1D                   / Double
+TUNIT#  = deg                  / Units of field
+TTYPE#  = OMDOT                / [deg/yr]Periastron advance 
+TFORM#  = 1D                   / Double
+TUNIT#  = deg/yr               / Units of field
+TTYPE#  = ECC                  / Eccentricity
+TFORM#  = 1D                   / Double
+TTYPE#  = PBDOT                / First time deriv of binary period
+TFORM#  = 1D                   / Double
+TTYPE#  = GAMMA                / Post-Keplerian "gamma" term
+TFORM#  = 1D                   / Double
+TUNIT#  = s                    / Units of field
+TTYPE#  = SINI                 / Sine of inclination angle
+TFORM#  = 1D                   / Double
+TTYPE#  = M2                   / Companion mass 
+TFORM#  = 1D                   / Double
+TUNIT#  = Msun                 / Units of field
+TTYPE#  = T0_2                 / Epoch of periastron [2nd orbit] 
+TFORM#  = 1D                   / Double
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = PB_2                 / Binary period of pulsar [2nd orbit]
+TFORM#  = 1D                   / Double
+TUNIT#  = d                    / Units of field
+TTYPE#  = A1_2                 / asin(i) of 2nd orbit
+TFORM#  = 1D                   / Double
+TUNIT#  = s                    / Units of field
+TTYPE#  = OM_2                 / [deg] Longitude of periastron [2nd orbit]
+TFORM#  = 1D                   / Double
+TUNIT#  = deg                  / Units of field
+TTYPE#  = ECC_2                / Eccentricity [2nd orbit]
+TFORM#  = 1D                   / Double
+TTYPE#  = DTHETA               / Relativistic deformation of the orbit
+TFORM#  = 1D                   / Double
+TTYPE#  = A1DOT                / Rate of change of asin(i) 
+TFORM#  = 1D                   / Double
+TTYPE#  = ECCDOT               / Rate of change of eccentricity 
+TFORM#  = 1D                   / Double
+TUNIT#  = s**(-1)              / Units of field
+TTYPE#  = TASC                 / Epoch of ascending node
+TFORM#  = 1D                   / Double
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = EPS1                 / ECC sin(OM) (ELL1 binary model)
+TFORM#  = 1D                   / Double
+TTYPE#  = EPS2                 / ECC cos(OM) (ELL1 binary model)
+TFORM#  = 1D                   / Double
+TTYPE#  = EPS1DOT              / Time derivative of EPS1
+TFORM#  = 1D                   / Double
+TUNIT#  = s**(-1)              / Units of field
+TTYPE#  = EPS2DOT              / Time derivative of EPS2
+TFORM#  = 1D                   / Double
+TUNIT#  = s**(-1)              / Units of field
+TTYPE#  = OM2DOT               / Second time derivative of omega 
+TFORM#  = 1D                   / Double
+TUNIT#  = rad s**(-2)          / Units of field
+TTYPE#  = XOMDOT               / Omega-dot minus GR prediction 
+TFORM#  = 1D                   / Double
+TUNIT#  = deg/yr               / Units of field
+TTYPE#  = XPBDOT               / Pbdot minus GR prediction 
+TFORM#  = 1D                   / Double
+TTYPE#  = MTOT                 / [M_sun] Total system mass 
+TFORM#  = 1D                   / Double
+TUNIT#  = Msun                 / Units of field
+TTYPE#  = DR                   / Relativistic deformation of the orbit
+TFORM#  = 1D                   / Double
+TTYPE#  = X2DOT                / Second time derivative of x=a1 
+TFORM#  = 1D                   / Double
+TUNIT#  = s**(-1)              / Units of field
+TTYPE#  = PMRV                 / Radial proper motion 
+TFORM#  = 1D                   / Double
+TUNIT#  = mas/yr               / Units of field
+TTYPE#  = START                / Epoch of start of fit
+TFORM#  = 1D                   / Double
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = FINISH               / Epoch of end of fit
+TFORM#  = 1D                   / Double
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = TRES                 / RMS timing residual
+TFORM#  = 1D                   / Double
+TUNIT#  = mus                  / Units of field
+TTYPE#  = NTOA                 / Number of TOAs in timing fit
+TFORM#  = 1I                   / Integer
+TNULL#  = 1                    / Null value used by fits_write_col_null
+TTYPE#  = CLK                  / Terrestrial time standard
+TFORM#  = 12A                  / 12-char string
+TTYPE#  = EPHEM                / Solar system ephemeris
+TFORM#  = 12A                  / 12-char string
+TTYPE#  = TZRIMJD              / Reference TOA (Integer part)
+TFORM#  = 1J                   / Long Integer
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = TZRFMJD              / Reference TOA (Fractional part)
+TFORM#  = 1D                   / Double
+TUNIT#  = d                    / Units of field
+TTYPE#  = TZRFRQ               / Frequency of reference TOA
+TFORM#  = 1D                   / Double
+TUNIT#  = MHz                  / Units of field
+TTYPE#  = TZRSITE              / Observatory code of reference TOA
+TFORM#  = 8A                   / 8-char string
+TTYPE#  = GLEP_1               / Epoch [Tempo Glitch 1]
+TFORM#  = 1D                   / Double
+TUNIT#  = MJD                  / Units of field
+TTYPE#  = GLPH_1               / Phase increment [Tempo Glitch 1]
+TFORM#  = 1D                   / Double
+TTYPE#  = GLF0_1               / Permanent pulse freq increment [Glitch 1]
+TFORM#  = 1D                   / Double
+TUNIT#  = Hz                   / Units of field
+TTYPE#  = GLF1_1               / Permanent freq deriv incr. [Glitch 1] 
+TFORM#  = 1D                   / Double
+TUNIT#  = s**(-2)              / Units of field
+TTYPE#  = GLF0D_1              / Spin freq increment [Decaying Glitch 1]
+TFORM#  = 1D                   / Double
+TUNIT#  = Hz                   / Units of field
+#
+# New parameters for TEMPO2, ignored for EPHVER < 5
+# (Commented out for now - PBD)
+#TTYPE#  = ECLOBL               / Ecliptic obliquity 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = arcsec               / Units of field
+#TTYPE#  = IPM                  / Correct for interplanetary dispersion 
+#TFORM#  = 1I                   / Integer flag
+#TNULL#  = 1                    / Default = True
+#TTYPE#  = TEMPO1               / Tempo1 emulation mode 
+#TFORM#  = 1I                   / Integer flag
+#TNULL#  = 0                    / Default = False
+#TTYPE#  = DILATEFREQ           / Correct obs frequency for time dilation 
+#TFORM#  = 1I                   / Integer flag
+#TNULL#  = 1                    / Default = True
+#TTYPE#  = NO_SS_SHAPIRO        / Turn off all solar system Shapiro delays
+#TFORM#  = 1I                   / Integer flag
+#TNULL#  = 0                    / Default = False
+#TTYPE#  = PLANET_SHAPIRO       / Account for planetary Shapiro delays 
+#TFORM#  = 1I                   / Integer flag
+#TNULL#  = 1                    / Default = True
+#TTYPE#  = CORRECT_TROPO        / Correct for tropospheric delays 
+#TFORM#  = 1I                   / Integer flag
+#TNULL#  = 1                    / Default = True
+#TTYPE#  = UNITS                / Units for SSB timescale (SI, TDB) 
+#TFORM#  = 4A                   / String
+#TNULL#  = SI                   / Default = SI
+#TTYPE#  = NE1AU                / Solar electron density scale @1AU
+#TFORM#  = 1D                   / Double
+#TUNIT#  = cm**(-3) pc          / Units of field
+#TTYPE#  = TIMEEPH              / Time ephemeris code to use (IF99, fb90)
+#TFORM#  = 6A                   / String
+#TNULL#  = IF99                 / Default = IF99
+#TTYPE#  = T2CMETHOD            / Polar Motion/Prec/Nut code (IAU2000B, TEMPO)
+#TFORM#  = 9A                   / String
+#TNULL#  = IAU2000B             / Default = IAU2000B
+#TTYPE#  = DMFACTOR             / DM/Dispersion Constant 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = cm**(-3) pc s**(-3)  / Units of field
+#TTYPE#  = DMEPOCH              / Epoch for DM 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = MJD                  / Units of field
+#TTYPE#  = FDDC                 / Scale of freq-dependent delay 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = s MHz**(-FDDI)       / Units of field
+#TTYPE#  = FDDI                 / Spectral index of freq-dependent delay
+#TFORM#  = 1D                   / Double
+#TTYPE#  = MSS                  / Use Wex 1988 "MSS" in T2 binary model 
+#TFORM#  = 1I                   / Integer flag
+#TNULL#  = 0                    / Default = False
+#TTYPE#  = BINIT                / Iterate to invert binary timing formula
+#TFORM#  = 1I                   / Integer flag
+#TNULL#  = 1                    / Default = True
+#TTYPE#  = SHAPMAX              / -ln(1-sini) Shapiro delay parameter
+#TFORM#  = 1D                   / Double
+#TTYPE#  = KOM                  / Position angle of ascending node 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = deg                  / Units of field
+#TTYPE#  = KIN                  / Inclination of orbit, for Kopeikin terms
+#TFORM#  = 1D                   / Double
+#TUNIT#  = deg                  / Units of field
+#TTYPE#  = KMPRA                / PMRA for Kopeikin term 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = mas/yr               / Units of field
+#TTYPE#  = KPMDEC               / PMDEC for Kopeikin term 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = mas/yr               / Units of field
+#TTYPE#  = KPMELONG             / PMELONG for Kopeikin term
+#TFORM#  = 1D                   / Double
+#TUNIT#  = mas/yr               / Units of field
+#TTYPE#  = KPMELAT              / PMELAT for Kopeikin term 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = mas/yr               / Units of field
+#TTYPE#  = RV                   / Radial velocity 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = km/s                 / Units of field
+#TTYPE#  = RVS                  / Radial velocity for Shklovskii-dot term
+#TFORM#  = 1D                   / Double
+#TUNIT#  = km/s                 / Units of field
+#TTYPE#  = VT                   / Transverse velocity for Doppler term
+#TFORM#  = 1D                   / Double
+#TUNIT#  = m s**(-2)            / Units of field
+#TTYPE#  = RACC                 / Radial acceleration 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = m s**(-2)            / Units of field
+#TTYPE#  = PMACC                / Accel parallel to proper motion 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = m s**(-2)            / Units of field
+#TTYPE#  = D_SHK                / Distance for Shklovskii term 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = kpc                  / Units of field
+#TTYPE#  = D_AOP                / Distance for annual-orbital parallax 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = kpc                  / Units of field
+#TTYPE#  = D_OP                 / Distance for orbital parallax 
+#TFORM#  = 1D                   / Double
+#TUNIT#  = kpc                  / Units of field
+#TTYPE#  = WAVE_FREQ            / Fundamental FITWAVE frequency
+#TFORM#  = 1D                   / Double
+#TUNIT#  = Hz                   / Units of field
+#TTYPE#  = WAVES_1              / FITWAVE sine component amplitude
+#TFORM#  = 1D                   / Double
+#TUNIT#  = s                    / Units of field
+#TTYPE#  = WAVEC_1              / FITWAVE cosine component amplitude
+#TFORM#  = 1D                   / Double
+#TUNIT#  = s                    / Units of field
+END
+#
+###############################################################################
+#
+# TEMPO1 Polyco History Binary Table Extension
+#
+###############################################################################
+#
+XTENSION= BINTABLE             / ***** Polyco history *****
+BITPIX  =                    8 / N/A 
+NAXIS   =                    2 / 2-dimensional binary table
+NAXIS1  =                    * / width of table in bytes
+NAXIS2  =                    * / number of rows in table
+PCOUNT  =                    0 / size of special data area
+GCOUNT  =                    1 / one data group (required keyword)
+TFIELDS =                    * / Number of fields per row
+EXTNAME = POLYCO               / name of this binary table extension
+TTYPE#  = DATE_PRO             / Processing date and time (UTC)
+TFORM#  = 24A                  / 24-char string
+TTYPE#  = POLYVER              / Polyco version ID
+TFORM#  = 16A                  / 16-char string
+TTYPE#  = NSPAN                / Span of polyco in min
+TFORM#  = 1I                   / Integer
+TTYPE#  = NCOEF                / Nr of coefficients (<=15)
+TFORM#  = 1I                   / Integer
+TTYPE#  = NPBLK                / Nr of blocks (rows) for this polyco
+TFORM#  = 1I                   / Integer
+TTYPE#  = NSITE                / Observatory code
+TFORM#  = 8A                   / 8-char string
+TTYPE#  = REF_FREQ             / Reference frequency for phase
+TFORM#  = 1D                   / Double
+TUNIT#  = MHz                  / Units of field
+TTYPE#  = PRED_PHS             / Predicted pulse phase at obs start
+TFORM#  = 1D                   / Double
+TTYPE#  = REF_MJD              / Reference MJD
+TFORM#  = 1D                   / Double
+TTYPE#  = REF_PHS              / Reference phase
+TFORM#  = 1D                   / Double
+TTYPE#  = REF_F0               / Zero-order pulsar frequency
+TUNIT#  = Hz                   / Units of field
+TFORM#  = 1D                   / Double
+TTYPE#  = LGFITERR             / Log_10 of polynomial fit rms error in periods
+TFORM#  = 1D                   / Double
+TTYPE#  = COEFF                / Polyco coefficients
+TFORM#  = 15D                  / NCOEF doubles
+END
+#
+###############################################################################
+#
+# Subintegration data Binary Table Extension
+#
+###############################################################################
+#
+XTENSION= BINTABLE             / ***** Subintegration data  *****
+BITPIX  =                    8 / N/A
+NAXIS   =                    2 / 2-dimensional binary table
+NAXIS1  =                    * / width of table in bytes 
+NAXIS2  =                    * / Number of rows in table (NSUBINT)
+PCOUNT  =                    0 / size of special data area
+GCOUNT  =                    1 / one data group (required keyword)
+TFIELDS =                    * / Number of fields per row
+INT_TYPE= 'TIME'               / Time axis (TIME, BINPHSPERI, BINLNGASC, etc)
+INT_UNIT= 'SEC'                / Unit of time axis (SEC, PHS (0-1), DEG) 
+SCALE   = 'FluxDen'            / Intensity units (FluxDen/RefFlux/Jansky)
+NPOL    = 4                    / Nr of polarisations
+POL_TYPE= 'IQUV'               / Polarisation identifier (e.g., AABBCRCI, AA+BB)
+TBIN    =                    * / [s] Time per bin or sample 
+NBIN    =                    * / Nr of bins (PSR/CAL mode; else 1)
+NBIN_PRD= 0                    / Nr of bins/pulse period (for gated data)
+PHS_OFFS= 0.0                  / Phase offset of bin 0 for gated data
+NBITS   = 1                    / Nr of bits/datum (SEARCH mode 'X' data, else 1)
+NSUBOFFS= 0                    / Subint offset (Contiguous SEARCH-mode files)
+NCHAN   =                    * / Number of channels/sub-bands in this file
+CHAN_BW =                    * / [MHz] Channel/sub-band width
+NCHNOFFS= 0                    / Channel/sub-band offset for split files
+NSBLK   = 1                    / Samples/row (SEARCH mode, else 1) 
+EXTNAME = SUBINT               / name of this binary table extension
+TTYPE#  = TSUBINT              / Length of subintegration
+TFORM#  = 1D                   / Double 
+TUNIT#  = s                    / Units of field
+TTYPE#  = OFFS_SUB             / Offset from Start of subint centre
+TFORM#  = 1D                   / Double 
+TUNIT#  = s                    / Units of field
+TTYPE#  = LST_SUB              / LST at subint centre 
+TFORM#  = 1D                   / Double 
+TUNIT#  = s                    / Units of field
+TTYPE#  = RA_SUB               / RA (J2000) at subint centre
+TFORM#  = 1D                   / Double 
+TUNIT#  = deg                  / Units of field
+TTYPE#  = DEC_SUB              / Dec (J2000) at subint centre
+TFORM#  = 1D                   / Double 
+TUNIT#  = deg                  / Units of field
+TTYPE#  = GLON_SUB             / [deg] Gal longitude at subint centre
+TFORM#  = 1D                   / Double 
+TUNIT#  = deg                  / Units of field
+TTYPE#  = GLAT_SUB             / [deg] Gal latitude at subint centre
+TFORM#  = 1D                   / Double 
+TUNIT#  = deg                  / Units of field
+TTYPE#  = FD_ANG               / [deg] Feed angle at subint centre
+TFORM#  = 1E                   / Float
+TUNIT#  = deg                  / Units of field
+TTYPE#  = POS_ANG              / [deg] Position angle of feed at subint centre
+TFORM#  = 1E                   / Float
+TUNIT#  = deg                  / Units of field
+TTYPE#  = PAR_ANG              / [deg] Parallactic angle at subint centre
+TFORM#  = 1E                   / Float
+TUNIT#  = deg                  / Units of field
+TTYPE#  = TEL_AZ               / [deg] Telescope azimuth at subint centre
+TFORM#  = 1E                   / Float 
+TUNIT#  = deg                  / Units of field
+TTYPE#  = TEL_ZEN              / [deg] Telescope zenith angle at subint centre
+TFORM#  = 1E                   / Float
+TUNIT#  = deg                  / Units of field
+TTYPE#  = DAT_FREQ             / [MHz] Centre frequency for each channel
+TFORM#  = E                    / NCHAN floats
+TUNIT#  = MHz                  / Units of field
+TTYPE#  = DAT_WTS              / Weights for each channel
+TFORM#  = E                    / NCHAN floats
+TTYPE#  = DAT_OFFS             / Data offset for each channel
+TFORM#  = E                    / NCHAN*NPOL floats
+TTYPE#  = DAT_SCL              / Data scale factor for each channel
+TFORM#  = E                    / NCHAN*NPOL floats
+TTYPE#  = DATA                 / Subint data table
+TDIM#   = (*,*,*,*)            / Dimensions (NBITS or NBIN,NCHAN,NPOL,NSBLK)
+TFORM#  = E                    / NBIN*NCHAN*NPOL*NSBLK int, byte(B) or bit(X)
+TUNIT#  = Jy                   / Units of subint data
+END
