@@ -90,6 +90,8 @@ struct sdfits
     int multifile;          // Write multiple output files
     int quiet;              // Be quiet about writing each subint
     char mode;              // Read (r) or write (w).
+	long int chanstart;     // First channel to include in conversion
+	long int chanend; 	    // Last channel to include in conversion
     struct primary_hdrinfo primary_hdr;
     struct sdfits_hdrinfo hdr;
     struct sdfits_data_columns data_columns;

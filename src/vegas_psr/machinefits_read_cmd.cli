@@ -1,13 +1,5 @@
-## The Name specified is only used in/for the manual page
 Name machinefits_read
-
-## Usage specifies a one-liner which is printed as part of
-## usage-message. It is also used in the NAME-section of the manual
-## page as a short description.
 Usage {Converts VEGAS MACHINEFITS and ancillary metadata .fits to PSRFITS output\n}
-
-## The Version specified is printed as part of the usage-message. The
-## example used here records the date of the clig-run as the version.
 Version [exec date +%Y-%m-%d]
 
 ## Commandline specifies the name of a slot in the generated struct
@@ -17,19 +9,11 @@ Version [exec date +%Y-%m-%d]
 ## output file to document how it was generated.
 Commandline tool
 
-########################################################################
-## EXAMPLE OF FLAG OPTION
+Flag -h help {show this help}
 
-## Flag options are rather trivial. They do not have any parameters.
 Flag -v verbose {switch on verbose program operation}
 
 Flag -q quantize {recalculate quantization parameters continuously (every row)}
-
-Flag -bandx bandx {use 'bandX' file labeling}
-
-########################################################################
-## EXAMPLES OF STRING OPTIONS
-
 
 
 ## String options can have one or more parameters. By default they
@@ -50,13 +34,6 @@ String -ifmeta ifmeta {location of IF .fits metadata} \
 #     -m \
 #     -c 1 5
 
-## Non-mandatory options can have default values
-# String -bg background {background color} \
-#     -d red
-
-########################################################################
-## EXAMPLES OF FLOAT OPTIONS
-
 ## `count', `mandatory' and `default' work as for String-options
 # Float -f f {frequencies} \
 #     -c 2 10 \
@@ -71,18 +48,12 @@ String -ifmeta ifmeta {location of IF .fits metadata} \
 # Float -scale scale {scale value} \
 #     -r 0.0 oo
 
-Double -huge huge {try a really huge value or `inf' or `-inf'} 
-
-Double -freq freq {set or override band center frequency (Hz)} \
+Double -freq freq {set or override band center frequencies (Hz, alphabetical order)} \
+    -c 1 10 \
     -r 0 100000000000
 
 Double -ra ra {set or override right ascension} 
-
 Double -dec dec {set or override declination}
-
-########################################################################
-## EXAMPLES OF INT OPTIONS
-
 
 Int -startchan startchan {channel to start with in psrfits output} \
     -d 0
@@ -94,7 +65,6 @@ Int -rows rows {number of subints (rows) to pack in each PSRFITS output file} \
     -d 10000000    
 
 
-########################################################################
 ## EXAMPLES OF LONG OPTIONS
 # Long -lol lol {list of longs} \
 #    -c 1 5
@@ -107,3 +77,6 @@ Int -rows rows {number of subints (rows) to pack in each PSRFITS output file} \
 ## has a default `count' of 1,oo, but here we set it to 1,10.
 # Rest infiles {list of input files} \
 #    -c 1 10
+
+Flag -bankx bankx {use 'bankX' file labeling}
+

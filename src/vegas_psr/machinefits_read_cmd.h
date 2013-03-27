@@ -9,12 +9,12 @@
 *****/
 
 typedef struct s_Cmdline {
+  /***** -h: show this help */
+  char helpP;
   /***** -v: switch on verbose program operation */
   char verboseP;
   /***** -q: recalculate quantization parameters continuously (every row) */
   char quantizeP;
-  /***** -bandx: use 'bandX' file labeling */
-  char bandxP;
   /***** -data: path to directory containing MACHINEFITS input */
   char dataP;
   char* data;
@@ -23,13 +23,9 @@ typedef struct s_Cmdline {
   char ifmetaP;
   char* ifmeta;
   int ifmetaC;
-  /***** -huge: try a really huge value or `inf' or `-inf' */
-  char hugeP;
-  double huge;
-  int hugeC;
-  /***** -freq: set or override band center frequency (Hz) */
+  /***** -freq: set or override band center frequencies (Hz, alphabetical order) */
   char freqP;
-  double freq;
+  double *freq;
   int freqC;
   /***** -ra: set or override right ascension */
   char raP;
@@ -55,6 +51,8 @@ typedef struct s_Cmdline {
   char rowsP;
   int rows;
   int rowsC;
+  /***** -bankx: use 'bankX' file labeling */
+  char bankxP;
   /***** uninterpreted command line parameters */
   int argc;
   /*@null*/char **argv;

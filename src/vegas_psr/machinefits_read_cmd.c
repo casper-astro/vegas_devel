@@ -22,12 +22,12 @@ char *Program;
 /*@-null*/
 
 static Cmdline cmd = {
+  /***** -h: show this help */
+  /* helpP = */ 0,
   /***** -v: switch on verbose program operation */
   /* verboseP = */ 0,
   /***** -q: recalculate quantization parameters continuously (every row) */
   /* quantizeP = */ 0,
-  /***** -bandx: use 'bandX' file labeling */
-  /* bandxP = */ 0,
   /***** -data: path to directory containing MACHINEFITS input */
   /* dataP = */ 0,
   /* data = */ (char*)0,
@@ -36,13 +36,9 @@ static Cmdline cmd = {
   /* ifmetaP = */ 0,
   /* ifmeta = */ (char*)0,
   /* ifmetaC = */ 0,
-  /***** -huge: try a really huge value or `inf' or `-inf' */
-  /* hugeP = */ 0,
-  /* huge = */ (double)0,
-  /* hugeC = */ 0,
-  /***** -freq: set or override band center frequency (Hz) */
+  /***** -freq: set or override band center frequencies (Hz, alphabetical order) */
   /* freqP = */ 0,
-  /* freq = */ (double)0,
+  /* freq = */ (double*)0,
   /* freqC = */ 0,
   /***** -ra: set or override right ascension */
   /* raP = */ 0,
@@ -68,6 +64,8 @@ static Cmdline cmd = {
   /* rowsP = */ 1,
   /* rows = */ 10000000,
   /* rowsC = */ 1,
+  /***** -bankx: use 'bankX' file labeling */
+  /* bankxP = */ 0,
   /***** uninterpreted rest of command line */
   /* argc = */ 0,
   /* argv = */ (char**)0,
@@ -767,19 +765,17 @@ catArgv(int argc, char **argv)
 void
 usage(void)
 {
-  fprintf(stderr,"   [-v] [-q] [-bandx] [-data data] [-ifmeta ifmeta] [-huge huge] [-freq freq] [-ra ra] [-dec dec] [-startchan startchan] [-endchan endchan] [-spectra spectra] [-rows rows]\n");
+  fprintf(stderr,"   [-h] [-v] [-q] [-data data] [-ifmeta ifmeta] [-freq freq] [-ra ra] [-dec dec] [-startchan startchan] [-endchan endchan] [-spectra spectra] [-rows rows] [-bankx]\n");
   fprintf(stderr,"      Converts VEGAS MACHINEFITS and ancillary metadata .fits to PSRFITS output\n\n");
+  fprintf(stderr,"            -h: show this help\n");
   fprintf(stderr,"            -v: switch on verbose program operation\n");
   fprintf(stderr,"            -q: recalculate quantization parameters continuously (every row)\n");
-  fprintf(stderr,"        -bandx: use 'bandX' file labeling\n");
   fprintf(stderr,"         -data: path to directory containing MACHINEFITS input\n");
   fprintf(stderr,"                1 char* value\n");
   fprintf(stderr,"       -ifmeta: location of IF .fits metadata\n");
   fprintf(stderr,"                1 char* value\n");
-  fprintf(stderr,"         -huge: try a really huge value or `inf' or `-inf'\n");
-  fprintf(stderr,"                1 double value\n");
-  fprintf(stderr,"         -freq: set or override band center frequency (Hz)\n");
-  fprintf(stderr,"                1 double value between 0 and 100000000000\n");
+  fprintf(stderr,"         -freq: set or override band center frequencies (Hz, alphabetical order)\n");
+  fprintf(stderr,"                1...10 double values between 0 and 100000000000\n");
   fprintf(stderr,"           -ra: set or override right ascension\n");
   fprintf(stderr,"                1 double value\n");
   fprintf(stderr,"          -dec: set or override declination\n");
@@ -796,7 +792,8 @@ usage(void)
   fprintf(stderr,"         -rows: number of subints (rows) to pack in each PSRFITS output file\n");
   fprintf(stderr,"                1 int value\n");
   fprintf(stderr,"                default: `10000000'\n");
-  fprintf(stderr,"  version: 2013-03-26\n");
+  fprintf(stderr,"        -bankx: use 'bankX' file labeling\n");
+  fprintf(stderr,"  version: 2013-03-27\n");
   fprintf(stderr,"  ");
   exit(EXIT_FAILURE);
 }
@@ -809,6 +806,11 @@ parseCmdline(int argc, char **argv)
   Program = argv[0];
   cmd.tool = catArgv(argc, argv);
   for(i=1, cmd.argc=1; i<argc; i++) {
+    if( 0==strcmp("-h", argv[i]) ) {
+      cmd.helpP = 1;
+      continue;
+    }
+
     if( 0==strcmp("-v", argv[i]) ) {
       cmd.verboseP = 1;
       continue;
@@ -816,11 +818,6 @@ parseCmdline(int argc, char **argv)
 
     if( 0==strcmp("-q", argv[i]) ) {
       cmd.quantizeP = 1;
-      continue;
-    }
-
-    if( 0==strcmp("-bandx", argv[i]) ) {
-      cmd.bandxP = 1;
       continue;
     }
 
@@ -840,21 +837,13 @@ parseCmdline(int argc, char **argv)
       continue;
     }
 
-    if( 0==strcmp("-huge", argv[i]) ) {
-      int keep = i;
-      cmd.hugeP = 1;
-      i = getDoubleOpt(argc, argv, i, &cmd.huge, 1);
-      cmd.hugeC = i-keep;
-      continue;
-    }
-
     if( 0==strcmp("-freq", argv[i]) ) {
       int keep = i;
       cmd.freqP = 1;
-      i = getDoubleOpt(argc, argv, i, &cmd.freq, 1);
+      i = getDoubleOpts(argc, argv, i, &cmd.freq, 1, 10);
       cmd.freqC = i-keep;
-      checkDoubleLower("-freq", &cmd.freq, cmd.freqC, 100000000000);
-      checkDoubleHigher("-freq", &cmd.freq, cmd.freqC, 0);
+      checkDoubleLower("-freq", cmd.freq, cmd.freqC, 100000000000);
+      checkDoubleHigher("-freq", cmd.freq, cmd.freqC, 0);
       continue;
     }
 
@@ -903,6 +892,11 @@ parseCmdline(int argc, char **argv)
       cmd.rowsP = 1;
       i = getIntOpt(argc, argv, i, &cmd.rows, 1);
       cmd.rowsC = i-keep;
+      continue;
+    }
+
+    if( 0==strcmp("-bankx", argv[i]) ) {
+      cmd.bankxP = 1;
       continue;
     }
 

@@ -9,10 +9,9 @@
 #include <math.h>
 #include <ctype.h>
 #include "fitshead.h"
-//#include "guppi_params.h"
 #include "vegas_params.h"
-#include "guppi_time.h"
-#include "guppi_error.h"
+#include "vegas_time.h"
+#include "vegas_error.h"
 #include "slalib.h"
 #include "sdfits.h"
 
@@ -82,7 +81,7 @@
         if ((param)==(val)) {                                           \
             char errmsg[100];                                           \
             sprintf(errmsg, "%s is required!\n", (key));                \
-            guppi_error("guppi_read_obs_params", errmsg);               \
+            vegas_error("vegas_read_obs_params", errmsg);               \
             exit(1);                                                    \
         }                                                               \
     }
@@ -245,5 +244,285 @@ void vegas_read_obs_params(char *buf,
 void vegas_free_sdfits(struct sdfits *sd) {
     // Free any memory allocated in to the psrfits struct
 }
+
+
+// Read observation params from a VEGAS machinefits file
+void read_machine_params(struct iffits *ifinfo, struct vegas_params *g, struct sdfits *sf)
+{
+    int temp_int;
+    double temp_dbl;
+
+	int nhdu, hdutype, nkeys;
+  	long nrows;
+	int status=0;
+
+	char *buf;
+	char *hdr;
+
+	fits_open_file(&sf->fptr, sf->filename, READONLY, &status);
+	fprintf(stderr, "%d\n", status);
+	/* Move to correct HDU - don't assume anything about EXTVERs */
+	fits_get_num_hdus(sf->fptr, &nhdu, &status);
+	fits_movabs_hdu(sf->fptr, 1, &hdutype, &status);
+		
+	/* get header into the hdr buffer */
+	if( fits_hdr2str(sf->fptr, 0, NULL, 0, &hdr, &nkeys, &status ) )
+    printf(" Error getting first header\n");
+	
+	buf = hdr;
+
+    /* Header information */
+
+    /* machine FITS reports NRAO_GBT */
+    //get_str("TELESCOP", sf->hdr.telescope, 16, "GBT");
+    
+    sprintf(sf->hdr.telescope, "GBT");
+    get_str("INSTRUME", sf->hdr.instrument, 16, "VEGAS");
+    get_str("DATE-OBS", sf->hdr.date_obs, 16, "Unknown");
+    get_int("SCAN", temp_int, 1);
+    sf->hdr.scan = (double)(temp_int);
+    get_int("NCHAN", sf->hdr.nchan, 1024);
+    get_str("CAL_MODE", sf->hdr.cal_mode, 16, "Unknown");
+
+	free(hdr);
+
+    printf(" got header\n");
+
+
+	fits_movabs_hdu(sf->fptr, 4, &hdutype, &status);
+	
+	
+	/* we'll only read first row - assume no doppler tracking */
+	fits_read_col(sf->fptr, TDOUBLE, 7, 1, 1, 1, NULL, &temp_dbl, NULL, &status);            
+	ifinfo->crval1 = temp_dbl;
+
+	fits_read_col(sf->fptr, TDOUBLE, 8, 1, 1, 1, NULL, &temp_dbl, NULL, &status);            
+	ifinfo->cdelt1 = temp_dbl;
+	
+	printf(" got header\n");
+
+	fits_movabs_hdu(sf->fptr, 6, &hdutype, &status);
+	fits_get_num_rows(sf->fptr, &nrows, &status);
+
+	if( fits_hdr2str(sf->fptr, 0, NULL, 0, &hdr, &nkeys, &status ) )
+    printf(" Error getting second header\n");
+	
+	buf=hdr;
+    printf(" got header\n");
+
+	
+    get_dbl("UTDSTART", sf->hdr.sttmjd, 0);
+
+	get_dbl("UTCSTART", temp_dbl, 0);
+
+
+    printf(" got utc\n");
+
+    /* Start day and time */
+
+    int YYYY, MM, DD, h, m;
+    double s;
+	
+	sf->hdr.sttmjd = sf->hdr.sttmjd + (temp_dbl/86400.0);
+
+	if(sf->hdr.sttmjd < 1) sf->hdr.sttmjd = 56000.5;
+    
+	printf("%f\n", sf->hdr.sttmjd);
+    
+    datetime_from_mjd(sf->hdr.sttmjd, &YYYY, &MM, &DD, &h, &m, &s);
+    
+    sprintf(sf->hdr.date_obs, "%04d-%02d-%02dT%02d:%02d:%06.3f", 
+                YYYY, MM, DD, h, m, s);
+
+	printf("%s\n", sf->hdr.date_obs);
+	
+	
+	fits_close_file(sf->fptr, &status);
+	free(hdr);
+	
+	/* getting the center frequency is turned out to be pretty tough, so we have to jump through some hoops here: */
+	
+	/* #1: crval1 is being mis-set in the machine fits files, it should be 1/2 of 1 channel */
+	ifinfo->crval1 = 1440000000.0/2048.0;
+	
+
+	
+	
+    sf->hdr.freqres = ifinfo->cdelt1;
+    sf->hdr.chan_bw = sf->hdr.freqres;
+	fprintf(stderr, "chan bw: %f\n", ifinfo->cdelt1);
+	sf->hdr.bandwidth = sf->hdr.freqres * sf->hdr.nchan;
+	/* for now we'll hard code to AABB */
+    sf->hdr.npol = 2;
+
+	/* center of the band */
+    sf->hdr.obsfreq = (ifinfo->sff_sideband[ifinfo->currentbank] * (ifinfo->crval1 + ((double) sf->hdr.nchan/2 + 0.5) * ifinfo->cdelt1)) + (ifinfo->sff_multiplier[ifinfo->currentbank] * ifinfo->lo) + ifinfo->sff_offset[ifinfo->currentbank];
+
+	/* #2: the frequency resolution for the LO and sff_offset values doesn't have sufficient resolution to stitch */
+	/* our bands together, so we need to demand that the center frequency we derive is an integer number of half-channels */
+	/* from our desired band bottom */
+	double bandbottom = 10500000000.0;  //for now we want 10.5 GHz
+	
+	sf->hdr.obsfreq = ((round((sf->hdr.obsfreq - bandbottom) / (sf->hdr.chan_bw/2)) * (sf->hdr.chan_bw/2)) + bandbottom);
+
+	fprintf(stderr, "obsfreq: %f\n", sf->hdr.obsfreq);
+
+    if (status) {
+        fprintf(stderr, "Error reading machinefits params.\n");
+        fits_report_error(stderr, status);
+        exit(1);
+    }	
+
+		
+	//f_sky = SFF_SIDEBAND * IF + +SFF_MULTIPLIER*LO1 + SFF_OFFSET
+	//For a given SUBBAND, IF = CRVAL1 + i * CDELT1 where i goes from 0 to
+	//(number of channels-1).
+
+	
+}
+
+
+
+void read_if_params(struct iffits *ifinfo)
+{
+    double temp_dbl;
+
+
+	int nhdu, hdutype, nkeys;
+  	long nrows;
+	int status=0;
+	int i,j,k;
+
+	char *backend[2];
+	char *bank[2];
+	char *hdr;
+	
+	for (i = 0; i < 2; i++) {   /* allocate space for string column value */
+		backend[i] = (char *) malloc(16);
+		bank[i] = (char *) malloc(16);
+	}
+	ifinfo->N = 0;	
+	fits_open_file(&ifinfo->fptr, ifinfo->filename, READONLY, &status);
+	fprintf(stderr, "%d\n", status);
+	/* Move to correct HDU - don't assume anything about EXTVERs */
+	fits_get_num_hdus(ifinfo->fptr, &nhdu, &status);
+
+	fits_movabs_hdu(ifinfo->fptr, 1, &hdutype, &status);
+
+	/* get header into the hdr buffer */
+	if( fits_hdr2str(ifinfo->fptr, 0, NULL, 0, &hdr, &nkeys, &status ) )
+    printf(" Error getting IF header\n");
+
+	fits_movabs_hdu(ifinfo->fptr, 2, &hdutype, &status);
+	fits_get_num_rows(ifinfo->fptr, &nrows, &status);
+	for(i=1;i<=nrows;i++) {
+	    fits_read_col(ifinfo->fptr, TSTRING, 1, i, 1, 1, NULL, backend, NULL, &status);    
+		fits_read_col(ifinfo->fptr, TSTRING, 2, i, 1, 1, NULL, bank, NULL, &status);    
+
+
+		//fprintf(stderr, "%s %s %s %f\n", backend[0], bank[0], ifinfo->bank[ifinfo->N], temp_dbl);
+
+		for(j = 0; j < ifinfo->N; j++) {
+			 if (strcmp(bank[0], ifinfo->bank[j]) == 0) {
+				sprintf(bank[0], "Z");	
+			 }
+		}
+
+		/* if we have a unique vegas band */
+		if((strcmp("VEGAS", backend[0]) == 0) && ( strcmp("Z", bank[0]) != 0)){			
+			strcpy(ifinfo->bank[ifinfo->N], bank[0]);
+
+		    fits_read_col(ifinfo->fptr, TDOUBLE, 21, i, 1, 1, NULL, &temp_dbl, NULL, &status);            
+		    ifinfo->sff_multiplier[ifinfo->N] = temp_dbl;
+
+		    fits_read_col(ifinfo->fptr, TDOUBLE, 22, i, 1, 1, NULL, &temp_dbl, NULL, &status);
+		    ifinfo->sff_sideband[ifinfo->N] = temp_dbl;
+		    
+		    fits_read_col(ifinfo->fptr, TDOUBLE, 23, i, 1, 1, NULL, &temp_dbl, NULL, &status);            
+		    ifinfo->sff_offset[ifinfo->N] = temp_dbl;
+	
+			ifinfo->N = ifinfo->N + 1;
+		}
+
+	}
+
+	//fprintf(stderr, "nrows: %ld nkeys: %d nunique %d\n", nrows, nkeys, ifinfo->N);
+	fits_close_file(ifinfo->fptr, &status);
+	fprintf(stderr, "%d\n", status);
+	free(hdr);
+}
+
+
+void read_lo_params(struct iffits *ifinfo)
+{
+    double temp_dbl;
+
+
+	int nhdu, hdutype, nkeys;
+  	long nrows;
+	int status = 0;
+	char *hdr;
+	
+	fits_open_file(&ifinfo->fptr, ifinfo->filename, READONLY, &status);
+	fprintf(stderr, "%s %d\n", ifinfo->filename, status);
+
+	
+	/* Move to correct HDU - don't assume anything about EXTVERs */
+	fits_get_num_hdus(ifinfo->fptr, &nhdu, &status);
+
+	fits_movabs_hdu(ifinfo->fptr, 1, &hdutype, &status);
+
+	/* get header into the hdr buffer */
+	if( fits_hdr2str(ifinfo->fptr, 0, NULL, 0, &hdr, &nkeys, &status ) )
+    printf(" Error getting LO header\n");
+
+	fits_movabs_hdu(ifinfo->fptr, 4, &hdutype, &status);
+	fits_get_num_rows(ifinfo->fptr, &nrows, &status);
+
+	/* we'll only read first row - assume no doppler tracking */
+	fits_read_col(ifinfo->fptr, TDOUBLE, 4, 1, 1, 1, NULL, &temp_dbl, NULL, &status);            
+	
+	ifinfo->lo = temp_dbl;
+	
+	//fprintf(stderr, "nrows: %ld nkeys: %d nunique %d\n", nrows, nkeys, ifinfo->N);
+	fits_close_file(ifinfo->fptr, &status);
+	free(hdr);
+}
+
+void read_go_params(struct iffits *ifinfo, struct vegas_params *g, struct sdfits *sf)
+{
+    double temp_dbl;
+
+	char *buf;
+	char *hdr;
+	int nhdu, hdutype, nkeys;
+  	long nrows;
+	int status=0;
+
+	fits_open_file(&ifinfo->fptr, ifinfo->filename, READONLY, &status);
+	fprintf(stderr, "%d\n", status);
+
+	/* Move to correct HDU - don't assume anything about EXTVERs */
+	fits_get_num_hdus(ifinfo->fptr, &nhdu, &status);
+
+	fits_movabs_hdu(ifinfo->fptr, 1, &hdutype, &status);
+	
+	/* get header into the hdr buffer */
+	if( fits_hdr2str(ifinfo->fptr, 0, NULL, 0, &hdr, &nkeys, &status ) )
+    printf(" Error getting header\n");
+	
+	//fprintf(stderr, "nrows: %ld nkeys: %d nunique %d\n", nrows, nkeys, ifinfo->N);
+	fits_close_file(ifinfo->fptr, &status);
+	buf = hdr;
+	
+	get_dbl("RA", sf->data_columns.ra, 0.0);
+    get_dbl("DEC", sf->data_columns.dec, 0.0);
+    get_str("OBJECT", sf->data_columns.object, 16, "Unknown");
+    get_str("RECEIVER", sf->hdr.frontend, 16, "Unknown");
+    sprintf(sf->hdr.projid, "VEGAS"); 
+
+	free(hdr);
+}
+
 
 
