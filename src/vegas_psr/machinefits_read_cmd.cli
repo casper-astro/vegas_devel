@@ -1,0 +1,109 @@
+## The Name specified is only used in/for the manual page
+Name machinefits_read
+
+## Usage specifies a one-liner which is printed as part of
+## usage-message. It is also used in the NAME-section of the manual
+## page as a short description.
+Usage {Converts VEGAS MACHINEFITS and ancillary metadata .fits to PSRFITS output\n}
+
+## The Version specified is printed as part of the usage-message. The
+## example used here records the date of the clig-run as the version.
+Version [exec date +%Y-%m-%d]
+
+## Commandline specifies the name of a slot in the generated struct
+## which will be set to a newly allocated string holding the
+## concatenated command line. This is particularly useful for programs
+## which want to record their calling sequence somewhere, e.g. in a in
+## output file to document how it was generated.
+Commandline tool
+
+########################################################################
+## EXAMPLE OF FLAG OPTION
+
+## Flag options are rather trivial. They do not have any parameters.
+Flag -v verbose {switch on verbose program operation}
+
+Flag -q quantize {recalculate quantization parameters continuously (every row)}
+
+Flag -bandx bandx {use 'bandX' file labeling}
+
+########################################################################
+## EXAMPLES OF STRING OPTIONS
+
+
+
+## String options can have one or more parameters. By default they
+## have exactly one parameter.
+String -data data {path to directory containing MACHINEFITS input}
+
+## To let them have exactly two parameters, use the following
+String -ifmeta ifmeta {location of IF .fits metadata} \
+
+## To impose no upper limit on the number of parameters, use oo,
+## i.e. double-`o'
+# String -plotnames plotnames {names of curves to plot} \
+#     -c 1 oo
+
+## An option you really need should be made mandatory. (I'm not sure
+## whether it can be called an `option' then?)
+# String -colors colors {colors to use in plots} \
+#     -m \
+#     -c 1 5
+
+## Non-mandatory options can have default values
+# String -bg background {background color} \
+#     -d red
+
+########################################################################
+## EXAMPLES OF FLOAT OPTIONS
+
+## `count', `mandatory' and `default' work as for String-options
+# Float -f f {frequencies} \
+#     -c 2 10 \
+#     -r 0 47.11 \
+#     -d 2 4 8 16.11
+
+## special values for range-specs are -oo and oo denoting minus
+## infinity and infinity
+# Float -negscale negscale {negative scale value} \
+#     -r -oo 0.0
+
+# Float -scale scale {scale value} \
+#     -r 0.0 oo
+
+Double -huge huge {try a really huge value or `inf' or `-inf'} 
+
+Double -freq freq {set or override band center frequency (Hz)} \
+    -r 0 100000000000
+
+Double -ra ra {set or override right ascension} 
+
+Double -dec dec {set or override declination}
+
+########################################################################
+## EXAMPLES OF INT OPTIONS
+
+
+Int -startchan startchan {channel to start with in psrfits output} \
+    -d 0
+Int -endchan endchan {last channel to keep in psrfits output} \
+    -d 1023
+Int -spectra spectra {number of spectra to pack in each subint (row) of PSRFITS output} \
+    -d 4096
+Int -rows rows {number of subints (rows) to pack in each PSRFITS output file} \
+    -d 10000000    
+
+
+########################################################################
+## EXAMPLES OF LONG OPTIONS
+# Long -lol lol {list of longs} \
+#    -c 1 5
+
+########################################################################
+## EXAMPLES OF REST COMMAND
+
+## The Rest-command specifies what may be found on the command line
+## after all options have extracted their parameters. The Rest-command
+## has a default `count' of 1,oo, but here we set it to 1,10.
+# Rest infiles {list of input files} \
+#    -c 1 10
