@@ -13,6 +13,8 @@ Flag -h help {show this help}
 
 Flag -v verbose {switch on verbose program operation}
 
+Flag -V veryverbose {switch on very verbose program operation}
+
 Flag -q quantize {recalculate quantization parameters continuously (every row)}
 
 
@@ -63,6 +65,8 @@ Int -spectra spectra {number of spectra to pack in each subint (row) of PSRFITS 
     -d 4096
 Int -rows rows {number of subints (rows) to pack in each PSRFITS output file} \
     -d 10000000    
+Int -quantthresh quantthresh {median absolute deviation +/- quantization threshold} \
+    -d 6    
 
 
 ## EXAMPLES OF LONG OPTIONS

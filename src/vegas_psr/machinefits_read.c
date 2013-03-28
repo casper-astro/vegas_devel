@@ -112,6 +112,7 @@ int main(int argc, char *argv[]) {
     
     
     if(cmd->helpP) usage();
+    if(cmd->veryverboseP) cmd->verboseP = 1;
     
     
     /* process using ancillary fits metadata */
@@ -203,7 +204,6 @@ int main(int argc, char *argv[]) {
 
 	if(cmd->verboseP) fprintf(stderr, "%s %s %s\n", ifinfo.bank[0], ifinfo.bank[1], ifinfo.bank[2]);    
     
-    
 	if(cmd->verboseP) fprintf(stderr, "project directory: %s observation: %s\n", ifinfo.basefilename, ifinfo.observation);
 
 
@@ -252,11 +252,11 @@ for(ifinfo.currentbank = 0; ifinfo.currentbank < ifinfo.N; ifinfo.currentbank = 
 			}
 		
 			/* we'll use multifile to count sdfits files - not sure if this is consistent with other vegas code */
-			printf("File count is %i  Total size is %ld bytes currentbank is %d\n",sf.multifile, size, ifinfo.currentbank);
+			if(cmd->verboseP) fprintf(stderr, "File count is %i  Total size is %ld bytes currentbank is %d\n",sf.multifile, size, ifinfo.currentbank);
 		
 			read_machine_params(&ifinfo, &vf, &sf);
 			
-			printf("read params..\n");
+			if(cmd->verboseP) fprintf(stderr, "read params..\n");
 		
 		
 		while(sf.filenum <= sf.multifile ) {
@@ -277,20 +277,20 @@ for(ifinfo.currentbank = 0; ifinfo.currentbank < ifinfo.N; ifinfo.currentbank = 
 					  
 				  /* get header into the hdr buffer */
 				  if( fits_hdr2str(sf.fptr, 0, NULL, 0, &hdr, &nkeys, &status ) )
-				  printf(" Error getting header\n");
+				  fprintf(stderr, "Error getting header\n");
 				  
 				  fits_movabs_hdu(sf.fptr, 6, &hdutype, &status);
 				  
-				  fprintf(stderr, "status: %d %d\n",status, hdutype);
+				  if(cmd->verboseP) fprintf(stderr, "status: %d %d\n",status, hdutype);
 				  fits_get_num_rows(sf.fptr, &nrows,  &status);
 			
-				  fprintf(stderr, "number of rows: %d %ld\n",status, nrows);
+				  if(cmd->verboseP) fprintf(stderr, "number of rows: %d %ld\n",status, nrows);
 				  sf.hdr.nrows = nrows;
 			 
-			 	  fprintf(stderr, "tot rows %d\n",pf.tot_rows);
+			 	  if(cmd->verboseP) fprintf(stderr, "tot rows %d\n",pf.tot_rows);
 
 				  if(pf.tot_rows == 0 && specdata == NULL) {
-						 	fprintf(stderr, "maloccing\n");
+						 if(cmd->verboseP) fprintf(stderr, "maloccing\n");
 
 						 /* we'll assume we always get AABB from VEGAS machinefits */
 						 sf.data_columns.data  = (unsigned char *)malloc(2048 * 4);
@@ -309,7 +309,7 @@ for(ifinfo.currentbank = 0; ifinfo.currentbank < ifinfo.N; ifinfo.currentbank = 
 						 }
 						
 						 pf.sub.bytes_per_subint = pf.hdr.nchan * pf.hdr.npol * cmd->spectra;
-						 fprintf(stderr, "bytes per subint %d\n", pf.sub.bytes_per_subint);
+						 if(cmd->verboseP) fprintf(stderr, "bytes per subint %d\n", pf.sub.bytes_per_subint);
 
 						 subintdata = (float *) malloc(sizeof(float) * pf.sub.bytes_per_subint); 
 						 memset(subintdata, 0x0, sizeof(float) * pf.sub.bytes_per_subint);
@@ -384,7 +384,7 @@ for(ifinfo.currentbank = 0; ifinfo.currentbank < ifinfo.N; ifinfo.currentbank = 
 		
 			sf.N++;
 			
-			//fprintf(stderr, "%d %f integnum: %d accumid: %d %f sttspec: %d stpspec: %d az: %f chan_bw: %f, exposure: %f\n",status, sf.hdr.chan_bw, sf.data_columns.integ_num, sf.data_columns.accumid, sf.data_columns.centre_freq[0], sf.data_columns.sttspec, sf.data_columns.stpspec, sf.data_columns.azimuth, sf.hdr.chan_bw, sf.data_columns.exposure);
+			if(cmd->veryverboseP) fprintf(stderr, "%d %f integnum: %d accumid: %d %f sttspec: %d stpspec: %d az: %f chan_bw: %f, exposure: %f\n",status, sf.hdr.chan_bw, sf.data_columns.integ_num, sf.data_columns.accumid, sf.data_columns.centre_freq[0], sf.data_columns.sttspec, sf.data_columns.stpspec, sf.data_columns.azimuth, sf.hdr.chan_bw, sf.data_columns.exposure);
 		
 		
 			
@@ -410,31 +410,24 @@ for(ifinfo.currentbank = 0; ifinfo.currentbank < ifinfo.N; ifinfo.currentbank = 
 				}
 		 
 				if(pf.tot_rows == 0) {
-					//fprintf(stderr, "computing stats on %d channels and %d pols\n", pf.hdr.nchan, pf.hdr.npol);
+					if (cmd->veryverboseP) fprintf(stderr, "computing stats on %d channels and %d pols\n", pf.hdr.nchan, pf.hdr.npol);
 					compute_stat(subintdata, pf.hdr.nchan, pf.hdr.npol, cmd->spectra, medians, mads, means);
 				} else if (cmd->quantizeP) {
-					//fprintf(stderr, "computing stats on %d channels and %d pols\n", pf.hdr.nchan, pf.hdr.npol);
+					if (cmd->veryverboseP) fprintf(stderr, "computing stats on %d channels and %d pols\n", pf.hdr.nchan, pf.hdr.npol);
 					compute_stat(subintdata, pf.hdr.nchan, pf.hdr.npol, cmd->spectra, medians, mads, means);		
 				} else {
 					massage(subintdata, pf.hdr.nchan, pf.hdr.npol, cmd->spectra, medians, mads, means);					
 				}
 		
 					 
-				//fprintf(stderr, "000000 %f %f %f\n", mads[500], medians[500], means[500]);
-				//fprintf(stderr, "quantizing\n");
-				quant(subintdata, pf.sub.data, pf.hdr.nchan, pf.hdr.npol, cmd->spectra, 6, mads);
+				quant(subintdata, pf.sub.data, pf.hdr.nchan, pf.hdr.npol, cmd->spectra, cmd->quantthresh, mads);
 		
-				//for(j = 0; j < sf.hdr.nchan * pf.hdr.npol; j++) pf.sub.dat_scales[j] = 1.0;
-				for(j = 0; j < pf.hdr.nchan * pf.hdr.npol; j++) pf.sub.dat_scales[j] = (1.4826 * mads[j] * 12)/256;
+				for(j = 0; j < pf.hdr.nchan * pf.hdr.npol; j++) pf.sub.dat_scales[j] = (1.4826 * mads[j] * (cmd->quantthresh * 2))/256;
 		
 				for(j = 0; j < pf.hdr.nchan * pf.hdr.npol; j++) pf.sub.dat_weights[j] = 1.0;
-		
-				/* set weights for the fake pulsar */
-				//for(j = 0; j < pf.hdr.nchan * pf.hdr.npol; j++) pf.sub.dat_weights[j] = 0.0;
-				//for(j = 5; j < 125; j++) pf.sub.dat_weights[j] = 1.0;
-				
-					
-				for(j = 0; j < pf.hdr.nchan * pf.hdr.npol; j++) pf.sub.dat_offsets[j] = medians[j];
+										
+				for(j = 0; j < pf.hdr.nchan * pf.hdr.npol; j++) pf.sub.dat_offsets[j] = medians[j] - (1.4826 * mads[j] * cmd->quantthresh);
+
 				for(j = 0; j < pf.hdr.nchan; j++) pf.sub.dat_freqs[j] = (pf.hdr.fctr - (pf.hdr.df * (pf.hdr.nchan / 2)) + ((double) j * pf.hdr.df));		
 				
 				//fprintf(stderr, "writing subint\n");
@@ -517,14 +510,14 @@ void bin_print_verbose(short x)
 
 }
 
-
+/* perform median subtraction on a subintegration */
 void massage(float *data, int nchan, int npol, int nframe, float *medians, float *mads, float *means) {
 
 	 long int ii,jj;
 
 	 for(ii = 0;ii<(nchan * npol);ii = ii + 1){		  
 	 	  for (jj = 0; jj < nframe; jj = jj + 1) {
-				data[(jj * nchan * npol) + ii] = data[(jj * nchan * npol) + ii] + 0.00001 - medians[ii];
+				data[(jj * nchan * npol) + ii] = data[(jj * nchan * npol) + ii] - medians[ii];
 		  		//sum = sum + data[(jj * nchan * npol) + ii]; 
 	 	  }			
 	 }
@@ -544,7 +537,7 @@ void compute_stat(float *data, int nchan, int npol, int nframe, float *medians, 
 	 for(ii = 0;ii<(nchan * npol);ii = ii + 1){		  
 	 	  sum = 0;
 	 	  for (jj = 0; jj < nframe; jj = jj + 1) {
-				data[(jj * nchan * npol) + ii] = data[(jj * nchan * npol) + ii] + 0.00001;
+				//data[(jj * nchan * npol) + ii] = data[(jj * nchan * npol) + ii] + 0.00001;
  		  		tempvec[jj] =  data[(jj * nchan * npol) + ii];
 				sum = sum + (double) tempvec[jj];				
 
@@ -561,7 +554,7 @@ void compute_stat(float *data, int nchan, int npol, int nframe, float *medians, 
 	 	  }
 	 	  
 		  mads[ii] = median(tempvec, nframe);
-		  if(fabsf(mads[ii]) < 0.0001) mads[ii] = 1.0;
+		  //if(fabsf(mads[ii]) < 0.0001) mads[ii] = 1.0;
 	 }
 
 	 free(tempvec);		  		
@@ -582,18 +575,20 @@ void quant(float *data, unsigned char * quantbytes, int nchan, int npol, int nfr
 			  //printf("%f %f %f %f %d\n", data[(jj * nchan * npol) + ii], min, max, (int)(((data[(jj * nchan * npol) + ii] - min) / (max-min)) * 255.0));
 		  }
 	 }
- //usleep(500000000);
-
 }
 
 
 
 unsigned char uquantize(float d, float min, float max)
 {
-    if(d > max) d = max;
-    if(d < min) d = min;
-    
- 	return (unsigned char)( ((d - min) / (max-min)) * 255.0);
+    if((max - min) == 0) {
+    	return (unsigned char) 127;
+    } else if(d > max) {
+    	d = max;
+    } else if(d < min) {
+    	d = min;
+    }
+ 	return (unsigned char)( ((d - min) / (max-min)) * 256.0);
 }
 
 
@@ -626,7 +621,7 @@ int sdfits_to_psrfits_create(struct sdfits *sf, struct psrfits *pf, struct iffit
 		sprintf(tempfilname, "%s/vegas-hpc%d-bdata1/psr_%s_0001.fits", ifinfo->observation, ifinfo->writtenbank, ifinfo->observation);
 		strcpy(pf->filename, tempfilname);
 	}
-	printf("filename: %s\n",pf->filename);
+	if(cmd->verboseP) fprintf(stderr, "filename: %s\n",pf->filename);
 
     char *guppi_dir = getenv("GUPPI_DIR");
     char template_file[1024];
@@ -635,13 +630,13 @@ int sdfits_to_psrfits_create(struct sdfits *sf, struct psrfits *pf, struct iffit
                 "Error: GUPPI_DIR environment variable not set, exiting.\n");
         exit(1);
     }
-    printf("Opening file '%s' for writing up to %d rows\n", pf->filename, pf->rows_per_file);
+    if(cmd->verboseP) fprintf(stderr, "Opening file '%s' for writing up to %d rows\n", pf->filename, pf->rows_per_file);
 
     sprintf(template_file, "%s/%s", guppi_dir, PSRFITS_SEARCH_TEMPLATE);
     printf("using: %s\n", template_file);
     fits_create_template(&(pf->fptr), pf->filename, template_file, status);
 
-    printf("created psrfits\n");
+    if(cmd->verboseP) fprintf(stderr,"created psrfits\n");
 	ifinfo->writtenbank++;
 	fflush(stdout);
     // Check to see if file was successfully created

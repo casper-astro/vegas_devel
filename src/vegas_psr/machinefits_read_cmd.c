@@ -26,6 +26,8 @@ static Cmdline cmd = {
   /* helpP = */ 0,
   /***** -v: switch on verbose program operation */
   /* verboseP = */ 0,
+  /***** -V: switch on very verbose program operation */
+  /* veryverboseP = */ 0,
   /***** -q: recalculate quantization parameters continuously (every row) */
   /* quantizeP = */ 0,
   /***** -data: path to directory containing MACHINEFITS input */
@@ -64,6 +66,10 @@ static Cmdline cmd = {
   /* rowsP = */ 1,
   /* rows = */ 10000000,
   /* rowsC = */ 1,
+  /***** -quantthresh: median absolute deviation +/- quantization threshold */
+  /* quantthreshP = */ 1,
+  /* quantthresh = */ 6,
+  /* quantthreshC = */ 1,
   /***** -bankx: use 'bankX' file labeling */
   /* bankxP = */ 0,
   /***** uninterpreted rest of command line */
@@ -765,35 +771,39 @@ catArgv(int argc, char **argv)
 void
 usage(void)
 {
-  fprintf(stderr,"   [-h] [-v] [-q] [-data data] [-ifmeta ifmeta] [-freq freq] [-ra ra] [-dec dec] [-startchan startchan] [-endchan endchan] [-spectra spectra] [-rows rows] [-bankx]\n");
+  fprintf(stderr,"   [-h] [-v] [-V] [-q] [-data data] [-ifmeta ifmeta] [-freq freq] [-ra ra] [-dec dec] [-startchan startchan] [-endchan endchan] [-spectra spectra] [-rows rows] [-quantthresh quantthresh] [-bankx]\n");
   fprintf(stderr,"      Converts VEGAS MACHINEFITS and ancillary metadata .fits to PSRFITS output\n\n");
-  fprintf(stderr,"            -h: show this help\n");
-  fprintf(stderr,"            -v: switch on verbose program operation\n");
-  fprintf(stderr,"            -q: recalculate quantization parameters continuously (every row)\n");
-  fprintf(stderr,"         -data: path to directory containing MACHINEFITS input\n");
-  fprintf(stderr,"                1 char* value\n");
-  fprintf(stderr,"       -ifmeta: location of IF .fits metadata\n");
-  fprintf(stderr,"                1 char* value\n");
-  fprintf(stderr,"         -freq: set or override band center frequencies (Hz, alphabetical order)\n");
-  fprintf(stderr,"                1...10 double values between 0 and 100000000000\n");
-  fprintf(stderr,"           -ra: set or override right ascension\n");
-  fprintf(stderr,"                1 double value\n");
-  fprintf(stderr,"          -dec: set or override declination\n");
-  fprintf(stderr,"                1 double value\n");
-  fprintf(stderr,"    -startchan: channel to start with in psrfits output\n");
-  fprintf(stderr,"                1 int value\n");
-  fprintf(stderr,"                default: `0'\n");
-  fprintf(stderr,"      -endchan: last channel to keep in psrfits output\n");
-  fprintf(stderr,"                1 int value\n");
-  fprintf(stderr,"                default: `1023'\n");
-  fprintf(stderr,"      -spectra: number of spectra to pack in each subint (row) of PSRFITS output\n");
-  fprintf(stderr,"                1 int value\n");
-  fprintf(stderr,"                default: `4096'\n");
-  fprintf(stderr,"         -rows: number of subints (rows) to pack in each PSRFITS output file\n");
-  fprintf(stderr,"                1 int value\n");
-  fprintf(stderr,"                default: `10000000'\n");
-  fprintf(stderr,"        -bankx: use 'bankX' file labeling\n");
-  fprintf(stderr,"  version: 2013-03-27\n");
+  fprintf(stderr,"              -h: show this help\n");
+  fprintf(stderr,"              -v: switch on verbose program operation\n");
+  fprintf(stderr,"              -V: switch on very verbose program operation\n");
+  fprintf(stderr,"              -q: recalculate quantization parameters continuously (every row)\n");
+  fprintf(stderr,"           -data: path to directory containing MACHINEFITS input\n");
+  fprintf(stderr,"                  1 char* value\n");
+  fprintf(stderr,"         -ifmeta: location of IF .fits metadata\n");
+  fprintf(stderr,"                  1 char* value\n");
+  fprintf(stderr,"           -freq: set or override band center frequencies (Hz, alphabetical order)\n");
+  fprintf(stderr,"                  1...10 double values between 0 and 100000000000\n");
+  fprintf(stderr,"             -ra: set or override right ascension\n");
+  fprintf(stderr,"                  1 double value\n");
+  fprintf(stderr,"            -dec: set or override declination\n");
+  fprintf(stderr,"                  1 double value\n");
+  fprintf(stderr,"      -startchan: channel to start with in psrfits output\n");
+  fprintf(stderr,"                  1 int value\n");
+  fprintf(stderr,"                  default: `0'\n");
+  fprintf(stderr,"        -endchan: last channel to keep in psrfits output\n");
+  fprintf(stderr,"                  1 int value\n");
+  fprintf(stderr,"                  default: `1023'\n");
+  fprintf(stderr,"        -spectra: number of spectra to pack in each subint (row) of PSRFITS output\n");
+  fprintf(stderr,"                  1 int value\n");
+  fprintf(stderr,"                  default: `4096'\n");
+  fprintf(stderr,"           -rows: number of subints (rows) to pack in each PSRFITS output file\n");
+  fprintf(stderr,"                  1 int value\n");
+  fprintf(stderr,"                  default: `10000000'\n");
+  fprintf(stderr,"    -quantthresh: median absolute deviation +/- quantization threshold\n");
+  fprintf(stderr,"                  1 int value\n");
+  fprintf(stderr,"                  default: `6'\n");
+  fprintf(stderr,"          -bankx: use 'bankX' file labeling\n");
+  fprintf(stderr,"  version: 2013-03-28\n");
   fprintf(stderr,"  ");
   exit(EXIT_FAILURE);
 }
@@ -813,6 +823,11 @@ parseCmdline(int argc, char **argv)
 
     if( 0==strcmp("-v", argv[i]) ) {
       cmd.verboseP = 1;
+      continue;
+    }
+
+    if( 0==strcmp("-V", argv[i]) ) {
+      cmd.veryverboseP = 1;
       continue;
     }
 
@@ -892,6 +907,14 @@ parseCmdline(int argc, char **argv)
       cmd.rowsP = 1;
       i = getIntOpt(argc, argv, i, &cmd.rows, 1);
       cmd.rowsC = i-keep;
+      continue;
+    }
+
+    if( 0==strcmp("-quantthresh", argv[i]) ) {
+      int keep = i;
+      cmd.quantthreshP = 1;
+      i = getIntOpt(argc, argv, i, &cmd.quantthresh, 1);
+      cmd.quantthreshC = i-keep;
       continue;
     }
 

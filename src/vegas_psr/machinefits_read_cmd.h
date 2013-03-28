@@ -13,6 +13,8 @@ typedef struct s_Cmdline {
   char helpP;
   /***** -v: switch on verbose program operation */
   char verboseP;
+  /***** -V: switch on very verbose program operation */
+  char veryverboseP;
   /***** -q: recalculate quantization parameters continuously (every row) */
   char quantizeP;
   /***** -data: path to directory containing MACHINEFITS input */
@@ -51,6 +53,10 @@ typedef struct s_Cmdline {
   char rowsP;
   int rows;
   int rowsC;
+  /***** -quantthresh: median absolute deviation +/- quantization threshold */
+  char quantthreshP;
+  int quantthresh;
+  int quantthreshC;
   /***** -bankx: use 'bankX' file labeling */
   char bankxP;
   /***** uninterpreted command line parameters */
