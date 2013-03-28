@@ -1,0 +1,11 @@
+psrfits_utils 
+by P. Demorest, S. Ransom.
+
+psrfits_utils is  a lightweight library for processing PSRFITS pulsar
+data files.
+
+To compile:
+  ./prepare (should only be necessary the first time)
+  ./configure [options]
+  make && make install
+
