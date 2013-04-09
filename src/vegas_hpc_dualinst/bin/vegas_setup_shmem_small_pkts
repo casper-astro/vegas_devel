@@ -1,0 +1,16 @@
+#!/bin/bash
+${VEGAS_DIR}/bin/vegas_init_shmem_small_pkts
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -D --nogbt
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -U --nogbt \
+    --host=10.0.0.4     \
+    --port=60000        \
+    --packets=SPEAD     \
+    --npol=2		    \
+    --nchan=16          \
+    --chan_bw=1465      \
+    --nsubband=1        \
+    --sub0freq=2.4e9    \
+    --exposure=256e-3   \
+    --fpgaclk=150e6     \
+    --efsampfr=600e6    \
+    --hwexposr=0.5e-3   \

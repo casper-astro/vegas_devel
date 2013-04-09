@@ -1,0 +1,20 @@
+#! /bin/bash
+if test "$LOGNAME" != "root"; then
+	echo "vegas_reset_shmem should be run as root"
+	exit 1 
+fi
+export LD_LIBRARY_PATH=/home/pulsar64/presto/lib
+export VEGAS_DIR=/home/gpu/src/vegas_hpc
+
+# Delete all old shmem
+$VEGAS_DIR/bin/clean_vegas_shmem
+$VEGAS_DIR/bin/clean_vegas_shmem
+
+# New status shmem
+$VEGAS_DIR/bin/check_vegas_status > /dev/null
+
+# New databuf 1 (net/search)
+$VEGAS_DIR/bin/check_vegas_databuf -c -i1 -s128 -n8 > /dev/null
+
+# New databuf 2 (fold)
+$VEGAS_DIR/bin/check_vegas_databuf -c -i2 -s256 -n4 > /dev/null

@@ -1,0 +1,6 @@
+#! /bin/bash
+if test "${VEGAS_DIR}zz" = zz; then
+	echo "Error: VEGAS_DIR environment variable not set, exiting."
+	exit 1
+fi
+python $VEGAS_DIR/python/vegas_status_monitor.py
