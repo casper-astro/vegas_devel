@@ -1,0 +1,2 @@
+/tools/xilinx/14.2/ISE_DS/ISE/sysgen/bin/lin64/saferun -- /tools/xilinx/14.2/ISE_DS/ISE//bin/lin64/xst -ifn xst_cichbcic_core.scr -ofn cichbcic_core.syr
+/tools/xilinx/14.2/ISE_DS/ISE/sysgen/bin/lin64/saferun -- /tools/xilinx/14.2/ISE_DS/ISE//bin/lin64/ngcbuild -p xc6vsx475t-1ff1759 cichbcic_core cichbcic_core_complete.ngc
