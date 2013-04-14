@@ -367,7 +367,7 @@ int main(int argc, char *argv[]) {
 			
 		    if(sf.rownum > 1 && ((utcdelta - utcdeltaprev) - sf.hdr.hwexposr) > utcdropthresh) {
 				 /* dropped at least one packet! */
-				 if(cmd->verboseP) fprintf(stderr, "Dropped a spectra at row %d!!!!\n", sf.rownum);
+				 if(cmd->verboseP) fprintf(stderr, "Dropped a spectrum at row %d!!!!\n", sf.rownum);
 				 utcdelta = utcdeltaprev + sf.hdr.hwexposr; //increment utc delta by one spectra
 				 memset(specdata, 0x0, sizeof(float) *  sf.hdr.nchan * 4); //zero out spectra
 				 sf.rownum--; //roll back row number, this will get incremented later
