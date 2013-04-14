@@ -213,6 +213,11 @@ int main(int argc, char *argv[]) {
 
 	float integrat[2];
 	double utcdelta;
+	double utcdeltaprev;
+	
+	/* how close to the integration time must utcdelta be to guarantee no dropped pkts */
+	double utcdropthresh;
+	
 	struct stat st;
 	long int size=0;
 
@@ -291,6 +296,14 @@ int main(int argc, char *argv[]) {
 			 
 			 	  if(cmd->verboseP) fprintf(stderr, "tot rows %d\n",pf.tot_rows);
 
+				  utcdelta = 0.0;
+				  utcdeltaprev = 0.0;
+
+				  /* Need to actually calculate this from fits input! */
+				  sf.hdr.hwexposr = (double) (1.0/2880000000.0) * 768.0 * 2048.0;
+					
+				  utcdropthresh = sf.hdr.hwexposr / 10000.0;
+
 				  if(pf.tot_rows == 0 && specdata == NULL) {
 						 if(cmd->verboseP) fprintf(stderr, "maloccing\n");
 
@@ -340,6 +353,8 @@ int main(int argc, char *argv[]) {
 			/* real * nchan * npol data */
 			/* double utcdelta */
 
+			/* save old utcdelta */
+			utcdeltaprev = utcdelta;
 			
 			fits_read_col(sf.fptr, TDOUBLE, 1, sf.rownum, 1, 1, NULL, &(sf.data_columns.time), 
 					NULL, &status);
@@ -350,7 +365,16 @@ int main(int argc, char *argv[]) {
 			fits_read_col(sf.fptr, TDOUBLE, 4, sf.rownum, 1, 1, NULL, &utcdelta, 
 					NULL, &status);
 			
-		
+		    if(sf.rownum > 1 && ((utcdelta - utcdeltaprev) - sf.hdr.hwexposr) > utcdropthresh) {
+				 /* dropped at least one packet! */
+				 if(cmd->verboseP) fprintf(stderr, "Dropped a spectra at row %d!!!!\n", sf.rownum);
+				 utcdelta = utcdeltaprev + sf.hdr.hwexposr; //increment utc delta by one spectra
+				 memset(specdata, 0x0, sizeof(float) *  sf.hdr.nchan * 4); //zero out spectra
+				 sf.rownum--; //roll back row number, this will get incremented later
+				 sf.tot_rows--; //roll back total rows, this will get incremented later
+				 						    
+		    }   
+
 			//printf("%f %f\n", sf.data_columns.time, utcdelta);	
 			//for (i = 0; i < 1024; i++) printf("%d: %f %f\n", i, specdata[i], specdata[i+1024]);
 			
@@ -398,7 +422,7 @@ int main(int argc, char *argv[]) {
 					//if(sf.data_columns.time_counter < 0) sf.data_columns.time_counter = sf.data_columns.time_counter + 4294967296;
 					//if(last_fpgactr < 0) last_fpgactr = last_fpgactr + 4294967296;
 					//sf.hdr.hwexposr = fabs((double) (sf.data_columns.time_counter - last_fpgactr)) / (double) sf.hdr.fpgaclk;			
-					sf.hdr.hwexposr = (double) (1.0/2880000000.0) * 768.0 * 2048.0;
+					//sf.hdr.hwexposr = (double) (1.0/2880000000.0) * 768.0 * 2048.0;
 		
 					//fprintf(stderr, "calculated expos time: %d %d %f %15.15f\n",sf.data_columns.time_counter, last_fpgactr, sf.hdr.fpgaclk, sf.hdr.hwexposr);			
 					//fprintf(stderr, "center freq: %f idindx: %f CP: %d integnum: %d accumid: %d %f sttspec: %d stpspec: %d az: %f chan_bw: %f, exposure: %f\n",sf.data_columns.centre_freq[0], sf.data_columns.centre_freq_idx,status, sf.data_columns.integ_num, sf.data_columns.accumid, sf.data_columns.centre_freq[0], sf.data_columns.sttspec, sf.data_columns.stpspec, sf.data_columns.azimuth, sf.hdr.chan_bw, sf.data_columns.exposure);
