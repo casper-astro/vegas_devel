@@ -112,6 +112,7 @@ int main(int argc, char *argv[]) {
     
     
     if(cmd->helpP) usage();
+    if(!cmd->ifmeta && !cmd->data) usage();
     if(cmd->veryverboseP) cmd->verboseP = 1;
     
     
@@ -207,7 +208,8 @@ int main(int argc, char *argv[]) {
 	if(cmd->verboseP) fprintf(stderr, "project directory: %s observation: %s\n", ifinfo.basefilename, ifinfo.observation);
 
 
-    /* Now move on to the data! - we'll eventually want to loop over all the bands in this loop */
+
+    /* Now move on to the data! */
 
 	float integrat[2];
 	double utcdelta;
@@ -217,7 +219,7 @@ int main(int argc, char *argv[]) {
     ifinfo.currentbank = 0;
 	ifinfo.writtenbank = 0;
 
-for(ifinfo.currentbank = 0; ifinfo.currentbank < ifinfo.N; ifinfo.currentbank = ifinfo.currentbank + 1) {
+	for(ifinfo.currentbank = 0; ifinfo.currentbank < ifinfo.N; ifinfo.currentbank = ifinfo.currentbank + 1) {
 
 			sf.N = 0L;
 			sf.T = 0.0;
@@ -353,8 +355,7 @@ for(ifinfo.currentbank = 0; ifinfo.currentbank < ifinfo.N; ifinfo.currentbank = 
 			//for (i = 0; i < 1024; i++) printf("%d: %f %f\n", i, specdata[i], specdata[i+1024]);
 			
 			//exit(0);
-		
-			
+					
 			//fprintf(stderr, "%d integnum: %d accumid: %d %f sttspec: %d stpspec: %d az: %f chan_bw: %f, exposure: %f\n",status, sf.data_columns.integ_num, sf.data_columns.accumid, sf.data_columns.centre_freq[0], sf.data_columns.sttspec, sf.data_columns.stpspec, sf.data_columns.azimuth, sf.hdr.chan_bw, sf.data_columns.exposure);
 		
 			strcpy(sf.data_columns.object, name[0]);
