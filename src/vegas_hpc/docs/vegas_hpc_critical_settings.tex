@@ -1,0 +1,191 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{letterpaper} % or letterpaper (US) or a5paper or....
+% \geometry{margins=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\usepackage{rotating}
+
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{VEGAS: VErsatile Greenbank Astronomical Spectrometer \\ \Large Memo on the Critical Settings for the HPC}
+\author{Simon Scott, UC Berkeley}
+%\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+\parskip 7.2pt
+
+\section{Introduction}
+
+This document specifies the settings for the HPC software, for each operating mode. These fields are set via the status shared memory. Table \ref{status-buffer-critical} lists the critical fields that must be set before the VEGAS HPC can be executed.
+
+\begin{table}[!h]
+\centering
+\caption{Status Buffer Fields for Critical Settings}
+\begin{tabular}{l l l}
+\hline
+\bf Field Name & \bf Data Type & \bf Description \\
+\hline
+NSUBBAND & Integer & Number of sub-bands (1 to 8) \\
+NPOL & Integer & Number of antenna polarisations (must be 2) \\
+NCHAN & Integer &  Number of frequency channels per sub-band \\
+CHAN\_BW & Double & Width of each spectral channel/bin [Hz]\\
+EXPOSURE & Float & Required integration time [s] \\
+HWEXPOSR & Float & Hardware integration time (on FPGA or GPU) [s]\\
+FPGACLK & Float & FPGA clock rate [Hz] \\
+EFSAMPFR & Float & Effective sampling frequency (after decimation) [Hz] \\
+SUB0FREQ & Double & Centre frequency of sub-band 0 [Hz] \\
+SUB1FREQ & Double & Centre frequency of sub-band 1 [Hz] \\
+SUB2FREQ & Double & Centre frequency of sub-band 2 [Hz] \\
+SUB3FREQ & Double & Centre frequency of sub-band 3 [Hz] \\
+SUB4FREQ & Double & Centre frequency of sub-band 4 [Hz] \\
+SUB5FREQ & Double & Centre frequency of sub-band 5 [Hz] \\
+SUB6FREQ & Double & Centre frequency of sub-band 6 [Hz] \\
+SUB7FREQ & Double & Centre frequency of sub-band 7 [Hz] \\
+DATAHOST & String & Hostname of attached ROACH board \\
+DATAPORT & Integer & UDP port to which ROACH board transmits packets \\
+PKTFMT & String &  Network packet format (must be SPEAD) \\
+DATADIR & String & FITS output directory (only when disk thread used) \\
+FILENUM & Integer & File number in multi-file scan (reset to zero for each scan) \\
+\hline
+\end{tabular}
+\label{status-buffer-critical}
+\end{table}
+
+There are 17 different operating modes, each with its own unique set of parameters. These modes are described in Table \ref{mode-table}. From this point on, each mode will be identified purely by its ``mode number'' (the first column in the table).
+
+
+\begin{table}[!h]
+\centering
+\caption{VEGAS Modes}
+\begin{tabular}{| p{1.6cm}|  p{4cm} | p{2.4cm} | p{3.5cm} | p{1.6cm} |}
+\hline
+\bf Mode number & \bf Number of sub-bands per IF [MHz] & \bf Sub-band bandwidth & \bf Number of channels per sub-band & \bf Use GPU? \\
+\hline
+1 & 1 & 1500 & 1024 & No \\
+2 & 1 & 1000 & 2084 & No \\
+3 & 1 & 800 & 4096 & No \\
+4 & 1 & 500 & 8192 & No \\
+5 & 1 & 400 & 16384 & No \\
+6 & 1 & 250 & 32768 & Yes \\
+7 & 1 & 100 & 32768 & Yes \\
+8 & 1 & 50 & 32768 & Yes \\
+9 & 1 & 25 & 32768 & Yes \\
+10 & 1 & 10 & 32768 & Yes \\
+11 & 1 & 5 & 32768 & Yes \\
+12 & 1 & 1 & 32768 & Yes \\
+13 & 8 & 30 & 4096 & Yes \\
+14 & 8 & 15 & 4096 & Yes \\
+15 & 8 & 10 & 4096 & Yes \\
+16 & 8 & 5 & 4096 & Yes \\
+17 & 8 & 1 & 4096 & Yes \\
+\hline
+\end{tabular}
+\label{mode-table}
+\end{table}
+
+\section{List of Settings for Each Mode}
+
+Some of the critical settings are mode dependant, while others are mode independant. Table \ref{const-setting-table} shows the recommend values for the mode-independant fields, while Table \ref{mode-setting-table} shows how to set the rest of the fields appropriately for each mode.
+
+\begin{table}[!h]
+\centering
+\caption{Critical Settings that are Independant of Mode}
+\begin{tabular}{| l | l |}
+\hline
+\bf Field Name & \bf Description \\
+\hline
+NPOL & Number of polarisations (always 2) \\
+EXPOSURE & The required integration time, in seconds (typically between 5e-4 and 60) \\
+SUB[0-7]FREQ & The frequency at the centre of the NCHAN/2 frequency bin of each sub-band\\
+DATAHOST & The IP address, or host name, of the ROACH board attached to this machine \\
+DATAPORT & The network port used by the ROACH (usually 60000) \\
+PKTFMT & The network packet format (always "SPEAD") \\
+DATADIR & The directory to which the output FITS files should be written \\
+FILENUM & Set to zero when starting new observation \\
+\hline
+\end{tabular}
+\label{const-setting-table}
+\end{table}
+
+\clearpage
+
+\begin{sidewaystable}[!h]
+\centering
+\caption{Critical Settings for Each Mode}
+\begin{tabular}{| l | l | l | l | l | l | l |}
+\hline
+\bf Mode & \bf NSUBBAND & \bf NCHAN & \bf CHAN\_BW & \bf HWEXPOSR & \bf FPGACLK & \bf EFSAMPFR \\
+\hline
+1 & 1 & 1024 & 1.465e6 & 5e-4 & 375e6 & 3e9 \\
+2 & 1 & 2084 & 4.88e5 & 5e-4 & 375e6 & 2e9 \\
+3 & 1 & 4096 & 1.95e5 & 5e-4 & 375e6 & 1.6e9 \\
+4 & 1 & 8192 & 6.1e4 & 5e-4 & 375e6 & 1e9 \\
+5 & 1 & 16384 & 2.4e4 & 5e-4 & 375e6 & 800e6 \\
+6 & 1 & 32768 & 7.6e3 & 1e-2 & 375e6 & 500e6 \\
+7 & 1 & 32768 & 3.1e3 & 1e-2 & 375e6 & 200e6 \\
+8 & 1 & 32768 & 1.5e3 & 1e-2 & 375e6 & 100e6 \\
+9 & 1 & 32768 & 8e2 & 1e-2 & 375e6 & 50e6 \\
+10 & 1 & 32768 & 3e2 & 1e-2 & 375e6 & 20e6 \\
+11 & 1 & 32768 & 1.5e2 & 1e-2 & 375e6 & 10e6 \\
+12 & 1 & 32768 & 3e1 & 1e-2 & 375e6 & 2e6 \\
+13 & 8 & 4096 & 7.3e3 & 1e-2 & 375e6 & 60e6 \\
+14 & 8 & 4096 & 3.7e3 & 1e-2 & 375e6 & 30e6 \\
+15 & 8 & 4096 & 2.4e3 & 1e-2 & 375e6 & 20e6 \\
+16 & 8 & 4096 & 1.2e3 & 1e-2 & 375e6 & 10e6 \\
+17 & 8 & 4096 & 2e2 & 1e-2 & 375e6 & 2e6 \\
+\hline
+\end{tabular}
+\label{mode-setting-table}
+\end{sidewaystable}
+
+\end{document}

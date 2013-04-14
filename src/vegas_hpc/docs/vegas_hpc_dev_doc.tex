@@ -479,6 +479,75 @@ SWVER & String & Version number of the VEGAS HPC software \\
 \label{status-buffer-monitor}
 \end{table}
 
+\subsection{Programmatic Access to the Shared Memory Segments}
+
+The shared memory segments can be programmatically accessed using their keys
+and identifiers. The following description applies to the dual-instance version
+of VEGAS.
+
+On a PC on which dual-instance shared memory is set up, running {\tt ipcs}
+should show something similar to the following:
+
+\begin{verbatim}
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+0x4019ccf5 131072     owner      666        184320     0                       
+0x8019ccf5 163841     owner      666        1081745664 0                       
+0x8019ccf6 196610     owner      666        1081745664 0                       
+0x8019ccf7 229379     owner      666        408658112  0                       
+0x4119ccf5 262148     owner      666        184320     0                       
+0x8119ccf5 294917     owner      666        1081745664 0                       
+0x8119ccf6 327686     owner      666        1081745664 0                       
+0x8119ccf7 360455     owner      666        408658112  0                       
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+0x8019ccf5 65538      owner      666        32        
+0x8019ccf6 98307      owner      666        32        
+0x8019ccf7 131076     owner      666        1024      
+0x8119ccf5 163845     owner      666        32        
+0x8119ccf6 196614     owner      666        32        
+0x8119ccf7 229383     owner      666        1024      
+\end{verbatim}
+
+The first four shared memory segments and the first three semaphores correspond
+to instance 0, while the rest corresponding to instance 1. The key generation
+functionality is implemented in the files {\tt vegas\_ipckey.c} and
+{\tt vegas\_ipckey.h}. Keys are generated using the {\tt ftok()} function (see
+manpage), which takes a {\tt proj\_id} built in the following way:
+
+For data buffers, {\tt proj\_id = (instance\_id \& 0x3f) | 0x80}, and for
+status buffers, {\tt proj\_id = (instance\_id \& 0x3f) | 0x40}. For instance
+IDs 0 and 1, this would correspond to {\tt 0x80} and {\tt 0x81} respectively
+for data buffers and {\tt 0x40} and {\tt 0x41} respectively for status buffers.
+That is, the keys starting with {\tt 0x40} and {\tt 0x80} correspond to
+instance 0, and those starting with {\tt 0x41} and {\tt 0x81} correspond to
+instance 1.
+
+The instance ID is passed as a command-line argument to {\tt vegas\_hpc\_hbw}
+and {\tt vegas\_hpc\_lbw}, and this is used by their processes to attach the
+relevant shared memory segments to their address spaces, and use the relevant
+semaphores, as demonstrated by the following example:
+
+\begin{verbatim}
+struct vegas_status st;
+rv = vegas_status_attach(instance_id, &st);
+...
+struct vegas_databuf *db;
+db = vegas_databuf_attach(instance_id, args->output_buffer);
+\end{verbatim}
+
+Internally, these functions use {\tt instance\_id} and the shared memory key to
+get the shmid, as shown below.
+
+\begin{verbatim}
+shmid = shmget(key + databuf_id - 1, 0, 0666);
+\end{verbatim}
+
+Here, {\tt databuf\_id} may be 1, 2, or 3 depending on whether the data buffer
+shared memory identifier in question is at the output of the network thread,
+the GPU thread, or the accumulation thread, respectively.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CHAPTER: PROCESSING THREADS

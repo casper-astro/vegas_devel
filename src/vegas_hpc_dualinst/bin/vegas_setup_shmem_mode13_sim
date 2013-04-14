@@ -1,0 +1,55 @@
+#!/bin/bash
+# set up for instance 0 -->
+instance_id=0
+${VEGAS_DIR}/bin/vegas_init_shmem $instance_id
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -D --nogbt \
+    --instance_id=$instance_id
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -U --nogbt \
+    --host=localhost    \
+    --port=60000        \
+    --packets=SPEAD     \
+    --npol=2		    \
+    --nchan=4096        \
+    --chan_bw=5722.0    \
+    --nsubband=8        \
+    --sub0freq=2.4e9    \
+    --sub1freq=2.5e9    \
+    --sub2freq=2.6e9    \
+    --sub3freq=2.7e9    \
+    --sub4freq=2.8e9    \
+    --sub5freq=2.9e9    \
+    --sub6freq=3.0e9    \
+    --sub7freq=3.1e9    \
+    --exposure=20e-3    \
+    --fpgaclk=375e6     \
+    --efsampfr=46.875e6 \
+    --hwexposr=10e-3    \
+    --instance_id=$instance_id
+
+# set up for instance 1 -->
+instance_id=1
+${VEGAS_DIR}/bin/vegas_init_shmem $instance_id
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -D --nogbt \
+    --instance_id=$instance_id
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -U --nogbt \
+    --host=localhost    \
+    --port=60000        \
+    --packets=SPEAD     \
+    --npol=2		    \
+    --nchan=4096        \
+    --chan_bw=5722.0    \
+    --nsubband=8        \
+    --sub0freq=2.4e9    \
+    --sub1freq=2.5e9    \
+    --sub2freq=2.6e9    \
+    --sub3freq=2.7e9    \
+    --sub4freq=2.8e9    \
+    --sub5freq=2.9e9    \
+    --sub6freq=3.0e9    \
+    --sub7freq=3.1e9    \
+    --exposure=20e-3    \
+    --fpgaclk=375e6     \
+    --efsampfr=46.875e6 \
+    --hwexposr=10e-3    \
+    --instance_id=$instance_id
+

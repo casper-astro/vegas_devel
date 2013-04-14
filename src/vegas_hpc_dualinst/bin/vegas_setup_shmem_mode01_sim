@@ -1,0 +1,43 @@
+#!/bin/bash
+# set up for instance 0 -->
+instance_id=0
+${VEGAS_DIR}/bin/vegas_init_shmem $instance_id
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -D --nogbt \
+    --instance_id=$instance_id
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -U --nogbt \
+    --host=127.0.0.1    \
+    --port=60000        \
+    --packets=SPEAD     \
+    --npol=2		    \
+    --nchan=1024        \
+    --chan_bw=1.46e6    \
+    --nsubband=1        \
+    --sub0freq=2.4e9    \
+    --exposure=2e-3     \
+    --fpgaclk=375e6     \
+    --efsampfr=3e9      \
+    --hwexposr=0.5e-3   \
+    --obsmode=HBW       \
+    --instance_id=$instance_id
+
+# set up for instance 1 -->
+instance_id=1
+${VEGAS_DIR}/bin/vegas_init_shmem $instance_id
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -D --nogbt \
+    --instance_id=$instance_id
+python2.5 ${VEGAS_DIR}/python/vegas_set_params.py -U --nogbt \
+    --host=localhost    \
+    --port=60000        \
+    --packets=SPEAD     \
+    --npol=2		    \
+    --nchan=1024        \
+    --chan_bw=1.46e6    \
+    --nsubband=1        \
+    --sub0freq=3.4e9    \
+    --exposure=2e-3     \
+    --fpgaclk=375e6     \
+    --efsampfr=3e9      \
+    --hwexposr=0.5e-3   \
+    --obsmode=HBW       \
+    --instance_id=$instance_id
+
