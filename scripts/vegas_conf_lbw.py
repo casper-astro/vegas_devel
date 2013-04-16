@@ -4,11 +4,16 @@ import corr,time,numpy,struct,sys
 execfile('mixercic_funcs.py')
 n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
 #lo_f = 0  # LO in MHz
-lo_f = [104, 104, 75, 92, 27, 122, 135, 144]
+#lo_f = [104, 103, 75, 91, 92, 122, 135, 144]
+lo_f = [75, 91, 92, 103, 104, 122, 135, 144]
+#lo_f = [75, 91, 93, 103, 104, 122, 135, 144]
+#lo_f =[0, 0, 0, 0, 0, 0, 0, 0]
 #boffile='v13_16r128dr_ver104_2013_Feb_19_2001.bof'
 #boffile='v13_16r128dr_ver104_2013_Mar_05_1659.bof'
 #boffile='v13_16r128dr_ver111_2013_Mar_06_1933.bof'
-boffile='v13_16r128dr_ver113b_2013_Mar_21_0034.bof'
+#boffile='v13_16r128dr_ver113b_2013_Mar_21_0034.bof'
+#boffile='v13_16r64dr_ver114_2013_Apr_06_2235.bof'
+boffile='v13_16r128dr_ver117_2013_Apr_12_0131.bof'
 roach = '192.168.40.80'
 
 dest_ip  = 10*(2**24) +  145 #10.0.0.145
