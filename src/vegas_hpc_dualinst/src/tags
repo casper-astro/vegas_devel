@@ -1,0 +1,1117 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+A	sla.c	/^                           DOUBLE(A),$/;"	v
+A	sla.c	/^                          DOUBLE_ARRAY(A),$/;"	v
+Accumulate	pfb_gpu_kernels.cu	/^__global__ void Accumulate(float4 *pf4FFTOut,$/;"	f
+B	sla.c	/^                           DOUBLE(B),$/;"	v
+B	sla.c	/^                          DOUBLE_ARRAY(B),$/;"	v
+B1	sla.c	/^                               DOUBLE(B1),$/;"	v
+B1	sla.c	/^F77_DOUBLE_FUNCTION(sla_dbear)( DOUBLE(A1), DOUBLE(B1), $/;"	v
+BEP1	sla.c	/^                           DOUBLE(BEP1),$/;"	v
+BW	psrfits.h	/^    double BW;              \/\/ Bandwidth of the observing band (MHz)$/;"	m	struct:hdrinfo
+BYTE	f77.h	231;"	d
+BYTE_ARG	f77.h	512;"	d
+BYTE_ARRAY	f77.h	260;"	d
+BYTE_ARRAY_ARG	f77.h	536;"	d
+BYTE_ARR_TO_UINT	vegas_udp.c	23;"	d	file:
+BYTE_FUNCTION	f77.h	248;"	d
+BYTE_FUNCTION_ARG	f77.h	526;"	d
+C	sla.c	/^			 CHARACTER(C),$/;"	v
+CHARACTER	f77.h	277;"	d
+CHARACTER	f77.h	673;"	d
+CHARACTER	f77.h	674;"	d
+CHARACTER_ARG	f77.h	517;"	d
+CHARACTER_ARG	f77.h	743;"	d
+CHARACTER_ARG	f77.h	744;"	d
+CHARACTER_ARRAY	f77.h	279;"	d
+CHARACTER_ARRAY	f77.h	677;"	d
+CHARACTER_ARRAY	f77.h	678;"	d
+CHARACTER_ARRAY_ARG	f77.h	541;"	d
+CHARACTER_ARRAY_ARG	f77.h	745;"	d
+CHARACTER_ARRAY_ARG	f77.h	746;"	d
+CHARACTER_FUNCTION	f77.h	247;"	d
+CHARACTER_FUNCTION_ARG	f77.h	525;"	d
+CHARACTER_RETURN_ARG	f77.h	219;"	d
+CHARACTER_RETURN_VALUE	f77.h	218;"	d
+CNF_CONST	f77.h	111;"	d
+CNF_CONST	f77.h	113;"	d
+CNF_MACROS	f77.h	99;"	d
+CNF_OLD_DEFINED	f77.h	890;"	d
+CPU_INPUT_BUF	vegas_databuf.h	39;"	d
+CUDASafeCall	pfb_gpu.cu	76;"	d	file:
+D1950	sla.c	/^                           DOUBLE(D1950),$/;"	v
+D2000	sla.c	/^                           DOUBLE(D2000),$/;"	v
+D5	sla.c	/^                           DOUBLE(D5),$/;"	v
+DA	sla.c	/^                           DOUBLE(DA),$/;"	v
+DATE	sla.c	/^                           DOUBLE(DATE),$/;"	v
+DAYS	sla.c	/^                           DOUBLE(DAYS),$/;"	v
+DB	sla.c	/^                            DOUBLE(DB),$/;"	v
+DB	sla.c	/^                           DOUBLE(DB),$/;"	v
+DC	sla.c	/^                           DOUBLE(DC),$/;"	v
+DD	sla.c	/^                           DOUBLE(DD),$/;"	v
+DEBUGOUT	vegas_error.h	17;"	d
+DEBUGOUT	vegas_params.c	34;"	d	file:
+DEBUGOUT	write_sdfits.c	9;"	d	file:
+DEBUG_NET	vegas_net_thread.c	40;"	d	file:
+DEC	sla.c	/^                          DOUBLE(DEC),$/;"	v
+DEC	sla.c	/^F77_DOUBLE_FUNCTION(sla_pa)( DOUBLE(HA), DOUBLE(DEC), DOUBLE(PHI) );$/;"	v
+DECLARE_BYTE	f77.h	335;"	d
+DECLARE_BYTE_ARRAY	f77.h	352;"	d
+DECLARE_BYTE_ARRAY_DYN	f77.h	371;"	d
+DECLARE_CHARACTER	f77.h	342;"	d
+DECLARE_CHARACTER	f77.h	576;"	d
+DECLARE_CHARACTER	f77.h	577;"	d
+DECLARE_CHARACTER	f77.h	705;"	d
+DECLARE_CHARACTER	f77.h	706;"	d
+DECLARE_CHARACTER_ARRAY	f77.h	357;"	d
+DECLARE_CHARACTER_ARRAY	f77.h	579;"	d
+DECLARE_CHARACTER_ARRAY	f77.h	580;"	d
+DECLARE_CHARACTER_ARRAY	f77.h	711;"	d
+DECLARE_CHARACTER_ARRAY	f77.h	712;"	d
+DECLARE_CHARACTER_ARRAY_DYN	f77.h	376;"	d
+DECLARE_CHARACTER_ARRAY_DYN	f77.h	585;"	d
+DECLARE_CHARACTER_ARRAY_DYN	f77.h	586;"	d
+DECLARE_CHARACTER_ARRAY_DYN	f77.h	724;"	d
+DECLARE_CHARACTER_ARRAY_DYN	f77.h	725;"	d
+DECLARE_CHARACTER_DYN	f77.h	361;"	d
+DECLARE_CHARACTER_DYN	f77.h	582;"	d
+DECLARE_CHARACTER_DYN	f77.h	583;"	d
+DECLARE_CHARACTER_DYN	f77.h	720;"	d
+DECLARE_CHARACTER_DYN	f77.h	721;"	d
+DECLARE_DOUBLE	f77.h	333;"	d
+DECLARE_DOUBLE_ARRAY	f77.h	350;"	d
+DECLARE_DOUBLE_ARRAY_DYN	f77.h	369;"	d
+DECLARE_INTEGER	f77.h	331;"	d
+DECLARE_INTEGER_ARRAY	f77.h	348;"	d
+DECLARE_INTEGER_ARRAY_DYN	f77.h	367;"	d
+DECLARE_LOGICAL	f77.h	334;"	d
+DECLARE_LOGICAL_ARRAY	f77.h	351;"	d
+DECLARE_LOGICAL_ARRAY_DYN	f77.h	370;"	d
+DECLARE_POINTER	f77.h	340;"	d
+DECLARE_POINTER_ARRAY	f77.h	356;"	d
+DECLARE_POINTER_ARRAY_DYN	f77.h	375;"	d
+DECLARE_REAL	f77.h	332;"	d
+DECLARE_REAL_ARRAY	f77.h	349;"	d
+DECLARE_REAL_ARRAY_DYN	f77.h	368;"	d
+DECLARE_UBYTE	f77.h	337;"	d
+DECLARE_UBYTE_ARRAY	f77.h	354;"	d
+DECLARE_UBYTE_ARRAY_DYN	f77.h	373;"	d
+DECLARE_UWORD	f77.h	338;"	d
+DECLARE_UWORD_ARRAY	f77.h	355;"	d
+DECLARE_UWORD_ARRAY_DYN	f77.h	374;"	d
+DECLARE_WORD	f77.h	336;"	d
+DECLARE_WORD_ARRAY	f77.h	353;"	d
+DECLARE_WORD_ARRAY_DYN	f77.h	372;"	d
+DEGTORAD	vegas_params.c	25;"	d	file:
+DEQX	sla.c	/^                         DOUBLE(DEQX),$/;"	v
+DH	sla.c	/^                           DOUBLE(DH),$/;"	v
+DISK_INPUT_BUF	vegas_databuf.h	40;"	d
+DISK_WRITE_INTERVAL	vegas_defines.h	34;"	d
+DJM	sla.c	/^                           DOUBLE(DJM),$/;"	v
+DM	sla.c	/^                            DOUBLE(DM),$/;"	v
+DM	sla.c	/^                           DOUBLE(DM),$/;"	v
+DOUBLE	f77.h	229;"	d
+DOUBLE_ARG	f77.h	510;"	d
+DOUBLE_ARRAY	f77.h	258;"	d
+DOUBLE_ARRAY_ARG	f77.h	534;"	d
+DOUBLE_FUNCTION	f77.h	245;"	d
+DOUBLE_FUNCTION_ARG	f77.h	523;"	d
+DSB	sla.c	/^                            DOUBLE(DSB),$/;"	v
+DoPFB	pfb_gpu_kernels.cu	/^__global__ void DoPFB(char4* pc4Data,$/;"	f
+EL	sla.c	/^                          DOUBLE(EL),$/;"	v
+EP1	sla.c	/^                          DOUBLE(EP1),$/;"	v
+F77_ASSOC_BYTE_ARRAY	f77.h	408;"	d
+F77_ASSOC_CHARACTER_ARRAY	f77.h	403;"	d
+F77_ASSOC_DOUBLE_ARRAY	f77.h	407;"	d
+F77_ASSOC_INTEGER_ARRAY	f77.h	405;"	d
+F77_ASSOC_LOGICAL_ARRAY	f77.h	404;"	d
+F77_ASSOC_POINTER_ARRAY	f77.h	412;"	d
+F77_ASSOC_REAL_ARRAY	f77.h	406;"	d
+F77_ASSOC_UBYTE_ARRAY	f77.h	409;"	d
+F77_ASSOC_UWORD_ARRAY	f77.h	411;"	d
+F77_ASSOC_WORD_ARRAY	f77.h	410;"	d
+F77_BLANK_COMMON	f77.h	146;"	d
+F77_BLANK_COMMON	f77.h	699;"	d
+F77_BLANK_COMMON	f77.h	700;"	d
+F77_BYTE_FUNCTION	f77.h	209;"	d
+F77_BYTE_TYPE	f77.h	165;"	d
+F77_BYTE_TYPE	f77.h	645;"	d
+F77_BYTE_TYPE	f77.h	646;"	d
+F77_CALL	f77.h	503;"	d
+F77_CHARACTER_ARG_TYPE	f77.h	171;"	d
+F77_CHARACTER_ARG_TYPE	f77.h	669;"	d
+F77_CHARACTER_ARG_TYPE	f77.h	670;"	d
+F77_CHARACTER_ARRAY_ARG_TYPE	f77.h	172;"	d
+F77_CHARACTER_ARRAY_ARG_TYPE	f77.h	671;"	d
+F77_CHARACTER_ARRAY_ARG_TYPE	f77.h	672;"	d
+F77_CHARACTER_FUNCTION	f77.h	208;"	d
+F77_CHARACTER_TYPE	f77.h	164;"	d
+F77_CREATE_BYTE_ARRAY	f77.h	393;"	d
+F77_CREATE_CHARACTER	f77.h	363;"	d
+F77_CREATE_CHARACTER	f77.h	588;"	d
+F77_CREATE_CHARACTER	f77.h	589;"	d
+F77_CREATE_CHARACTER	f77.h	728;"	d
+F77_CREATE_CHARACTER	f77.h	729;"	d
+F77_CREATE_CHARACTER_ARRAY	f77.h	383;"	d
+F77_CREATE_CHARACTER_ARRAY	f77.h	591;"	d
+F77_CREATE_CHARACTER_ARRAY	f77.h	592;"	d
+F77_CREATE_CHARACTER_ARRAY	f77.h	732;"	d
+F77_CREATE_CHARACTER_ARRAY	f77.h	733;"	d
+F77_CREATE_CHARACTER_ARRAY_M	f77.h	385;"	d
+F77_CREATE_CHARACTER_ARRAY_M	f77.h	735;"	d
+F77_CREATE_DOUBLE_ARRAY	f77.h	392;"	d
+F77_CREATE_INTEGER_ARRAY	f77.h	390;"	d
+F77_CREATE_LOGICAL_ARRAY	f77.h	387;"	d
+F77_CREATE_LOGICAL_ARRAY_M	f77.h	389;"	d
+F77_CREATE_POINTER_ARRAY	f77.h	397;"	d
+F77_CREATE_REAL_ARRAY	f77.h	391;"	d
+F77_CREATE_UBYTE_ARRAY	f77.h	394;"	d
+F77_CREATE_UWORD_ARRAY	f77.h	396;"	d
+F77_CREATE_WORD_ARRAY	f77.h	395;"	d
+F77_DOUBLE_FUNCTION	f77.h	206;"	d
+F77_DOUBLE_TYPE	f77.h	162;"	d
+F77_EXPORT_BYTE	f77.h	435;"	d
+F77_EXPORT_BYTE_ARRAY	f77.h	456;"	d
+F77_EXPORT_CHARACTER	f77.h	430;"	d
+F77_EXPORT_CHARACTER_ARRAY	f77.h	447;"	d
+F77_EXPORT_CHARACTER_ARRAY_P	f77.h	449;"	d
+F77_EXPORT_DOUBLE	f77.h	431;"	d
+F77_EXPORT_DOUBLE_ARRAY	f77.h	451;"	d
+F77_EXPORT_INTEGER	f77.h	432;"	d
+F77_EXPORT_INTEGER_ARRAY	f77.h	452;"	d
+F77_EXPORT_LOCATOR	f77.h	440;"	d
+F77_EXPORT_LOCATOR_ARRAY	f77.h	462;"	d
+F77_EXPORT_LOGICAL	f77.h	433;"	d
+F77_EXPORT_LOGICAL_ARRAY	f77.h	453;"	d
+F77_EXPORT_POINTER	f77.h	439;"	d
+F77_EXPORT_POINTER_ARRAY	f77.h	460;"	d
+F77_EXPORT_REAL	f77.h	434;"	d
+F77_EXPORT_REAL_ARRAY	f77.h	455;"	d
+F77_EXPORT_UBYTE	f77.h	437;"	d
+F77_EXPORT_UBYTE_ARRAY	f77.h	458;"	d
+F77_EXPORT_UWORD	f77.h	438;"	d
+F77_EXPORT_UWORD_ARRAY	f77.h	459;"	d
+F77_EXPORT_WORD	f77.h	436;"	d
+F77_EXPORT_WORD_ARRAY	f77.h	457;"	d
+F77_EXTERNAL_NAME	f77.h	124;"	d
+F77_EXTERNAL_NAME	f77.h	562;"	d
+F77_EXTERNAL_NAME	f77.h	563;"	d
+F77_EXTERNAL_NAME	f77.h	654;"	d
+F77_EXTERNAL_NAME	f77.h	655;"	d
+F77_FALSE	f77.h	133;"	d
+F77_FREE_BYTE	f77.h	420;"	d
+F77_FREE_CHARACTER	f77.h	425;"	d
+F77_FREE_CHARACTER	f77.h	738;"	d
+F77_FREE_CHARACTER	f77.h	739;"	d
+F77_FREE_DOUBLE	f77.h	419;"	d
+F77_FREE_INTEGER	f77.h	417;"	d
+F77_FREE_LOGICAL	f77.h	426;"	d
+F77_FREE_POINTER	f77.h	424;"	d
+F77_FREE_REAL	f77.h	418;"	d
+F77_FREE_UBYTE	f77.h	421;"	d
+F77_FREE_UWORD	f77.h	423;"	d
+F77_FREE_WORD	f77.h	422;"	d
+F77_IMPORT_BYTE	f77.h	471;"	d
+F77_IMPORT_BYTE_ARRAY	f77.h	492;"	d
+F77_IMPORT_CHARACTER	f77.h	466;"	d
+F77_IMPORT_CHARACTER_ARRAY	f77.h	483;"	d
+F77_IMPORT_CHARACTER_ARRAY_P	f77.h	485;"	d
+F77_IMPORT_DOUBLE	f77.h	467;"	d
+F77_IMPORT_DOUBLE_ARRAY	f77.h	487;"	d
+F77_IMPORT_INTEGER	f77.h	468;"	d
+F77_IMPORT_INTEGER_ARRAY	f77.h	488;"	d
+F77_IMPORT_LOCATOR	f77.h	476;"	d
+F77_IMPORT_LOCATOR_ARRAY	f77.h	498;"	d
+F77_IMPORT_LOGICAL	f77.h	469;"	d
+F77_IMPORT_LOGICAL_ARRAY	f77.h	489;"	d
+F77_IMPORT_POINTER	f77.h	475;"	d
+F77_IMPORT_POINTER_ARRAY	f77.h	496;"	d
+F77_IMPORT_REAL	f77.h	470;"	d
+F77_IMPORT_REAL_ARRAY	f77.h	491;"	d
+F77_IMPORT_UBYTE	f77.h	473;"	d
+F77_IMPORT_UBYTE_ARRAY	f77.h	494;"	d
+F77_IMPORT_UWORD	f77.h	474;"	d
+F77_IMPORT_UWORD_ARRAY	f77.h	495;"	d
+F77_IMPORT_WORD	f77.h	472;"	d
+F77_IMPORT_WORD_ARRAY	f77.h	493;"	d
+F77_INTEGER_FUNCTION	f77.h	204;"	d
+F77_INTEGER_TYPE	f77.h	159;"	d
+F77_ISFALSE	f77.h	139;"	d
+F77_ISFALSE	f77.h	693;"	d
+F77_ISFALSE	f77.h	694;"	d
+F77_ISFALSE	f77.h	797;"	d
+F77_ISFALSE	f77.h	798;"	d
+F77_ISTRUE	f77.h	138;"	d
+F77_ISTRUE	f77.h	691;"	d
+F77_ISTRUE	f77.h	692;"	d
+F77_ISTRUE	f77.h	795;"	d
+F77_ISTRUE	f77.h	796;"	d
+F77_LOGICAL_FUNCTION	f77.h	207;"	d
+F77_LOGICAL_TYPE	f77.h	163;"	d
+F77_NAMED_COMMON	f77.h	147;"	d
+F77_POINTER_FUNCTION	f77.h	213;"	d
+F77_POINTER_TYPE	f77.h	181;"	d
+F77_REAL_FUNCTION	f77.h	205;"	d
+F77_REAL_FUNCTION_TYPE	f77.h	161;"	d
+F77_REAL_TYPE	f77.h	160;"	d
+F77_SUBROUTINE	f77.h	188;"	d
+F77_TRUE	f77.h	132;"	d
+F77_TRUE	f77.h	689;"	d
+F77_TRUE	f77.h	690;"	d
+F77_TRUE	f77.h	793;"	d
+F77_TRUE	f77.h	794;"	d
+F77_UBYTE_FUNCTION	f77.h	211;"	d
+F77_UBYTE_TYPE	f77.h	167;"	d
+F77_UWORD_FUNCTION	f77.h	212;"	d
+F77_UWORD_TYPE	f77.h	168;"	d
+F77_WORD_FUNCTION	f77.h	210;"	d
+F77_WORD_TYPE	f77.h	166;"	d
+FALSE	pfb_gpu.h	6;"	d
+FFTPLAN_BATCH	pfb_gpu.h	20;"	d
+FFTPLAN_IDIST	pfb_gpu.h	18;"	d
+FFTPLAN_ISTRIDE	pfb_gpu.h	16;"	d
+FFTPLAN_ODIST	pfb_gpu.h	19;"	d
+FFTPLAN_OSTRIDE	pfb_gpu.h	17;"	d
+FFTPLAN_RANK	pfb_gpu.h	15;"	d
+FILE_COEFF_DATATYPE	pfb_gpu.h	12;"	d
+FILE_COEFF_PREFIX	pfb_gpu.h	11;"	d
+FILE_COEFF_SUFFIX	pfb_gpu.h	13;"	d
+FITS_TYPE	vegas_defines.h	26;"	d
+FITS_typecode	psrfits.h	/^    int FITS_typecode;      \/\/ FITS data typecode as per CFITSIO$/;"	m	struct:subint
+FLOAT_PAYLOAD	vegas_accum_thread.c	38;"	d	file:
+FOLD_MODE	psrfits.h	133;"	d
+GENPTR_BYTE	f77.h	295;"	d
+GENPTR_BYTE_ARRAY	f77.h	306;"	d
+GENPTR_BYTE_FUNCTION	f77.h	318;"	d
+GENPTR_CHARACTER	f77.h	293;"	d
+GENPTR_CHARACTER	f77.h	679;"	d
+GENPTR_CHARACTER	f77.h	680;"	d
+GENPTR_CHARACTER_ARRAY	f77.h	304;"	d
+GENPTR_CHARACTER_ARRAY	f77.h	683;"	d
+GENPTR_CHARACTER_ARRAY	f77.h	684;"	d
+GENPTR_CHARACTER_FUNCTION	f77.h	316;"	d
+GENPTR_DOUBLE	f77.h	292;"	d
+GENPTR_DOUBLE_ARRAY	f77.h	303;"	d
+GENPTR_DOUBLE_FUNCTION	f77.h	315;"	d
+GENPTR_INTEGER	f77.h	290;"	d
+GENPTR_INTEGER_ARRAY	f77.h	301;"	d
+GENPTR_INTEGER_FUNCTION	f77.h	313;"	d
+GENPTR_LOGICAL	f77.h	294;"	d
+GENPTR_LOGICAL_ARRAY	f77.h	305;"	d
+GENPTR_LOGICAL_FUNCTION	f77.h	317;"	d
+GENPTR_POINTER	f77.h	299;"	d
+GENPTR_POINTER_ARRAY	f77.h	310;"	d
+GENPTR_POINTER_FUNCTION	f77.h	322;"	d
+GENPTR_REAL	f77.h	291;"	d
+GENPTR_REAL_ARRAY	f77.h	302;"	d
+GENPTR_REAL_FUNCTION	f77.h	314;"	d
+GENPTR_SUBROUTINE	f77.h	312;"	d
+GENPTR_UBYTE	f77.h	297;"	d
+GENPTR_UBYTE_ARRAY	f77.h	308;"	d
+GENPTR_UBYTE_FUNCTION	f77.h	320;"	d
+GENPTR_UWORD	f77.h	298;"	d
+GENPTR_UWORD_ARRAY	f77.h	309;"	d
+GENPTR_UWORD_FUNCTION	f77.h	321;"	d
+GENPTR_WORD	f77.h	296;"	d
+GENPTR_WORD_ARRAY	f77.h	307;"	d
+GENPTR_WORD_FUNCTION	f77.h	319;"	d
+GPU_INPUT_BUF	vegas_databuf.h	38;"	d
+H	sla.c	/^                          DOUBLE(H),$/;"	v
+I	sla.c	/^F77_SUBROUTINE(sla_rdplan)(DOUBLE(DATE), INTEGER(I), DOUBLE(ELONG), DOUBLE(PHI),$/;"	v
+IAMIN	sla.c	/^                           INTEGER(IAMIN),$/;"	v
+IM	sla.c	/^                           INTEGER(IM),$/;"	v
+IMIN	sla.c	/^                           INTEGER(IMIN),$/;"	v
+INTEGER	f77.h	227;"	d
+INTEGER_ARG	f77.h	508;"	d
+INTEGER_ARRAY	f77.h	256;"	d
+INTEGER_ARRAY_ARG	f77.h	532;"	d
+INTEGER_FUNCTION	f77.h	243;"	d
+INTEGER_FUNCTION_ARG	f77.h	521;"	d
+INT_MAX	hget.c	67;"	d	file:
+INT_PAYLOAD	vegas_accum_thread.c	37;"	d	file:
+IY	sla.c	/^                          INTEGER(IY),$/;"	v
+LOGICAL	f77.h	230;"	d
+LOGICAL_ARG	f77.h	511;"	d
+LOGICAL_ARRAY	f77.h	259;"	d
+LOGICAL_ARRAY_ARG	f77.h	535;"	d
+LOGICAL_FUNCTION	f77.h	246;"	d
+LOGICAL_FUNCTION_ARG	f77.h	524;"	d
+MAX_BLKS_PER_BUF	vegas_databuf.h	42;"	d
+MAX_CMD_LEN	vegas_hpc_server.c	148;"	d	file:
+MAX_HEAPS_IN_BLOCK	vegas_fake_net_thread.c	40;"	d	file:
+MAX_HEAPS_PER_BLK	vegas_databuf.h	43;"	d
+MAX_NUM_CH	vegas_accum_thread.c	34;"	d	file:
+MAX_NUM_SUB	vegas_accum_thread.c	33;"	d	file:
+MAX_THREAD	vegas_hpc_server.c	190;"	d	file:
+MJD_epoch	psrfits.h	/^    long double MJD_epoch;  \/\/ Starting epoch in MJD$/;"	m	struct:hdrinfo
+N	psrfits.h	/^    long long N;            \/\/ Current number of spectra written$/;"	m	struct:psrfits
+N	sdfits.h	/^    long long N;            \/\/ Current number of spectra written$/;"	m	struct:sdfits
+N	sla.c	/^                         INTEGER(N),$/;"	v
+NEW_GBT	vegas_defines.h	12;"	d
+NUM_STOKES	vegas_accum_thread.c	35;"	d	file:
+NUM_SW_STATES	vegas_accum_thread.c	32;"	d	file:
+PACKET_SIZE_1SFA	vegas_udp.c	200;"	d	file:
+PACKET_SIZE_1SFA_OLD	vegas_udp.c	201;"	d	file:
+PACKET_SIZE_FAST4K	vegas_udp.c	202;"	d	file:
+PACKET_SIZE_ORIG	vegas_udp.c	198;"	d	file:
+PACKET_SIZE_PASP	vegas_udp.c	203;"	d	file:
+PACKET_SIZE_SHORT	vegas_udp.c	199;"	d	file:
+PACKET_SIZE_SPEAD	vegas_udp.c	204;"	d	file:
+PAYLOAD_SIZE	vegas_defines.h	30;"	d
+PHI	sla.c	/^                            DOUBLE(PHI),$/;"	v
+POINTER	f77.h	239;"	d
+POINTER_ARG	f77.h	516;"	d
+POINTER_ARRAY	f77.h	265;"	d
+POINTER_ARRAY_ARG	f77.h	540;"	d
+POINTER_FUNCTION	f77.h	252;"	d
+POINTER_FUNCTION_ARG	f77.h	530;"	d
+PSRFITS	vegas_defines.h	22;"	d
+PSRFITS_FOLD_TEMPLATE	psrfits.h	13;"	d
+PSRFITS_MAXFILELEN_FOLD	psrfits.h	8;"	d
+PSRFITS_MAXFILELEN_SEARCH	psrfits.h	7;"	d
+PSRFITS_SEARCH_TEMPLATE	psrfits.h	12;"	d
+RA	sla.c	/^                               REAL(RA),$/;"	v
+RADTODEG	vegas_params.c	28;"	d	file:
+REAL	f77.h	228;"	d
+REAL_ARG	f77.h	509;"	d
+REAL_ARRAY	f77.h	257;"	d
+REAL_ARRAY_ARG	f77.h	533;"	d
+REAL_FUNCTION	f77.h	244;"	d
+REAL_FUNCTION_ARG	f77.h	522;"	d
+SDFITS	vegas_defines.h	23;"	d
+SDFITS_MAXFILELEN	sdfits.h	7;"	d
+SDFITS_TEMPLATE	sdfits.h	11;"	d
+SEARCH_MODE	psrfits.h	132;"	d
+SHRT_MAX	hget.c	68;"	d	file:
+SLALIBHDEF	slalib.h	2;"	d
+SOL	vegas_params.c	31;"	d	file:
+SPEAD	vegas_defines.h	15;"	d
+SPEAD_NUM_ITEMS	spead_heap.h	4;"	d
+SPEAD_SPECTRUM_SZ	vegas_fake_net_thread.c	41;"	d	file:
+STATUS_KEY	pfb_gpu.cu	27;"	d	file:
+STATUS_KEY	vegas_accum_thread.c	29;"	d	file:
+STATUS_KEY	vegas_fake_net_thread.c	30;"	d	file:
+STATUS_KEY	vegas_net_thread.c	28;"	d	file:
+STATUS_KEY	vegas_null_thread.c	23;"	d	file:
+STATUS_KEY	vegas_pfb_thread.c	25;"	d	file:
+STATUS_KEY	vegas_psrfits_thread.c	26;"	d	file:
+STATUS_KEY	vegas_rawdisk_thread.c	22;"	d	file:
+STATUS_KEY	vegas_sdfits_thread.c	25;"	d	file:
+STATUS_KEY	vegas_threads.h	25;"	d
+STATUS_KEY	vegas_threads.h	34;"	d
+SUBROUTINE	f77.h	242;"	d
+SUBROUTINE_ARG	f77.h	520;"	d
+SWVER	vegas_defines.h	9;"	d
+T	psrfits.h	/^    double T;               \/\/ Current duration of the observation written$/;"	m	struct:psrfits
+T	sdfits.h	/^    double T;               \/\/ Current duration of the observation written$/;"	m	struct:sdfits
+TMP_STATUS_KEY	vegas_threads.h	26;"	d
+TMP_STATUS_KEY	vegas_threads.h	35;"	d
+TOMS_gcd	misc_utils.c	/^static int TOMS_gcd(int a, int b)$/;"	f	file:
+TRAIL	f77.h	278;"	d
+TRAIL	f77.h	570;"	d
+TRAIL	f77.h	571;"	d
+TRAIL	f77.h	675;"	d
+TRAIL	f77.h	676;"	d
+TRAIL_ARG	f77.h	518;"	d
+TRAIL_ARG	f77.h	597;"	d
+TRAIL_ARG	f77.h	598;"	d
+TRAIL_ARG	f77.h	747;"	d
+TRAIL_ARG	f77.h	748;"	d
+TRUE	pfb_gpu.h	7;"	d
+UBYTE	f77.h	233;"	d
+UBYTE_ARG	f77.h	514;"	d
+UBYTE_ARRAY	f77.h	262;"	d
+UBYTE_ARRAY_ARG	f77.h	538;"	d
+UBYTE_FUNCTION	f77.h	250;"	d
+UBYTE_FUNCTION_ARG	f77.h	528;"	d
+UV	sla.c	/^                         DOUBLE_ARRAY(UV),$/;"	v
+UWORD	f77.h	234;"	d
+UWORD_ARG	f77.h	515;"	d
+UWORD_ARRAY	f77.h	263;"	d
+UWORD_ARRAY_ARG	f77.h	539;"	d
+UWORD_FUNCTION	f77.h	251;"	d
+UWORD_FUNCTION_ARG	f77.h	529;"	d
+VA	sla.c	/^                           DOUBLE_ARRAY(VA),$/;"	v
+VA	sla.c	/^                          DOUBLE_ARRAY(VA),$/;"	v
+VB	sla.c	/^                          DOUBLE_ARRAY(VB),$/;"	v
+VEGAS_DATABUF_KEY	vegas_databuf.h	26;"	d
+VEGAS_ERR_GEN	vegas_error.h	11;"	d
+VEGAS_ERR_KEY	vegas_error.h	14;"	d
+VEGAS_ERR_PACKET	vegas_error.h	15;"	d
+VEGAS_ERR_PARAM	vegas_error.h	13;"	d
+VEGAS_ERR_SYS	vegas_error.h	12;"	d
+VEGAS_KEY_ERROR	vegas_ipckey.h	12;"	d
+VEGAS_LOCK	vegas_status.h	19;"	d
+VEGAS_MAX_PACKET_SIZE	vegas_udp.h	14;"	d
+VEGAS_NOLOCK	vegas_status.h	20;"	d
+VEGAS_NUM_TAPS	pfb_gpu.h	9;"	d
+VEGAS_OK	vegas_error.h	9;"	d
+VEGAS_STATUS_CARD	vegas_status.h	17;"	d
+VEGAS_STATUS_KEY	vegas_status.h	14;"	d
+VEGAS_STATUS_SEMID	vegas_status.h	15;"	d
+VEGAS_STATUS_SIZE	vegas_status.h	16;"	d
+VEGAS_TIMEOUT	vegas_error.h	10;"	d
+VLENGTH	hget.c	70;"	d	file:
+WORD	f77.h	232;"	d
+WORD_ARG	f77.h	513;"	d
+WORD_ARRAY	f77.h	261;"	d
+WORD_ARRAY_ARG	f77.h	537;"	d
+WORD_FUNCTION	f77.h	249;"	d
+WORD_FUNCTION_ARG	f77.h	527;"	d
+_F77_KR	f77.h	622;"	d
+_GNU_SOURCE	vegas_accum_thread.c	8;"	d	file:
+_GNU_SOURCE	vegas_fake_net_thread.c	8;"	d	file:
+_GNU_SOURCE	vegas_net_thread.c	7;"	d	file:
+_GNU_SOURCE	vegas_null_thread.c	6;"	d	file:
+_GNU_SOURCE	vegas_pfb_thread.c	6;"	d	file:
+_GNU_SOURCE	vegas_psrfits_thread.c	6;"	d	file:
+_GNU_SOURCE	vegas_rawdisk_thread.c	6;"	d	file:
+_GNU_SOURCE	vegas_sdfits_thread.c	6;"	d	file:
+_ISOC99_SOURCE	write_sdfits.c	2;"	d	file:
+_PFB_GPU_H	pfb_gpu.h	2;"	d
+_PFB_GPU_KERNELS	pfb_gpu_kernels.h	2;"	d
+_PSRFITS_H	psrfits.h	3;"	d
+_SDFITS_H	sdfits.h	3;"	d
+_SPEAD_HEAP_H_	spead_heap.h	2;"	d
+_VEGAS_DATABUF_H	vegas_databuf.h	8;"	d
+_VEGAS_DEFINES_H	vegas_defines.h	6;"	d
+_VEGAS_ERROR_H	vegas_error.h	6;"	d
+_VEGAS_IPCKEY_H	vegas_ipckey.h	8;"	d
+_VEGAS_PARAMS_H	vegas_params.h	8;"	d
+_VEGAS_STATUS_H	vegas_status.h	8;"	d
+_VEGAS_THREADS_H	vegas_threads.h	7;"	d
+_VEGAS_THREAD_ARGS_H	vegas_thread_args.h	2;"	d
+_VEGAS_THREAD_MAIN_H	vegas_thread_main.h	7;"	d
+_VEGAS_TIME_H	vegas_time.h	6;"	d
+_VEGAS_UDP_H	vegas_udp.h	7;"	d
+__CUDASafeCall	pfb_gpu.cu	/^void __CUDASafeCall(cudaError_t iCUDARet,$/;"	f
+__buf	vegas_databuf.h	/^    struct seminfo *__buf;$/;"	m	union:semun	typeref:struct:semun::seminfo
+_dec_unix	f77.h	765;"	d
+_dec_unix	f77.h	768;"	d
+_dec_unix	f77.h	771;"	d
+_dec_unix	f77.h	774;"	d
+_fitshead_h_	fitshead.h	33;"	d
+accumid	sdfits.h	/^    int accumid;            \/\/ ID of the accumulator from where the spectrum came$/;"	m	struct:sdfits_data_columns
+accumulate	pfb_gpu.cu	/^int accumulate()$/;"	f
+array	vegas_databuf.h	/^    unsigned short *array;$/;"	m	union:semun
+array_offset	vegas_databuf.h	/^    unsigned int array_offset;$/;"	m	struct:disk_buf_index
+array_size	vegas_databuf.h	/^        unsigned int array_size;    \/\/Size of a single data array$/;"	m	union:databuf_index::__anon2
+avg_std	misc_utils.c	/^void avg_std(char *x, int n, double *mean, double *std, int stride)$/;"	f
+azimuth	psrfits.h	/^    double azimuth;         \/\/ Azimuth (commanded) at the start of the obs (deg)$/;"	m	struct:hdrinfo
+azimuth	sdfits.h	/^    float azimuth;          \/\/ Commanded azimuth$/;"	m	struct:sdfits_data_columns
+backend	psrfits.h	/^    char backend[24];       \/\/ Backend or instrument used$/;"	m	struct:hdrinfo
+bandwidth	sdfits.h	/^    double bandwidth;       \/\/ Bandwidth of the entire backend$/;"	m	struct:hdrinfo
+basefilename	psrfits.h	/^    char basefilename[200]; \/\/ The base filename from which to build the true filename$/;"	m	struct:psrfits
+basefilename	sdfits.h	/^    char basefilename[200]; \/\/ The base filename from which to build the true filename$/;"	m	struct:sdfits
+be_phase	psrfits.h	/^    int be_phase;           \/\/ Backend poln cross-term phase convention (+\/-1)$/;"	m	struct:hdrinfo
+beam_FWHM	psrfits.h	/^    double beam_FWHM;       \/\/ Beam FWHM (deg)$/;"	m	struct:hdrinfo
+beam_FWHM	vegas_params.c	/^double beam_FWHM(double obs_freq, double dish_diam)$/;"	f
+bin_print_verbose	raw_read.c	/^void bin_print_verbose(short x)$/;"	f
+block_heap_check	vegas_net_thread.c	/^int block_heap_check(struct datablock_stats *d, unsigned int heap_cntr) {$/;"	f
+block_idx	vegas_fake_net_thread.c	/^    int block_idx;                  \/\/ Block index number in databuf$/;"	m	struct:fake_datablock_stats	file:
+block_idx	vegas_net_thread.c	/^    int block_idx;                  \/\/ Block index number in databuf$/;"	m	struct:datablock_stats	file:
+block_size	vegas_databuf.h	/^    size_t block_size;  \/* Size of each data block (bytes) *\/$/;"	m	struct:vegas_databuf
+block_stack_push	vegas_net_thread.c	/^void block_stack_push(struct datablock_stats *d, int nblock) {$/;"	f
+blsearch	hget.c	/^blsearch (hstring,keyword)$/;"	f
+bmaj	sdfits.h	/^    float bmaj;             \/\/ Beam major axis length (deg)$/;"	m	struct:sdfits_data_columns
+bmin	sdfits.h	/^    float bmin;             \/\/ Beam minor axis length (deg)$/;"	m	struct:sdfits_data_columns
+bpa	sdfits.h	/^    float bpa;              \/\/ Beam position angle (deg)$/;"	m	struct:sdfits_data_columns
+buf	vegas_databuf.h	/^    struct semid_ds *buf;$/;"	m	union:semun	typeref:struct:semun::semid_ds
+buf	vegas_status.h	/^    char *buf;   \/* Pointer to data area *\/$/;"	m	struct:vegas_status
+buf_type	vegas_databuf.h	/^    unsigned int buf_type;  \/* GPU_INPUT_BUF or CPU_INPUT_BUF *\/$/;"	m	struct:vegas_databuf
+bytes_per_subint	psrfits.h	/^    int bytes_per_subint;   \/\/ Number of bytes for one row of raw data$/;"	m	struct:subint
+cal_dcyc	psrfits.h	/^    double cal_dcyc;        \/\/ Cal duty cycle (0-1)$/;"	m	struct:hdrinfo
+cal_dcyc	sdfits.h	/^    double cal_dcyc;        \/\/ Cal duty cycle (0-1)$/;"	m	struct:hdrinfo
+cal_freq	psrfits.h	/^    double cal_freq;        \/\/ Cal modulation frequency (Hz)$/;"	m	struct:hdrinfo
+cal_freq	sdfits.h	/^    double cal_freq;        \/\/ Cal modulation frequency (Hz)$/;"	m	struct:hdrinfo
+cal_mode	psrfits.h	/^    char cal_mode[8];       \/\/ Cal mode (OFF, SYNC, EXT1, EXT2$/;"	m	struct:hdrinfo
+cal_mode	sdfits.h	/^    char cal_mode[16];      \/\/ Cal mode (OFF, SYNC, EXT1, EXT2$/;"	m	struct:hdrinfo
+cal_phs	psrfits.h	/^    double cal_phs;         \/\/ Cal phase (wrt start time)$/;"	m	struct:hdrinfo
+cal_phs	sdfits.h	/^    double cal_phs;         \/\/ Cal phase (wrt start time)$/;"	m	struct:hdrinfo
+cc	vegas_thread_main.h	/^void cc(int sig) { run=0; }$/;"	f
+centre_freq	sdfits.h	/^    double centre_freq[8];  \/\/ Frequency at centre of each sub-band$/;"	m	struct:sdfits_data_columns
+centre_freq_idx	sdfits.h	/^    float centre_freq_idx;  \/\/ Index of centre frequency bin$/;"	m	struct:sdfits_data_columns
+chan_bw	sdfits.h	/^    double chan_bw;         \/\/ Width of each spectral bin$/;"	m	struct:hdrinfo
+chan_dm	psrfits.h	/^    double chan_dm;         \/\/ DM that each channel was de-dispersed at (pc\/cm^3)$/;"	m	struct:hdrinfo
+change_endian64	vegas_udp.c	/^unsigned long long change_endian64(const unsigned long long *d) {$/;"	f
+check_thread_exit	vegas_hpc_server.c	/^int check_thread_exit(struct vegas_thread_args *args, int nthread) {$/;"	f
+cleanup_gpu	pfb_gpu.cu	/^void cleanup_gpu()$/;"	f
+cnf_calloc	f77.h	892;"	d
+cnf_copyf	f77.h	893;"	d
+cnf_cptr	f77.h	894;"	d
+cnf_creat	f77.h	895;"	d
+cnf_cref	f77.h	896;"	d
+cnf_crefa	f77.h	897;"	d
+cnf_creib	f77.h	898;"	d
+cnf_creim	f77.h	899;"	d
+cnf_crela	f77.h	900;"	d
+cnf_expch	f77.h	901;"	d
+cnf_expla	f77.h	902;"	d
+cnf_expn	f77.h	903;"	d
+cnf_exprt	f77.h	904;"	d
+cnf_exprta	f77.h	905;"	d
+cnf_exprtap	f77.h	906;"	d
+cnf_fptr	f77.h	907;"	d
+cnf_free	f77.h	908;"	d
+cnf_freef	f77.h	909;"	d
+cnf_impb	f77.h	910;"	d
+cnf_impbn	f77.h	911;"	d
+cnf_impch	f77.h	912;"	d
+cnf_impla	f77.h	913;"	d
+cnf_impn	f77.h	914;"	d
+cnf_imprt	f77.h	915;"	d
+cnf_imprta	f77.h	916;"	d
+cnf_imprtap	f77.h	917;"	d
+cnf_lenc	f77.h	918;"	d
+cnf_lenf	f77.h	919;"	d
+cnf_malloc	f77.h	920;"	d
+cnf_regp	f77.h	921;"	d
+cnf_uregp	f77.h	922;"	d
+cpu_gpu_buf	vegas_databuf.h	/^        struct cpu_gpu_buf_index cpu_gpu_buf[MAX_HEAPS_PER_BLK];$/;"	m	union:databuf_index::__anon3	typeref:struct:databuf_index::__anon3::cpu_gpu_buf_index
+cpu_gpu_buf_index	vegas_databuf.h	/^struct cpu_gpu_buf_index$/;"	s
+create_accumulators	vegas_accum_thread.c	/^void create_accumulators(float ***accumulator, int num_chans, int num_subbands)$/;"	f
+dat_freqs	psrfits.h	/^    float *dat_freqs;       \/\/ Ptr to array of Centre freqs for each channel (MHz)$/;"	m	struct:subint
+dat_offsets	psrfits.h	/^    float *dat_offsets;     \/\/ Ptr to array of offsets for each chan * pol$/;"	m	struct:subint
+dat_scales	psrfits.h	/^    float *dat_scales;      \/\/ Ptr to array of scalings for each chan * pol$/;"	m	struct:subint
+dat_weights	psrfits.h	/^    float *dat_weights;     \/\/ Ptr to array of Weights for each channel$/;"	m	struct:subint
+data	psrfits.h	/^    unsigned char *data;    \/\/ Ptr to the raw data itself$/;"	m	struct:subint
+data	sdfits.h	/^    unsigned char *data;    \/\/ Ptr to the raw data itself$/;"	m	struct:sdfits_data_columns
+data	vegas_udp.h	/^    char data[VEGAS_MAX_PACKET_SIZE] __attribute__ ((aligned(32))); \/* packet data *\/$/;"	m	struct:vegas_udp_packet
+data_columns	sdfits.h	/^    struct sdfits_data_columns data_columns;$/;"	m	struct:sdfits	typeref:struct:sdfits::sdfits_data_columns
+data_dims	sdfits.h	/^    char data_dims[16];     \/\/ Data matrix dimensions$/;"	m	struct:sdfits_data_columns
+data_len	sdfits.h	/^    char data_len[16];      \/\/ Length of the data array$/;"	m	struct:sdfits_data_columns
+data_type	vegas_databuf.h	/^    char data_type[64]; \/* Type of data in buffer *\/$/;"	m	struct:vegas_databuf
+datablock_stats	vegas_net_thread.c	/^struct datablock_stats {$/;"	s	file:
+databuf_index	vegas_databuf.h	/^struct databuf_index$/;"	s
+databuf_size	vegas_databuf.h	/^    size_t databuf_size; \/* Size for the entire buffer (bytes) *\/$/;"	m	struct:vegas_databuf
+date	sdfits.h	/^    char date[16];          \/\/ Date file was created (dd\/mm\/yy)$/;"	m	struct:primary_hdrinfo
+date_obs	psrfits.h	/^    char date_obs[24];      \/\/ Start of observation (YYYY-MM-DDTHH:MM:SS.SSS)$/;"	m	struct:hdrinfo
+date_obs	sdfits.h	/^    char date_obs[16];      \/\/ Date of observation (dd\/mm\/yy)$/;"	m	struct:hdrinfo
+datetime_from_mjd	vegas_time.c	/^int datetime_from_mjd(long double MJD, int *YYYY, int *MM, int *DD, $/;"	f
+db	vegas_fake_net_thread.c	/^    struct vegas_databuf *db;       \/\/ Pointer to overall shared mem databuf$/;"	m	struct:fake_datablock_stats	typeref:struct:fake_datablock_stats::vegas_databuf	file:
+db	vegas_net_thread.c	/^    struct vegas_databuf *db;       \/\/ Pointer to overall shared mem databuf$/;"	m	struct:datablock_stats	typeref:struct:datablock_stats::vegas_databuf	file:
+dec	psrfits.h	/^    double dec;             \/\/ Dec (J2000) at subint centre (deg)$/;"	m	struct:subint
+dec	sdfits.h	/^    double dec;             \/\/ DEC mid-integration$/;"	m	struct:sdfits_data_columns
+dec2000	psrfits.h	/^    double dec2000;         \/\/ Dec of observation (deg, J2000) at obs start$/;"	m	struct:hdrinfo
+dec2str	hput.c	/^dec2str (string, lstr, dec, ndec)$/;"	f
+dec_str	psrfits.h	/^    char dec_str[16];       \/\/ Declination string (DD:MM:SS.SSSS)$/;"	m	struct:hdrinfo
+decimation_factor	vegas_params.h	/^    int decimation_factor;      \/\/ Number of raw spectra integrated$/;"	m	struct:vegas_params
+dedisp	psrfits.h	/^    struct dedispersion dedisp;$/;"	m	struct:psrfits	typeref:struct:psrfits::dedispersion
+dedispersion	psrfits.h	/^struct dedispersion {$/;"	s
+deg2str	hput.c	/^deg2str (string, lstr, deg, ndec)$/;"	f
+delay_from_dm	misc_utils.c	/^double delay_from_dm(double dm, double freq_emitted)$/;"	f
+destroy_accumulators	vegas_accum_thread.c	/^void destroy_accumulators(float **accumulator)$/;"	f
+df	psrfits.h	/^    double df;              \/\/ Frequency spacing between the channels (MHz)$/;"	m	struct:hdrinfo
+disk_buf	vegas_databuf.h	/^        struct disk_buf_index disk_buf[2*MAX_HEAPS_PER_BLK];$/;"	m	union:databuf_index::__anon3	typeref:struct:databuf_index::__anon3::disk_buf_index
+disk_buf_index	vegas_databuf.h	/^struct disk_buf_index$/;"	s
+do_fft	pfb_gpu.cu	/^int do_fft()$/;"	f
+do_pfb	pfb_gpu.cu	/^void do_pfb(struct vegas_databuf *db_in,$/;"	f
+drop_frac	vegas_params.h	/^    double drop_frac;           \/\/ Fraction of dropped packets in this block$/;"	m	struct:vegas_params
+drop_frac_avg	vegas_params.h	/^    double drop_frac_avg;       \/\/ Running average of the fract of dropped packets$/;"	m	struct:vegas_params
+drop_frac_tot	vegas_params.h	/^    double drop_frac_tot;       \/\/ Total fraction of dropped packets$/;"	m	struct:vegas_params
+ds_freq_fact	psrfits.h	/^    int ds_freq_fact;       \/\/ Software downsampling factor in freq (1 if none)$/;"	m	struct:hdrinfo
+ds_time_fact	psrfits.h	/^    int ds_time_fact;       \/\/ Software downsampling factor in time (1 if none)$/;"	m	struct:hdrinfo
+dt	psrfits.h	/^    double dt;              \/\/ Sample duration (s)$/;"	m	struct:hdrinfo
+efsampfr	sdfits.h	/^    double efsampfr;        \/\/ Effective sampling frequency (after decimation)$/;"	m	struct:hdrinfo
+elevation	sdfits.h	/^    float elevation;        \/\/ Commanded elevation$/;"	m	struct:sdfits_data_columns
+exit_on_missing	vegas_params.c	81;"	d	file:
+exposure	sdfits.h	/^    float exposure;         \/\/ Effective integration time (seconds)$/;"	m	struct:sdfits_data_columns
+fake_block_stack_push	vegas_fake_net_thread.c	/^void fake_block_stack_push(struct fake_datablock_stats *d, int nblock) {$/;"	f
+fake_datablock_stats	vegas_fake_net_thread.c	/^struct fake_datablock_stats {$/;"	s	file:
+fake_finalize_block	vegas_fake_net_thread.c	/^void fake_finalize_block(struct fake_datablock_stats *d) {$/;"	f
+fake_increment_block	vegas_fake_net_thread.c	/^void fake_increment_block(struct fake_datablock_stats *d, unsigned long long next_heap_cntr) {$/;"	f
+fake_init_block	vegas_fake_net_thread.c	/^void fake_init_block(struct fake_datablock_stats *d, struct vegas_databuf *db, $/;"	f
+fake_reset_block	vegas_fake_net_thread.c	/^void fake_reset_block(struct fake_datablock_stats *d) {$/;"	f
+fake_reset_stats	vegas_fake_net_thread.c	/^void fake_reset_stats(struct fake_datablock_stats *d) {$/;"	f
+fctr	psrfits.h	/^    double fctr;            \/\/ Center frequency of the observing band (MHz)$/;"	m	struct:hdrinfo
+fd_hand	psrfits.h	/^    int fd_hand;            \/\/ Receiver "handedness" or X\/Y swap (+\/-1)$/;"	m	struct:hdrinfo
+fd_sang	psrfits.h	/^    double fd_sang;         \/\/ Reference angle for feed rotation (deg)$/;"	m	struct:hdrinfo
+fd_xyph	psrfits.h	/^    double fd_xyph;         \/\/ Cal signal poln cross-term phase (deg)$/;"	m	struct:hdrinfo
+feed_ang	psrfits.h	/^    double feed_ang;        \/\/ Feed angle at subint centre (deg)$/;"	m	struct:subint
+feed_angle	psrfits.h	/^    double feed_angle;      \/\/ Feed\/Posn angle requested (deg)$/;"	m	struct:hdrinfo
+feed_mode	psrfits.h	/^    char feed_mode[8];      \/\/ Feed track mode (FA, CPA, SPA, TPA)$/;"	m	struct:hdrinfo
+fft_len	psrfits.h	/^    int fft_len;            \/\/ FFT length for coherent dedisp$/;"	m	struct:dedispersion
+filename	psrfits.h	/^    char filename[200];     \/\/ Filename of the current PSRFITs file$/;"	m	struct:psrfits
+filename	sdfits.h	/^    char filename[200];     \/\/ Filename of the current PSRFITs file$/;"	m	struct:sdfits
+filenum	psrfits.h	/^    int filenum;            \/\/ The current number of the file in the scan (1-offset)$/;"	m	struct:psrfits
+filenum	sdfits.h	/^    int filenum;            \/\/ The current number of the file in the scan (1-offset)$/;"	m	struct:sdfits
+filtnep	sdfits.h	/^    double filtnep;         \/\/ PFB filter noise-equivalent parameter$/;"	m	struct:hdrinfo
+finalize_block	vegas_net_thread.c	/^void finalize_block(struct datablock_stats *d) {$/;"	f
+finished	vegas_thread_args.h	/^    int finished;$/;"	m	struct:vegas_thread_args
+finished_c	vegas_thread_args.h	/^    pthread_cond_t finished_c;$/;"	m	struct:vegas_thread_args
+finished_m	vegas_thread_args.h	/^    pthread_mutex_t finished_m;$/;"	m	struct:vegas_thread_args
+fixnegzero	hput.c	/^fixnegzero (string)$/;"	f	file:
+fold	psrfits.h	/^    struct foldinfo fold;   $/;"	m	struct:psrfits	typeref:struct:psrfits::foldinfo
+foldinfo	psrfits.h	/^struct foldinfo {$/;"	s
+fpgaclk	sdfits.h	/^    double fpgaclk;         \/\/ FPGA clock rate [Hz]$/;"	m	struct:hdrinfo
+fptr	psrfits.h	/^    fitsfile *fptr;         \/\/ The CFITSIO file structure$/;"	m	struct:psrfits
+fptr	sdfits.h	/^    fitsfile *fptr;         \/\/ The CFITSIO file structure$/;"	m	struct:sdfits
+freq_spead_heap	spead_heap.h	/^struct freq_spead_heap {$/;"	s
+freqres	sdfits.h	/^    double freqres;         \/\/ Width of each spectral channel in the file$/;"	m	struct:hdrinfo
+frontend	psrfits.h	/^    char frontend[24];      \/\/ Frontend used$/;"	m	struct:hdrinfo
+frontend	sdfits.h	/^    char frontend[16];      \/\/ Frontend used$/;"	m	struct:hdrinfo
+g_acFileCoeff	pfb_gpu.cu	/^char g_acFileCoeff[256] = {0};$/;"	v
+g_auiHeapValid	pfb_gpu.cu	/^unsigned int g_auiHeapValid[2*MAX_HEAPS_PER_BLK] = {0};$/;"	v
+g_auiStatusBits	pfb_gpu.cu	/^unsigned int g_auiStatusBits[2*MAX_HEAPS_PER_BLK] = {0};$/;"	v
+g_buf_in_block_size	pfb_gpu.cu	/^size_t g_buf_in_block_size;$/;"	v
+g_buf_out_block_size	pfb_gpu.cu	/^size_t g_buf_out_block_size;$/;"	v
+g_dFirstHeapRcvdMJD	pfb_gpu.cu	/^double g_dFirstHeapRcvdMJD = 0.0;$/;"	v
+g_iBlockInDataSize	pfb_gpu.cu	/^int g_iBlockInDataSize = 0;$/;"	v
+g_iFileCoeff	pfb_gpu.cu	/^int g_iFileCoeff = 0;$/;"	v
+g_iFirstHeapIn	pfb_gpu.cu	/^int g_iFirstHeapIn = 0;$/;"	v
+g_iHeapOut	pfb_gpu.cu	/^int g_iHeapOut = 0;$/;"	v
+g_iMaxNumHeapOut	pfb_gpu.cu	/^int g_iMaxNumHeapOut = 0;$/;"	v
+g_iNumSubBands	pfb_gpu.cu	/^int g_iNumSubBands = 0;$/;"	v
+g_iPFBCurBlockOut	pfb_gpu.cu	/^int g_iPFBCurBlockOut = 0;$/;"	v
+g_iPrevBlankingState	pfb_gpu.cu	/^unsigned int g_iPrevBlankingState = FALSE;$/;"	v
+g_iSpecPerAcc	pfb_gpu.cu	/^int g_iSpecPerAcc = 0;$/;"	v
+g_iTotHeapOut	pfb_gpu.cu	/^int g_iTotHeapOut = 0;$/;"	v
+g_nchan	pfb_gpu.cu	/^int g_nchan;$/;"	v
+g_pc4DataRead_d	pfb_gpu.cu	/^char4* g_pc4DataRead_d = NULL;          \/* raw data read pointer *\/$/;"	v
+g_pc4Data_d	pfb_gpu.cu	/^char4* g_pc4Data_d = NULL;              \/* raw data starting address *\/$/;"	v
+g_pc4InBuf	pfb_gpu.cu	/^char4* g_pc4InBuf = NULL;$/;"	v
+g_pc4InBufRead	pfb_gpu.cu	/^char4* g_pc4InBufRead = NULL;$/;"	v
+g_pf4FFTIn_d	pfb_gpu.cu	/^float4* g_pf4FFTIn_d = NULL;$/;"	v
+g_pf4FFTOut_d	pfb_gpu.cu	/^float4* g_pf4FFTOut_d = NULL;$/;"	v
+g_pf4SumStokes_d	pfb_gpu.cu	/^float4* g_pf4SumStokes_d = NULL;$/;"	v
+g_pfPFBCoeff	pfb_gpu.cu	/^float *g_pfPFBCoeff = NULL;$/;"	v
+g_pfPFBCoeff_d	pfb_gpu.cu	/^float *g_pfPFBCoeff_d = NULL;$/;"	v
+g_stPlan	pfb_gpu.cu	/^cufftHandle g_stPlan = {0};$/;"	v
+get_accumulated_spectrum_from_device	pfb_gpu.cu	/^int get_accumulated_spectrum_from_device(char *out)$/;"	f
+get_current_lst	vegas_time.c	/^int get_current_lst(double mjd, int *lst_secs) {$/;"	f
+get_current_mjd	vegas_time.c	/^int get_current_mjd(int *stt_imjd, int *stt_smjd, double *stt_offs) {$/;"	f
+get_current_mjd_double	vegas_time.c	/^int get_current_mjd_double(double *mjd) {$/;"	f
+get_dbl	vegas_params.c	36;"	d	file:
+get_flt	vegas_params.c	44;"	d	file:
+get_int	vegas_params.c	52;"	d	file:
+get_lon	vegas_params.c	60;"	d	file:
+get_str	vegas_params.c	73;"	d	file:
+gethlength	hget.c	/^gethlength (header)$/;"	f
+glat	psrfits.h	/^    double glat;            \/\/ Gal latitude at subint centre (deg)$/;"	m	struct:subint
+glon	psrfits.h	/^    double glon;            \/\/ Gal longitude at subint centre (deg)$/;"	m	struct:subint
+hadd	hput.c	/^hadd (hplace, keyword)$/;"	f
+hchange	hput.c	/^hchange (hstring, keyword1, keyword2)$/;"	f
+hdel	hput.c	/^hdel (hstring,keyword)$/;"	f
+hdr	psrfits.h	/^    struct hdrinfo hdr;$/;"	m	struct:psrfits	typeref:struct:psrfits::hdrinfo
+hdr	sdfits.h	/^    struct hdrinfo hdr;$/;"	m	struct:sdfits	typeref:struct:sdfits::hdrinfo
+hdrinfo	psrfits.h	/^struct hdrinfo {$/;"	s
+hdrinfo	sdfits.h	/^struct hdrinfo$/;"	s
+header_size	vegas_databuf.h	/^    size_t header_size; \/* Size of each block header (bytes) *\/$/;"	m	struct:vegas_databuf
+headshrink	hput.c	/^const static int headshrink=1;\/* Set to 1 to drop line after deleting keyword *\/$/;"	v	file:
+heap_cntr	vegas_databuf.h	/^    unsigned int heap_cntr;$/;"	m	struct:cpu_gpu_buf_index
+heap_idx	vegas_fake_net_thread.c	/^    unsigned long long heap_idx;    \/\/ Index of first heap number in block$/;"	m	struct:fake_datablock_stats	file:
+heap_idx	vegas_net_thread.c	/^    unsigned int heap_idx;          \/\/ Index of first heap in block$/;"	m	struct:datablock_stats	file:
+heap_rcvd_mjd	vegas_databuf.h	/^    double heap_rcvd_mjd;$/;"	m	struct:cpu_gpu_buf_index
+heap_size	vegas_databuf.h	/^        unsigned int heap_size;     \/\/Size of a single heap$/;"	m	union:databuf_index::__anon2
+heap_size	vegas_fake_net_thread.c	/^    size_t heap_size;               \/\/ Data size of each heap$/;"	m	struct:fake_datablock_stats	file:
+heap_size	vegas_net_thread.c	/^    size_t heap_size;               \/\/ Size of each heap$/;"	m	struct:datablock_stats	file:
+heap_valid	vegas_databuf.h	/^    unsigned int heap_valid;$/;"	m	struct:cpu_gpu_buf_index
+heaps_per_block	vegas_fake_net_thread.c	/^    int heaps_per_block;            \/\/ Total number of heaps to go in the block$/;"	m	struct:fake_datablock_stats	file:
+heaps_per_block	vegas_net_thread.c	/^    int heaps_per_block;            \/\/ Total number of heaps to go in the block$/;"	m	struct:datablock_stats	file:
+hgetc	hget.c	/^hgetc (hstring,keyword0)$/;"	f
+hgetdate	hget.c	/^hgetdate (hstring,keyword,dval)$/;"	f
+hgetdec	hget.c	/^hgetdec (hstring,keyword,dval)$/;"	f
+hgeti2	hget.c	/^hgeti2 (hstring,keyword,ival)$/;"	f
+hgeti4	hget.c	/^hgeti4 (hstring,keyword,ival)$/;"	f
+hgeti4c	hget.c	/^hgeti4c (hstring,keyword,wchar,ival)$/;"	f
+hgetl	hget.c	/^hgetl (hstring,keyword,ival)$/;"	f
+hgetndec	hget.c	/^hgetndec (hstring, keyword, ndec)$/;"	f
+hgetr4	hget.c	/^hgetr4 (hstring,keyword,rval)$/;"	f
+hgetr8	hget.c	/^hgetr8 (hstring,keyword,dval)$/;"	f
+hgetr8c	hget.c	/^hgetr8c (hstring,keyword,wchar,dval)$/;"	f
+hgetra	hget.c	/^hgetra (hstring,keyword,dval)$/;"	f
+hgets	hget.c	/^hgets (hstring, keyword, lstr, str)$/;"	f
+hgetsc	hget.c	/^hgetsc (hstring,keyword,wchar,lstr,str)$/;"	f
+hlength	hget.c	/^hlength (header, lhead)$/;"	f
+hputc	hput.c	/^hputc (hstring,keyword,value)$/;"	f
+hputcom	hput.c	/^hputcom (hstring,keyword,comment)$/;"	f
+hputdec	hput.c	/^hputdec (hstring, keyword, dec)$/;"	f
+hputi4	hput.c	/^hputi4 (hstring,keyword,ival)$/;"	f
+hputi8	hput.c	/^hputi8 (hstring, keyword, ival)$/;"	f
+hputl	hput.c	/^hputl (hstring, keyword,lval)$/;"	f
+hputm	hput.c	/^hputm (hstring,keyword,cval)$/;"	f
+hputnr8	hput.c	/^hputnr8 (hstring, keyword, ndec, dval)$/;"	f
+hputr4	hput.c	/^hputr4 (hstring, keyword, rval)$/;"	f
+hputr8	hput.c	/^hputr8 (hstring, keyword, dval)$/;"	f
+hputra	hput.c	/^hputra (hstring, keyword, ra)$/;"	f
+hputs	hput.c	/^hputs (hstring,keyword,cval)$/;"	f
+hwexposr	sdfits.h	/^    double hwexposr;        \/\/ Duration of fixed integration on FPGA\/GPU [s]$/;"	m	struct:hdrinfo
+imswap4	raw_read.c	/^imswap4 (string,nbytes)$/;"	f
+increment_block	vegas_net_thread.c	/^void increment_block(struct datablock_stats *d, unsigned int next_heap_cntr)$/;"	f
+index_size	vegas_databuf.h	/^    size_t index_size;  \/* Size of each block's index (bytes) *\/$/;"	m	struct:vegas_databuf
+init_block	vegas_net_thread.c	/^void init_block(struct datablock_stats *d, struct vegas_databuf *db, $/;"	f
+init_gpu	pfb_gpu.cu	/^int init_gpu(size_t input_block_sz, size_t output_block_sz, int num_subbands, int num_chans)$/;"	f
+init_hbw_mode	vegas_hpc_server.c	/^void init_hbw_mode(struct vegas_thread_args *args, int *nthread) {$/;"	f
+init_lbw_mode	vegas_hpc_server.c	/^void init_lbw_mode(struct vegas_thread_args *args, int *nthread) {$/;"	f
+init_monitor_mode	vegas_hpc_server.c	/^void init_monitor_mode(struct vegas_thread_args *args, int *nthread) {$/;"	f
+input_buffer	vegas_thread_args.h	/^    int input_buffer;$/;"	m	struct:vegas_thread_args
+instrument	sdfits.h	/^    char instrument[16];       \/\/ Backend or instrument used$/;"	m	struct:hdrinfo
+integ_num	sdfits.h	/^    int integ_num;          \/\/ The integration number (indicates a specific integ. period)$/;"	m	struct:sdfits_data_columns
+integ_size	spead_heap.h	/^    unsigned int integ_size;$/;"	m	struct:freq_spead_heap
+integ_size_addr_mode	spead_heap.h	/^    unsigned char integ_size_addr_mode;$/;"	m	struct:freq_spead_heap
+integ_size_id	spead_heap.h	/^    unsigned short integ_size_id;$/;"	m	struct:freq_spead_heap
+is_blanked	pfb_gpu.cu	/^int is_blanked(int heap_start, int num_heaps)$/;"	f
+is_valid	pfb_gpu.cu	/^int is_valid(int heap_start, int num_heaps)$/;"	f
+isnum	hget.c	/^isnum (string)$/;"	f
+ksearch	hget.c	/^ksearch (hstring,keyword)$/;"	f
+last_heap	vegas_fake_net_thread.c	/^    unsigned long long last_heap;   \/\/ Last heap counter written to block$/;"	m	struct:fake_datablock_stats	file:
+last_heap	vegas_net_thread.c	/^    unsigned int last_heap;         \/\/ Last heap counter written to block$/;"	m	struct:datablock_stats	file:
+leaveblank	hput.c	/^const static int leaveblank = 0;      \/* If 1, leave blank line when deleting *\/$/;"	v	file:
+lhead0	hget.c	/^const static int lhead0 = 0;  \/* Length of header string *\/$/;"	v	file:
+lock	vegas_status.h	/^    sem_t *lock; \/* POSIX semaphore descriptor for locking *\/$/;"	m	struct:vegas_status
+lst	psrfits.h	/^    double lst;             \/\/ LST at subint centre (sec)$/;"	m	struct:subint
+main	check_vegas_databuf.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	check_vegas_status.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	clean_vegas_shmem.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	raw_read.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	test_net_thread.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	test_udp_recv.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	vegas_hpc_hbw.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	vegas_hpc_lbw.c	/^int main(int argc, char *argv[]) {$/;"	f
+main	vegas_hpc_server.c	/^int main(int argc, char *argv[]) {$/;"	f
+mode	psrfits.h	/^    char mode;              \/\/ Read (r) or write (w).$/;"	m	struct:psrfits
+mode	sdfits.h	/^    char mode;              \/\/ Read (r) or write (w).$/;"	m	struct:sdfits
+mode	spead_heap.h	/^    unsigned int mode;$/;"	m	struct:freq_spead_heap
+mode	spead_heap.h	/^    unsigned int mode;$/;"	m	struct:time_spead_heap
+mode_addr_mode	spead_heap.h	/^    unsigned char mode_addr_mode;$/;"	m	struct:freq_spead_heap
+mode_addr_mode	spead_heap.h	/^    unsigned char mode_addr_mode;$/;"	m	struct:time_spead_heap
+mode_id	spead_heap.h	/^    unsigned short mode_id;$/;"	m	struct:freq_spead_heap
+mode_id	spead_heap.h	/^    unsigned short mode_id;$/;"	m	struct:time_spead_heap
+multifile	psrfits.h	/^    int multifile;          \/\/ Write multiple output files$/;"	m	struct:psrfits
+multifile	sdfits.h	/^    int multifile;          \/\/ Write multiple output files$/;"	m	struct:sdfits
+multiline	hget.c	/^const static int multiline = 0;$/;"	v	file:
+n_bits_adc	vegas_params.h	/^    int n_bits_adc;             \/\/ Number of bits sampled by ADCs$/;"	m	struct:vegas_params
+n_block	vegas_databuf.h	/^    int n_block;        \/* Number of data blocks in buffer *\/$/;"	m	struct:vegas_databuf
+n_dropped	vegas_params.h	/^    int n_dropped;              \/\/ Number of packets dropped in current block$/;"	m	struct:vegas_params
+n_packets	vegas_params.h	/^    int n_packets;              \/\/ Total number of packets in current block$/;"	m	struct:vegas_params
+n_polyco_sets	psrfits.h	/^    int n_polyco_sets;      \/\/ Number of polyco sets present$/;"	m	struct:foldinfo
+nbin	psrfits.h	/^    int nbin;               \/\/ Number of bins per period in fold mode$/;"	m	struct:hdrinfo
+nbin	psrfits.h	/^    int nbin;               \/\/ Requested number of bins$/;"	m	struct:foldinfo
+nbits	psrfits.h	/^    int nbits;              \/\/ Number of bits per data sample $/;"	m	struct:hdrinfo
+nchan	psrfits.h	/^    int nchan;              \/\/ Number of channels$/;"	m	struct:hdrinfo
+nchan	sdfits.h	/^    int nchan;              \/\/ Number of spectral bins per sub-band$/;"	m	struct:hdrinfo
+new_file	sdfits.h	/^    int new_file;           \/\/ Indicates that a new file must be created.    $/;"	m	struct:sdfits
+next2_to_n	misc_utils.c	/^long long next2_to_n(long long x)$/;"	f
+nheaps	vegas_fake_net_thread.c	/^    int nheaps;                     \/\/ Number of heaps filled so far$/;"	m	struct:fake_datablock_stats	file:
+nheaps	vegas_net_thread.c	/^    int nheaps;                     \/\/ Number of heaps filled so far$/;"	m	struct:datablock_stats	file:
+notnum	hget.c	/^notnum (string)$/;"	f
+npol	psrfits.h	/^    int npol;               \/\/ Number of polarizations to be stored (1 for summed)$/;"	m	struct:hdrinfo
+npol	sdfits.h	/^    int npol;               \/\/ Number of antenna polarisations (normally 2)$/;"	m	struct:hdrinfo
+nsblk	psrfits.h	/^    int nsblk;              \/\/ Number of spectra per row$/;"	m	struct:hdrinfo
+nsubband	sdfits.h	/^    int nsubband;           \/\/ Number of sub-bands$/;"	m	struct:hdrinfo
+num2str	hput.c	/^num2str (string, num, field, ndec)$/;"	f
+num_datasets	vegas_databuf.h	/^        unsigned int num_datasets;  \/\/Number of datasets in block$/;"	m	union:databuf_index::__anon1
+num_heaps	vegas_databuf.h	/^        unsigned int num_heaps;     \/\/Number of actual heaps in block$/;"	m	union:databuf_index::__anon1
+num_pkts_dropped	vegas_params.h	/^    int num_pkts_dropped;       \/\/ Number of packets dropped in current block$/;"	m	struct:vegas_params
+num_pkts_rcvd	vegas_params.h	/^    int num_pkts_rcvd;          \/\/ Number of packets received in current block$/;"	m	struct:vegas_params
+numdec	hget.c	/^numdec (string)$/;"	f
+object	sdfits.h	/^    char object[16];        \/\/ Object being viewed$/;"	m	struct:sdfits_data_columns
+obs_mode	psrfits.h	/^    char obs_mode[24];       \/\/ Observing mode (SEARCH, PSR, CAL)$/;"	m	struct:hdrinfo
+observer	psrfits.h	/^    char observer[24];      \/\/ Observer's name$/;"	m	struct:hdrinfo
+obsfreq	sdfits.h	/^    double obsfreq;         \/\/ Centre frequency for observation$/;"	m	struct:hdrinfo
+offs	psrfits.h	/^    double offs;            \/\/ Offset from Start of subint centre (sec)$/;"	m	struct:subint
+offset	vegas_params.h	/^    float offset[16*1024];      \/\/ Per-channel offset$/;"	m	struct:vegas_params
+offset_subint	psrfits.h	/^    int offset_subint;      \/\/ Offset subint number for first row in the file$/;"	m	struct:hdrinfo
+onlyI	psrfits.h	/^    int onlyI;              \/\/ 1 if the software will only record Stokes I$/;"	m	struct:hdrinfo
+orig_df	psrfits.h	/^    double orig_df;         \/\/ Original frequency spacing between the channels (MHz)$/;"	m	struct:hdrinfo
+orig_nchan	psrfits.h	/^    int orig_nchan;         \/\/ Number of spectral channels per sample$/;"	m	struct:hdrinfo
+output_buffer	vegas_thread_args.h	/^    int output_buffer;$/;"	m	struct:vegas_thread_args
+overlap	psrfits.h	/^    int overlap;            \/\/ overlap length for coherent dedisp$/;"	m	struct:dedispersion
+packet_format	vegas_udp.h	/^    char packet_format[32]; \/* Packet format *\/$/;"	m	struct:vegas_udp_params
+packet_size	vegas_udp.h	/^    size_t packet_size;     \/* Expected packet size, 0 = don't care *\/$/;"	m	struct:vegas_udp_params
+packet_size	vegas_udp.h	/^    size_t packet_size;  \/* packet size, bytes *\/$/;"	m	struct:vegas_udp_packet
+packetindex	vegas_params.h	/^    long long packetindex;      \/\/ Index of first packet in raw data block$/;"	m	struct:vegas_params
+packets_per_block	vegas_params.h	/^    int packets_per_block;      \/\/ Total number of packets per block$/;"	m	struct:vegas_params
+packetsize	vegas_params.h	/^    int packetsize;             \/\/ Size in bytes of data portion of each packet$/;"	m	struct:vegas_params
+pad0	spead_heap.h	/^    unsigned char pad0;$/;"	m	struct:freq_spead_heap
+pad0	spead_heap.h	/^    unsigned char pad0;$/;"	m	struct:time_spead_heap
+pad1	spead_heap.h	/^    unsigned char pad1;$/;"	m	struct:freq_spead_heap
+pad1	spead_heap.h	/^    unsigned char pad1;$/;"	m	struct:time_spead_heap
+pad2	spead_heap.h	/^    unsigned char pad2;$/;"	m	struct:freq_spead_heap
+pad2	spead_heap.h	/^    unsigned char pad2;$/;"	m	struct:time_spead_heap
+pad3	spead_heap.h	/^    unsigned char pad3;$/;"	m	struct:freq_spead_heap
+pad3	spead_heap.h	/^    unsigned char pad3;$/;"	m	struct:time_spead_heap
+pad4	spead_heap.h	/^    unsigned char pad4;$/;"	m	struct:freq_spead_heap
+pad5	spead_heap.h	/^    unsigned char pad5;$/;"	m	struct:freq_spead_heap
+par_ang	psrfits.h	/^    double par_ang;         \/\/ Parallactic angle at subint centre (deg)$/;"	m	struct:subint
+parfile	psrfits.h	/^    char parfile[256];      \/\/ Parfile name for folding$/;"	m	struct:foldinfo
+parkes_to_vegas	vegas_udp.c	/^void parkes_to_vegas(struct vegas_udp_packet *b, const int acc_len, $/;"	f
+parkes_udp_packet_datasize	vegas_udp.c	/^size_t parkes_udp_packet_datasize(size_t packet_size) {$/;"	f
+payload_data_off	spead_heap.h	/^    unsigned int payload_data_off;$/;"	m	struct:freq_spead_heap
+payload_data_off	spead_heap.h	/^    unsigned int payload_data_off;$/;"	m	struct:time_spead_heap
+payload_data_off_addr_mode	spead_heap.h	/^    unsigned char payload_data_off_addr_mode;$/;"	m	struct:freq_spead_heap
+payload_data_off_addr_mode	spead_heap.h	/^    unsigned char payload_data_off_addr_mode;$/;"	m	struct:time_spead_heap
+payload_data_off_id	spead_heap.h	/^    unsigned short payload_data_off_id;$/;"	m	struct:freq_spead_heap
+payload_data_off_id	spead_heap.h	/^    unsigned short payload_data_off_id;$/;"	m	struct:time_spead_heap
+pc	psrfits.h	/^    struct polyco *pc;      \/\/ Pointer to polyco blocks$/;"	m	struct:foldinfo	typeref:struct:foldinfo::polyco
+pfb_overlap	vegas_params.h	/^    int pfb_overlap;            \/\/ PFB overlap factor$/;"	m	struct:vegas_params
+pfd	vegas_udp.h	/^    struct pollfd pfd;              \/* Use to poll for avail data *\/$/;"	m	struct:vegas_udp_params	typeref:struct:vegas_udp_params::pollfd
+pkts_dropped	vegas_net_thread.c	/^    int pkts_dropped;               \/\/ Number of dropped packets so far$/;"	m	struct:datablock_stats	file:
+pkts_dropped_in_heap	vegas_net_thread.c	/^char pkts_dropped_in_heap;$/;"	v
+poln_order	psrfits.h	/^    char poln_order[16];    \/\/ Order of polarizations (i.e. XXYYXYYX)$/;"	m	struct:hdrinfo
+poln_type	psrfits.h	/^    char poln_type[8];      \/\/ Polarization recorded (LIN or CIRC)$/;"	m	struct:hdrinfo
+port	vegas_udp.h	/^    int port;         \/* Receive port *\/$/;"	m	struct:vegas_udp_params
+pos_ang	psrfits.h	/^    double pos_ang;         \/\/ Position angle of feed at subint centre (deg)$/;"	m	struct:subint
+prev_heap_cntr	vegas_net_thread.c	/^unsigned int prev_heap_cntr;$/;"	v
+prev_heap_offset	vegas_net_thread.c	/^unsigned int prev_heap_offset;$/;"	v
+primary_hdr	sdfits.h	/^    struct primary_hdrinfo primary_hdr;$/;"	m	struct:sdfits	typeref:struct:sdfits::primary_hdrinfo
+primary_hdrinfo	sdfits.h	/^struct primary_hdrinfo$/;"	s
+priority	vegas_thread_args.h	/^    int priority;$/;"	m	struct:vegas_thread_args
+project_id	psrfits.h	/^    char project_id[24];    \/\/ Project identifier$/;"	m	struct:hdrinfo
+projid	sdfits.h	/^    char projid[16];        \/\/ The project ID$/;"	m	struct:hdrinfo
+psrfits	psrfits.h	/^struct psrfits {$/;"	s
+quiet	psrfits.h	/^    int quiet;              \/\/ Be quiet about writing each subint$/;"	m	struct:psrfits
+quiet	sdfits.h	/^    int quiet;              \/\/ Be quiet about writing each subint$/;"	m	struct:sdfits
+ra	psrfits.h	/^    double ra;              \/\/ RA (J2000) at subint centre (deg)$/;"	m	struct:subint
+ra	sdfits.h	/^    double ra;              \/\/ RA mid-integration$/;"	m	struct:sdfits_data_columns
+ra2000	psrfits.h	/^    double ra2000;          \/\/ RA  of observation (deg, J2000) at obs start$/;"	m	struct:hdrinfo
+ra2str	hput.c	/^ra2str (string, lstr, ra, ndec)$/;"	f
+ra_str	psrfits.h	/^    char ra_str[16];        \/\/ Right Ascension string (HH:MM:SS.SSSS)$/;"	m	struct:hdrinfo
+rcvr_polns	psrfits.h	/^    int rcvr_polns;         \/\/ Number of polns provided by the receiver$/;"	m	struct:hdrinfo
+remove_whitespace	misc_utils.c	/^char *remove_whitespace(char *str)$/;"	f
+reset_accumulators	vegas_accum_thread.c	/^void reset_accumulators(float **accumulator, struct sdfits_data_columns* data_cols,$/;"	f
+reset_block	vegas_net_thread.c	/^void reset_block(struct datablock_stats *d) {$/;"	f
+reset_stats	vegas_net_thread.c	/^void reset_stats(struct datablock_stats *d) {$/;"	f
+rmlead	misc_utils.c	/^char *rmlead(char *str)$/;"	f
+rmtrail	misc_utils.c	/^char *rmtrail(char *str)$/;"	f
+rownum	psrfits.h	/^    int rownum;             \/\/ The current subint number to be written (1-offset)$/;"	m	struct:psrfits
+rownum	sdfits.h	/^    int rownum;             \/\/ The current data row number to be written (1-offset)$/;"	m	struct:sdfits
+rows_per_file	psrfits.h	/^    int rows_per_file;      \/\/ The maximum number of rows (subints) per file$/;"	m	struct:psrfits
+rows_per_file	sdfits.h	/^    int rows_per_file;      \/\/ The maximum number of data rows per file$/;"	m	struct:sdfits
+run	test_udp_recv.c	/^int run=1;$/;"	v
+run	vegas_thread_main.h	/^int run=1;$/;"	v
+safe_fclose	vegas_rawdisk_thread.c	/^int safe_fclose(FILE *f) {$/;"	f
+scale	vegas_params.h	/^    float scale[16*1024];       \/\/ Per-channel scale factor$/;"	m	struct:vegas_params
+scan	sdfits.h	/^    double scan;            \/\/ Scan number (float)$/;"	m	struct:hdrinfo
+scan_number	psrfits.h	/^    int scan_number;        \/\/ Number of scan$/;"	m	struct:hdrinfo
+scanlen	psrfits.h	/^    double scanlen;         \/\/ Requested scan length (sec)$/;"	m	struct:hdrinfo
+sdfits	sdfits.h	/^struct sdfits$/;"	s
+sdfits_close	write_sdfits.c	/^int sdfits_close(struct sdfits *sf) {$/;"	f
+sdfits_create	write_sdfits.c	/^int sdfits_create(struct sdfits *sf) {$/;"	f
+sdfits_data_columns	sdfits.h	/^struct sdfits_data_columns$/;"	s
+sdfits_write_subint	write_sdfits.c	/^int sdfits_write_subint(struct sdfits *sf) {$/;"	f
+semid	vegas_databuf.h	/^    int semid;          \/* ID of locking semaphore set *\/$/;"	m	struct:vegas_databuf
+semun	vegas_databuf.h	/^union semun {$/;"	u
+sender	vegas_udp.h	/^    char sender[80];  \/* Sender hostname *\/$/;"	m	struct:vegas_udp_params
+sender_addr	vegas_udp.h	/^    struct addrinfo sender_addr;    \/* Sender hostname\/IP params *\/$/;"	m	struct:vegas_udp_params	typeref:struct:vegas_udp_params::addrinfo
+set_exit_status	vegas_threads.h	/^static void set_exit_status(struct vegas_status *s) {$/;"	f
+set_obs_params_gb	vegas_params.c	/^void set_obs_params_gb(char *buf, $/;"	f
+set_saolib	hget.c	/^int set_saolib(hstring)$/;"	f
+shmid	vegas_databuf.h	/^    int shmid;          \/* ID of this shared mem segment *\/$/;"	m	struct:vegas_databuf
+shmid	vegas_status.h	/^    int shmid;   \/* Shared memory segment id *\/$/;"	m	struct:vegas_status
+slaAddet	sla.c	/^void slaAddet ( double rm, double dm, double eq, double *rc, double *dc ) {$/;"	f
+slaAirmas	sla.c	/^double slaAirmas( double zd ) {$/;"	f
+slaAmpqk	sla.c	/^void slaAmpqk ( double ra, double da, double amprms[21],$/;"	f
+slaCaldj	sla.c	/^void slaCaldj ( int iy, int im, int id, double *djm, int *j ) {$/;"	f
+slaDaf2r	sla.c	/^void slaDaf2r ( int ideg, int iamin, double asec, double *rad, int *j ) {$/;"	f
+slaDat	sla.c	/^slaDat( double utc ) {$/;"	f
+slaDav2m	sla.c	/^void slaDav2m ( double axvec[3], double rmat[3][3] ) {$/;"	f
+slaDbear	sla.c	/^double slaDbear ( double a1, double b1, double a2, double b2  ) {$/;"	f
+slaDcc2s	sla.c	/^void slaDcc2s ( double v[3], double *a, double *b ) {$/;"	f
+slaDcs2c	sla.c	/^void slaDcs2c ( double a, double b, double v[3] ) {$/;"	f
+slaDe2h	sla.c	/^void slaDe2h ( double ha, double dec, double phi, double *az, double *el ) {$/;"	f
+slaDh2e	sla.c	/^void slaDh2e ( double az, double el, double phi, double *ha, double *dec ) {$/;"	f
+slaDimxv	sla.c	/^void slaDimxv ( double dm[3][3], double va[3], double vb[3] ) {$/;"	f
+slaDjcal	sla.c	/^void slaDjcal ( int ndp, double djm, int iymdf[ 4 ], int *j ) {$/;"	f
+slaDjcl	sla.c	/^void slaDjcl ( double djm, int *iy, int *im, int *id, double *fd, int *j ) {$/;"	f
+slaDmat	sla.c	/^void slaDmat ( int n, double *a, double *y, double *d, int *jf, int *iw ) {$/;"	f
+slaDmxm	sla.c	/^void slaDmxm ( double a[3][3], double b[3][3], double c[3][3] ) {$/;"	f
+slaDmxv	sla.c	/^void slaDmxv ( double dm[3][3], double va[3], double vb[3] ) {$/;"	f
+slaDrange	sla.c	/^double slaDrange ( double angle ) {$/;"	f
+slaDranrm	sla.c	/^double slaDranrm ( double angle ) {$/;"	f
+slaDsep	sla.c	/^double slaDsep ( double a1, double b1, double a2, double b2 ) {$/;"	f
+slaDt	sla.c	/^double slaDt ( double epoch ) $/;"	f
+slaDtf2d	sla.c	/^void slaDtf2d ( int ihour, int imin, double sec, double *days, int *j ) {$/;"	f
+slaDtf2r	sla.c	/^void slaDtf2r ( int ihour, int imin, double sec, double *rad, int *j ) {$/;"	f
+slaDtt	sla.c	/^slaDtt( double utc ) {$/;"	f
+slaDvdv	sla.c	/^double slaDvdv( double va[3], double vb[3] ) {$/;"	f
+slaDvn	sla.c	/^void slaDvn ( double v[3], double uv[3], double *vm ) {$/;"	f
+slaDvxv	sla.c	/^void slaDvxv ( double va[3], double vb[3], double vc[3] ) {$/;"	f
+slaEcmat	sla.c	/^void slaEcmat ( double date, double rmat[3][3] ) {$/;"	f
+slaEpb	sla.c	/^double slaEpb ( double date ) {$/;"	f
+slaEpb2d	sla.c	/^double slaEpb2d ( double epb ) {$/;"	f
+slaEpj	sla.c	/^double slaEpj ( double date ) {$/;"	f
+slaEpj2d	sla.c	/^double slaEpj2d ( double epj ) {$/;"	f
+slaEqeqx	sla.c	/^double slaEqeqx ( double date ) {$/;"	f
+slaEqgal	sla.c	/^void slaEqgal ( double dr, double dd, double *dl, double *db ) {$/;"	f
+slaEvp	sla.c	/^void slaEvp ( double date, double deqx, double dvb[3], double dpb[3], $/;"	f
+slaFk45z	sla.c	/^void slaFk45z ( double r1950, double d1950, double bepoch,$/;"	f
+slaFk54z	sla.c	/^void slaFk54z ( double r2000, double d2000, double bepoch,$/;"	f
+slaFk5hz	sla.c	/^void slaFk5hz ( double r5, double d5, double jepoch,$/;"	f
+slaGaleq	sla.c	/^void slaGaleq ( double dl, double db, double *dr, double *dd ) {$/;"	f
+slaGalsup	sla.c	/^void slaGalsup ( double dl, double db, double *dsl, double *dsb ) {$/;"	f
+slaGeoc	sla.c	/^void slaGeoc ( double p, double h, double *r, double *z ) {$/;"	f
+slaGmst	sla.c	/^double slaGmst ( double ut1 ) {$/;"	f
+slaHfk5z	sla.c	/^void slaHfk5z ( double rh, double dh, double jepoch,$/;"	f
+slaMappa	sla.c	/^void slaMappa ( double eq, double date, double amprms[21] ) {$/;"	f
+slaMapqkz	sla.c	/^void slaMapqkz ( double rm, double dm, double amprms[21],$/;"	f
+slaPa	sla.c	/^slaPa ( double ha, double dec, double phi ) {$/;"	f
+slaPrebn	sla.c	/^void slaPrebn ( double bep0, double bep1, double rmatp[3][3] ) {$/;"	f
+slaPrec	sla.c	/^void slaPrec ( double ep0, double ep1, double rmatp[3][3] ) {$/;"	f
+slaRdplan	sla.c	/^slaRdplan( double date, int i, double elong, double phi,$/;"	f
+slaRverot	sla.c	/^float slaRverot ( float phi, float ra, float dec, float st ) {$/;"	f
+slaRvgalc	sla.c	/^float slaRvgalc ( float ra, float dec ) {$/;"	f
+slaRvlg	sla.c	/^float slaRvlg ( float ra, float dec ) {$/;"	f
+slaRvlsrd	sla.c	/^float slaRvlsrd ( float ra, float dec ) {$/;"	f
+slaRvlsrk	sla.c	/^float slaRvlsrk ( float ra, float dec ) {$/;"	f
+slaStringExport	sla.c	/^static void slaStringExport( const char *source_c, char *dest_f, int dest_len ) {$/;"	f	file:
+slaStringImport	sla.c	/^void slaStringImport( const char *source_f, int source_len, char *dest_c )$/;"	f
+slaSubet	sla.c	/^void slaSubet ( double rc, double dc, double eq, double *rm, double *dm ) {$/;"	f
+slaSupgal	sla.c	/^void slaSupgal ( double dsl, double dsb, double *dl, double *db ) {$/;"	f
+slaSvd	sla.c	/^void slaSvd ( int m, int n, int mp, int np,$/;"	f
+slaSvdsol	sla.c	/^void slaSvdsol ( int m, int n, int mp, int np,$/;"	f
+sock	vegas_udp.h	/^    int sock;                       \/* Receive socket *\/$/;"	m	struct:vegas_udp_params
+source	psrfits.h	/^    char source[24];        \/\/ Source name$/;"	m	struct:hdrinfo
+spead_hdr_size	vegas_net_thread.c	/^    size_t spead_hdr_size;          \/\/ Size of each SPEAD header$/;"	m	struct:datablock_stats	file:
+spectrum_cntr	spead_heap.h	/^    unsigned int spectrum_cntr;$/;"	m	struct:freq_spead_heap
+spectrum_cntr_addr_mode	spead_heap.h	/^    unsigned char spectrum_cntr_addr_mode;$/;"	m	struct:freq_spead_heap
+spectrum_cntr_id	spead_heap.h	/^    unsigned short spectrum_cntr_id;$/;"	m	struct:freq_spead_heap
+sphead	vegas_udp.c	/^const unsigned char sphead[] = { $/;"	v
+split_path_file	misc_utils.c	/^void split_path_file(char *input, char **path, char **file)$/;"	f
+split_root_suffix	misc_utils.c	/^int split_root_suffix(char *input, char **root, char **suffix)$/;"	f
+srv_cc	vegas_hpc_server.c	/^void srv_cc(int sig) { srv_run=0; run=0; }$/;"	f
+srv_quit	vegas_hpc_server.c	/^void srv_quit(int sig) { srv_run=0; }$/;"	f
+srv_run	vegas_hpc_server.c	/^int srv_run=1;$/;"	v
+start_day	psrfits.h	/^    int start_day;          \/\/ Start MJD (UTC days) (J - long integer)$/;"	m	struct:hdrinfo
+start_hbw_mode	vegas_hpc_server.c	/^void start_hbw_mode(struct vegas_thread_args *args, pthread_t *ids) {$/;"	f
+start_lbw_mode	vegas_hpc_server.c	/^void start_lbw_mode(struct vegas_thread_args *args, pthread_t *ids) {$/;"	f
+start_lst	psrfits.h	/^    double start_lst;       \/\/ Start LST (sec past 00h)$/;"	m	struct:hdrinfo
+start_monitor_mode	vegas_hpc_server.c	/^void start_monitor_mode(struct vegas_thread_args *args, pthread_t *ids) {$/;"	f
+start_sec	psrfits.h	/^    double start_sec;       \/\/ Start time (sec past UTC 00h) $/;"	m	struct:hdrinfo
+status	psrfits.h	/^    int status;             \/\/ The CFITSIO status value$/;"	m	struct:psrfits
+status	sdfits.h	/^    int status;             \/\/ The CFITSIO status value$/;"	m	struct:sdfits
+status_bits	spead_heap.h	/^    unsigned int status_bits;$/;"	m	struct:freq_spead_heap
+status_bits	spead_heap.h	/^    unsigned int status_bits;$/;"	m	struct:time_spead_heap
+status_bits_addr_mode	spead_heap.h	/^    unsigned char status_bits_addr_mode;$/;"	m	struct:freq_spead_heap
+status_bits_addr_mode	spead_heap.h	/^    unsigned char status_bits_addr_mode;$/;"	m	struct:time_spead_heap
+status_bits_id	spead_heap.h	/^    unsigned short status_bits_id;$/;"	m	struct:freq_spead_heap
+status_bits_id	spead_heap.h	/^    unsigned short status_bits_id;$/;"	m	struct:time_spead_heap
+stop_running	test_udp_recv.c	/^void stop_running(int sig) { run=0; }$/;"	f
+stop_threads	vegas_hpc_server.c	/^void stop_threads(struct vegas_thread_args *args, pthread_t *ids,$/;"	f
+stpspec	sdfits.h	/^    int stpspec;            \/\/ SPECTRUM_COUNT of the last spectrum in the integration$/;"	m	struct:sdfits_data_columns
+str2dec	hget.c	/^str2dec (in)$/;"	f
+str2ra	hget.c	/^str2ra (in)$/;"	f
+strMove	misc_utils.c	9;"	d	file:
+strcsrch	hget.c	/^strcsrch (s1, s2)$/;"	f
+strfix	hget.c	/^strfix (string, fillblank, dropzero)$/;"	f
+strlower	misc_utils.c	/^char *strlower(char *str)$/;"	f
+strncsrch	hget.c	/^strncsrch (s1, s2, ls1)$/;"	f
+strnsrch	hget.c	/^strnsrch (s1, s2, ls1)$/;"	f
+strsrch	hget.c	/^strsrch (s1, s2)$/;"	f
+strtofilename	misc_utils.c	/^void strtofilename(char *string)$/;"	f
+struct_offset	vegas_databuf.h	/^    unsigned int struct_offset;$/;"	m	struct:disk_buf_index
+struct_size	vegas_databuf.h	/^    size_t struct_size; \/* Size alloced for this struct (bytes) *\/$/;"	m	struct:vegas_databuf
+stt_valid	vegas_params.h	/^    int stt_valid;              \/\/ Has an accurate start time been measured$/;"	m	struct:vegas_params
+sttmjd	sdfits.h	/^    double sttmjd;          \/\/ Observation start time [double MJD]$/;"	m	struct:hdrinfo
+sttspec	sdfits.h	/^    int sttspec;            \/\/ SPECTRUM_COUNT of the first spectrum in the integration$/;"	m	struct:sdfits_data_columns
+sub	psrfits.h	/^    struct subint sub;$/;"	m	struct:psrfits	typeref:struct:psrfits::subint
+subint	psrfits.h	/^struct subint {$/;"	s
+summed_polns	psrfits.h	/^    int summed_polns;       \/\/ Are polarizations summed? (1=Yes, 0=No)$/;"	m	struct:hdrinfo
+tel_az	psrfits.h	/^    double tel_az;          \/\/ Telescope azimuth at subint centre (deg)$/;"	m	struct:subint
+tel_zen	psrfits.h	/^    double tel_zen;         \/\/ Telescope zenith angle at subint centre (deg)$/;"	m	struct:subint
+telescope	psrfits.h	/^    char telescope[24];     \/\/ Telescope used$/;"	m	struct:hdrinfo
+telescope	sdfits.h	/^    char telescope[16];     \/\/ Telescope used$/;"	m	struct:hdrinfo
+tfold	psrfits.h	/^    double tfold;           \/\/ Requested fold integration time$/;"	m	struct:foldinfo
+time	sdfits.h	/^    double time;            \/\/ MJD start of integration (from system time)$/;"	m	struct:sdfits_data_columns
+time_cntr	spead_heap.h	/^    unsigned int time_cntr;$/;"	m	struct:freq_spead_heap
+time_cntr	spead_heap.h	/^    unsigned int time_cntr;$/;"	m	struct:time_spead_heap
+time_cntr_addr_mode	spead_heap.h	/^    unsigned char time_cntr_addr_mode;$/;"	m	struct:freq_spead_heap
+time_cntr_addr_mode	spead_heap.h	/^    unsigned char time_cntr_addr_mode;$/;"	m	struct:time_spead_heap
+time_cntr_id	spead_heap.h	/^    unsigned short time_cntr_id;$/;"	m	struct:freq_spead_heap
+time_cntr_id	spead_heap.h	/^    unsigned short time_cntr_id;$/;"	m	struct:time_spead_heap
+time_counter	sdfits.h	/^    int time_counter;       \/\/ FPGA time counter at start of integration$/;"	m	struct:sdfits_data_columns
+time_spead_heap	spead_heap.h	/^struct time_spead_heap {$/;"	s
+tot_rows	psrfits.h	/^    int tot_rows;           \/\/ The total number of subints written so far$/;"	m	struct:psrfits
+tot_rows	sdfits.h	/^    int tot_rows;           \/\/ The total number of data rows written so far$/;"	m	struct:sdfits
+track_mode	psrfits.h	/^    char track_mode[16];    \/\/ Track mode (TRACK, SCANGC, SCANLAT)$/;"	m	struct:hdrinfo
+transpose_bytes	misc_utils.c	/^short transpose_bytes(unsigned char *a, int nx, int ny, unsigned char *move,$/;"	f
+tsubint	psrfits.h	/^    double tsubint;         \/\/ Length of subintegration (sec)$/;"	m	struct:subint
+tsys	sdfits.h	/^    double tsys;            \/\/ System temperature$/;"	m	struct:hdrinfo
+usage	check_vegas_databuf.c	/^void usage() { $/;"	f
+usage	test_net_thread.c	/^void usage() {$/;"	f
+usage	test_udp_recv.c	/^void usage() {$/;"	f
+usage	vegas_hpc_server.c	/^void usage() {$/;"	f
+use_saolib	hget.c	/^static int use_saolib=0;$/;"	v	file:
+val	vegas_databuf.h	/^    int val;$/;"	m	union:semun
+vegas_DAQ_CONTROL	vegas_hpc_server.c	30;"	d	file:
+vegas_accum_thread	vegas_accum_thread.c	/^void vegas_accum_thread(void *_args) {$/;"	f
+vegas_chk_spead_pkt_size	vegas_udp.c	/^int vegas_chk_spead_pkt_size(const struct vegas_udp_packet *p)$/;"	f
+vegas_conf_databuf_size	vegas_databuf.c	/^void vegas_conf_databuf_size(struct vegas_databuf *d, size_t new_block_size)$/;"	f
+vegas_databuf	vegas_databuf.h	/^struct vegas_databuf {$/;"	s
+vegas_databuf_attach	vegas_databuf.c	/^struct vegas_databuf *vegas_databuf_attach(int databuf_id) {$/;"	f
+vegas_databuf_block_status	vegas_databuf.c	/^int vegas_databuf_block_status(struct vegas_databuf *d, int block_id) {$/;"	f
+vegas_databuf_clear	vegas_databuf.c	/^void vegas_databuf_clear(struct vegas_databuf *d) {$/;"	f
+vegas_databuf_create	vegas_databuf.c	/^struct vegas_databuf *vegas_databuf_create(int n_block, size_t block_size,$/;"	f
+vegas_databuf_data	vegas_databuf.c	/^char *vegas_databuf_data(struct vegas_databuf *d, int block_id) {$/;"	f
+vegas_databuf_detach	vegas_databuf.c	/^int vegas_databuf_detach(struct vegas_databuf *d) {$/;"	f
+vegas_databuf_header	vegas_databuf.c	/^char *vegas_databuf_header(struct vegas_databuf *d, int block_id) {$/;"	f
+vegas_databuf_index	vegas_databuf.c	/^char *vegas_databuf_index(struct vegas_databuf *d, int block_id) {$/;"	f
+vegas_databuf_key	vegas_ipckey.c	/^key_t vegas_databuf_key(int instance_id)$/;"	f
+vegas_databuf_set_filled	vegas_databuf.c	/^int vegas_databuf_set_filled(struct vegas_databuf *d, int block_id) {$/;"	f
+vegas_databuf_set_free	vegas_databuf.c	/^int vegas_databuf_set_free(struct vegas_databuf *d, int block_id) {$/;"	f
+vegas_databuf_total_status	vegas_databuf.c	/^int vegas_databuf_total_status(struct vegas_databuf *d) {$/;"	f
+vegas_databuf_wait_filled	vegas_databuf.c	/^int vegas_databuf_wait_filled(struct vegas_databuf *d, int block_id) {$/;"	f
+vegas_databuf_wait_free	vegas_databuf.c	/^int vegas_databuf_wait_free(struct vegas_databuf *d, int block_id) {$/;"	f
+vegas_error	vegas_error.c	/^void vegas_error(const char *name, const char *msg) {$/;"	f
+vegas_fake_net_thread	vegas_fake_net_thread.c	/^void *vegas_fake_net_thread(void *_args) {$/;"	f
+vegas_find_end	vegas_status.c	/^char *vegas_find_end(char *buf) {$/;"	f
+vegas_fitsbuf_clear	vegas_databuf.c	/^void vegas_fitsbuf_clear(char *buf) {$/;"	f
+vegas_free_psrfits	vegas_params.c	/^void vegas_free_psrfits(struct psrfits *p) {$/;"	f
+vegas_free_sdfits	vegas_params.c	/^void vegas_free_sdfits(struct sdfits *sd) {$/;"	f
+vegas_ipckey	vegas_ipckey.c	/^static key_t vegas_ipckey(int proj_id)$/;"	f	file:
+vegas_net_thread	vegas_net_thread.c	/^void *vegas_net_thread(void *_args) {$/;"	f
+vegas_null_thread	vegas_null_thread.c	/^void vegas_null_thread(void *_args) {$/;"	f
+vegas_params	vegas_params.h	/^struct vegas_params {$/;"	s
+vegas_params	vegas_params.h	/^struct vegas_params$/;"	s
+vegas_pfb_thread	vegas_pfb_thread.c	/^void vegas_pfb_thread(void *_args) {$/;"	f
+vegas_psrfits_thread	vegas_psrfits_thread.c	/^void vegas_psrfits_thread(void *_args) {$/;"	f
+vegas_rawdisk_thread	vegas_rawdisk_thread.c	/^void vegas_rawdisk_thread(void *_args) {$/;"	f
+vegas_read_net_params	vegas_params.c	/^void vegas_read_net_params(char *buf, struct vegas_udp_params *u) {$/;"	f
+vegas_read_obs_mode	vegas_params.c	/^void vegas_read_obs_mode(const char *buf, char *mode) {$/;"	f
+vegas_read_obs_params	vegas_params.c	/^void vegas_read_obs_params(char *buf, $/;"	f
+vegas_read_subint_params	vegas_params.c	/^void vegas_read_subint_params(char *buf, $/;"	f
+vegas_sdfits_thread	vegas_sdfits_thread.c	/^void vegas_sdfits_thread(void *_args) {$/;"	f
+vegas_spead_packet_copy	vegas_udp.c	/^int vegas_spead_packet_copy(struct vegas_udp_packet *p, char *header_addr,$/;"	f
+vegas_spead_packet_data	vegas_udp.c	/^char* vegas_spead_packet_data(const struct vegas_udp_packet *p)$/;"	f
+vegas_spead_packet_datasize	vegas_udp.c	/^unsigned int vegas_spead_packet_datasize(const struct vegas_udp_packet *p)$/;"	f
+vegas_spead_packet_heap_cntr	vegas_udp.c	/^unsigned int vegas_spead_packet_heap_cntr(const struct vegas_udp_packet *p)$/;"	f
+vegas_spead_packet_heap_offset	vegas_udp.c	/^unsigned int vegas_spead_packet_heap_offset(const struct vegas_udp_packet *p)$/;"	f
+vegas_spead_packet_seq_num	vegas_udp.c	/^unsigned int vegas_spead_packet_seq_num(int heap_cntr, int heap_offset, int packets_per_heap)$/;"	f
+vegas_status	vegas_status.h	/^struct vegas_status {$/;"	s
+vegas_status_attach	vegas_status.c	/^int vegas_status_attach(struct vegas_status *s) {$/;"	f
+vegas_status_chkinit	vegas_status.c	/^void vegas_status_chkinit(struct vegas_status *s) {$/;"	f
+vegas_status_clear	vegas_status.c	/^void vegas_status_clear(struct vegas_status *s) {$/;"	f
+vegas_status_detach	vegas_status.c	/^int vegas_status_detach(struct vegas_status *s) {$/;"	f
+vegas_status_key	vegas_ipckey.c	/^key_t vegas_status_key(int instance_id)$/;"	f
+vegas_status_lock	vegas_status.c	/^int vegas_status_lock(struct vegas_status *s) {$/;"	f
+vegas_status_lock_safe	vegas_threads.h	16;"	d
+vegas_status_unlock	vegas_status.c	/^int vegas_status_unlock(struct vegas_status *s) {$/;"	f
+vegas_status_unlock_safe	vegas_threads.h	19;"	d
+vegas_thread_args	vegas_thread_args.h	/^struct vegas_thread_args {$/;"	s
+vegas_thread_args_destroy	vegas_thread_args.c	/^void vegas_thread_args_destroy(struct vegas_thread_args *a) {$/;"	f
+vegas_thread_args_init	vegas_thread_args.c	/^void vegas_thread_args_init(struct vegas_thread_args *a) {$/;"	f
+vegas_thread_finished	vegas_thread_args.c	/^int vegas_thread_finished(struct vegas_thread_args *a, $/;"	f
+vegas_thread_set_finished	vegas_thread_args.c	/^void vegas_thread_set_finished(struct vegas_thread_args *a) {$/;"	f
+vegas_udp_close	vegas_udp.c	/^int vegas_udp_close(struct vegas_udp_params *p) {$/;"	f
+vegas_udp_init	vegas_udp.c	/^int vegas_udp_init(struct vegas_udp_params *p) {$/;"	f
+vegas_udp_packet	vegas_udp.h	/^struct vegas_udp_packet {$/;"	s
+vegas_udp_packet_data	vegas_udp.c	/^char *vegas_udp_packet_data(const struct vegas_udp_packet *p) {$/;"	f
+vegas_udp_packet_data_copy	vegas_udp.c	/^void vegas_udp_packet_data_copy(char *out, const struct vegas_udp_packet *p) {$/;"	f
+vegas_udp_packet_data_copy_transpose	vegas_udp.c	/^void vegas_udp_packet_data_copy_transpose(char *databuf, int nchan,$/;"	f
+vegas_udp_packet_datasize	vegas_udp.c	/^size_t vegas_udp_packet_datasize(size_t packet_size) {$/;"	f
+vegas_udp_packet_flags	vegas_udp.c	/^unsigned long long vegas_udp_packet_flags(const struct vegas_udp_packet *p) {$/;"	f
+vegas_udp_packet_seq_num	vegas_udp.c	/^unsigned long long vegas_udp_packet_seq_num(const struct vegas_udp_packet *p) {$/;"	f
+vegas_udp_params	vegas_udp.h	/^struct vegas_udp_params {$/;"	s
+vegas_udp_recv	vegas_udp.c	/^int vegas_udp_recv(struct vegas_udp_params *p, struct vegas_udp_packet *b, char bw_mode[]) {$/;"	f
+vegas_udp_wait	vegas_udp.c	/^int vegas_udp_wait(struct vegas_udp_params *p) {$/;"	f
+vegas_warn	vegas_error.c	/^void vegas_warn(const char *name, const char *msg) {$/;"	f
+verbose	hput.c	/^const static int verbose=0;\/* Set to 1 to print error messages and other info *\/$/;"	v	file:
+write_fake_heap_to_block	vegas_fake_net_thread.c	/^void write_fake_heap_to_block(struct fake_datablock_stats *d, int heap_cntr)$/;"	f
+write_spead_packet_to_block	vegas_net_thread.c	/^void write_spead_packet_to_block(struct datablock_stats *d, struct vegas_udp_packet *p,$/;"	f
+zenith_ang	psrfits.h	/^    double zenith_ang;      \/\/ Zenith angle (commanded) at the start of the obs (deg)$/;"	m	struct:hdrinfo
+zero_accumulator	pfb_gpu.cu	/^void zero_accumulator()$/;"	f
+zero_end_chans	vegas_psrfits_thread.c	/^void zero_end_chans(struct psrfits *pf)$/;"	f

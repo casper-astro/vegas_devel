@@ -1,0 +1,109 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.6	//
+GBTStatus	GBTStatus.py	/^class GBTStatus:$/;"	c
+Reinit	vtest.py	/^def Reinit(nodes=range(1,9)):$/;"	f
+VegasServer	VegasServer.py	/^class VegasServer(Pyro.core.ObjBase):$/;"	c
+VegasServerProxy	VegasServer.py	/^class VegasServerProxy:$/;"	c
+_Dummy	VegasServer.py	/^        class _Dummy(Pyro.core.ObjBase):$/;"	c
+__getitem__	vegas_utils.py	/^    def __getitem__(self, key):$/;"	m	class:vegas_status	file:
+__init__	GBTStatus.py	/^    def __init__(self):$/;"	m	class:GBTStatus
+__init__	VegasServer.py	/^            def __init__(self):$/;"	m	class:_Dummy
+__init__	VegasServer.py	/^    def __init__(self,parent):$/;"	m	class:VegasServerProxy
+__init__	VegasServer.py	/^    def __init__(self,port='\/dev\/ttyS0'):$/;"	m	class:VegasServer
+__init__	vegas_utils.py	/^    def __init__(self, instance_id=0):$/;"	m	class:vegas_status
+__init__	vegas_utils.py	/^    def __init__(self,instance_id=0,databuf_id=1):$/;"	m	class:vegas_databuf
+_object	possem.py	/^    class _object : pass$/;"	c
+_swig_getattr	possem.py	/^def _swig_getattr(self,class_type,name):$/;"	f
+_swig_repr	possem.py	/^def _swig_repr(self):$/;"	f
+_swig_setattr	possem.py	/^def _swig_setattr(self,class_type,name,value):$/;"	f
+_swig_setattr_nondynamic	possem.py	/^def _swig_setattr_nondynamic(self,class_type,name,value,static=1):$/;"	f
+adcSummary	vtest.py	/^def adcSummary(rns=range(1,9)):$/;"	f
+add_param	vegas_set_params.py	/^def add_param(option, opt_str, val, parser, *args):$/;"	f
+add_param_option	vegas_set_params.py	/^def add_param_option(longopt, name, help, type="string", short=None):$/;"	f
+azza_to_radec	astro_utils.py	/^def azza_to_radec(az, za, MJD, fctr=350.0, atm=1010.0, temp=283.0, humid=0.5, scope='GBT'):$/;"	f
+beam_halfwidth	astro_utils.py	/^def beam_halfwidth(obs_freq, dish_diam):$/;"	f
+card_from_string	vegas_utils.py	/^def card_from_string(str):$/;"	f
+cardlist_from_string	vegas_utils.py	/^def cardlist_from_string(str):$/;"	f
+checkClocks	vtest.py	/^def checkClocks():$/;"	f
+checkNTP	vtest.py	/^def checkNTP(nodes=range(1,9)):$/;"	f
+collectKVPairs	GBTStatus.py	/^    def collectKVPairs(self):$/;"	m	class:GBTStatus
+current_MJD	astro_utils.py	/^def current_MJD():$/;"	f
+dB	vegas_simple_monitor.py	/^def dB(x, mindb=-80.0):$/;"	f
+data	vegas_utils.py	/^    def data(self,block):$/;"	m	class:vegas_databuf
+degrees2dms	GBTStatus.py	/^    def degrees2dms(self, deg):$/;"	m	class:GBTStatus
+degrees2hms	GBTStatus.py	/^    def degrees2hms(self, deg):$/;"	m	class:GBTStatus
+display_status	vegas_status_monitor.py	/^def display_status(stdscr,stat,instance_id,data):$/;"	f
+doAdcTest	vtest.py	/^def doAdcTest(bof,clks=[800,1200,1440,1500],basedir='\/home\/sandboxes\/vegastest\/data\/adctests',note='',rns=range(1,9)):$/;"	f
+execAll	vtest.py	/^def execAll(cmd,*args,**kwargs):$/;"	f
+filenum	vtest.py	/^def filenum(nodes=range(1,9)):$/;"	f
+fproxy	VegasServer.py	/^            def fproxy(*args,**kwargs):$/;"	f
+frmtCoordUnits	GBTStatus.py	/^    def frmtCoordUnits(self, major):$/;"	m	class:GBTStatus
+frmtFloat	GBTStatus.py	/^    def frmtFloat(self,strVal):$/;"	m	class:GBTStatus
+getAdcSnap	vtest.py	/^def getAdcSnap(roach):$/;"	f
+getAdcSnap9b	vtest.py	/^def getAdcSnap9b(roach):$/;"	f
+getAdcSnapTest	vtest.py	/^def getAdcSnapTest(roach):$/;"	f
+getData	VegasServer.py	/^    def getData(self,block=0,buf=2):$/;"	m	class:VegasServer
+getMajor	GBTStatus.py	/^    def getMajor(self):$/;"	m	class:GBTStatus
+getMinor	GBTStatus.py	/^    def getMinor(self):$/;"	m	class:GBTStatus
+getParam	VegasServer.py	/^    def getParam(self,param=None):$/;"	m	class:VegasServer
+getScanStartInfo	GBTStatus.py	/^    def getScanStartInfo(self, key):$/;"	m	class:GBTStatus
+getSnap64	vtest.py	/^def getSnap64(roach,name='adcsnap'):$/;"	f
+getSynthFreq	VegasServer.py	/^    def getSynthFreq(self):$/;"	m	class:VegasServer
+getSynthLocked	VegasServer.py	/^    def getSynthLocked(self):$/;"	m	class:VegasServer
+getSynthRefFreq	VegasServer.py	/^    def getSynthRefFreq(self):$/;"	m	class:VegasServer
+getTime	VegasServer.py	/^    def getTime(self):$/;"	m	class:VegasServer
+getTimeToSource	GBTStatus.py	/^    def getTimeToSource(self):$/;"	m	class:GBTStatus
+getValue	GBTStatus.py	/^    def getValue(self, key):$/;"	m	class:GBTStatus
+header_from_string	vegas_utils.py	/^def header_from_string(str):$/;"	f
+hms_to_rad	astro_utils.py	/^def hms_to_rad(hour, min, sec):$/;"	f
+initShmem	VegasServer.py	/^    def initShmem(self):$/;"	m	class:VegasServer
+ipckey	vegas_utils.py	/^    def ipckey(instance_id):$/;"	m	class:vegas_databuf
+ipckey	vegas_utils.py	/^    def ipckey(instance_id):$/;"	m	class:vegas_status
+items	vegas_utils.py	/^    def items(self):$/;"	m	class:vegas_status
+key_press	vegas_simple_monitor.py	/^def key_press(event):$/;"	f
+keys	vegas_utils.py	/^    def keys(self):$/;"	m	class:vegas_status
+lock	vegas_utils.py	/^    def lock(self):$/;"	m	class:vegas_status
+netstat	vtest.py	/^def netstat(nodes=range(1,9)):$/;"	f
+npkt	vtest.py	/^def npkt(nodes=range(1,9)):$/;"	f
+plotAdcs	vtest.py	/^def plotAdcs(rns=range(1,9),fn = None,Fs = 2880.0):$/;"	f
+prepQuery	GBTStatus.py	/^    def prepQuery(self):$/;"	m	class:GBTStatus
+programAll	vtest.py	/^def programAll(boffile,rns = range(1,9),force=True):$/;"	f
+quit	VegasServer.py	/^    def quit(self):$/;"	m	class:VegasServer
+radec_to_azza	astro_utils.py	/^def radec_to_azza(ra, dec, MJD, fctr=350.0, atm=1010.0, temp=283.0, humid=0.5, scope='GBT'):$/;"	f
+read	vegas_utils.py	/^    def read(self):$/;"	m	class:vegas_status
+read_all_hdr	vegas_utils.py	/^    def read_all_hdr(self):$/;"	m	class:vegas_databuf
+read_hdr	vegas_utils.py	/^    def read_hdr(self,block):$/;"	m	class:vegas_databuf
+remoteExec	vtest.py	/^def remoteExec(node,cmd):$/;"	f
+remoteExecAll	vtest.py	/^def remoteExecAll(cmd,nodes=range(1,9)):$/;"	f
+reset	vtest.py	/^def reset(rns = range(1,9),acc_len=768):$/;"	f
+semname	vegas_utils.py	/^    def semname(instance_id):$/;"	m	class:vegas_status
+setParams	VegasServer.py	/^    def setParams(self,**kwargs):$/;"	m	class:VegasServer
+setSynthFreq	VegasServer.py	/^    def setSynthFreq(self,freq,chan_spacing=2.0):$/;"	m	class:VegasServer
+setSynths	vtest.py	/^def setSynths(freq,rns = range(1,9)):$/;"	f
+setupFakePulsar	vtest.py	/^def setupFakePulsar(nodes=range(1,9),fpgaclk=360e6,frqs=cfs,sideband=-1):$/;"	f
+setupMasterSSG	vtest.py	/^def setupMasterSSG(ondur=5e-3,period=50e-3,fpgaclk=360e6,rn=1,onbits=0x04):$/;"	f
+setupNet	vtest.py	/^def setupNet(rns = range(1,9),starttap=True):$/;"	f
+setupShmemDefaults	vtest.py	/^def setupShmemDefaults(nodes=range(1,9)):$/;"	f
+setupSlaves	vtest.py	/^def setupSlaves(rns=range(2,9),mss=0x2):$/;"	f
+show	GBTStatus.py	/^    def show(self, key, title = None, units = None):$/;"	m	class:GBTStatus
+show	vegas_utils.py	/^    def show(self):$/;"	m	class:vegas_status
+startHPC	vtest.py	/^def startHPC(nodes=range(1,9),basedir='\/mnt\/bdata1',hpcexe='vegas_hpc_hbw'):$/;"	f
+stopHPC	vtest.py	/^def stopHPC(nodes=range(1,9)):$/;"	f
+sync	vtest.py	/^def sync(rns=range(1,9)):$/;"	f
+unlock	vegas_utils.py	/^    def unlock(self):$/;"	m	class:vegas_status
+update	vegas_utils.py	/^    def update(self, key, value, comment=None):$/;"	m	class:vegas_status
+updateFromGBT	VegasServer.py	/^    def updateFromGBT(self):$/;"	m	class:VegasServer
+updateFromGBT	vtest.py	/^def updateFromGBT(nodes=range(1,9)):$/;"	f
+update_azza	vegas_utils.py	/^    def update_azza(self):$/;"	m	class:vegas_status
+update_lines	vegas_simple_monitor.py	/^def update_lines(*args):$/;"	f
+update_with_gbtstatus	vegas_utils.py	/^    def update_with_gbtstatus(self):$/;"	m	class:vegas_status
+usage	vegas_simple_monitor.py	/^def usage():$/;"	f
+values	vegas_utils.py	/^    def values(self):$/;"	m	class:vegas_status
+vegas_databuf	vegas_utils.py	/^class vegas_databuf:$/;"	c
+vegas_ipckey	vegas_utils.py	/^def vegas_ipckey(proj_id):$/;"	f
+vegas_status	vegas_utils.py	/^class vegas_status:$/;"	c
+write	vegas_utils.py	/^    def write(self):$/;"	m	class:vegas_status

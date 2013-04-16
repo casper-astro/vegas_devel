@@ -1,8 +1,8 @@
 OPT64 = /home/pulsar64
 CFLAGS = -O3 -Wall -DFOLD_USE_INTRINSICS -I$(OPT64)/include
-PROGS = sdfits_read machinefits_read machinefits_read_complete
-OBJS  = guppi_error.o \
-	guppi_time.o \
+PROGS = sdfits_read machinefits_read
+OBJS  = vegas_error.o machinefits_read_cmd.o\
+	vegas_time.o \
 	median.o \
 	hget.o hput.o sla.o vegas_params.o
 LIBS = -L$(OPT64)/lib -lcfitsio -L/home/pulsar64/presto/lib -lsla -lm -lpthread

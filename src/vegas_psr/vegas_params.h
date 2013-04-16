@@ -7,7 +7,7 @@
 #ifndef _VEGAS_PARAMS_H
 #define _VEGAS_PARAMS_H
 
-#include "guppi_udp.h"
+//#include "guppi_udp.h"
 #include "sdfits.h"
 
 
@@ -63,6 +63,27 @@ struct vegas_params {
 
 
 
+struct iffits
+{
+	char filename[200];     	// Filename of the IF fits file
+	char observation[100];
+	char basefilename[100];
+	char *bank[8];				// VEGAS banks used in this obs
+	int N;            			// Number of VEGAS banks used
+	int currentbank;			//current bank 
+	int writtenbank;
+	double sff_multiplier[8];
+	double sff_sideband[8];
+	double sff_offset[8];
+	double lo;
+	double crval1;
+	double cdelt1;
+	fitsfile *fptr;         	// The CFITSIO file structure
+};  
+
+
+
+
 
 void vegas_read_subint_params(char *buf, 
                               struct vegas_params *g, 
@@ -70,5 +91,15 @@ void vegas_read_subint_params(char *buf,
 void vegas_read_obs_params(char *buf, 
                            struct vegas_params *g, 
                            struct sdfits *p);
+
+void read_machine_params(struct iffits *ifinfo, struct vegas_params *g, struct sdfits *p);
+
 void vegas_free_sdfits(struct sdfits *p);
+
+void read_if_params(struct iffits *ifinfo);
+void read_lo_params(struct iffits *ifinfo);
+void read_go_params(struct iffits *ifinfo, struct vegas_params *g, struct sdfits *sf);
+
+
 #endif
+
