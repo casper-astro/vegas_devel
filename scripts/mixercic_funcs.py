@@ -52,11 +52,11 @@ def fill_mixer_bram(fpgaclient, n_inputs, mixer_name, limit, bramformat, data):
     fpgaclient.write_int(mixer_name+'_mixer_cnt', limit - 2 )  # This -2 because of the Rational a = b delay one clock for output and counter begin from 0
     for i in range(2**n_inputs):
 	fpgaclient.write(mixer_name+'_lo_'+str(i)+'_lo_ram', struct.pack(bramformat, *data[i::(2**n_inputs)]))
-	print('done with '+str(i))
+	#print('done with '+str(i))
 
 
 
-def calc_lof(Fs,bramlength,lof_input,lof_diff_n,lof_diff_m):
+def calc_lof(Fs,bramlength,n_inputs,lof_input,lof_diff_n,lof_diff_m):
     """
     Function:
         Calculate the closest frequency of lof_input, return the exact
@@ -64,12 +64,13 @@ def calc_lof(Fs,bramlength,lof_input,lof_diff_n,lof_diff_m):
         denominator of the combination.
         The available frequency combination can be: 
         (1/2,1/3,1/4,1/5,2/5,1/6/,1/7,2/7,3/7,...,1/2^bramlength,2/2^bramlength,...) times Fs
-    # How do we find the numberator and denominator? e.g. say we have a bram of length 2**10, we can choose to
-    #    use a fraction of it (this would be lof_diff_m, the denominator) to store lof_diff_n cycles of sine/cosine
+    # How do we find the numberator and denominator? e.g. say we have 8 bram of length 2**10 (for 8 parallel inputs), we can choose to
+    #    use a fraction of them (this upperboudn of address for all subbands combined would be lof_diff_m, the denominator) to store lof_diff_n cycles of sine/cosine
     #    waves, which has frequency of (lof_diff_n*Fs/lof_diff_m)
     Parameters:
         Fs: ADC sampling frequency, e.g. 600.0(MHz)
         bramlength: Mixer BRAM length: 2^bramlength, e.g. 10
+	n_inputs: number of parallel inputs: 2^n_inputs, e.g. 8
         lof_input: The demanded mixer frequency, e.g. 241.0(MHz)
         lof_diff_n: The closest frequency numerator
         lof_diff_m: The closest frequency denominator
@@ -110,7 +111,7 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, mixer_name, bramlength):
 	lo_wave = constant_wave_gen(2**(bramlength+n_inputs))
 	lof_output = 0
     else:
-	lof_output,lof_diff_n,lof_diff_num = calc_lof(bandwidth,bramlength,lo_f, 0, 0)
+	lof_output,lof_diff_n,lof_diff_num = calc_lof(bandwidth*2,bramlength,n_inputs,lo_f, 0, 0)
 	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, lof_diff_num)
     bramformat = '>'+str(lof_diff_num/(2**n_inputs))+'I'
     #print size(lo_wave), ' bramformat', bramformat
