@@ -1,0 +1,11 @@
+xlpersistentdff.ngc /tools/casper/projects/hong/my_vegas_devel/mode13/cichbcic_core/sysgen/perl_results.vhd mult_11_2_893416810381d560.vhd addsb_11_0_5de09ee679db1560.ngc mult_11_2_893416810381d560.ngc addsb_11_0_e35a3bf39f366fd8.vhd cntr_11_0_6400a835b899f648.vhd addsb_11_0_5bfb73f1589643d3.vhd addsb_11_0_e35a3bf39f366fd8.ngc addsb_11_0_5de09ee679db1560.vhd addsb_11_0_a6179ec1a236388e.vhd cntr_11_0_a0d692c18ceb283e.vhd cntr_11_0_a0d692c18ceb283e.ngc addsb_11_0_5bfb73f1589643d3.ngc addsb_11_0_a6179ec1a236388e.ngc cntr_11_0_6400a835b899f648.ngc nonleaf_results.vhd synopsis
+opened file cichbcic_core.vhd
+copied mult_11_2_893416810381d560.vhd
+copied addsb_11_0_e35a3bf39f366fd8.vhd
+copied cntr_11_0_6400a835b899f648.vhd
+copied addsb_11_0_5bfb73f1589643d3.vhd
+copied addsb_11_0_5de09ee679db1560.vhd
+copied addsb_11_0_a6179ec1a236388e.vhd
+copied cntr_11_0_a0d692c18ceb283e.vhd
+copied /tools/casper/projects/hong/my_vegas_devel/mode13/cichbcic_core/sysgen/perl_results.vhd
+copied nonleaf_results.vhd

@@ -30,11 +30,13 @@ time.sleep(1)
 # ROACH@ 16 input SFP+
 #boffile='v01_16r4t11f_ver137_2013_Jan_13_1830.bof'
 #boffile='v01_16r4t11f_ver139_2013_Jan_13_1848.bof'
-boffile='v02_16r4t11f_ver103_2013_Jan_22_1839.bof'
+#boffile='v02_16r4t11f_ver103_2013_Jan_22_1839.bof'
+boffile='v01_16r4t11f_ver141_2013_Feb_19_1801.bof' # 1 subband - seems to work
+#boffile='v13_16r128dr_ver111_2013_Mar_06_1933.bof'
 
 # Program the Device
 fpga.progdev(boffile)
-#time.sleep(1)
+time.sleep(1)
 
 # Set 10GbE NIC IP and Port
 fpga.tap_start('tap0','gbe0',mac_base+src_ip,src_ip,fabric_port)
@@ -47,6 +49,10 @@ fpga.write_int('dest_port',dest_port)
 
 # Set accumulation length
 fpga.write_int('acc_len',acc_len)
+
+# Set FFT shift schedule
+fpga.write_int('fftshift', 0b1010101010)
+
 
 # Set sync period
 time.sleep(1)
@@ -70,11 +76,11 @@ def reset():
     fpga.write_int('sg_sync',0x11)
 
 def getadc0():
-  adc0=np.fromstring(fpga.snapshot_get('adcsnap0')['data'],dtype='<i1')
+  adc0=np.fromstring(fpga.snapshot_get('adcsnap0',man_trig=True,man_valid=True)['data'],dtype='<i1')
   return adc0
 
 def getadc1():
-  adc1=np.fromstring(fpga.snapshot_get('adcsnap0')['data'],dtype='<i1')
+  adc1=np.fromstring(fpga.snapshot_get('adcsnap0',man_trig=True)['data'],dtype='<i1')
   return adc1
 
 def getvacc():
@@ -124,14 +130,14 @@ def intrlv(ar1,ar2):
   ar3[1::2] = ar2
   return ar3 
        
-def getrshp2():
-  fpga.write_int('rshpout_ctrl',0)
-  fpga.write_int('rshpout_ctrl',1)
-  fpga.write_int('rshpout_ctrl',0)
-  a=fpga.read('rshpout_bram',16384)
-  b=np.fromstring(a,dtype='uint32')
-  b1=struct.unpack('>4096I',a)
-  return b1[::4]
+#def getrshp2():
+#  fpga.write_int('rshpout_ctrl',0)
+#  fpga.write_int('rshpout_ctrl',1)
+#  fpga.write_int('rshpout_ctrl',0)
+#  a=fpga.read('rshpout_bram',16384)
+#  b=np.fromstring(a,dtype='uint32')
+#  b1=struct.unpack('>4096I',a)
+#  return b1[::4]
 
 def plotrshp():
   fpga.write_int('rshpout_ctrl',0)

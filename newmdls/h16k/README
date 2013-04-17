@@ -1,0 +1,10 @@
+h16k_ver100.mdl uses the "Black Boxing" trick to improve the development efficiency. The technique is described in the Casper Memo No.28(http://casper.berkeley.edu/wiki/images/a/a4/Black_box_memo.pdf).
+
+To compile h16k_ver100.mdl
+0) Enter the directory vegas_devel/newmdls/h16k
+1) Open fftwbr_core.mdl
+2) Double click on the System Generator block, click the "Generate" button. Wait for the generation to complete.
+3) Open pfbfirr_core.mdl
+4) Double click on the System Generator block, click the "Generate" button. Wait for the generation to complete.
+5) Open h16k_ver100.mdl
+6) Compile it as with other regular mdl files.

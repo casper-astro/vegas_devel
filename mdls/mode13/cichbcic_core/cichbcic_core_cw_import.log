@@ -1,0 +1,12 @@
+INFO:HDLCompiler:1061 - Parsing VHDL file
+   "/tools/casper/projects/hong/my_vegas_devel/mode13/cichbcic_core/cichbcic_cor
+   e_cw.vhd" into library work
+INFO:ProjectMgmt - Parsing design hierarchy completed successfully.
+INFO:HDLCompiler:1061 - Parsing VHDL file
+   "/tools/casper/projects/hong/my_vegas_devel/mode13/cichbcic_core/cichbcic_cor
+   e.vhd" into library work
+INFO:ProjectMgmt - Parsing design hierarchy completed successfully.
+INFO:TclTasksC:2116 - The automatic calculation of top has been turned-off.
+   Please set the new top explicitly by running the "project set top" command.
+   To re-calculate the new top automatically, set the "Auto Implementation Top"
+   property to true.
