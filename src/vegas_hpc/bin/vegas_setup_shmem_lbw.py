@@ -61,8 +61,10 @@ for o, a in Opts:
         nChan = int(a)
     elif o in ("-g", "--gpuint"):
         gpuInt = float(a)
+        gpuInt = gpuInt / 1000
     elif o in ("-t", "--totint"):
         totInt = float(a)
+        totInt = totInt / 1000
     else:
         PrintUsage(ProgName)
         sys.exit(1)

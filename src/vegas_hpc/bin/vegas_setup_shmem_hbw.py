@@ -17,18 +17,14 @@ def PrintUsage(ProgName):
     print "    -t  --totint <value>       Total integration time in ms"
     return
 
-# constants
-# ASSUMPTION: using ASIAA ADC that is dual-data-rate, decimation factor fixed
-DecFactor = 128     # decimation factor for both pols.
-
 # other config info
 ROACH_10GbE_IP = "10.0.0.4"
 Port = "60000"
 
 # get the command line arguments
 ProgName = sys.argv[0]
-OptsShort = "ha:s:c:g:t:"
-OptsLong = ["help", "adcclk=", "nsubband=", "nchan=", "gpuint=", "totint="]
+OptsShort = "ha:c:t:"
+OptsLong = ["help", "adcclk=", "nchan=", "totint="]
 
 # check if the minimum expected number of arguments has been passed
 # to the program
@@ -53,14 +49,11 @@ for o, a in Opts:
         sys.exit()
     elif o in ("-a", "--adcclk"):
         adcClock = float(a)
-    elif o in ("-s", "--nsubband"):
-        nSubBand = int(a)
     elif o in ("-c", "--nchan"):
         nChan = int(a)
-    elif o in ("-g", "--gpuint"):
-        gpuInt = float(a)
     elif o in ("-t", "--totint"):
         totInt = float(a)
+        totInt = totInt / 1000
     else:
         PrintUsage(ProgName)
         sys.exit(1)

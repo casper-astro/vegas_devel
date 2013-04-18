@@ -4,6 +4,7 @@ import corr,time,numpy,struct,sys
 #n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
 
 #boffile='l1_lbw1_ver100_2013_Apr_10_1217.bof'
+#boffile = 'l1_lbw1_ver100_2013_Apr_10_1217.bof'
 boffile = 'l1_ver100_2013_Apr_17_1407.bof'
 roach = '192.168.40.80'
 

@@ -1,7 +1,7 @@
 #! /opt/vegas/bin/python2.7
 
 import corr,time,struct 
-roach = '192.168.40.82'
+roach = '192.168.40.80'
 
 ## IPs at Greenbank
 #dest_ip = 192*(2**24)+168*(2**16)+3*(2**8)+15
@@ -24,7 +24,8 @@ fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
 #boffile='newmode_2013_Mar_26_1953.bof'
-boffile='newmode_ver102_2013_Apr_04_1517.bof'
+#boffile='newmode_ver102_2013_Apr_04_1517.bof'
+boffile='h16k_ver100_2013_Apr_17_1725.bof'
 
 # Program the Device
 fpga.progdev(boffile)
