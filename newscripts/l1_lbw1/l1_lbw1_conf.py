@@ -2,15 +2,15 @@
 
 import corr,time,numpy,struct,sys
 #n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
-boffile='l1_lbw1_ver100_2013_Apr_10_1217.bof'
+
+#boffile='l1_lbw1_ver100_2013_Apr_10_1217.bof'
+boffile = 'l1_ver100_2013_Apr_17_1407.bof'
 roach = '192.168.40.80'
 
 dest_ip  = 10*(2**24) +  145 #10.0.0.145
 src_ip   = 10*(2**24) + 4  #10.0.0.4
-
 dest_port     = 60000
 fabric_port     = 60000
-
 mac_base = (2<<40) + (2<<32)
 
 print('Connecting to server %s on port... '%(roach)),
@@ -45,6 +45,7 @@ print 'done'
 
 print '------------------------'
 print 'Setting-up packet core...',
+
 sys.stdout.flush()
 fpga.write_int('dest_ip',dest_ip)
 fpga.write_int('dest_port',dest_port)
