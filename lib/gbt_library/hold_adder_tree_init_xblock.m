@@ -1,11 +1,12 @@
 function hold_adder_tree_init_xblock(blk,varargin)
 
-defaults = {'n_inputs', 3, 'add_latency', 1, 'hold_period', 1, 'ext_en', 'on'};
+defaults = {'n_inputs', 3, 'add_latency', 1, 'hold_period', 1, 'ext_en', 'on', 'extra_delay', 0};
 
 n_inputs = get_var('n_inputs', 'defaults', defaults, varargin{:});
 add_latency = get_var('add_latency', 'defaults', defaults, varargin{:});
 hold_period = get_var('hold_period', 'defaults', defaults, varargin{:});
 ext_en = get_var('ext_en', 'defaults', defaults, varargin{:});
+extra_delay = get_var('extra_delay', 'defaults', defaults, varargin{:});
 
 stages = ceil(log2(n_inputs));
 
@@ -61,7 +62,8 @@ else
                             {[blk, '/', addr], ...
                             'add_latency', add_latency, ...
                              'hold_period', hold_period, ...
-                             'ext_en', ext_en}, ...
+                             'ext_en', ext_en, ...
+                             'extra_delay', extra_delay}, ...
                              {din{j*2-1}, din{j*2}, sync}, ...
                              {adder_outs{stage}{j}, []});
                 else
@@ -69,7 +71,8 @@ else
                             {[blk, '/', addr], ...
                             'add_latency', add_latency, ...
                              'hold_period', hold_period, ...
-                             'ext_en', ext_en}, ...
+                             'ext_en', ext_en, ...
+                             'extra_delay', extra_delay}, ...
                              {adder_outs{stage-1}{j*2-1}, adder_outs{stage-1}{j*2}, sync}, ...
                              {adder_outs{stage}{j}, []});
                 end
@@ -101,8 +104,14 @@ if ~isempty(blk) && ~strcmp(blk(1), '/')
     clean_blocks(blk);
 
     % Set attribute format string (block annotation)
-    annotation=sprintf('latency %d\nhold period:%d',stages*add_latency, hold_period);
-    set_param(blk,'AttributesFormatString',annotation);
+    if strcmp(ext_en, 'off')
+        annotation=sprintf('latency %d\nhold period:%d\n extra latency for en_gen: %d',...
+            stages*add_latency, hold_period, extra_delay);
+        set_param(blk,'AttributesFormatString',annotation);
+    else
+        annotation=sprintf('latency %d\nhold period:%d',stages*add_latency, hold_period);
+        set_param(blk,'AttributesFormatString',annotation);
+    end
 end
 
 end

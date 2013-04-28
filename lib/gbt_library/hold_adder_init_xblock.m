@@ -1,10 +1,11 @@
 function hold_adder_init_xblock(blk, varargin)
 
-defaults = {'add_latency', 1, 'hold_period', 1, 'ext_en', 'on'};
+defaults = {'add_latency', 1, 'hold_period', 1, 'ext_en', 'on', 'extra_delay', 0};
 
 add_latency = get_var('add_latency', 'defaults', defaults, varargin{:});
 hold_period = get_var('hold_period', 'defaults', defaults, varargin{:});
 ext_en = get_var('ext_en', 'defaults', defaults, varargin{:});
+extra_delay = get_var('extra_delay', 'defaults', defaults, varargin{:});
 
 
 %% inports
@@ -29,7 +30,8 @@ if strcmp(ext_en, 'off')
     en = xSignal('en');
     hold_en = xBlock(struct('source', str2func('hold_en_init_xblock'), 'name', 'en_gen'), ...
         {[blk, '/en_gen'], ...
-        'hold_period', hold_period}, ...
+        'hold_period', hold_period, ...
+        'extra_delay', extra_delay}, ...
          {xlsub2_sync_in}, ...
          {en});
      
@@ -72,8 +74,14 @@ end
 
 if ~isempty(blk) && ~strcmp(blk(1),'/')
     clean_blocks(blk);
-    fmtstr=sprintf('hold period: %d\n add latency: %d',hold_period, add_latency);
-    set_param(blk,'AttributesFormatString',fmtstr);
+    if strcmp(ext_en, 'off')  
+        fmtstr=sprintf('hold period: %d\n add latency: %d\n extra latency for en_gen: %d', ...
+            hold_period, add_latency, extra_delay);
+        set_param(blk,'AttributesFormatString',fmtstr);
+    else
+        fmtstr=sprintf('hold period: %d\n add latency: %d',hold_period, add_latency);
+        set_param(blk,'AttributesFormatString',fmtstr);
+    end
 end
 
 end

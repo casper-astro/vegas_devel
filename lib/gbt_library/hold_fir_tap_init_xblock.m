@@ -1,7 +1,7 @@
 function hold_fir_tap_init_xblock(blk, varargin)
 
 
-defaults = {'mult_latency', 3, 'hold_period', 1, 'coefficient', 1.0, 'n_bits', 16, 'bin_pt', 14, 'ext_en', 'on'};
+defaults = {'mult_latency', 3, 'hold_period', 1, 'coefficient', 1.0, 'n_bits', 16, 'bin_pt', 14,'extra_delay', 0, 'ext_en', 'on'};
 
 
 mult_latency = get_var('mult_latency', 'defaults', defaults, varargin{:});
@@ -10,6 +10,7 @@ coefficient = get_var('coefficient', 'defaults', defaults, varargin{:});
 n_bits = get_var('n_bits', 'defaults', defaults, varargin{:});
 bin_pt = get_var('bin_pt', 'defaults', defaults, varargin{:});
 ext_en = get_var('ext_en', 'defaults', defaults, varargin{:});
+extra_delay = get_var('extra_delay', 'defaults', defaults, varargin{:});
 
 
 if coefficient > 2^(n_bits-bin_pt-1)
@@ -41,7 +42,8 @@ if strcmp(ext_en, 'off')
     en = xSignal('en');
     hold_en = xBlock(struct('source', str2func('hold_en_init_xblock'), 'name', 'en_gen'), ...
         {[blk, '/en_gen'], ...
-        'hold_period', hold_period}, ...
+        'hold_period', hold_period, ...
+        'extra_delay', extra_delay}, ...
          {sync}, ...
          {en});
      
@@ -102,8 +104,14 @@ end
 
 
 if ~isempty(blk) && ~strcmp(blk(1),'/')
-    fmtstr=sprintf('coefficient: %f%s\n hold period: %d\n mult latency: %d',coefficient,coeff_msg, hold_period, mult_latency);
-    set_param(blk,'AttributesFormatString',fmtstr);
+    if strcmp(ext_en, 'off')
+        fmtstr=sprintf('coefficient: %f%s\n hold period: %d\n mult latency: %d\n extra latency for en_gen: %d', ...
+            coefficient,coeff_msg, hold_period, mult_latency, extra_delay);
+        set_param(blk,'AttributesFormatString',fmtstr);
+    else
+        fmtstr=sprintf('coefficient: %f%s\n hold period: %d\n mult latency: %d',coefficient,coeff_msg, hold_period, mult_latency);
+        set_param(blk,'AttributesFormatString',fmtstr);
+    end
 end
 end
 
@@ -127,7 +135,8 @@ function hold_tap_period_one_init_xblock(blk, data_inport, sync_or_en_inport, mu
         xConnector(en_outport,sync_or_en_inport);
 
         if ~isempty(blk) && ~strcmp(blk(1),'/')
-            fmtstr=sprintf('coefficient: %f%s\n hold period: %d\n mult latency: %d',coefficient,coeff_msg,  hold_period, mult_latency);
+            fmtstr=sprintf('coefficient: %f%s\n hold period: %d\n mult latency: %d', ...
+                coefficient,coeff_msg,  hold_period, mult_latency);
             set_param(blk,'AttributesFormatString',fmtstr);
         end
         return;
