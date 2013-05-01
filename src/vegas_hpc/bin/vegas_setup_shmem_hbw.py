@@ -62,7 +62,7 @@ dirVEGAS = os.getenv("VEGAS_DIR")
 
 (Status, Output) = commands.getstatusoutput(dirVEGAS + "/bin/vegas_init_shmem")
 
-(Status, Output) = commands.getstatusoutput("python2.5"                                                      \
+(Status, Output) = commands.getstatusoutput("python2.7"                                                      \
                                             + " " + dirVEGAS + "/python/vegas_set_params.py"                 \
                                             + " -D --nogbt")
 if (0 != Status):
@@ -74,7 +74,7 @@ fpgaClock = (adcClock * 1e6) / 8
 BW = adcClock * 1e6
 chanBW = BW / nChan
 
-(Status, Output) = commands.getstatusoutput("python2.5"                                                      \
+(Status, Output) = commands.getstatusoutput("python2.7"                                                      \
                                             + " " + dirVEGAS + "/python/vegas_set_params.py"                 \
                                             + " -U --nogbt"                                                  \
                                             + " --host=" + ROACH_10GbE_IP                                    \
