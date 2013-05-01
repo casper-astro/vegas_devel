@@ -183,5 +183,24 @@ fft11_bb.mdl -- blackbox model for fft
 
 pfb4t11_bb.mdl -- blackbox model for pfb
 
+v01_16r4t11f_ver142bb.mdl -- Update to v01_16r4t11f_ver141bb.mdl 
+    * Remove manual pps control from sg_sync register and move to separate sg_manpps register in case
+        the register bits are glitching when set from PPC.
+    * Add delay of 760*128 to sync_out to represent delay from first valid sync to vacc to when the first "valid valid" comes out of the vacc.
+        Used 760 instead of 768 to ensure data gets enabled early enough
 
+v01_16r4t11f_ver146bb.mdl -- Update to v01_16r4t11f_ver141bb_redraw.mdl
+    * fix potential glitch with reshaper rst signal on falling edge of data_enable
+    * updated ssg spec tick to be every 128 clocks instead of 256 clocks
 
+v01_16r4t11f_ver147bb.mdl -- Update to v01_16r4t11f_ver146bb.mdl
+    * added trigger on debug snap to look at what's happening right after data_enable goes high
+
+v01_16r4t11f_ver148bb.mdl -- Update to v01_16r4t11f_ver147bb.mdl
+    * added more trigger options on debug snap
+
+v01_16r4t11f_ver149bb.mdl -- Update to v01_16r4t11f_ver148bb.mdl
+    * added data_enable to valid input of tge to avoid run packets getting through
+
+v01_16r4t11f_ver151bb.mdl -- Update to v01_16r4t11f_ver149bb.mdl
+    * fix to SSG: moved control bits to LSBs of control register
