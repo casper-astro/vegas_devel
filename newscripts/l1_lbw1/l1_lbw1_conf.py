@@ -6,7 +6,7 @@ import corr,time,numpy,struct,sys
 #boffile='l1_lbw1_ver100_2013_Apr_10_1217.bof'
 #boffile = 'l1_lbw1_ver100_2013_Apr_10_1217.bof'
 boffile = 'l1_ver100_2013_Apr_17_1407.bof'
-roach = '192.168.40.80'
+roach = '192.168.40.82'
 
 dest_ip  = 10*(2**24) +  145 #10.0.0.145
 src_ip   = 10*(2**24) + 4  #10.0.0.4

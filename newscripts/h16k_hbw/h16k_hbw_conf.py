@@ -1,7 +1,7 @@
 #! /opt/vegas/bin/python2.7
 
 import corr,time,struct 
-roach = '192.168.40.80'
+roach = '192.168.40.82'
 
 ## IPs at Greenbank
 #dest_ip = 192*(2**24)+168*(2**16)+3*(2**8)+15

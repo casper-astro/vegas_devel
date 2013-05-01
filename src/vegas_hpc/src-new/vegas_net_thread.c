@@ -207,7 +207,7 @@ void *vegas_net_thread(void *_args) {
     /* Set cpu affinity */
     cpu_set_t cpuset, cpuset_orig;
     sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
-    //CPU_ZERO(&cpuset);
+    CPU_ZERO(&cpuset);
     CPU_SET(13, &cpuset);
     rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 

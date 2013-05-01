@@ -152,6 +152,9 @@ void vegas_pfb_thread(void *_args) {
             /* Read required exposure from status shared memory, and calculate
                corresponding accumulation length */
             acc_len = (abs(sf.hdr.chan_bw) * sf.hdr.hwexposr);
+            printf("********************************\n");
+            printf("acc_len = %d\n", acc_len);
+            printf("********************************\n");
         }
         vegas_read_subint_params(hdr_in, &gp, &sf);
 
