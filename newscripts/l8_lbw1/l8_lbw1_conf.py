@@ -145,6 +145,8 @@ fpga.write_int('dest_ip',dest_ip)
 fpga.write_int('dest_port',dest_port)
 time.sleep(1)
 
+fpga.write_int('mode_sel', 1)
+time.sleep(1)
 fpga.write_int('sg_sync', 0b10100)
 time.sleep(1)
 fpga.write_int('arm', 0)

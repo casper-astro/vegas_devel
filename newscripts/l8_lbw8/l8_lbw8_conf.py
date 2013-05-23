@@ -1,12 +1,12 @@
 #! /usr/bin/env python2.6
 
-import corr,time,numpy,struct,sys.socket
+import corr,time,numpy,struct,sys, socket
 execfile('mixercic_funcs.py')
 n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
 #lo_f = [104, 103, 75, 91, 92, 122, 135, 144]
-lo_f = [75, 91, 92, 103, 104, 122, 135, 144]
+lo_f = [75, 91, 92, 100, 104, 122, 135, 144]
 lo_f_actual = lo_f
-bw = 1500 # bandwidth, in MHz
+bw = 1200 # bandwidth, in MHz
 
 #boffile='v13_16r128dr_ver113b_2013_Mar_21_0034.bof'
 #boffile='v13_16r64dr_ver114_2013_Apr_06_2235.bof'
@@ -85,10 +85,10 @@ def plotpacketfft(i):
   Y.real = realY.astype(np.float)
   Y.imag = imagY.astype(np.float)
   l_y = len(Y)
-  f_index_x = np.linspace(lo_f_actual[i] - bw/(2.*128), lo_f_actual[i] + bw/(2.*128), l)
+  f_index_x = np.linspace(lo_f_actual[i] - bw/(1.*128), lo_f_actual[i] + bw/(1.*128), l)
   subplot(211)
   plot(f_index_x, 10*np.log10(np.abs(np.fft.fftshift(np.fft.fft(X)))))
-  f_index_y = np.linspace(lo_f_actual[i] - bw/(2.*128), lo_f_actual[i] + bw/(2.*128), l_y)
+  f_index_y = np.linspace(lo_f_actual[i] - bw/(1.*128), lo_f_actual[i] + bw/(1.*128), l_y)
   subplot(212)
   plot(f_index_y, 10*np.log10(np.abs(np.fft.fftshift(np.fft.fft(Y)))))
 
@@ -133,6 +133,8 @@ sys.stdout.flush()
 fpga.write_int('dest_ip',dest_ip)
 fpga.write_int('dest_port',dest_port)
 
+fpga.write_int('mode_sel', 0)
+time.sleep(1)
 fpga.write_int('sg_sync', 0b10100)
 time.sleep(1)
 fpga.write_int('arm', 0)
