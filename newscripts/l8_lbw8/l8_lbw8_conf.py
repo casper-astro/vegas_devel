@@ -3,6 +3,7 @@
 import corr,time,numpy,struct,sys, socket
 execfile('mixercic_funcs.py')
 n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
+bramlength = 8 # size of brams used in mixers (2^?)
 #lo_f = [104, 103, 75, 91, 92, 122, 135, 144]
 lo_f = [75, 91, 92, 100, 104, 122, 135, 144]
 lo_f_actual = lo_f
@@ -97,6 +98,11 @@ def plotsubband1fft():
   f_index = np.linspace(lo_f_actual[1] - bw/(2.*128), lo_f_actual[1] + bw/(2.*128), len(s1p1re))
   plot(f_index, 10*np.log10(np.abs(np.fft.fftshift(np.fft.fft(s1p1re)))))
 
+def lo_adjust(i, new_lo):
+  lo_setup(fpga, new_lo, bw, n_inputs, 's'+str(i), bramlength)
+  lo_f[i] = new_lo
+
+
 print('Connecting to server %s on port... '%(roach)),
 fpga = corr.katcp_wrapper.FpgaClient(roach)
 time.sleep(2)
@@ -151,14 +157,14 @@ print 'done'
 #lo_setup(fpga, lo_f, bandwidth=400, n_inputs, cnt_r_name='mixer_cnt', mixer_name='s1', bramlength=8)
 
 
-lo_f_actual[0] = lo_setup(fpga, lo_f[0], bw, n_inputs, 's0', 8)
-lo_f_actual[1] = lo_setup(fpga, lo_f[1], bw, n_inputs, 's1', 8)
-lo_f_actual[2] = lo_setup(fpga, lo_f[2], bw, n_inputs, 's2', 8)
-lo_f_actual[3] = lo_setup(fpga, lo_f[3], bw, n_inputs, 's3', 8)
-lo_f_actual[4] = lo_setup(fpga, lo_f[4], bw, n_inputs, 's4', 8)
-lo_f_actual[5] = lo_setup(fpga, lo_f[5], bw, n_inputs, 's5', 8)
-lo_f_actual[6] = lo_setup(fpga, lo_f[6], bw, n_inputs, 's6', 8)
-lo_f_actual[7] = lo_setup(fpga, lo_f[7], bw, n_inputs, 's7', 8)
+lo_f_actual[0] = lo_setup(fpga, lo_f[0], bw, n_inputs, 's0', bramlength)
+lo_f_actual[1] = lo_setup(fpga, lo_f[1], bw, n_inputs, 's1', bramlength)
+lo_f_actual[2] = lo_setup(fpga, lo_f[2], bw, n_inputs, 's2', bramlength)
+lo_f_actual[3] = lo_setup(fpga, lo_f[3], bw, n_inputs, 's3', bramlength)
+lo_f_actual[4] = lo_setup(fpga, lo_f[4], bw, n_inputs, 's4', bramlength)
+lo_f_actual[5] = lo_setup(fpga, lo_f[5], bw, n_inputs, 's5', bramlength)
+lo_f_actual[6] = lo_setup(fpga, lo_f[6], bw, n_inputs, 's6', bramlength)
+lo_f_actual[7] = lo_setup(fpga, lo_f[7], bw, n_inputs, 's7', bramlength)
 
 time.sleep(1)
 
