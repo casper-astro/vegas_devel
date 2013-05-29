@@ -1,7 +1,9 @@
 #! /usr/bin/env python2.6
 
 import corr,time,numpy,struct,sys, socket
+from matplotlib.pyplot import * 
 execfile('mixercic_funcs.py')
+
 n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
 bramlength = 8 # size of brams used in mixers (2^?)
 #lo_f = [104, 103, 75, 91, 92, 122, 135, 144]
@@ -12,7 +14,8 @@ bw = 1200 # bandwidth, in MHz
 #boffile='v13_16r128dr_ver113b_2013_Mar_21_0034.bof'
 #boffile='v13_16r64dr_ver114_2013_Apr_06_2235.bof'
 #boffile='v13_16r128dr_ver117_2013_Apr_12_0131.bof'
-boffile='l8_ver115_2013_May_17_1027.bof'
+#boffile='l8_ver115_2013_May_17_1027.bof'
+boffile='l8_ver117_2013_May_25_1242.bof'
 
 roach = '192.168.40.82'
 
@@ -100,7 +103,7 @@ def plotsubband1fft():
 
 def lo_adjust(i, new_lo):
   lo_setup(fpga, new_lo, bw, n_inputs, 's'+str(i), bramlength)
-  lo_f[i] = new_lo
+  lo_f_actual[i] = new_lo
 
 
 print('Connecting to server %s on port... '%(roach)),
