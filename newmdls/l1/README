@@ -1,3 +1,12 @@
+### DESCRIPTION ###
+
 l1 - this is a single subband similar to 
     l8, but uses the dec_fir and mixer instead of
 the CIC filter
+
+### COMPILES ###
+
+l1_ver106 - This version corrects the order of the status bits 
+	    in the SSG to coincide with the HPC code.  The order
+	    is 3. BLANK 2. SR1 1. SR0 0.CAL
+
