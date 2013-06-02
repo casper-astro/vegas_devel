@@ -1,7 +1,14 @@
-h16k_ver100.mdl uses the "Black Boxing" trick to improve the development efficiency. The technique is described in the Casper Memo No.28(http://casper.berkeley.edu/wiki/images/a/a4/Black_box_memo.pdf).
+### DESIGNS ###
+
+h16k_ver101 - Changed the order of the status bits to coincide with the
+	      HPC code.  The ordering is now 3. BLANK 2. SR1 1. SR0 0. CAL
+
+### COMPILING ###
+
+h16k_verXXX.mdl uses the "Black Boxing" trick to improve the development efficiency. The technique is described in the Casper Memo No.28(http://casper.berkeley.edu/wiki/images/a/a4/Black_box_memo.pdf).
 
 Since some of the steps (Extract entity, place pcores in the design, etc) have been done already, so to compile h16k_ver100.mdl, there's no need to run through every steps described in the memo.
-To compile h16k_ver100.mdl:
+To compile h16k_verXXX.mdl:
 0) Enter the directory vegas_devel/newmdls/h16k
 1) Open fftwbr_core.mdl
 2) Double click on the System Generator block, click the "Generate" button. Wait for the generation to complete.
