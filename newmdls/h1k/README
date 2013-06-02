@@ -3,3 +3,6 @@ h1k design, previously known as mode 01
 h1k_ver100.mdl is a copy of v01_16r4t11f_ver141bb.mdl
 
 h1k_ver101.mdl is a copy of v01_16r4t11f_ver151bb.mdl
+
+h1k_ver102.mdl changes the order of the status bits to 3. blank, 2. sr1
+1. sr0, 0. cal
