@@ -1,7 +1,7 @@
 #! /opt/vegas/bin/python2.7
 
 import corr,time,struct 
-roach = '192.168.40.80'
+roach = '192.168.40.82'
 
 ## IPs at Greenbank
 #dest_ip = 192*(2**24)+168*(2**16)+3*(2**8)+15
@@ -219,11 +219,7 @@ def plotdebug(debubdict):
   xarr[5].set_title('reshape_state')
 
 reset()
-#debug_bram = getdebug()
 
 
-#np.fromstring(u.snapshot_get('vaccout',man_valid=True,man_trig=True)['data'],dtype='>i4')
-
-#np.fromstring(u.snapshot_get('rshpout')['data'],dtype='>i4')[::2]
 
 
