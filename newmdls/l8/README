@@ -1,0 +1,23 @@
+l8 - can be configured to output 1 band or 8 subbands.
+
+### DESIGNS ###
+
+l8_ver118.mdl - differs from lesser versions in that the order of the SSG 
+		status bits (to be sent off to the HPC) have changed to
+		3. Blank
+		2. SR1
+		1. SR0
+		0. CAL
+
+### COMPILING ###
+
+l8_verXXX.mdl uses the "Black Boxing" trick to improve the development efficiency. The technique is described in the Casper Memo No.28(http://casper.berkeley.edu/wiki/images/a/a4/Black_box_memo.pdf).
+
+Since some of the steps (Extract entity, place pcores in the design, etc) have been done already, so to compile l8_ver100.mdl, there's no need to run through every steps described in the memo.
+
+To compile l8_verXXX.mdl:
+0) Enter the directory vegas_devel/newmdls/l8
+1) Open cichbcic_core.mdl
+2) Double click on the System Generator block, click the "Generate" button. Wait for the generation to complete.
+5) Open l8_ver100.mdl
+6) Compile it as with other regular mdl files.

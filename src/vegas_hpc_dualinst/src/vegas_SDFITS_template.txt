@@ -1,0 +1,151 @@
+##################################################################
+# FITS Primary Header Block
+##################################################################
+
+SIMPLE  =                    T / file does conform to FITS standard
+BITPIX  =                    8 / number of bits per data pixel
+NAXIS   =                    0 / number of data axes
+EXTEND  =                    T / FITS dataset may contain extensions
+BLOCKED =                    T / Blocks of 2880 bytes
+ORIGIN  = 'GUPPI_DAQ v1.0  '   / File was created by the guppi_daq sw
+DATE    = '2011/01/01      '   / Date (dd/mm//yy) this file was written
+END
+
+##################################################################
+# SDFITS Binary Table Header Block
+##################################################################
+
+### Mandatory SDFITS header fields ###
+
+XTENSION= BINTABLE             / FITS binary table
+BITPIX  =                    8 / Binary data
+NAXIS   =                    2 / 2-dimensional binary table
+NAXIS1  =                    * / width of table in bytes 
+NAXIS2  =                    * / Number of rows in table
+PCOUNT  =                    0 / size of special data area
+GCOUNT  =                    1 / one data group (required keyword)
+TFIELDS =                    * / Number of fields per row
+EXTNAME = 'SINGLE DISH'        / name of this binary table extension
+NMATRIX =                    1 / 1 dataset per row
+#
+### Core SDFITS header fields ###
+#
+TELESCOP= 'GBT'                / Telescope name
+BANDWID =                    * / Bandwidth of entire backend
+FREQRES =                    * / Width of each original spectral channel
+DATE-OBS= '                '   / Date of observation (YYYY-MM-DDThh:mm:ss UTC)
+TSYS    =                    * / System temperature
+#
+### Shared (optional) SDFITS header fields ###
+#
+PROJID  = '                '   / Project name
+FRONTEND= '                '   / Rx and feed ID
+OBSFREQ =                    * / [MHz] Centre frequency for observation
+SITELONG= 38.432842            / Antenna longitude (degrees, float)
+SITELAT = -79.839411           / Antenna latitude (degrees, float)
+SITEELEV= 807.43               / Antenna elevation (metres, float)
+EQUINOX = 2000.0               / Equinox of coords (e.g. 2000.0) 
+SCAN    =                    * / Scan number (float)
+#
+### Fields that were copied across from PSRFITS ###
+#
+HDRVER  = '1.0             '   / Header version 
+FITSTYPE= 'SDFITS          '   / FITS definition for pulsar data files
+INSTRUME= 'VEGAS'              / Backend ID
+COORD_MD= 'J2000'              / Coordinate mode (J2000, GAL, ECLIP, etc.)
+CAL_MODE= 'OFF'                / Cal mode (OFF, SYNC, EXT1, EXT2)
+CAL_FREQ= 0.0                  / [Hz] Cal modulation frequency (E)
+CAL_DCYC= 0.0                  / Cal duty cycle (E)
+CAL_PHS = 0.0                  / Cal phase (wrt start time) (E)
+NPOL    =                    * / Number of antenna polarisations
+NCHAN   =                    * / Number of spectral bins per sub-band
+CHAN_BW =                    * / bandwidth of each spectral bin (resolution)
+#
+### New fields that have been added to support the GBT spectrometer ###
+#
+NSUBBAND=                    * / Number of sub-bands
+FPGACLK =                    * / FPGA clock rate [Hz]
+EFSAMPFR=                    * / Effective sampling frequency [Hz]
+HWEXPOSR=                    * / Duration of integration on FPGA/GPU [s]
+FILTNEP =                    * / PFB filter noise-equivalent parameter
+STTMJD  =                    * / Observation start time [double MJD]
+#
+#
+##################################################################
+# Data table columns
+#####################################################################
+#
+### Standard SDFITS columns ###
+#
+TTYPE#  = 'TIME    '           / MJD at start of integration (usec resolution)
+TFORM#  = '1D      '           / 8-byte real 
+TTYPE#  = 'TIMECNTR'           / FPGA time counter at start of integration
+TFORM#  = '1J      '           / 32-bit integer 
+TTYPE#  = 'INTEGNUM'           / Indicates the integration interval
+TFORM#  = '1J      '           / 32-bit integer 
+TTYPE#  = 'EXPOSURE'           / Effective integration time (seconds)
+TFORM#  = '1E      '           / 4-byte real 
+TTYPE#  = 'OBJECT  '           / Object being viewed
+TFORM#  = '16A     '           / 16 characters
+TTYPE#  = 'AZIMUTH '           / Commanded azimuth (degrees, float)
+TFORM#  = '1E      '           / 4-byte real
+TTYPE#  = 'ELEVATIO'           / Commanded elevation (degrees, float)
+TFORM#  = '1E      '           / 4-byte real
+TTYPE#  = 'BMAJ    '           / [deg] Beam major axis length
+TFORM#  = '1E      '           / 4-byte real
+TTYPE#  = 'BMIN    '           / [deg] Beam minor axis length
+TFORM#  = '1E      '           / 4-byte real
+TTYPE#  = 'BPA     '           / [deg] Beam position angle
+TFORM#  = '1E      '           / 4-byte real
+#
+### Custom columns for the GBT Spectrometer ###
+#
+TTYPE#  = 'ACCUMID '           / ID of the accumulator (0 to 7) from where spectrum came
+TFORM#  = '1J      '           / 32-bit integer
+TTYPE#  = 'STTSPEC '           / SPECTRUM_COUNT of the first spectrum in the integration
+TFORM# 	= '1J      '           / 32-bit integer
+TTYPE# 	= 'STPSPEC '           / SPECTRUM_COUNT of the last spectrum in the integration
+TFORM# 	= '1J      '           / 32-bit integer
+TTYPE# 	= 'SUBFREQ '           / Frequency at centre of each sub-band
+TFORM#  = 'D       '           / 8-byte real (* number of sub-bands)
+#
+### The data array axes ###
+#
+CTYPE1  = 'FREQ    '           / DATA ARRAY AXIS 1: frequency in Hz.            
+TTYPE#  = 'CRPIX1  '           / Channel num. of centre of spectral bin                              
+TFORM#  = '1E      '           / 4-byte real                              
+TTYPE#  = 'CRVAL1  '           / Freq at centre of sub-band (always 0Hz)                              
+TFORM#  = '1D      '           / 8-byte real                               
+TUNIT#  = 'Hz      '           / Units is Hz                                 
+TTYPE#  = 'CDELT1  '           / Width of each spectral channel                               
+TFORM#  = '1D      '           / 8-byte real                                
+TUNIT#  = 'Hz      '           / Units is Hz    
+#
+CTYPE2  = 'SUBBAND '           / DATA ARRAY AXIS 2: Sub-bands          
+CRPIX1  =                  1.0 / Reference pixel
+CRVAL1  =                  0.0 / Sub-band number for reference pixel
+CDELT1  =                  1.0 / Sub-band axis increment               
+#                            
+CTYPE3  = 'STOKES  '           / DATA ARRAY AXIS 3: Stokes polarisation          
+CRPIX3  =                  1.0 / Polarization code reference pixel
+CRVAL3  =                 -5.0 / Polarization code at reference pixel (XX)
+CDELT3  =                 -1.0 / Polarization code axis increment               
+#
+CTYPE4  = 'RA      '           / DATA ARRAY AXIS 4: RA mid-integration (degenerate)         
+CRPIX4  =                  1.0 / RA reference pixel
+TTYPE#  = 'CRVAL4  '           / Value of RA
+TFORM#  = '1D      '           / 8-byte real
+TUNIT#  = 'deg     '           / degrees
+#
+CTYPE5  = 'DEC     '           / DATA ARRAY AXIS 5: DEC mid-integration (degenerate)         
+CRPIX5  =                  1.0 / DEC reference pixel
+TTYPE#  = 'CRVAL5  '           / Value of DEC
+TFORM#  = '1D      '           / 8-byte real
+TUNIT#  = 'deg     '           / degrees
+#
+TTYPE#  = 'DATA    '           / The actual data array
+TFORM#  = '1E      '           / Length of data array (e.g. 131072E)
+TDIM#   = '        '           / Matrix dimensions (e.g. 8,4096,4,1,1)
+TMATX#  =                    T / This is a matrix
+#
+END

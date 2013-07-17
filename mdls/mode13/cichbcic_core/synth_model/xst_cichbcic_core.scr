@@ -1,0 +1,1 @@
+run -ifn xst_cichbcic_core.prj -ifmt mixed -ofn cichbcic_core.ngc -ofmt NGC -p xc6vsx475t-1ff1759 -ent cichbcic_core -keep_hierarchy NO -iobuf NO -bus_delimiter () -top cichbcic_core -hierarchy_separator / -report_timing_constraint_problems warning -register_balancing no -iob Auto

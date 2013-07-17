@@ -207,7 +207,7 @@ void *vegas_net_thread(void *_args) {
     /* Set cpu affinity */
     cpu_set_t cpuset, cpuset_orig;
     sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
-    //CPU_ZERO(&cpuset);
+    CPU_ZERO(&cpuset);
     CPU_SET(13, &cpuset);
     rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
@@ -313,6 +313,17 @@ void *vegas_net_thread(void *_args) {
     }
     heaps_per_block =   (block_size - MAX_HEAPS_PER_BLK*spead_hdr_size) /
                         (heap_size - spead_hdr_size);
+    /* make general --> */
+    int nsubband = pf.hdr.nsubband;
+    int iDataSize = heaps_per_block * (heap_size - spead_hdr_size);
+    int iWholeSpectra = iDataSize / (nsubband * nchan * 4); /* 4 is the number of bytes in a sample */
+    heaps_per_block = (iWholeSpectra * (nsubband * nchan * 4)) / (heap_size - spead_hdr_size);
+    if (heaps_per_block > MAX_HEAPS_PER_BLK)   /* sanity check, shouldn't happen */
+    {
+        vegas_error("vegas_net_thread", "heaps_per_block > MAX_HEAPS_PER_BLK");
+        pthread_exit(NULL);
+    }
+    /* <-- make general */
 
     /* List of databuf blocks currently in use */
     unsigned i;
@@ -378,7 +389,7 @@ void *vegas_net_thread(void *_args) {
         }
 	
         /* Read packet */
-        rv = vegas_udp_recv(&up, &p);
+        rv = vegas_udp_recv(&up, &p, bw_mode);
         if (rv!=VEGAS_OK) {
             if (rv==VEGAS_ERR_PACKET) {
                 #ifdef DEBUG_NET
@@ -509,6 +520,9 @@ void *vegas_net_thread(void *_args) {
 
                 /* Get obs start time */
                 get_current_mjd_double(&meas_stt_mjd);
+                
+                printf("vegas_net_thread: got start packet at MJD %f", meas_stt_mjd);
+                
                 meas_stt_offs = meas_stt_mjd*24*60*60 - floor(meas_stt_mjd*24*60*60);
 
                 if(meas_stt_offs > 0.1 && meas_stt_offs < 0.9)
@@ -568,10 +582,15 @@ void *vegas_net_thread(void *_args) {
          * The "write packets" functions also update drop stats 
          * for blocks, etc.
          */
+        int nblocks = 0;
         for (i=0; i<nblock; i++)
         {
             if ((blocks[i].block_idx>=0) && (block_heap_check(&blocks[i],heap_cntr)==0))
             {
+            	if (nblocks > 0) {
+            		printf("vegas_net_thread: Warning! Adding packet to more than one block! heap_cntr= %d, block = %d",heap_cntr,i);
+            	}
+            	nblocks++;
                 write_spead_packet_to_block(&blocks[i], &p, heap_cntr,
                                 heap_offset, packets_per_heap, bw_mode);
             }

@@ -63,6 +63,9 @@ add_param_option("--cal_freq",
 add_param_option("--obs", 
         name="OBSERVER", type="string",
         help="Set observers name")
+add_param_option("--obsmode",
+        name="OBS_MODE", type="string",
+        help="Set observation mode (HBW,LBW)")
 add_param_option("--src", 
         name="SRC_NAME", type="string",
         help="Set observed source name")
@@ -238,6 +241,7 @@ if (opt.update == False):
     # command line values
     g.update("SRC_NAME", "unknown")
     g.update("OBSERVER", "unknown")
+    g.update("OBS_MODE", "HBW")
     g.update("RA_STR", "00:00:00.0")
     g.update("DEC_STR", "+00:00:00.0")
     g.update("TELESCOP", "GBT")

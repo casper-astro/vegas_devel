@@ -5,6 +5,8 @@ the third block is the fpga board used (ri is roach 1, rii is roach 2);
 the fourth block is the demux of the adc, the number of taps in the pfb, and the 
 number of pts in the fft (e.g. 8r4t11f is demux by 8, 4 taps, and 2^11 pt fft)
 
+A trailing 'sa' indicates that the design was compiled against the ska-sa/mlib_devel library
+
 v01_aa_ri_8r4t11f_ver101.mdl -- this is simply a copy of v01_na_ri_8r4t11f_ver102.mdl with 
 				the national adc switched out for the asiaa adc
 
@@ -12,6 +14,10 @@ v01_na_ri_8r4t11f_ver101.mdl -- functional mode 1 design mostly functional at lo
 				rates.  Some optimizations for speed have not been made
 
 v01_na_ri_8r4t11f_ver102.mdl -- functional mode 1 design, optimized for speeds up to 360MHz
+
+v01_aa_ri_8r4t11f_ver102.mdl -- This version updates v01_aa_ri_8r4t11f_ver101.mdl with a 
+				conversion from the adc output of fixed 8_0 to signed 8_7 
+				for proper input into the pfb_fir.
 
 v01_na_ri_8r4t11f_ver103.mdl -- (TESTING) functional mode 1 containing snap blocks for adc 
 				and packet headers.  Low clock speeds.. probably no longer 
@@ -49,3 +55,152 @@ v01_na_ri_8r4t11f_ver109.mdl -- Updated version of v01_na_ri_8r4t11f_ver108.mdl
         * Added first draft of allowing external blank to be ORed with internal blank.
             This is controlled by bit 6 of ssg_master_slave_sel
             
+v01_na_ri_8r4t11f_ver111.mdl -- Updated version of v01_na_ri_8r4t11f_ver110.mdl
+        * Added ability to choose between ASR input and BLANK input as external blank
+            to be ORed with internal blank. This is controlled by bit 7 of ssg_master_slave_sel
+            Default of 0 selects ASR input (VEGAS master configuration)
+            
+v01_na_ri_ssgonly_ver112.mdl -- Based on v01_na_ri_8r4t11f_ver111.mdl
+        * Removed DSP logic for faster builds to improve testing of SSG signals. 
+            This line of development will be moved to ROACH II since the GPIO pinouts will be different (and uniform).
+
+v01_aa_rii_8r4t11f_ver113.mdl -- Updated version of v01_na_ri_8r4t11f_ver109.mdl
+	* Compiles for ROACH2
+	* Adds ASIAA ADC (uses every other sample)
+	* Removed switching signal generator, removing the GPIOs which were causing compile issues
+	    under ROACH2
+	
+v01_aa_rii_16r4t11f_ver114.mdl -- Updated version of v01_na_ri_8r4t11f_ver109.mdl
+	* Compiles for ROACH2
+	* Adds ASIAA ADC (uses all 16 samples)
+	* Design was modified to accomodate 16 simultaneous inputs from each of the ADCs 
+	* Removed switching signal generator, removing the GPIOs which were causing compile issues
+	    under ROACH2
+	
+v01_aa_rii_16r4t11f_ver115sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver114.mdl
+	* Changed 10 GbE port to use SFP+ card 1 port 0
+	* The contemporary edition of casper-astro/mlib_devel is outdated with respect to SFP+, so the design was 
+		updated to compile with ska-sa/mlib_devel
+    * SSG not present
+
+v01_aa_rii_16r4t11f_ver115.mdl -- Added ssg (no 'sa')
+
+v01_aa_rii_16r4t11f_ver116sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver115sa.mdl
+    * Updated adc capture to use snapshot blocks and simplified signal routing
+    * raw_adc_trig is new name for original raw_snap_trig in previous designs.
+    * In this version, accidentally grabbed top bit of raw_adc_trig to trigger snap blocks, fixed in ver117sa
+    * added status and nspec registers for debugging
+
+v01_aa_rii_16r4t11f_ver117sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver116sa.mdl
+    * fixed raw_adc_trig so LSB triggers ADC capture
+    * Added more signals to status register
+    * added debug snapshot block to capture status register signals for debugging
+
+v01_aa_rii_16r4t11f_ver118sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver117sa.mdl
+    * this design stalled while compiling
+    * made debug snap longer and 16 bits wide instead of 32 bit (not sure if that had anything to do with stalled compile)
+
+v01_aa_rii_16r4t11f_ver119sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver118sa.mdl
+    * same design as v118 but changed back to 32 bit snap. This design compiled.
+
+v01_aa_rii_16r4t11f_ver120sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver119sa.mdl
+    * this design adds a snap after the stokes block and another after the VACC to debug the problem found in the vector accumulator
+
+v01_aa_rii_16r4t11f_ver121sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver120sa.mdl
+    * this design stalled while compiling so was renamed to ver122
+    * this design is identical to ver120 but the vector accumulator initialization script was updated to fix the problem, so this design should
+        not suffer from the vacc bug
+
+v01_aa_rii_16r4t11f_ver122sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver121sa.mdl
+    * this design is identical to ver121 and is simply a rename because the build stalled during compile.
+    * this design is identical to ver120 but the vector accumulator initialization script was updated to fix the problem, so this design should
+        not suffer from the vacc bug
+
+v01_aa_rii_16r4t11f_ver124sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver122sa.mdl
+    * this design fixes a delay discrepancy in the sync passing by the stokes block
+    * found the spectrum to be totall corrupt. Appears to be PFB_FIR or FFT at fault.
+
+v01_md_16r4t11f_ver125sa.mdl -- Updated version of v01_aa_rii_16r4t11f_ver124sa.mdl
+    * removed xblocks/pfb_fir_real and replaced with vanilla pfb_fir_real from ska-sa/mlib_devel
+    * spectrum still not 100% correct
+
+v01_16r4t11f_ver123.mdl -- Updated version v01_aa_rii_16r4t11f_ver122sa.mdl 
+    * addedin switching signal generator
+    * renamed to avoid 64 character maximum naming restraint
+    
+v01_16r4t11f_ver126.mdl -- Update version v01_16r4t11f_ver123.mdl
+    * replaced pfb_fir and fft with standard ones from ska-sa/mlib_devel library
+    * reduced delay past the stokes block by one intended to resolve an off by 8 
+      issue in the spectra
+
+v01_16r4t11f_ver127.mdl -- Rename of v01_16r4t11f_ver126.mdl
+
+v01_16r4t11f_ver129.mdl -- Update version v01_16r4t11f_ver127.mdl
+    * add one clock latency to valid signal at output of vacc to try to solve the off by 8 issue.
+
+v01_16r4t11f_ver130.mdl -- Update version v01_16r4t11f_ver129.mdl
+
+v01_16r4t11f_ver131.mdl -- Update version v01_16r4t11f_ver130.mdl
+    * added several changes to attempt to improve arm reliability
+    * BROKE sync generation in doing so. do not use this design
+    
+v01_16r4t11f_ver132.mdl -- Update version v01_16r4t11f_ver131.mdl
+    * fixed sync generation problem from ver131
+    * this design should have fixed vacc and reshaper problems.
+    * final output spectra looks ok
+    * note snaps triggered on 'valid' signals are off by one.
+    * find that vaccout and rshpout snaps are off by two, one is explained by valid. 
+        This does not match simulation and does not make sense since final output data
+        looks good. Suspect some interpretation/user error.
+
+v01_16r4t11f_ver134.mdl -- Update version v01_16r4t11f_ver132.mdl
+    * add timesnap debugging to check sync period oddities
+    * add delays to vaccout and rshpout snaps to compensate properly trigger logic
+    
+v01_16r4t11f_ver135.mdl -- Update version v01_16r4t11f_ver134.mdl
+    * hopefully fixed 5 ns glitch caused by vacc not properly resetting if sync period varies
+        and by sync_generator not providing consistent sync period when PPS comes
+    * updated most (all?) pos/neg edge blocks to use new edge detect block 
+        to avoid deprecation warnings
+
+v01_16r4t11f_ver140.mdl -- Update version v01_16r4t11f_ver135.mdl
+    * Removig hard coded shift schedule and adding fftshift software register
+      to allow dynamic setting of fft shift stages
+    * adding switching signal generator logic.  It was completely rewritten,
+      but the block was dropped in without any other changes to the design.
+
+v01_16r4t11f_ver141.mdl -- Update version v01_16r4t11f_ver140.mdl
+	* renaming ssg1 -> ssg
+	* removing spead_rst signal to reshaper (rst on reshaper is poorly named) to fix arming problem
+	* rename misnamed txack tags to txovf  to clean up.
+	* moved sync_disable circuitry a bit to avoid sync every time sync_disable is deasserted. Not sure if this was happening, but just in case.
+
+v01_16r4t11f_ver141bb.mdl -- Blackboxed version of v01_16r4t11f_ver141.mdl
+    * replaced fft and pfbs with blackboxed version.
+    * built successfully and updates faster after first update.
+
+fft11_bb.mdl -- blackbox model for fft
+
+pfb4t11_bb.mdl -- blackbox model for pfb
+
+v01_16r4t11f_ver142bb.mdl -- Update to v01_16r4t11f_ver141bb.mdl 
+    * Remove manual pps control from sg_sync register and move to separate sg_manpps register in case
+        the register bits are glitching when set from PPC.
+    * Add delay of 760*128 to sync_out to represent delay from first valid sync to vacc to when the first "valid valid" comes out of the vacc.
+        Used 760 instead of 768 to ensure data gets enabled early enough
+
+v01_16r4t11f_ver146bb.mdl -- Update to v01_16r4t11f_ver141bb_redraw.mdl
+    * fix potential glitch with reshaper rst signal on falling edge of data_enable
+    * updated ssg spec tick to be every 128 clocks instead of 256 clocks
+
+v01_16r4t11f_ver147bb.mdl -- Update to v01_16r4t11f_ver146bb.mdl
+    * added trigger on debug snap to look at what's happening right after data_enable goes high
+
+v01_16r4t11f_ver148bb.mdl -- Update to v01_16r4t11f_ver147bb.mdl
+    * added more trigger options on debug snap
+
+v01_16r4t11f_ver149bb.mdl -- Update to v01_16r4t11f_ver148bb.mdl
+    * added data_enable to valid input of tge to avoid run packets getting through
+
+v01_16r4t11f_ver151bb.mdl -- Update to v01_16r4t11f_ver149bb.mdl
+    * fix to SSG: moved control bits to LSBs of control register

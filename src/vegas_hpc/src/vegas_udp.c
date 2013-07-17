@@ -88,7 +88,7 @@ int vegas_udp_init(struct vegas_udp_params *p) {
     /* Poll command */
     p->pfd.fd = p->sock;
     p->pfd.events = POLLIN;
-
+    
     return(VEGAS_OK);
 }
 
@@ -106,15 +106,60 @@ int vegas_udp_wait(struct vegas_udp_params *p) {
     }  
 }
 
-int vegas_udp_recv(struct vegas_udp_params *p, struct vegas_udp_packet *b) {
-    int rv = recv(p->sock, b->data, VEGAS_MAX_PACKET_SIZE, 0);
+const unsigned char sphead[] = { 
+    0x53, 0x04, 0x03, 0x05,   0x00, 0x00, 0x00, 0x08, // 0
+    0x80, 0x00, 0x01, 0x00,   0x00, 0x00, 0x00, 0x00, // 1 (pkt num)
+    0x80, 0x00, 0x02, 0x00,   0x00, 0x00, 0x20, 0x20, // 2
+    0x80, 0x00, 0x03, 0x00,   0x00, 0x00, 0x00, 0x00, // 3
+    0x80, 0x00, 0x04, 0x00,   0x00, 0x00, 0x20, 0x00, // 4
+    0x80, 0x00, 0x20, 0x00,   0x00, 0x00, 0x00, 0x00, // 5 (abs time?)
+    0x80, 0x00, 0x21, 0x00,   0x00, 0x00, 0x00, 0x0D, // 6
+    0x80, 0x00, 0x22, 0x00,   0x00, 0x00, 0x00, 0x00, // 7
+    0x00, 0x00, 0x23, 0x00,   0x00, 0x00, 0x00, 0x00  // 8 
+};
+
+int vegas_udp_recv(struct vegas_udp_params *p, struct vegas_udp_packet *b, char bw_mode[]) {
+    int rv = 0;
+    char tempbuf[VEGAS_MAX_PACKET_SIZE]; /* for lbw */
+    int bw = (strncmp(bw_mode, "high", 4) == 0);
+    if (bw) /* hbw */
+    {
+        rv = recv(p->sock, b->data, VEGAS_MAX_PACKET_SIZE, 0);
+    }
+    else    /* lbw */
+    {
+        rv = recv(p->sock, tempbuf, VEGAS_MAX_PACKET_SIZE, 0);
+        if (8208 != rv) /* sanity check */
+        {
+            return VEGAS_ERR_PACKET;
+        }
+    }
     b->packet_size = rv;
     if (rv==-1) { return(VEGAS_ERR_SYS); }
     else if (p->packet_size) {
 #ifdef SPEAD
 
     	if (strncmp(p->packet_format, "SPEAD", 5) == 0)
+	    {
+    	    if (!bw)    /* only for lbw */
+	        {
+	            memcpy(b->data,sphead,72); // copy the header template
+	            unsigned int *hdr = (unsigned int *) b->data;
+                unsigned long tmcounter = ((unsigned long) (ntohl(((unsigned int*) tempbuf)[0])) << 32) + ntohl(((unsigned int*) tempbuf)[1]);
+				unsigned long pktnum = (tmcounter - 10) / 2048;
+                unsigned long status_bits = (unsigned long) (tempbuf[1] & 0x0F);
+                hdr[1*2+0] = hdr[1*2+0] | htonl((unsigned int) ((pktnum >> 32) & 0x00000000000000FF));
+	            hdr[1*2+1] = htonl((unsigned int) (pktnum & 0x00000000FFFFFFFF));
+	            hdr[5*2+1] = htonl((tmcounter - 10) & 0x000000FFFFFFFFFF);
+                hdr[7*2+1] = htonl((unsigned int) (status_bits & 0x0000000F));
+	            b->packet_size = 8192+72;
+
+	            char *in = tempbuf+16;          /* skip 16-byte header */
+	            char *out = b->data + 72;       /* skip 72-byte header */
+                (void) memcpy(out, in, 8192);   /* copy data */
+    	    }
             return vegas_chk_spead_pkt_size(b);
+        }
 		else if (rv!=p->packet_size)
 			return(VEGAS_ERR_PACKET);
 		else
@@ -167,6 +212,8 @@ size_t vegas_udp_packet_datasize(size_t packet_size) {
      */
     if (packet_size==PACKET_SIZE_1SFA) // 1SFA packet size
         return((size_t)8192);
+    else if (packet_size == 8208)
+        return ((size_t)8192); // simple 8K
     else if (packet_size==PACKET_SIZE_SHORT) 
         //return((size_t)256);
         return((size_t)512);

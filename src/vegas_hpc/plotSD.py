@@ -1,4 +1,5 @@
-#!/opt/local/bin/python2.7
+#!/opt/vegas/bin/python2.7
+
 import matplotlib
 #matplotlib.use('TkAgg')
 from matplotlib import pyplot as plt
@@ -23,14 +24,16 @@ def getSDdata(fname):
     data = bt.data.field('DATA')
     cf = bt.header['OBSFREQ']
     bw = bt.header['CHAN_BW']*1024
-    print "Found data with shape:",data.shape, "cf=",cf,"bw=",bw
-    return data,cf,bw
+    nchan = bt.header['NCHAN']
+    print "Found data with shape:",data.shape, "cf=",cf,"bw=",bw,"nchan=",nchan
+    return data,cf,bw,nchan
     
 def plotSDfile(fname,nplot=1):
-    d,cf,bw = getSDdata(fname)
+    d,cf,bw,nchan = getSDdata(fname)
     nspec = d.shape[0]
-    freqs = cf + bw*np.arange(1024)/1024.0  - bw/2.0
+    freqs = cf + bw*np.arange(nchan)/(nchan*1.0)  - bw/2.0
     freqs = freqs/1e6
+
     for pn in range(nplot):
         f,axs = plt.subplots(4,1,squeeze=True,sharex=True)
         sidx = pn*nspec/nplot + nspec/(2*nplot)
@@ -60,6 +63,6 @@ if __name__ == "__main__":
     if len(sys.argv) >3:
 	fadc = float(sys.argv[3])
     else:
-	fadc = 600.0
-    plotSDfile(fn,nplot,fadc=fadc)
+	fadc = 1200.0
+    plotSDfile(fn,nplot)
     plt.show()

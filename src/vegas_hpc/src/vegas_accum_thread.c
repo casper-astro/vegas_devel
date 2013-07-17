@@ -16,6 +16,7 @@
 #include <sys/resource.h>
 #include <sys/types.h>
 #include <stdint.h>
+#include <math.h>
 
 #include "vegas_defines.h"
 #include "fitshead.h"
@@ -133,9 +134,8 @@ void vegas_accum_thread(void *_args) {
     /* Set cpu affinity */
     cpu_set_t cpuset, cpuset_orig;
     sched_getaffinity(0, sizeof(cpu_set_t), &cpuset_orig);
-    //CPU_ZERO(&cpuset);
-    CPU_CLR(13, &cpuset);
-    CPU_SET(9, &cpuset);
+    CPU_ZERO(&cpuset);
+    CPU_SET(14, &cpuset);
     rv = sched_setaffinity(0, sizeof(cpu_set_t), &cpuset);
     if (rv<0) { 
         vegas_error("vegas_accum_thread", "Error setting cpu affinity.");
@@ -267,7 +267,7 @@ void vegas_accum_thread(void *_args) {
 
             /* Read required exposure and PFB rate from status shared memory */
             reqd_exposure = sf.data_columns.exposure;
-            pfb_rate = abs(sf.hdr.efsampfr) / (2 * sf.hdr.nchan);
+            pfb_rate = fabs(sf.hdr.efsampfr) / (2 * sf.hdr.nchan);
 
             /* Initialise the index in the output block */
             index_out = (struct databuf_index*)vegas_databuf_index(db_out, curblock_out);
@@ -417,7 +417,8 @@ void vegas_accum_thread(void *_args) {
                 {
                     /*Record SPEAD header fields*/
                     data_cols[accumid].time = index_in->cpu_gpu_buf[heap].heap_rcvd_mjd;
-                    data_cols[accumid].time_counter = freq_heap->time_cntr;
+                    data_cols[accumid].time_counter = (((uint64_t)freq_heap->time_cntr_top8) << 32)
+                                                        + (uint64_t)freq_heap->time_cntr;
                     data_cols[accumid].integ_num = integ_num;
                     data_cols[accumid].sttspec = freq_heap->spectrum_cntr;
                     data_cols[accumid].accumid = accumid;

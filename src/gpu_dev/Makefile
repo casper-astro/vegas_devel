@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -std=gnu99 -pedantic -Wall -O3
 # NVCC compiler and flags
 NVCC = nvcc
-NVFLAGS = --ptxas-options=-v --compiler-bindir=/usr/bin/gcc-4.3 -O3
+NVFLAGS = --ptxas-options=-v --compiler-bindir=/usr/bin/gcc -O3
 
 # linker options
 LFLAGS_FFTW3 = -lfftw3f

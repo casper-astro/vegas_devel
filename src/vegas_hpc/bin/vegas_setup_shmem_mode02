@@ -1,0 +1,17 @@
+#!/bin/bash
+${VEGAS_DIR}/bin/vegas_init_shmem 
+python2.7 ${VEGAS_DIR}/python/vegas_set_params.py -D --nogbt
+python2.7 ${VEGAS_DIR}/python/vegas_set_params.py -U --nogbt \
+    --host=10.0.0.4     \
+    --port=60000        \
+    --packets=SPEAD     \
+    --npol=2		    \
+    --nchan=2048        \
+    --chan_bw=1171.876e3 \
+    --nsubband=1        \
+    --sub0freq=2.4e9    \
+    --exposure=2e-5    \
+    --fpgaclk=150e6     \
+    --efsampfr=1.2e9    \
+    --hwexposr=0.5e-3   \
+    --obsmode=HBW       \

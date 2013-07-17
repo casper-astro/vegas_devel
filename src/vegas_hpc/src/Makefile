@@ -20,11 +20,11 @@ ifdef EXT_DISK
 endif
 
 CFLAGS = -g -O3 -Wall -D_GNU_SOURCE -I$(CUDA)/include -I$(VEGAS_INCL) \
-		-I$(PYSLALIB) -I$(VEGAS_DIR)/src $(OPT_FLAGS)
+		-I$(PYSLALIB) -I$(VEGAS_DIR)/src -I/opt/local/include $(OPT_FLAGS)
 
-NVCCFLAGS = -arch=sm_20 -I$(CUDA)/include -I$(VEGAS_INCL)
+NVCCFLAGS = -arch=sm_20 -I$(CUDA)/include -I/opt/local/include -I$(VEGAS_INCL)
 
-LIBS = -L. -L$(PYSLALIB) -L$(VEGAS_LIB) -L$(VEGAS_LIB_GCC) -lcfitsio -lsla -lm -lpthread -lg2c
+LIBS = -L. -L$(PYSLALIB) -L/home/gbt7/newt/lib -L$(VEGAS_LIB) -L$(VEGAS_LIB_GCC) -lcfitsio -lsla -lm -lpthread -lg2c
 CUDA_LIBS = -L$(CUDA)/lib64 -lcufft -lcuda -lcudart -lrt -lm -lpthread
 
 PROGS = check_vegas_databuf check_vegas_status clean_vegas_shmem
@@ -38,7 +38,7 @@ THREAD_OBJS  = vegas_net_thread.o vegas_rawdisk_thread.o \
 	        vegas_null_thread.o vegas_fake_net_thread.o
 CUDA_OBJS = pfb_gpu.o pfb_gpu_kernels.o vegas_pfb_thread.o
 
-all: $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw 
+all: $(PROGS) $(THREAD_PROGS) vegas_hpc_lbw vegas_hpc_server
 clean:
 	rm -f $(PROGS) $(THREAD_PROGS) *~ *.o sdfits.tgz test_psrfits_0*.fits *.ptx
 INSTALL_DIR = ../bin
@@ -55,6 +55,10 @@ find_dropped_blocks: find_dropped_blocks.o
 	nvcc -c $(NVCCFLAGS) $< -o $@
 
 vegas_hpc_lbw: vegas_hpc_lbw.c $(THREAD_OBJS) $(OBJS) $(CUDA_OBJS)
+	$(CC) $(CFLAGS) $(CUDA_CFLAGS) $< -o $@ $(THREAD_OBJS) \
+		$(CUDA_OBJS) $(OBJS) $(LIBS) $(CUDA_LIBS)
+
+vegas_hpc_server: vegas_hpc_server.c $(THREAD_OBJS) $(OBJS) $(CUDA_OBJS)
 	$(CC) $(CFLAGS) $(CUDA_CFLAGS) $< -o $@ $(THREAD_OBJS) \
 		$(CUDA_OBJS) $(OBJS) $(LIBS) $(CUDA_LIBS)
 

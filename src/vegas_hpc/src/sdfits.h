@@ -48,7 +48,7 @@ struct hdrinfo
 struct sdfits_data_columns
 {
     double time;            // MJD start of integration (from system time)
-    int time_counter;       // FPGA time counter at start of integration
+    unsigned long int time_counter;       // FPGA time counter at start of integration
     int integ_num;          // The integration number (indicates a specific integ. period)
     float exposure;         // Effective integration time (seconds)
     char object[16];        // Object being viewed

@@ -59,14 +59,13 @@ int main(int argc, char *argv[])
     int iNextOpt = 0;
     /* valid short options */
 #if PLOT
-    const char* const pcOptsShort = "hb:n:pa:s:";
+    const char* const pcOptsShort = "hn:pa:s:";
 #else
-    const char* const pcOptsShort = "hb:n:pa:";
+    const char* const pcOptsShort = "hn:pa:";
 #endif
     /* valid long options */
     const struct option stOptsLong[] = {
         { "help",           0, NULL, 'h' },
-        { "nsub",           1, NULL, 'b' },
         { "nfft",           1, NULL, 'n' },
         { "pfb",            0, NULL, 'p' },
         { "nacc",           1, NULL, 'a' },

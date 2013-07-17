@@ -1,0 +1,5 @@
+{
+  'addsub' => 'SELECT Adder_Subtracter virtex6 Xilinx,_Inc. 11.0',
+  'counter' => 'SELECT Binary_Counter virtex6 Xilinx_Inc. 11.0',
+  'mult' => 'SELECT Multiplier virtex6 Xilinx,_Inc. 11.2'
+}
