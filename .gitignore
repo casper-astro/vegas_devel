@@ -3,3 +3,4 @@ src/guppi_daq/python/possem_wrap.c
 *.png
 *.mat
 *.swp
+*.old
