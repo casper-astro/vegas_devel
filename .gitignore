@@ -1,2 +1,5 @@
 src/guppi_daq/python/possem.py
 src/guppi_daq/python/possem_wrap.c
+*.png
+*.mat
+*.swp
