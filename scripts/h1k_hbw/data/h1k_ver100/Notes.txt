@@ -1,0 +1,22 @@
+Datafiles:
+1) Each *.npy file contains an array
+2) '(c)binN_MxRange_NUMpts.npy': frequency response at Nth bin
+       c = This is the center bin in the test
+       N = Nth bin in the spectrum
+       M = M times of bin width to scan
+       NUM = NUM points in the given frequency range to test
+3) 'specsN_MxRange.npy': A 2-D array contains spectra in the testing
+       N = Nth bin in the spectrum for testing (center)
+       M = M times of bin width to scan
+4) To use:
+       >>> import numpy as np
+       >>> binN_resp = np.load('binN_(---).npy')
+       >>> plot(binN_resp)
+       >>> specsN = np.load('specsN_(---).npy')
+       >>> plot(specsN[21])
+5) Notes/Questions:
+       <1> What happen to the center bin response? For different test cases
+contained in this folder, they all look ... strangely messy. Even though the
+basic shape are shown.
+       <2> To do: add HELP sections to the python code
+       <3>   
