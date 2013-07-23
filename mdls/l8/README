@@ -1,6 +1,12 @@
 l8 - can be configured to output 1 band or 8 subbands.
 
 ### DESIGNS ###
+l8_ver121_01.mdl - Test case. ONLY 1 subband. Compiled at 1.5GHz.  
+                   Based on ver121, but without black-boxing.
+                   Lots of snapblocks.
+
+l8_ver121.mdl - compiled at 1.5GHz clock rate.
+                watch out for the labels going into the reshaper.
 
 l8_ver118.mdl - differs from lesser versions in that the order of the SSG 
 		status bits (to be sent off to the HPC) have changed to
