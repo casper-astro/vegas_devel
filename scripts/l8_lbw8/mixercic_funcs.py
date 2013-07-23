@@ -33,7 +33,7 @@ def wave_gen(lo_f, sample_f, size):
         sini = int16(sinf*32767)
         cosf = cos(2*pi*lo_f/(sample_f*1.)*i)
         cosi = int16(cosf*32767)
-        sincos = int32(sini)*2**16 + cosi
+        sincos = int32(sini)*(2**16) + cosi
         #"""
         siniw.append(sini)
         cosiw.append(cosi)
@@ -48,11 +48,13 @@ def constant_wave_gen(size):
     result = [0x7fff7fff] * size
     return result
 
-def fill_mixer_bram(fpgaclient, n_inputs, mixer_name, limit, bramformat, data):
+def fill_mixer_bram(fpgaclient, n_inputs, mixer_name, limit, bramformat, data, t_s):
     fpgaclient.write_int(mixer_name+'_mixer_cnt', limit - 2 )  # This -2 because of the Rational a = b delay one clock for output and counter begin from 0
+    time.sleep(t_s)
     for i in range(2**n_inputs):
 	fpgaclient.write(mixer_name+'_lo_'+str(i)+'_lo_ram', struct.pack(bramformat, *data[i::(2**n_inputs)]))
-	#print('done with '+str(i))
+	time.sleep(t_s)
+	print('done with '+mixer_name+'_'+str(i))
 
 
 
@@ -65,7 +67,8 @@ def calc_lof(Fs,bramlength,n_inputs,lof_input,lof_diff_n,lof_diff_m):
         The available frequency combination can be: 
         (1/2,1/3,1/4,1/5,2/5,1/6/,1/7,2/7,3/7,...,1/2^bramlength,2/2^bramlength,...) times Fs
     # How do we find the numberator and denominator? e.g. say we have 8 bram of length 2**10 (for 8 parallel inputs), we can choose to
-    #    use a fraction of them (this upperboudn of address for all subbands combined would be lof_diff_m, the denominator) to store lof_diff_n cycles of sine/cosine
+    #    use a fraction of them (this upperboudn of address for all subbands combined would be lof_diff_m, the denominator, which HAS
+    #    to  be a multiple of 8, the number of parralel inputs) to store lof_diff_n cycles of sine/cosine
     #    waves, which has frequency of (lof_diff_n*Fs/lof_diff_m)
     Parameters:
         Fs: ADC sampling frequency, e.g. 600.0(MHz)
@@ -95,7 +98,7 @@ def calc_lof(Fs,bramlength,n_inputs,lof_input,lof_diff_n,lof_diff_m):
     print 'Mixing frequency (actual achivable):'+str(lof_actual)+'MHz'
     return lof_actual, lof_diff_n, lof_diff_m
 
-def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, mixer_name, bramlength):
+def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, mixer_name, bramlength, t_s):
     """
 	lo_f: LO frequency (desired value, might not be able to achieve it precisely)
 	bandwidth: ADC working bandwidth
@@ -115,7 +118,7 @@ def lo_setup(fpgaclient, lo_f, bandwidth, n_inputs, mixer_name, bramlength):
 	lo_wave, tmp_a, tmp_b = wave_gen(lof_output, bandwidth*2, lof_diff_num)
     bramformat = '>'+str(lof_diff_num/(2**n_inputs))+'I'
     #print size(lo_wave), ' bramformat', bramformat
-    fill_mixer_bram(fpgaclient, n_inputs, mixer_name, lof_diff_num/(2**n_inputs), bramformat, lo_wave)
-    return lof_output
+    fill_mixer_bram(fpgaclient, n_inputs, mixer_name, lof_diff_num/(2**n_inputs), bramformat, lo_wave, t_s)
+    return lof_output, lo_wave
 
 
