@@ -1,0 +1,5 @@
+h16k_hbw - 16k channel FPGA design, High BW HPC mode
+h1k_hbw - 1k channel FPGA design, High BW HPC mode
+l1_lbw1 - single band FPGA design, Low bandwidth (GPU) mode
+l8_lbw1/ - 1 or 8 band FPGA design, 1 subband HPC mode
+l8_lbw8/ - 1 or 8 band FPGA design, 8 subband HPC mode
