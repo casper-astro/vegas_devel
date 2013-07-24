@@ -1,7 +1,7 @@
 #! /opt/vegas/bin/python2.7
 
 import corr,time,struct 
-roach = '192.168.40.82'
+roach = '192.168.40.99'
 
 ## IPs at Greenbank
 #dest_ip = 192*(2**24)+168*(2**16)+3*(2**8)+15
@@ -15,6 +15,11 @@ dest_port = 60000
 
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
+
+
+
+bw = 1500.
+nchan = 1024*16.
 
 #acc_len=1023
 acc_len=96
@@ -67,6 +72,22 @@ def reset():
     fpga.write_int('arm',0)
     fpga.write_int('sg_sync',0x12)
     fpga.write_int('sg_sync',0x11)
+
+def runbash(shell_command):
+  event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+  return event.communicate()
+
+def setfreq(freq):
+  b=runbash('./sg_ctrl freq '+str(freq))
+  time.sleep(.5)
+  return b[0].split(' ')[0]
+
+def setampl(ampl):
+  a=runbash('sg_ctrl ampl '+str(ampl))
+  time.sleep(.5)
+  b=runbash('sg_ctrl ampl')
+  time.sleep(.5)
+  return b[0].split(' ')[0]
 
 def getadc0():
   adc0=np.fromstring(fpga.snapshot_get('adcsnap0',man_trig=True)['data'],dtype='<i1')
@@ -122,7 +143,44 @@ def intrlv(ar1,ar2):
   ar3[0::2] = ar1
   ar3[1::2] = ar2
   return ar3 
-       
+  
+def channelshape(nbin, num, scan_range):
+  powers0=np.array([])
+  powers1=np.array([])
+  powers2=np.array([])
+  freqs=np.array([])
+
+  deltaf = bw/nchan
+  specs=getrshp()[:nchan]
+
+  freqs1=np.array(range(int(num)*scan_range+1))*1./num*deltaf+nbin*deltaf-deltaf*2
+
+  for freq in freqs1:
+    print "setting freq ",str(freq)
+    setfreq(freq)
+    time.sleep(.5) 
+    print runbash('./sg_ctrl freq')[0].split(' ')[0]
+
+    spec_bm1=0
+    spec_bin=0
+    spec_bp1=0
+
+    for k in range(10):
+      spec=getrshp()[:1024]
+      spec_bm1=spec_bm1+spec[nbin-1]
+      spec_bin=spec_bin+spec[nbin]
+      spec_bp1=spec_bp1+spec[nbin+1]
+
+    specs = np.vstack((specs, spec))
+    freqs = np.append(freqs, freq)
+    powers0=np.append(powers0, spec_bm1)
+    powers1=np.append(powers1, spec_bin)
+    powers2=np.append(powers2, spec_bp1)
+    print 'Power at bin: ', str(spec_bin)
+     
+  return np.log10(powers0), np.log10(powers1), np.log10(powers2), freqs, specs
+
+     
 #def getrshp2():
 #  fpga.write_int('rshpout_ctrl',0)
 #  fpga.write_int('rshpout_ctrl',1)
