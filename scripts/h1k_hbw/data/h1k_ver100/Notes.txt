@@ -15,8 +15,9 @@ Datafiles:
        >>> specsN = np.load('specsN_(---).npy')
        >>> plot(specsN[21])
 5) Notes/Questions:
+       <1> To do: add HELP sections to the python code
+
+6) Answered Questions:
        <1> What happen to the center bin response? For different test cases
 contained in this folder, they all look ... strangely messy. Even though the
-basic shape are shown.
-       <2> To do: add HELP sections to the python code
-       <3>   
+basic shape are shown. ---- Messed up powers1 array structure (fixed in new commit)   

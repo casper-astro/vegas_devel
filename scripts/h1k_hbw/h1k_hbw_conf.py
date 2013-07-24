@@ -93,6 +93,7 @@ def channelshape(nbin, num, scan_range):
   powers0=np.array([])
   powers1=np.array([])
   powers2=np.array([])
+  freqs=np.array([])
 
   deltaf = bw/nchan
   specs=getrshp()[:nchan]
@@ -104,7 +105,6 @@ def channelshape(nbin, num, scan_range):
     setfreq(freq)
     time.sleep(.5) 
     print runbash('./sg_ctrl freq')[0].split(' ')[0]
-    powers1=np.append(powers1,getrshp()[:1024][nbin])
 
     spec_bm1=0
     spec_bin=0
@@ -117,12 +117,13 @@ def channelshape(nbin, num, scan_range):
       spec_bp1=spec_bp1+spec[nbin+1]
 
     specs = np.vstack((specs, spec))
+    freqs = np.append(freqs, freq)
     powers0=np.append(powers0, spec_bm1)
     powers1=np.append(powers1, spec_bin)
     powers2=np.append(powers2, spec_bp1)
     print 'Power at bin: ', str(spec_bin)
      
-  return np.log10(powers0), np.log10(powers1), np.log10(powers2), specs
+  return np.log10(powers0), np.log10(powers1), np.log10(powers2), freqs, specs
 '''
 
   for freq in freqs2:

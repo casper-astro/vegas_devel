@@ -1,0 +1,5 @@
+To test the channel shape
+   (1) Run h1k_hbw_conf.py
+   (2) >>> powers0, powers1, powers2, freqs, specs = channelshape(nbin, npts, scan_range)
+   (3) >>> plot(freqs, powers0)
+   (4) 
