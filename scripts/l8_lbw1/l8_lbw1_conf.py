@@ -8,7 +8,7 @@ lo_f_actual = lo_f
 bw = 1500 # Input siganl bandwidth, in MHz
 #boffile='v81_16r128dr_ver101_2013_Apr_10_0126.bof'
 boffile='l8_ver115_2013_May_17_1027.bof'
-roach = '192.168.40.82'
+roach = '192.168.40.99'
 
 dest_ip  = 10*(2**24) +  145 #10.0.0.145
 src_ip   = 10*(2**24) + 4  #10.0.0.4
