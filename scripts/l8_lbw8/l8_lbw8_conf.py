@@ -34,6 +34,8 @@ mac_base = (2<<40) + (2<<32)
 
 
 def runbash(shell_command):
+  '''
+  '''
   event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
   return event.communicate()
 
