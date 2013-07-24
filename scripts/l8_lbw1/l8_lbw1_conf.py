@@ -7,8 +7,7 @@ execfile('mixercic_funcs.py')
 
 n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
 bramlength = 10 # size of brams used in mixers (2^?)
-#lo_f = [104, 103, 75, 91, 92, 122, 135, 144]
-lo_f = [75, 91, 92, 100, 104, 122, 135, 144]
+lo_f = 91
 lo_f_actual = lo_f
 brd_clk = 1500. # bandwidth, in MHz, aka brd_clk
 bw = brd_clk
@@ -339,7 +338,7 @@ sys.stdout.flush()
 fpga.write_int('dest_ip',dest_ip)
 fpga.write_int('dest_port',dest_port)
 
-fpga.write_int('mode_sel', 0)
+fpga.write_int('mode_sel', 1)
 time.sleep(1)
 fpga.write_int('sg_sync', 0b10100)
 time.sleep(1)
@@ -357,25 +356,10 @@ print 'done'
 #lo_setup(fpga, lo_f, bandwidth=400, n_inputs, cnt_r_name='mixer_cnt', mixer_name='s1', bramlength=8)
 
 t_sleep = 1
-#lo_f_actual[0] = lo_setup(fpga, lo_f[0], brd_clk, n_inputs, 's0', bramlength, t_sleep)
-lo_f_actual[1], wave = lo_setup(fpga, lo_f[1], brd_clk, n_inputs, 's1', bramlength, t_sleep)
-#lo_f_actual[2] = lo_setup(fpga, lo_f[2], brd_clk, n_inputs, 's2', bramlength, t_sleep)
-#lo_f_actual[3] = lo_setup(fpga, lo_f[3], brd_clk, n_inputs, 's3', bramlength, t_sleep)
-#lo_f_actual[4] = lo_setup(fpga, lo_f[4], brd_clk, n_inputs, 's4', bramlength, t_sleep)
-#lo_f_actual[5] = lo_setup(fpga, lo_f[5], brd_clk, n_inputs, 's5', bramlength, t_sleep)
-#lo_f_actual[6] = lo_setup(fpga, lo_f[6], brd_clk, n_inputs, 's6', bramlength, t_sleep)
-#lo_f_actual[7] = lo_setup(fpga, lo_f[7], brd_clk, n_inputs, 's7', bramlength, t_sleep)
+lo_f_actual, wave = lo_setup(fpga, lo_f, brd_clk, n_inputs, 's1', bramlength, t_sleep)
 
 time.sleep(1)
 
 setgain(1, 2**12, 2**14)
-#fpga.write_int('s0_quant_gain',2**20)
-#fpga.write_int('s1_quant_gain',2**20)
-#fpga.write_int('s2_quant_gain',2**20)
-#fpga.write_int('s3_quant_gain',2**20)
-#fpga.write_int('s4_quant_gain',2**20)
-#fpga.write_int('s5_quant_gain',2**20)
-#fpga.write_int('s6_quant_gain',2**20)
-#fpga.write_int('s7_quant_gain',2**20)
 
 print "Board Clock: ",fpga.est_brd_clk()
