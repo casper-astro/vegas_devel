@@ -1,0 +1,2 @@
+Problem:
+  (1) The channel shape function doesn't quite work for this mode - because in the model file, the snap block for reshaper ('rshpout') only packs 1024 values. But a full spectrum in this mode has 16k channels. So we can't get a complete spectrum in the rshpout snap blocks. 
