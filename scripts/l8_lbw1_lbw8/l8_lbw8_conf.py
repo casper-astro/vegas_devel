@@ -11,7 +11,8 @@ bramlength = 10 # size of brams used in mixers (2^?)
 
 mode_sel = 0  # 0 for mode l8_lbw8
 t_sleep = 1
-lo_f = 91
+n_subbands = 8
+lo_f = [15, 77, 91, 135, 296, 588, 710, 1247]
 lo_f_actual = lo_f
 brd_clk = 1500. # bandwidth, in MHz, aka brd_clk
 bw = brd_clk
@@ -90,11 +91,10 @@ print 'done'
 #########################################
 
 
-
-lo_f_actual, wave = lo_setup(lo_f, 's1')
-
-time.sleep(1)
-
-setgain(1, 2**12, 2**14)
+for i in range(n_subbands):
+    lo_f_actual[i], wave_tmp = lo_setup(lo_f[i], 's'+str(i))
+    time.sleep(t_sleep)
+    setgain(i, 2**12, 2**14)
+    time.sleep(t_sleep)
 
 print "Board Clock: ",fpga.est_brd_clk()
