@@ -9,6 +9,7 @@ execfile('l8_debug.py')
 n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
 bramlength = 10 # size of brams used in mixers (2^?)
 
+mode_sel = 1  # 1 for mode l8_lbw1
 t_sleep = 1
 lo_f = 91
 lo_f_actual = lo_f
@@ -74,7 +75,7 @@ sys.stdout.flush()
 fpga.write_int('dest_ip',dest_ip)
 fpga.write_int('dest_port',dest_port)
 
-fpga.write_int('mode_sel', 1)
+set_mode(mode_sel)
 time.sleep(1)
 fpga.write_int('sg_sync', 0b10100)
 time.sleep(1)
