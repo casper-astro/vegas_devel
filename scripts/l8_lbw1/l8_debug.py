@@ -284,6 +284,7 @@ def plot_chc(lo_f):
 def filterresponse(pol, lo_f, scan_range=1, skip=50):
   '''
   Plot the filter response of the CIC-Halfband-CIC filter (subband1)
+  ***Notes: This function calls several functions (e.g. setfreq(), setampl(), etc.) that's specific for Berkeley BWRC setup
   Global variables:
     brd_clk: ADC bandwidth
     dec_rate: the decimation rate of the 
