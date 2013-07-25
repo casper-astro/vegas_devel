@@ -1,1 +1,14 @@
+The model files for l8_lbw1 and l8_lbw8 should be the same.
+The conf scripts are the same except for the line 
+   >>> fpga.write_int('mode_sel', 0)  # mode l8_lbw8
+   OR
+   >>> fpga.write_int('mode_sel', 1)  # mode l8_lbw1
 
+----------------------
+Notes:
+  (1) Histogram? 
+	>>> hist(getadc0(), 60) # very nice
+	>>> hist(get_mixer_ri(1, 're'), 60) # spacings???
+	>>> hist(get_dr16(1).real, 60) # not as nice but overall okay
+	>>> hist(get_halfband(1).real, 60) # still not bad
+	>>> hist(get_chc(1).real, 60) # OUCH
