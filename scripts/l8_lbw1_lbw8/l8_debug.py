@@ -1,50 +1,16 @@
-#! /usr/bin/env python2.6
-
-from subprocess import Popen, PIPE, STDOUT
-import corr,time,numpy,struct,sys, socket
-from matplotlib.pyplot import * 
-execfile('mixercic_funcs.py')
-
-n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
-bramlength = 10 # size of brams used in mixers (2^?)
-#lo_f = [104, 103, 75, 91, 92, 122, 135, 144]
-lo_f = [75, 91, 92, 100, 104, 122, 135, 144]
-lo_f_actual = lo_f
-brd_clk = 1500. # bandwidth, in MHz, aka brd_clk
-bw = brd_clk
-dec_rate = 128. # decimation rate
-#nchan = 8192. # number of points in fft
-
-#boffile='v13_16r128dr_ver113b_2013_Mar_21_0034.bof'
-#boffile='v13_16r64dr_ver114_2013_Apr_06_2235.bof'
-#boffile='v13_16r128dr_ver117_2013_Apr_12_0131.bof'
-#boffile='l8_ver115_2013_May_17_1027.bof'
-#boffile='l8_ver117_2013_May_25_1242.bof'
-boffile='l8_ver121_01_2013_Jul_21_1229.bof'
-
-roach = '192.168.40.99'
-
-dest_ip  = 10*(2**24) +  145 #10.0.0.145
-src_ip   = 10*(2**24) + 4  #10.0.0.4
-
-dest_port     = 60000
-fabric_port     = 60000
-
-mac_base = (2<<40) + (2<<32)
-
-
 def runbash(shell_command):
-  '''
-  '''
+  """ run shell_command """
   event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
   return event.communicate()
 
 def setfreq(freq):
+  """ For Berkely BWRC setup: set frequency for signal generator """
   b=runbash('./sg_ctrl freq '+str(freq))
   time.sleep(.5)
   return b[0].split(' ')[0]
 
 def setampl(ampl):
+  """ For Berkely BWRC setup: set frequency for signal generator """
   a=runbash('./sg_ctrl ampl '+str(ampl))
   time.sleep(.5)
   b=runbash('./sg_ctrl ampl')
@@ -52,6 +18,7 @@ def setampl(ampl):
   return b[0].split(' ')[0]
 
 def setmodoff():
+  """ For Berkely BWRC setup: set frequency for signal generator """
   a=runbash('./sg_ctrl mod off')
   time.sleep(.5)
   b=runbash('./sg_ctrl mod')
@@ -80,18 +47,37 @@ def boardreset():
   print 'done'
 
 def plotfft2(data, lo_f, bw, dec_rate):
+    '''
+    Parameters:
+       data: an array of data to plot
+       lo_f: LO
+       bw: bandwidth
+       dec_rate: decimation rate (not neccessarily the same as the total decimation rate in the design
+    Return:
+       NONE
+    '''
     f_index = np.linspace(lo_f - bw/(1.*dec_rate), lo_f + bw/(1.*dec_rate), len(
 data))
     plot(f_index, 10*np.log10(np.abs(np.fft.fftshift(np.fft.fft(data)))))
 
-
 def plotfft(ax, data, lo_f, bw, dec_rate):
+    '''
+    Parameters:
+       ax: an axis of figure to plot
+       data: an array of data to plot
+       lo_f: LO
+       bw: bandwidth
+       dec_rate: decimation rate (not neccessarily the same as the total decimation rate in the design
+    Return:
+       NONE
+    '''
     f_index = np.linspace(lo_f - bw/(1.*dec_rate), lo_f + bw/(1.*dec_rate), len(
 data))
     f_index = f_index - bw/(1.*dec_rate*len(data))
     ax.plot(f_index, 10*np.log10(np.abs(np.fft.fftshift(np.fft.fft(data)))))
 
 def makecomplex(data0, data1):
+    """ Given two real 1-D arrays and return a complex array """
     data_len = len(data0)
     complexdata = np.zeros(data_len, dtype=np.complex64)
     complexdata.real = data0
@@ -99,32 +85,34 @@ def makecomplex(data0, data1):
     return complexdata
 
 def get_mixer_ri(pol, reim):
+    """ Read the output of mixer, given: (1) pol ; (2) re/im ***subband1 """
     mixer = np.fromstring(fpga.snapshot_get('s1_mixer_p'+str(pol)+reim,man_trig=True, man_valid=True)['data'],dtype='>i1')
     return mixer
 
 def get_mixer(pol):
+    '''
+    Get the output of mixer @subband 1
+    Parameters:
+	pol: 1 or 2
+    Return values:
+	mixer_re: real
+	mixer_im: imag
+    Notes: as of ver121_01, the re/im streams of mixers are not in sync
+    '''
     mixer_re = get_mixer_ri(pol, 're')
     mixer_im = get_mixer_ri(pol, 'im')
     return mixer_re, mixer_im
 
-def get_mixer_lmt():
-    lmt = fpga.read_int('s1_mixer_cnt')
-    return lmt
-
-def setgain(subband, gain1, gain2):
-  fpga.write_int('s'+str(subband)+'_quant_gain1',gain1)
-  fpga.write_int('s'+str(subband)+'_quant_gain2',gain2)
-
-def gbeconf():
-  fpga.tap_start('tap0','gbe0',mac_base+src_ip,src_ip,fabric_port)
-
 def getadc(i):
-  adc=np.fromstring(fpga.snapshot_get('adcsnap'+str(i),man_trig=True,man_valid=True)['data'],dtype='<i1')
-  return adc
+    """ Read the output of adc, given (i) *** i=0 OR i=1  """
+    adc=np.fromstring(fpga.snapshot_get('adcsnap'+str(i),man_trig=True,man_valid=True)['data'],dtype='<i1')
+    return adc
 
 def get_dr16(pol):
     '''
-    subband 1, first CIC filter (dec_rate=16)
+    Read the output of first CIC stage (dec_rate=16) @ subband 1
+    Parameters: pol (1 or 2)
+    Return: dr16_out: a complex array
     '''
     dr16=np.fromstring(fpga.snapshot_get('s1_p'+str(pol)+'_dr16', man_trig=True,
  man_valid=True)['data'], dtype='>i8')
@@ -134,6 +122,13 @@ def get_dr16(pol):
     return dr16_out
 
 def get_1stcic(pol):
+    '''
+    Read the output of the first CIC (before Halfband, dec_rate=32) @subband1
+    Parameters: pol (1 or 2)
+    Returns: 
+	first_cic_out (complex array, 32-bit re/im)
+	first_cic_full_out (complex array,64-bit re/im)
+    '''
     first_cic = np.fromstring(fpga.snapshot_get('s1_p'+str(pol)+'_firstcic', man_trig=True, man_valid=True)['data'],dtype='>i4')
     first_cic_full = np.fromstring(fpga.snapshot_get('s1_p'+str(pol)+'_firstcic_full', man_trig=True, man_valid=True)['data'],dtype='>i8')
     fst_c_re = first_cic[0::4]
@@ -145,6 +140,11 @@ def get_1stcic(pol):
     return first_cic_out, first_cic_full_out
 
 def get_halfband(pol):
+    '''
+    Read the output of the halfband filter (so far, dec_rate=32) @subband1
+    Parameters: pol1 (1 or 2)
+    Returns: a complex array
+    '''
     halfband = np.fromstring(fpga.snapshot_get('s1_p'+str(pol)+'_halfband', man_trig=True, man_valid=True)['data'], dtype='>i4')
     hb_re = halfband[0::4]
     hb_im = halfband[1::4]
@@ -154,6 +154,12 @@ def get_halfband(pol):
 def get_subband1(pol):
   ''' 
   This is for the output of the first subband
+  Parameters:
+     pol: 1 or 2
+  Return values:
+     s1p: complex array (8-bit re/im)
+  Notes:
+     Compare to get_chc(pol), this one has only 8-bit while the other has 32 bits
   '''
   s1p_raw = np.fromstring(fpga.snapshot_get('s1p'+str(pol)+'_snap',man_trig=True,man_valid=True)['data'],dtype='<i1')
   s1p_re = s1p_raw[0::2*(dec_rate/(2**n_inputs))]
@@ -164,6 +170,8 @@ def get_subband1(pol):
 def get_chc(pol):
   ''' 
   This is for the output of the first subband
+  Parameters: pol1 (1 or 2)
+  Returns: a complex array
   '''
   chc_raw = np.fromstring(fpga.snapshot_get('cic'+str(pol)+'_snap', man_trig=True, man_valid=True)['data'], dtype='>i4')
   chc_re = chc_raw[0::2*(dec_rate/(2**n_inputs))]
@@ -205,6 +213,10 @@ def plotpacketfft(i):
   plot(f_index_y, 10*np.log10(np.abs(np.fft.fftshift(np.fft.fft(Y)))))
 
 def plot_dr16(lo_f):
+    '''
+    Plot the output of the first CIC stage (dec_rate = 16)
+    Two pols, complex spectra
+    '''
     dr16_p1 = get_dr16(1)
     dr16_p2 = get_dr16(2)
     f, (ax1, ax2, ax3, ax4) = subplots(4)
@@ -219,6 +231,10 @@ def plot_dr16(lo_f):
     show()
 
 def plot_1stcic(lo_f):
+    '''
+    Plot the output of the first CIC (dec_rate = 32)
+    Two pols, complex spectra
+    '''
     c_p1, c_p1_full = get_1stcic_ri(1)
     c_p2, c_p2_full = get_1stcic_ri(2)
     f, (ax1, ax2) = subplots(2)
@@ -231,6 +247,10 @@ def plot_1stcic(lo_f):
     show()
 
 def plot_hb(lo_f):
+    '''
+    Plot the output of the halfband filter (as of now, dec_rate=32 due to the CIC filter before the halfband filter)
+    Two pools, complex spectra
+    '''
     hb_p1 = get_halfband(1)
     hb_p2 = get_halfband(2)
     f, (ax1, ax2, ax3, ax4) = subplots(4)
@@ -245,6 +265,9 @@ def plot_hb(lo_f):
     show()
 
 def plot_chc(lo_f):
+    '''
+    Plot the output of the combined filter (dec_rate = 128)
+    '''
     chc_p1 = get_chc(1)
     chc_p2 = get_chc(2)
     f, (ax1, ax2, ax3, ax4) = subplots(4)
@@ -258,12 +281,23 @@ def plot_chc(lo_f):
     plotfft(ax2, chc_p2, lo_f, bw, dec_rate)
     show()
 
-def lo_adjust(i, new_lo):
-  lo_actual, lo_wave = lo_setup(fpga, new_lo, bw, n_inputs, 's'+str(i), bramlength, 1)
-  lo_f_actual[i] = new_lo
-  return lo_actual, lo_wave
-
 def filterresponse(pol, lo_f, scan_range=1, skip=50):
+  '''
+  Plot the filter response of the CIC-Halfband-CIC filter (subband1)
+  ***Notes: This function calls several functions (e.g. setfreq(), setampl(), etc.) that's specific for Berkeley BWRC setup
+  Global variables:
+    brd_clk: ADC bandwidth
+    dec_rate: the decimation rate of the 
+  Parameters:
+    pol: which pol to plot
+    lo_f: LO
+    scan_range: how many times of bandpass range to scan
+    skip: how to select test frequencies - skip how many points
+  Return values:
+    resp: response array
+    freqs: an array of frequencies corresponding to the resp array
+    specs: a 2-D array containing corresponding spectra 
+  '''
   resp=np.array([])
   freqs=np.array([])
   time.sleep(1)
@@ -277,10 +311,10 @@ def filterresponse(pol, lo_f, scan_range=1, skip=50):
   for i in range(0,nchan*scan_range,skip):
     freq=freq_arr[i]
     print "setting freq ",str(freq)
-    setampl(-15)
-    setfreq(freq)
+    setampl(-15) #BWRC
+    setfreq(freq) #BWRC
     time.sleep(.3)
-    print runbash('./sg_ctrl freq')[0].split(' ')[0]
+    print runbash('./sg_ctrl freq')[0].split(' ')[0]  #BWRC
     resp_y=0
     for k in range(5):
       data=get_subband1(pol)
@@ -301,83 +335,4 @@ def filterresponse(pol, lo_f, scan_range=1, skip=50):
 
   return resp, freqs, specs
 
-#-------------------------------------------------------
-#
-#-------------------------------------------------------
 
-print('Connecting to server %s on port... '%(roach)),
-fpga = corr.katcp_wrapper.FpgaClient(roach)
-time.sleep(2)
-
-if fpga.is_connected():
-	print 'ok\n'	
-else:
-    print 'ERROR\n'
-
-print '------------------------'
-print 'Programming FPGA with %s...' % boffile,
-fpga.progdev(boffile)
-print 'ok\n'
-time.sleep(5)
-
-print '------------------------'
-print 'Setting the port 0 linkup :',
-
-gbe0_link=bool(fpga.read_int('gbe0'))
-print gbe0_link
-
-if not gbe0_link:
-   print 'There is no cable plugged into port0'
-
-print '------------------------'
-print 'Configuring receiver core...',   
-# have to do this manually for now
-fpga.tap_start('tap0','gbe0',mac_base+src_ip,src_ip,fabric_port)
-print 'done'
-
-print '------------------------'
-print 'Setting-up packet core...',
-sys.stdout.flush()
-fpga.write_int('dest_ip',dest_ip)
-fpga.write_int('dest_port',dest_port)
-
-fpga.write_int('mode_sel', 0)
-time.sleep(1)
-fpga.write_int('sg_sync', 0b10100)
-time.sleep(1)
-fpga.write_int('arm', 0)
-fpga.write_int('arm', 1)
-fpga.write_int('arm', 0)
-time.sleep(1)
-fpga.write_int('sg_sync', 0b10101)
-fpga.write_int('sg_sync', 0b10100)
-print 'done'
-
-#########################################
-
-
-#lo_setup(fpga, lo_f, bandwidth=400, n_inputs, cnt_r_name='mixer_cnt', mixer_name='s1', bramlength=8)
-
-t_sleep = 1
-#lo_f_actual[0] = lo_setup(fpga, lo_f[0], brd_clk, n_inputs, 's0', bramlength, t_sleep)
-lo_f_actual[1], wave = lo_setup(fpga, lo_f[1], brd_clk, n_inputs, 's1', bramlength, t_sleep)
-#lo_f_actual[2] = lo_setup(fpga, lo_f[2], brd_clk, n_inputs, 's2', bramlength, t_sleep)
-#lo_f_actual[3] = lo_setup(fpga, lo_f[3], brd_clk, n_inputs, 's3', bramlength, t_sleep)
-#lo_f_actual[4] = lo_setup(fpga, lo_f[4], brd_clk, n_inputs, 's4', bramlength, t_sleep)
-#lo_f_actual[5] = lo_setup(fpga, lo_f[5], brd_clk, n_inputs, 's5', bramlength, t_sleep)
-#lo_f_actual[6] = lo_setup(fpga, lo_f[6], brd_clk, n_inputs, 's6', bramlength, t_sleep)
-#lo_f_actual[7] = lo_setup(fpga, lo_f[7], brd_clk, n_inputs, 's7', bramlength, t_sleep)
-
-time.sleep(1)
-
-setgain(1, 2**12, 2**14)
-#fpga.write_int('s0_quant_gain',2**20)
-#fpga.write_int('s1_quant_gain',2**20)
-#fpga.write_int('s2_quant_gain',2**20)
-#fpga.write_int('s3_quant_gain',2**20)
-#fpga.write_int('s4_quant_gain',2**20)
-#fpga.write_int('s5_quant_gain',2**20)
-#fpga.write_int('s6_quant_gain',2**20)
-#fpga.write_int('s7_quant_gain',2**20)
-
-print "Board Clock: ",fpga.est_brd_clk()

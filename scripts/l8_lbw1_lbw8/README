@@ -4,6 +4,13 @@ The conf scripts are the same except for the line
    OR
    >>> fpga.write_int('mode_sel', 1)  # mode l8_lbw1
 
+
+----------------------
+Model files:
+  ver121:    @1.5GHz, 8 subbands, but the goto tags going into the reshaper are all from subband1 in fact. That needs to be fixed.
+  ver121_01: @1.5GHz, 1 subband only
+  See the notes in the ../../mdls/l8 folder for more info.
+
 ----------------------
 Notes:
   (1) Histogram? 
