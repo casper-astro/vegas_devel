@@ -1,3 +1,0 @@
-To test the frequency response:
-    (1) Run l8_lbw1_conf.py
-    (2) >>> powers0, powers1, powers2, freqs, specs = 
