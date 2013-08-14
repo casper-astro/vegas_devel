@@ -75,22 +75,48 @@ def reset():
     fpga.write_int('sg_sync',0x11)
 
 def runbash(shell_command):
+  """ run shell_command """
   event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
   return event.communicate()
 
 def setfreq(freq):
+  """ For Berkely BWRC setup: set frequency for signal generator """
   b=runbash('./sg_ctrl freq '+str(freq))
   time.sleep(.5)
   return b[0].split(' ')[0]
 
 def setampl(ampl):
-  a=runbash('sg_ctrl ampl '+str(ampl))
+  """ For Berkely BWRC setup: set frequency for signal generator """
+  a=runbash('./sg_ctrl ampl '+str(ampl))
   time.sleep(.5)
-  b=runbash('sg_ctrl ampl')
+  b=runbash('./sg_ctrl ampl')
   time.sleep(.5)
   return b[0].split(' ')[0]
 
-def channelshape(nbin, num, scan_range):
+def setmodoff():
+  """ For Berkely BWRC setup: set frequency for signal generator """
+  a=runbash('./sg_ctrl mod off')
+  time.sleep(.5)
+  b=runbash('./sg_ctrl mod')
+  time.sleep(.5)
+  return b[0].split(' ')[0]
+
+def channelshape(nbin, num, scan_range, acc):
+  '''
+  Parameters: 
+    nbin: the N-th bin to scan
+    num:  how many points to test inside a bin
+    scan_range: how many times of binwidth to scan? we scan on a larger range on both side of the center bin
+    acc: for each test frequency input, how many accumulation do we do to obtain a response data point?
+  Retuns:
+    powers0: an array; response of the (N-1)th bin
+    powers1: an array; response of the Nth bin
+    powers2: an array; response of the (N+1)th bin
+    freqs:   an array; the test frequencies
+    specs:   a 2-D array; the un-accumulated spectra; one spectrum for each test frequency
+  Notes:
+    (1) The unit for data in the powers0, powers1, powers2 arrays is dB/10
+  '''
   powers0=np.array([])
   powers1=np.array([])
   powers2=np.array([])
@@ -99,20 +125,20 @@ def channelshape(nbin, num, scan_range):
   deltaf = bw/nchan
   specs=getrshp()[:nchan]
 
-  freqs1=np.array(range(int(num)*scan_range+1))*1./num*deltaf+nbin*deltaf-deltaf*2
+  freqs1=np.array(range(int(num)*scan_range+1))*1./num*deltaf+nbin*deltaf-deltaf*(scan_range/2.)
 
   for freq in freqs1:
     print "setting freq ",str(freq)
-    setfreq(freq)
+    setfreq(freq)  # for Berkeley BWRC settings
     time.sleep(.5) 
-    print runbash('./sg_ctrl freq')[0].split(' ')[0]
+    print runbash('./sg_ctrl freq')[0].split(' ')[0] #for Berkeley BWRC settings
 
     spec_bm1=0
     spec_bin=0
     spec_bp1=0
 
-    for k in range(10):
-      spec=getrshp()[:1024]
+    for k in range(acc):
+      spec=getrshp()[:nchan]
       spec_bm1=spec_bm1+spec[nbin-1]
       spec_bin=spec_bin+spec[nbin]
       spec_bp1=spec_bp1+spec[nbin+1]
@@ -125,32 +151,14 @@ def channelshape(nbin, num, scan_range):
     print 'Power at bin: ', str(spec_bin)
      
   return np.log10(powers0), np.log10(powers1), np.log10(powers2), freqs, specs
-'''
-
-  for freq in freqs2:
-    print "setting freq ",str(freq)
-    setfreq(freq)
-    time.sleep(2) 
-    
-:wq
-owers2=np.append(powers2,getrshp()[:1024][100])
-
-  for freq in freqs3:
-    print "setting freq ",str(freq)
-    setfreq(freq)
-    time.sleep(2) 
-    powers3=np.append(powers3,getrshp()[:1024][101])
-
-'''
-
-#  powers=append(powers1,powers2)
-#  powers=append(powers,powers3) 
 
 def getadc0():
+  """ Read the output of adc0  """
   adc0=np.fromstring(fpga.snapshot_get('adcsnap0',man_trig=True,man_valid=True)['data'],dtype='<i1')
   return adc0
 
 def getadc1():
+  """ Read the output of adc1  """
   adc1=np.fromstring(fpga.snapshot_get('adcsnap0',man_trig=True,man_valid=True)['data'],dtype='<i1')
   return adc1
 
@@ -159,12 +167,12 @@ def getvacc():
   return a[:32]
 
 def getrshp():
-  # grabs a snapshot of XX values
-  # plot(getrshp()[:1024]
+  """ grabs a snapshot of XX values """
   rshp=np.fromstring(fpga.snapshot_get('rshpout')['data'],dtype='>i4')[::4]
   return rshp
 
 def intrlv(ar1,ar2):
+  """interleave two arrays """
   ar3 = np.zeros((len(ar1) + len(ar2)))
   ar3[0::2] = ar1
   ar3[1::2] = ar2
