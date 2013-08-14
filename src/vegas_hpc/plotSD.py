@@ -55,7 +55,9 @@ def plotSDfile(fname,nplot=1):
             
 if __name__ == "__main__":
     import sys
+    print sys.argv, len(sys.argv)
     fn = sys.argv[1]
+    print fn
     if len(sys.argv) >2:
         nplot = int(sys.argv[2])
     else:
@@ -63,6 +65,6 @@ if __name__ == "__main__":
     if len(sys.argv) >3:
 	fadc = float(sys.argv[3])
     else:
-	fadc = 1200.0
+	fadc = 1500.0
     plotSDfile(fn,nplot)
     plt.show()
