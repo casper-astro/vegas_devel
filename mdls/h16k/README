@@ -2,6 +2,14 @@
 
 h16k_ver101 - Changed the order of the status bits to coincide with the
 	      HPC code.  The ordering is now 3. BLANK 2. SR1 1. SR0 0. CAL
+h16k_ver104 - ?
+h16k_ver105 - Test case. Similar to ver107, only differences are in the amount of delay on the paths of
+	      data and we and trig of the rshpout snap block. Corresponding bof files are h16k_ver105_*.bof.
+	      First compilation has fixed delay amount (probably wrong), second compilation features
+	      programmable delay length (see model file). 
+h16k_ver107 - Test case. Trying to make sensible capturing scheme for reshaper output 
+	      (focus on the part arond rshpout). Still a work i nprogress. Corresponding bof files
+	      are h16k_ver107_01_*.bof (re-naming issue...)
 
 ### COMPILING ###
 
