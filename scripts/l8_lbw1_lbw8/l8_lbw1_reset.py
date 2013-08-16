@@ -2,7 +2,7 @@
 
 import corr,time,numpy,struct,sys
 
-roach = '192.168.40.82'
+roach = '192.168.40.99'
 
 dest_ip  = 10*(2**24) +  145 #10.0.0.145
 src_ip   = 10*(2**24) + 4  #10.0.0.4

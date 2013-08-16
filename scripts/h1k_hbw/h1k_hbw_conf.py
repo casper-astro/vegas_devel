@@ -30,7 +30,8 @@ fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
 
 #boffile='v01_16r4t11f_ver141_2013_Feb_19_1801.bof' # 1 subband - seems to work
-boffile='h1k_ver100_2013_Apr_17_1957.bof'
+#boffile='h1k_ver100_2013_Apr_17_1957.bof'
+boffile='h1k_ver102_2013_Aug_06_1711.bof'
 
 # Program the Device
 fpga.progdev(boffile)
