@@ -9,20 +9,16 @@ roach = '192.168.40.99'
 #dest_ip = 192*(2**24)+168*(2**16)+3*(2**8)+15
 #src_ip = 192*(2**24)+168*(2**16)+3*(2**8)+17
 
-
-#
 bw = 1500.
 nchan = 1024
-
 
 ## IPs at BWRC
 dest_ip = 10*(2**24)+145
 src_ip = 10*(2**24)+4
 
-dest_port = 60000
-
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
+dest_port = 60000
 
 acc_len=767
 
@@ -31,7 +27,9 @@ time.sleep(1)
 
 #boffile='v01_16r4t11f_ver141_2013_Feb_19_1801.bof' # 1 subband - seems to work
 #boffile='h1k_ver100_2013_Apr_17_1957.bof'
-boffile='h1k_ver102_2013_Aug_06_1711.bof'
+#boffile='h1k_ver102_2013_Aug_06_1711.bof#s
+#boffile='h1k_ver102_2013_Aug_13_2138.bof'
+boffile='h1k_ver102_2013_Aug_18_0954.bof'
 
 # Program the Device
 fpga.progdev(boffile)

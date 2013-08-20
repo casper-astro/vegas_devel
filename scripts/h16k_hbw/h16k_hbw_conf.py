@@ -16,8 +16,6 @@ dest_port = 60000
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
 
-
-
 bw = 1500.
 nchan = 1024*16.
 
@@ -31,7 +29,8 @@ time.sleep(1)
 #boffile='newmode_2013_Mar_26_1953.bof'
 #boffile='newmode_ver102_2013_Apr_04_1517.bof'
 #boffile='h16k_ver100_2013_Apr_17_1725.bof'
-boffile='h16k_ver104_2013_Aug_06_1117.bof'
+#boffile='h16k_ver104_2013_Aug_06_1117.bof'
+boffile='h16k_ver102_2013_Aug_20_0053.bof'
 
 # Program the Device
 fpga.progdev(boffile)
@@ -104,10 +103,6 @@ def getvacc():
 
 def getrshp():
   rshp=np.fromstring(fpga.snapshot_get('rshpout')['data'],dtype='>i4')[::4]
-  return rshp
-
-def getrshp1():
-  rshp=np.fromstring(fpga.snapshot_get('rshpout1')['data'],dtype='>i4')[::4]
   return rshp
 
 def getvaccout():

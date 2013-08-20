@@ -4,10 +4,6 @@ from subprocess import Popen, PIPE, STDOUT
 import corr,time,numpy,struct,sys
 #n_inputs = 4 # number of simultaneous inputs - should be 4 for final design
 
-#boffile='l1_ver110_2013_Jul_14_2350.bof'
-#boffile='l1_ver112_2013_Jul_17_1634.bof'
-#boffile='l1_ver113_2013_Jul_18_1453.bof'
-#boffile='l1_ver114_2013_Jul_18_1644.bof'
 #boffile='l1_ver115_2013_Jul_19_1113.bof'
 #boffile='l1_ver106_2013_Jun_24_1324.bof'
 boffile='l1_ver117_2013_Jul_20_1645.bof'

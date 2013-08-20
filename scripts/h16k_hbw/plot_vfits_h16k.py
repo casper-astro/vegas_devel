@@ -18,8 +18,10 @@ specnum = 0
 #print nchan, nsb, nstokes
 d = hdu.data[specnum]['DATA']
 ns = d.shape[0]
-#print ns
+print ns
+
 d = d.reshape((1, nchan, nsb, nstokes))
+
 #d[:,0,:,:] = d[:,1,:,:]
 #d[:,4095,:,:] = d[:,4094,:,:]
 #d = np.fft.fftshift(d, axes=1)
