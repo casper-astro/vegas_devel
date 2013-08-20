@@ -1,6 +1,9 @@
 #! /opt/vegas/bin/python2.7
 
-import corr,time,struct 
+import corr,time,struct
+execfile('hbw_funcs.py')
+
+ 
 roach = '192.168.40.99'
 
 ## IPs at Greenbank
@@ -16,14 +19,13 @@ dest_port = 60000
 mac_base = (2 << 40) + (2<<32)
 fabric_port = 60000
 
-
-
 bw = 1500.
-nchan = 1024*16.
+nchan = 1024*16.  #h16k
 
 #acc_len=1023
-acc_len=96
+acc_len=96 #h16k
 #acc_len=2046
+fftshift=0b101110111111111 #this is what the setting was in Apr4 commit 
 
 fpga=corr.katcp_wrapper.FpgaClient(roach,7147)
 time.sleep(1)
@@ -31,7 +33,13 @@ time.sleep(1)
 #boffile='newmode_2013_Mar_26_1953.bof'
 #boffile='newmode_ver102_2013_Apr_04_1517.bof'
 #boffile='h16k_ver100_2013_Apr_17_1725.bof'
-boffile='h16k_ver104_2013_Aug_06_1117.bof'
+#boffile='h16k_ver104_2013_Aug_06_1117.bof'   #<---MW
+#boffile='h16k_ver102_2013_Aug_01_1254.bof'   #<---HC
+#boffile='h16k_ver103_2013_Aug_03_2049.bof'   #<---HC
+#boffile='h16k_ver104_2013_Aug_06_1117.bof'   #<---HC
+#boffile='h16k_ver107_01_2013_Aug_11_1144.bof' #<---HC
+#boffile='h16k_ver102_2013_Aug_19_1340.bof' #<--- HC ver107 compiled by MW
+boffile='h16k_ver102_2013_Aug_20_0053.bof'
 
 # Program the Device
 fpga.progdev(boffile)
@@ -50,11 +58,13 @@ fpga.write_int('dest_port',dest_port)
 fpga.write_int('acc_len',acc_len)
 
 # Set FFT shift schedule
-fpga.write_int('fftshift', 0b101110111111111)
+#fpga.write_int('fftshift', 0b101110111111111)  #h16k, but where did I get this idea?
+#fpga.write_int('fftshift', 0b1010101010)  # <--- this is the same as in mode h1k
+fpga.write_int('fftshift', fftshift)
 
 # Set sync period
 time.sleep(1)
-fpga.write_int('sg_period', acc_len*(2*11)*4*2048-4)
+fpga.write_int('sg_period', acc_len*(2*11)*4*2048-4) #h16k
 #fpga.write_int('sg_period',2*acc_len*7*32*128*32-4)
 #fpga.write_int('sg_period',2*16*1024*1024/8 -2)
 
@@ -65,221 +75,6 @@ fpga.write_int('arm',0)
 fpga.write_int('arm',1)
 fpga.write_int('arm',0)
 fpga.write_int('sg_sync',0x13)
-
-def reset():
-    fpga.write_int('sg_sync',0x12) 
-    fpga.write_int('arm',0)
-    fpga.write_int('arm',1)
-    fpga.write_int('arm',0)
-    fpga.write_int('sg_sync',0x12)
-    fpga.write_int('sg_sync',0x11)
-
-def runbash(shell_command):
-  event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
-  return event.communicate()
-
-def setfreq(freq):
-  b=runbash('./sg_ctrl freq '+str(freq))
-  time.sleep(.5)
-  return b[0].split(' ')[0]
-
-def setampl(ampl):
-  a=runbash('sg_ctrl ampl '+str(ampl))
-  time.sleep(.5)
-  b=runbash('sg_ctrl ampl')
-  time.sleep(.5)
-  return b[0].split(' ')[0]
-
-def getadc0():
-  adc0=np.fromstring(fpga.snapshot_get('adcsnap0',man_trig=True)['data'],dtype='<i1')
-  return adc0
-
-def getadc1():
-  adc1=np.fromstring(fpga.snapshot_get('adcsnap0',man_trig=True)['data'],dtype='<i1')
-  return adc1
-
-def getvacc():
-  a=np.fromstring(fpga.snapshot_get('vaccout')['data'],dtype='>i4')[::4]
-  return a[:32]
-
-def getrshp():
-  rshp=np.fromstring(fpga.snapshot_get('rshpout')['data'],dtype='>i4')[::4]
-  return rshp
-
-def getrshp1():
-  rshp=np.fromstring(fpga.snapshot_get('rshpout1')['data'],dtype='>i4')[::4]
-  return rshp
-
-def getvaccout():
-  vaccout1=np.fromstring(fpga.snapshot_get('vaccout1')['data'],dtype='>i4')
-  vaccout2=np.fromstring(fpga.snapshot_get('vaccout2')['data'],dtype='>i4')
-
-  a3=vaccout1[3::4]
-  a2=vaccout1[2::4]
-  a1=vaccout1[1::4]
-  a0=vaccout1[::4]
-
-  a7=vaccout2[3::4]
-  a6=vaccout2[2::4]
-  a5=vaccout2[1::4]
-  a4=vaccout2[::4]
-
-  vacc=np.array([]) 
-
-  for i in range(len(a0)):
-
-    vacc=np.append(vacc,a7[i]) 
-    vacc=np.append(vacc,a6[i]) 
-    vacc=np.append(vacc,a5[i]) 
-    vacc=np.append(vacc,a4[i]) 
-    vacc=np.append(vacc,a3[i]) 
-    vacc=np.append(vacc,a2[i]) 
-    vacc=np.append(vacc,a1[i]) 
-    vacc=np.append(vacc,a0[i]) 
-
-  return vacc
-
-def intrlv(ar1,ar2):
-  ar3 = np.zeros((len(ar1) + len(ar2)))
-  ar3[0::2] = ar1
-  ar3[1::2] = ar2
-  return ar3 
-  
-def channelshape(nbin, num, scan_range):
-  powers0=np.array([])
-  powers1=np.array([])
-  powers2=np.array([])
-  freqs=np.array([])
-
-  deltaf = bw/nchan
-  specs=getrshp()[:nchan]
-
-  freqs1=np.array(range(int(num)*scan_range+1))*1./num*deltaf+nbin*deltaf-deltaf*2
-
-  for freq in freqs1:
-    print "setting freq ",str(freq)
-    setfreq(freq)
-    time.sleep(.5) 
-    print runbash('./sg_ctrl freq')[0].split(' ')[0]
-
-    spec_bm1=0
-    spec_bin=0
-    spec_bp1=0
-
-    for k in range(10):
-      spec=getrshp()[:1024]
-      spec_bm1=spec_bm1+spec[nbin-1]
-      spec_bin=spec_bin+spec[nbin]
-      spec_bp1=spec_bp1+spec[nbin+1]
-
-    specs = np.vstack((specs, spec))
-    freqs = np.append(freqs, freq)
-    powers0=np.append(powers0, spec_bm1)
-    powers1=np.append(powers1, spec_bin)
-    powers2=np.append(powers2, spec_bp1)
-    print 'Power at bin: ', str(spec_bin)
-     
-  return np.log10(powers0), np.log10(powers1), np.log10(powers2), freqs, specs
-
-     
-#def getrshp2():
-#  fpga.write_int('rshpout_ctrl',0)
-#  fpga.write_int('rshpout_ctrl',1)
-#  fpga.write_int('rshpout_ctrl',0)
-#  a=fpga.read('rshpout_bram',16384)
-#  b=np.fromstring(a,dtype='uint32')
-#  b1=struct.unpack('>4096I',a)
-#  return b1[::4]
-
-def plotrshp():
-  fpga.write_int('rshpout_ctrl',0)
-  fpga.write_int('rshpout_ctrl',1)
-  fpga.write_int('rshpout_ctrl',0)
-  a=fpga.read('rshpout_bram',16384)
-  b=np.fromstring(a,dtype='uint32')
-  b1=struct.unpack('>4096I',a)
-  b1=b1[::4]
-  plot(b1)
-  show() 
-
-def getstokes():
-  stokes=np.fromstring(fpga.snapshot_get('stokesout',man_valid=True,man_trig=True)['data'],dtype='>i4')[::4]
-  return stokes
-
-def extract(reg,offset,bitwidth):
-  reg = reg >> offset
-  mask=1 
-  for i in range(bitwidth-1):
-    mask=(mask << 1) + 1
-  return reg & mask
-
-def get_debug():
-  #debug_bram=np.fromstring(fpga.snapshot_get('debug',man_valid=True,man_trig=True)['data'],dtype='>i4')
-  debug_bram=np.fromstring(fpga.snapshot_get('debug')['data'],dtype='>i4')
-  return debug_bram
-
-def get_valid(offset):
-  #debug_bram=get_debug()
-  bitwidth=1
-  validarr=np.array([])
-  for i in range(len(debug_bram)):
-    val=extract(debug_bram[i],offset,bitwidth)
-    validarr=np.append(validarr,val)
-  return validarr
-
-
-def makedebugdict(debug_bram):
-
-  debugdict = {'data_valid':[],
-	       'eoh':[],
-	       'eof':[],
-	       'spead_st':[],
-	       'data_valid_spead':[],
-	       'reshape_state':[],
-	       'data_enable':[],
-	       'spead_rst':[],
-	       'master_rst':[],
-	       'tge_rst':[],
-	       'valid':[],
-	       'txack':[]} 
-
-  for i in range(size(debug_bram)):
-    debugdict['data_valid'].append(extract(debug_bram[i],15,1))
-    debugdict['eoh'].append(extract(debug_bram[i],14,1))
-    debugdict['eof'].append(extract(debug_bram[i],13,1))
-    debugdict['spead_st'].append(extract(debug_bram[i],10,3))
-    debugdict['data_valid_spead'].append(extract(debug_bram[i],9,3))
-    debugdict['reshape_state'].append(extract(debug_bram[i],6,3))
-    debugdict['data_enable'].append(extract(debug_bram[i],5,1))
-    debugdict['spead_rst'].append(extract(debug_bram[i],4,1))
-    debugdict['master_rst'].append(extract(debug_bram[i],3,1))
-    debugdict['tge_rst'].append(extract(debug_bram[i],2,1))
-    debugdict['valid'].append(extract(debug_bram[i],1,1))
-    debugdict['txack'].append(extract(debug_bram[i],0,1))
-
-  return debugdict
-
-def plotdebug(debubdict):
-  
-  f, xarr = subplots(6,sharex=True)
-  dd=debugdict
-  xarr[0].plot(dd['data_valid'])
-  xarr[0].set_title('data_valid')
-
-  xarr[1].plot(dd['eoh'])
-  xarr[1].set_title('eoh')
-
-  xarr[2].plot(dd['eof'])
-  xarr[2].set_title('eof')
-
-  xarr[3].plot(dd['spead_st'])
-  xarr[3].set_title('spead_st')
-
-  xarr[4].plot(dd['data_valid_spead'])
-  xarr[4].set_title('data_valid_spead')
-
-  xarr[5].plot(dd['reshape_state'])
-  xarr[5].set_title('reshape_state')
 
 reset()
 #debug_bram = getdebug()
