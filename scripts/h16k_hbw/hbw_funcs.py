@@ -59,7 +59,7 @@ def channelshape(nbin, num, scan_range, acc):
 
   freqs1=np.array(range(int(num)*scan_range+1))*1./num*deltaf+nbin*deltaf-deltaf*(scan_range/2.)
 
-  nbin = nbin-1 # temporal hack fix for ver107_01
+  #nbin = nbin-1 # temporal hack fix for ver107_01
   for freq in freqs1:
     print "setting freq ",str(freq)
     setfreq(freq)  # for Berkeley BWRC settings
