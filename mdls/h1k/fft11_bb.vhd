@@ -23,7 +23,7 @@ entity fft11_bb is
     in8: in std_logic_vector(17 downto 0); 
     in9: in std_logic_vector(17 downto 0); 
     sync_in: in std_logic; 
-    oflow: out std_logic; 
+    oflow: out std_logic_vector(31 downto 0); 
     out0: out std_logic_vector(35 downto 0); 
     out1: out std_logic_vector(35 downto 0); 
     out2: out std_logic_vector(35 downto 0); 
