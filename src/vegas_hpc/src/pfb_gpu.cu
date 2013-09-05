@@ -293,7 +293,8 @@ void do_pfb(struct vegas_databuf *db_in,
         /* Sanity check for the first iteration */
         if ((g_iBlockInDataSize % (g_iNumSubBands * g_nchan * sizeof(char4))) != 0)
         {
-            (void) fprintf(stderr, "ERROR: Data size mismatch!\n");
+            (void) fprintf(stderr, "ERROR: Data size mismatch! BlockInDataSize=%d NumSubBands=%d nchan=%d\n",
+                                    g_iBlockInDataSize, g_iNumSubBands, g_nchan);
             run = 0;
             return;
         }
