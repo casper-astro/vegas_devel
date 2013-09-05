@@ -443,6 +443,7 @@ void do_pfb(struct vegas_databuf *db_in,
          
                 /* Write new heap header fields */
                 freq_heap_out->time_cntr_id = 0x20;
+                freq_heap_out->time_cntr_top8 = first_time_heap_in_accum->time_cntr_top8;
                 freq_heap_out->time_cntr = first_time_heap_in_accum->time_cntr;
                 freq_heap_out->spectrum_cntr_id = 0x21;
                 freq_heap_out->spectrum_cntr = g_iTotHeapOut;
@@ -493,6 +494,7 @@ void do_pfb(struct vegas_databuf *db_in,
      
             /* Write new heap header fields */
             freq_heap_out->time_cntr_id = 0x20;
+            freq_heap_out->time_cntr_top8 = first_time_heap_in_accum->time_cntr_top8;
             freq_heap_out->time_cntr = first_time_heap_in_accum->time_cntr;
             freq_heap_out->spectrum_cntr_id = 0x21;
             freq_heap_out->spectrum_cntr = g_iTotHeapOut;
