@@ -658,7 +658,7 @@ int get_accumulated_spectrum_from_device(char *out)
                              * sizeof(float4)),
                             cudaMemcpyDeviceToHost));
     /* copy the positive frequencies out */
-    CUDASafeCall(cudaMemcpy(out,
+    CUDASafeCall(cudaMemcpy(out + (g_iNumSubBands * (g_nchan / 2) * sizeof(float4)),
                             g_pf4SumStokes_d,
                             (g_iNumSubBands
                              * (g_nchan / 2)
