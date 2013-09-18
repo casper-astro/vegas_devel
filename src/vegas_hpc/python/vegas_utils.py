@@ -39,7 +39,7 @@ def cardlist_from_string(str):
     numcards = len(str)/80
     for ii in range(numcards):
         str_part = str[ii*80:(ii+1)*80]
-        if str_part.strip()=="END":
+        if str_part.strip().find("END") == 0:
             break
         else:
             cardlist.append(card_from_string(str_part))
