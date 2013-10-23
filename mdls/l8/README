@@ -1,19 +1,20 @@
 l8 - can be configured to output 1 band or 8 subbands.
 
 ### DESIGNS ###
-l8_ver121_01.mdl - Test case. ONLY 1 subband. Compiled at 1.5GHz.  
-                   Based on ver121, but without black-boxing.
-                   Lots of snapblocks.
 
-l8_ver121.mdl - compiled at 1.5GHz clock rate.
-                watch out for the labels going into the reshaper.
+l8_ver106.mdl - This is the current up to date model.  This version
+has been tested in Berkeley and appears to work in that environment as
+of Aug 25th 2013.  Versions of bof files that are older than this date
+can be assumed to not work properly.
 
-l8_ver118.mdl - differs from lesser versions in that the order of the SSG 
-		status bits (to be sent off to the HPC) have changed to
-		3. Blank
-		2. SR1
-		1. SR0
-		0. CAL
+The most up to date bof file should be in the top level bofs/ directory.
+The most up to date scripts should be in the scripts/l8_lbw8/ or 
+scripts/l8_lbw1 directories depending on the mode you are using.
+
+Please note that there may be l8_verXXX versions that are greater than the
+most up to date version.  This was due to un-coordination versioning. 
+
+*  SSG status bit order is 3. BLANK 2. SR1 1. SR0 0. CAL
 
 ### COMPILING ###
 
