@@ -10,3 +10,26 @@ l1_ver106 - This version corrects the order of the status bits
 	    in the SSG to coincide with the HPC code.  The order
 	    is 3. BLANK 2. SR1 1. SR0 0.CAL
 
+l1_ver107 - Add AND gate at valid signal of 10GBE core to improve arming
+        reliability, by making sure no data is being clocked in while
+        10 GbE core is resetting
+
+l1_ver108 - Replace mixer block with hardcoded "fast mixer" (no multipliers)
+        should improve "image" rejection caused by using quantized digital LO
+        with asymetric maximum values (-8/8 to 7/8 for 4 bit quantization
+        which was previously used.
+
+l1_ver109 - Add delay to multipliers in round blocks to meet timing
+
+l1_ver110 - Change filter response and use 256 tap instead of 64 tap filters
+
+l1_ver111 - downshift values (retaining precision) before filter to avoid overflow
+
+l1_ver112 - new arm logic. Should keep data from flowing while arm signal
+        is high, but didn't notice an extra pos-edge on the arm signal so didn't work
+
+l1_ver113 - fixed previous arm logic; now data does not flow during arming
+        and tge core is reset 100 cycles after arm goes low.
+        Also swapped Real and Imag outputs of filter to keep band same
+        orientation as at the ADC
+        Also changed requantization to use bits 48:55 instead of 56:63
