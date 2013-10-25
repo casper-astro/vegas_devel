@@ -3,6 +3,10 @@
 h16k_ver101 - Changed the order of the status bits to coincide with the
 	      HPC code.  The ordering is now 3. BLANK 2. SR1 1. SR0 0. CAL
 
+fftwbr_core_ver101 - This fft core has been redrawn with the 1/8 band fix...
+		      latency in relational block in the mirror_spectrum 
+		      script has been set to 1
+
 ### COMPILING ###
 
 h16k_verXXX.mdl uses the "Black Boxing" trick to improve the development efficiency. The technique is described in the Casper Memo No.28(http://casper.berkeley.edu/wiki/images/a/a4/Black_box_memo.pdf).
