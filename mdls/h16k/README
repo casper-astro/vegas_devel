@@ -1,5 +1,8 @@
 ### DESIGNS ###
 
+h16k_ver104 - This design has been updated with the new FFT core that has
+	      the 1/8 band fix (fftbr_core_ver101).
+
 h16k_ver101 - Changed the order of the status bits to coincide with the
 	      HPC code.  The ordering is now 3. BLANK 2. SR1 1. SR0 0. CAL
 

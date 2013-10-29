@@ -1,4 +1,6 @@
 ####
+h16k_ver104_2013_Oct_28_1255.bof - compiled with the 1/8 band fix.
+
 v01_aa_ri_8r4t11f_ver102_2012_Mar_17_1554.bof - compiled with commit bdbd3921af2646e237e78681ff6831864cf12737 And the sma-wideband repository:
 url = https://github.com/sma-wideband/mlib_devel
 
