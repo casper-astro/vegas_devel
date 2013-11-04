@@ -1,4 +1,10 @@
 ####
+l8_ver131_2013_Nov_03_1543.bof - This bof file has an arm sequence update and adding an
+                'and' gate before tx_valid on the Ten GbE out.
+                The arm signal now is confirmed high for only one clock
+                and then given a 100 clock delay before entering triggering
+                the sync generator.
+
 h16k_ver104_2013_Oct_28_1255.bof - compiled with the 1/8 band fix.
 
 v01_aa_ri_8r4t11f_ver102_2012_Mar_17_1554.bof - compiled with commit bdbd3921af2646e237e78681ff6831864cf12737 And the sma-wideband repository:
