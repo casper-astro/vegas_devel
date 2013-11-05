@@ -8,6 +8,8 @@ src/guppi_daq/python/possem_wrap.c
 *.autosave
 *.txt
 *.htm
+*.nfs*
+*.original
 /newmdls/
 /snaptest/
 /test16/

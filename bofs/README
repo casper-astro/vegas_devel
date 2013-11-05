@@ -1,4 +1,8 @@
 ####
+l8_ver132_2013_Nov_04_2322.bof - This bof removes a 'posedge' block right 
+after the arm sofware register and adds a snapshot block after the reshaper, 
+and one for a single pol (real/imag) form subband 1.
+
 l8_ver131_2013_Nov_03_1543.bof - This bof file has an arm sequence update and adding an
                 'and' gate before tx_valid on the Ten GbE out.
                 The arm signal now is confirmed high for only one clock

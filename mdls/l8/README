@@ -1,12 +1,15 @@
-l8 - can be configured to output 1 band or 8 subbands.
-
+l8 - can be configured to output 1 band or 8 subbands.  
 ### DESIGNS ###
 
-l8_ver131.mdl - This model has an arm sequence update and adding an 
-		'and' gate before tx_valid on the Ten GbE out.
-		The arm signal now is confirmed high for only one clock	
-		and then given a 100 clock delay before entering triggering
-		the sync generator.
+l8_ver132.mdl - This mdoel removes a 'posedge' block right after the arm 
+sofware register and adds a snapshot block after the reshaper, and one
+for a single pol (real/imag) form subband 1.
+
+l8_ver131.mdl - 
+This model has an arm sequence update and adding an 'and' gate before tx_valid 
+on the Ten GbE out.  The arm signal now is confirmed high for only one clock 
+and then given a 100 clock delay before entering triggering the sync generator.
+'and' gate before tx_valid on the Ten GbE out.
 
 l8_ver106.mdl - This is the current up to date model.  This version
 has been tested in Berkeley and appears to work in that environment as
