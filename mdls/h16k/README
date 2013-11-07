@@ -1,5 +1,7 @@
 ### DESIGNS ###
 
+h16k_ver105 - Fixing order of the status bits
+
 h16k_ver104 - This design has been updated with the new FFT core that has
 	      the 1/8 band fix (fftbr_core_ver101).
 

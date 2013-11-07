@@ -1,6 +1,8 @@
 ####
 #
 
+h16k_ver105_2013_Nov_06_1406.bof - Fixing the order of the status bits.
+
 h1k_ver103_Nov_5_842.bof - Fixing the 1/8the band issue. This involves setting latency
 to 1 in the relation block of the mirror_spectrum_init.m script in casper_library
 
