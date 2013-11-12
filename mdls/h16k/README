@@ -1,5 +1,11 @@
 ### DESIGNS ###
 
+h16k_ver107 - Fix spec_tick interval to proper 2048 cycles. Built at NRAO
+
+h16k_ver106 - Re-integrated fftwbr_core_ver101, added version control blocks
+            - built with ska-sa12a environment at NRAO
+            - Has error in spec_tick -> 4096 cycles instead of desired 2048. fixed in ver107
+
 h16k_ver105 - Fixing order of the status bits
 
 h16k_ver104 - This design has been updated with the new FFT core that has
@@ -19,7 +25,7 @@ h16k_verXXX.mdl uses the "Black Boxing" trick to improve the development efficie
 Since some of the steps (Extract entity, place pcores in the design, etc) have been done already, so to compile h16k_ver100.mdl, there's no need to run through every steps described in the memo.
 To compile h16k_verXXX.mdl:
 0) Enter the directory vegas_devel/newmdls/h16k
-1) Open fftwbr_core.mdl
+1) Open fftwbr_core_ver101.mdl
 2) Double click on the System Generator block, click the "Generate" button. Wait for the generation to complete.
 3) Open pfbfirr_core.mdl
 4) Double click on the System Generator block, click the "Generate" button. Wait for the generation to complete.
