@@ -1,6 +1,12 @@
 import numpy as np
 
 def lo_setup(fpga,mixer,lo_freq,fs,bram_len=10,n_inputs=16):
+    """
+    fpga: FpgaClient
+    mixer: string prefix of the mixer to configure (i.e. 's0', 's1', etc.)
+    lo_freq: desired LO frequency in same units as fs
+    fs: ADC sampling frequency in same units as lo_freq
+    """
     wave_len = n_inputs * 2**bram_len  # This is the number of complex samples in the waveform
     frac_lo = int(np.round((lo_freq/fs)*wave_len))
     actual_lo = fs*frac_lo/float(wave_len)
