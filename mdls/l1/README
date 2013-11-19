@@ -33,3 +33,7 @@ l1_ver113 - fixed previous arm logic; now data does not flow during arming
         Also swapped Real and Imag outputs of filter to keep band same
         orientation as at the ADC
         Also changed requantization to use bits 48:55 instead of 56:63
+
+l1_ver114 - added revision control registers
+
+l1_ver115 - change packet counter bit assignments
