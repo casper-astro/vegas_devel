@@ -1,6 +1,8 @@
 l8 - can be configured to output 1 band or 8 subbands.  
 ### DESIGNS ###
 
+l8_ver134.mdl - Has new packet header bit assignments. Has rcs blocks. Uses blackboxes to improve compile time. Some timing errors
+
 l8_ver132.mdl - This mdoel removes a 'posedge' block right after the arm 
 sofware register and adds a snapshot block after the reshaper, and one
 for a single pol (real/imag) form subband 1.
