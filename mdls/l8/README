@@ -1,6 +1,11 @@
 l8 - can be configured to output 1 band or 8 subbands.  
 ### DESIGNS ###
 
+l8_ver136.mdl - changed delays in lo units to registers and changed multiplier latency from 6 to 3 for better
+                pipelining. Now meets timing
+
+l8_ver135.mdl - changed some delays to registers to help with timing. still didn't meet timing though
+
 l8_ver134.mdl - Has new packet header bit assignments. Has rcs blocks. Uses blackboxes to improve compile time. Some timing errors
 
 l8_ver132.mdl - This mdoel removes a 'posedge' block right after the arm 
