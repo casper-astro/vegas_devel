@@ -23,6 +23,17 @@
 #define BYTE_ARR_TO_UINT(array, idx) (ntohl(((unsigned int*)(array))[idx]))
 #endif
 
+unsigned long long change_endian64(const unsigned long long *d) {
+    unsigned long long tmp;
+    char *in=(char *)d, *out=(char *)&tmp;
+    int i;
+    for (i=0; i<8; i++) {
+        out[i] = in[7-i];
+    }
+    return(tmp);
+}
+
+
 int vegas_udp_init(struct vegas_udp_params *p) {
 
     /* Resolve sender hostname */
@@ -145,13 +156,19 @@ int vegas_udp_recv(struct vegas_udp_params *p, struct vegas_udp_packet *b, char 
 	        {
 	            memcpy(b->data,sphead,72); // copy the header template
 	            unsigned int *hdr = (unsigned int *) b->data;
-                unsigned long tmcounter = ((unsigned long) (ntohl(((unsigned int*) tempbuf)[0])) << 32) + ntohl(((unsigned int*) tempbuf)[1]);
-				unsigned long pktnum = (tmcounter - 10) / 2048;
-                unsigned long status_bits = (unsigned long) (tempbuf[1] & 0x0F);
-                hdr[1*2+0] = hdr[1*2+0] | htonl((unsigned int) ((pktnum >> 32) & 0x00000000000000FF));
-                hdr[1*2+1] = htonl((unsigned int) (pktnum & 0x00000000FFFFFFFF));
-                hdr[5*2+0] = hdr[5*2+0] | htonl(((tmcounter - 10)>>32) & 0x00000000000000FF);
-                hdr[5*2+1] = htonl((tmcounter - 10) & 0x000000FFFFFFFFFF);
+	            // first 64 bits of packet are the header
+	            unsigned long long pkthdr = change_endian64(((unsigned long long*) tempbuf)); 
+	            
+	            unsigned long status_bits = pkthdr & 0x0F;
+	            unsigned long long fpga_count = pkthdr >> 4;
+	            unsigned long long pktnum = fpga_count >> 11;
+//                unsigned long tmcounter = ((unsigned long) (ntohl(((unsigned int*) tempbuf)[0])) << 32) + ntohl(((unsigned int*) tempbuf)[1]);
+//				unsigned long pktnum = (tmcounter - 10) / 2048;
+//               unsigned long status_bits = (unsigned long) (tempbuf[1] & 0x0F);
+                hdr[1*2+0] = hdr[1*2+0] | htonl((unsigned int) ((pktnum >> 32) & 0x00000000000000FF)); // bits 39:32 of pktnum
+                hdr[1*2+1] = htonl((unsigned int) (pktnum & 0x00000000FFFFFFFF));                       // bits 31:0 of pktnum
+                hdr[5*2+0] = hdr[5*2+0] | htonl(((fpga_count)>>32) & 0x00000000000000FF);              // bits 39:32 of fpga counter
+                hdr[5*2+1] = htonl((fpga_count) & 0x00000000FFFFFFFF);                                  // bits 31:0 of fpga counter
                 hdr[7*2+1] = htonl((unsigned int) (status_bits & 0x0000000F));
 	            b->packet_size = 8192+72;
 
@@ -175,15 +192,6 @@ int vegas_udp_recv(struct vegas_udp_params *p, struct vegas_udp_packet *b, char 
     }
 }
 
-unsigned long long change_endian64(const unsigned long long *d) {
-    unsigned long long tmp;
-    char *in=(char *)d, *out=(char *)&tmp;
-    int i;
-    for (i=0; i<8; i++) {
-        out[i] = in[7-i];
-    }
-    return(tmp);
-}
 
 unsigned long long vegas_udp_packet_seq_num(const struct vegas_udp_packet *p) {
     // XXX Temp for new baseband mode, blank out top 8 bits which 
