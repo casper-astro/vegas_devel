@@ -37,3 +37,5 @@ l1_ver113 - fixed previous arm logic; now data does not flow during arming
 l1_ver114 - added revision control registers
 
 l1_ver115 - change packet counter bit assignments
+
+l1_ver116 - change snap names. Update rcs block
