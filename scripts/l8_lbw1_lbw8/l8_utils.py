@@ -15,8 +15,8 @@ def lo_setup(fpga,mixer,lo_freq,fs,bram_len=10,n_inputs=16):
     if lo_freq == 0:
         wave_data[:] = 2**15 - 1 # set values to maximum constant value to pass wave directly through mixer
     else:
-        wave_dataf[::2] = np.sin(2*np.pi*frac_lo*np.arange(wave_len)/float(wave_len))*(2**15-1)  #-1 to ensure we never hit 2**15 which would translate to -2**15 and cause a glitch
-        wave_dataf[1::2] = np.cos(2*np.pi*frac_lo*np.arange(wave_len)/float(wave_len))*(2**15-1)
+        wave_dataf[::2] = np.cos(2*np.pi*frac_lo*np.arange(wave_len)/float(wave_len))*(2**15-1)  #-1 to ensure we never hit 2**15 which would translate to -2**15 and cause a glitch
+        wave_dataf[1::2] = np.sin(2*np.pi*frac_lo*np.arange(wave_len)/float(wave_len))*(2**15-1)
         wave_data[:] = np.round(wave_dataf).astype('>i2')
     
     fpga.write_int(('%s_mixer_cnt' % mixer),2**bram_len -2)
