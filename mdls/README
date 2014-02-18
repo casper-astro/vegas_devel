@@ -1,3 +1,35 @@
 directory for each of the FPGA modes 
 
-L8_1 can be configured for 8 subbands or 1
+L8_8 can be configured for 8 subbands or 1
+
+Designs were compiled against:
+* https://github.com/ska-sa/mlib_devel  f505ed55c8c9af9c1d7c5004db9265b15c7a8a6d
+** Modification: vegas_devel/mdls/gen_ucf.m replaces mlib_devel/xps_library/@xps_adc5g/gen_ucf.m to fix ROACH 2 Rev 2 routing issue
+
+* http://github.com/casper-astro/xblocks_devel 8a521d51187604efcf795169ab86e83c165d31e3
+
+
+Xilinx 14.3
+SystemGenerator 14.3.4477
+
+MATLAB Version: 7.14.0.739 (R2012a)
+Operating System: Linux 2.6.32-431.3.1.el6.x86_64 #1 SMP Fri Dec 13 06:58:20 EST 2013 x86_64
+Java Version: Java 1.6.0_31-b04 with Sun Microsystems Inc. Java HotSpot(TM) 64-Bit Server VM mixed mode
+
+# The following are just the versions listed with the 'ver' matlab command. Not all packages are used for compiling
+Simulink                                              Version 7.9        (R2012a)                             
+Control System Toolbox                                Version 9.3        (R2012a)                             
+Curve Fitting Toolbox                                 Version 3.2.1      (R2012a)                             
+DSP System Toolbox                                    Version 8.2        (R2012a)                             
+Fixed-Point Toolbox                                   Version 3.5        (R2012a)                             
+MATLAB Coder                                          Version 2.2        (R2012a)                             
+Optimization Toolbox                                  Version 6.2        (R2012a)                             
+Signal Processing Toolbox                             Version 6.17       (R2012a)                             
+Simulink Coder                                        Version 8.2        (R2012a)                             
+Simulink Fixed Point                                  Version 7.1        (R2012a)                             
+Stateflow                                             Version 7.9        (R2012a)                             
+Statistics Toolbox                                    Version 8.0        (R2012a)                             
+Symbolic Math Toolbox                                 Version 5.8        (R2012a)                             
+System Identification Toolbox                         Version 8.0        (R2012a)                             
+Xilinx System Generator                               Version 14.3       production build      License unknown
+
