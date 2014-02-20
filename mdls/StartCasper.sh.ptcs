@@ -1,0 +1,20 @@
+#!/bin/bash
+source /opt/Xilinx/14.3/ISE_DS/settings64.sh
+export XILINX_PATH=/opt/Xilinx/14.3/ISE_DS
+export MATLAB=/opt/matlab-R2012a
+export PLATFORM=lin64
+export MLIB_DEVEL_PATH=/export/home/ptcs/scratch/models/gjones/ska-sa12a
+export XPS_BASE_PATH=$MLIB_DEVEL_PATH/xps_base
+
+
+export PATH=${MATLAB}/bin:${XILINX}/bin/${PLATFORM}:${XILINX_EDK}/bin/${PLATFORM}:${PATH}
+export LD_LIBRARY_PATH=/export/home/ptcs/scratch/lib:${XILINX}/bin/${PLATFORM}:${XILINX}/lib/${PLATFORM}:${XILINX_DSP}/sysgen/lib:${LD_LIBRARY_PATH}
+#export LMC_HOME=${XILINX}/ska-sartmodel/${PLATFORM}/installed_lin
+#export PATH=${LMC_HOME}/bin:${XILINX_DSP}/common/bin:${PATH}
+export INSTALLMLLOC=/opt/matlab-R2012a
+export TEMP=/tmp/
+export TMP=/tmp/
+cd $MLIB_DEVEL_PATH
+sysgen
+#$MATLAB/bin/matlab
+

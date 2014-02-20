@@ -5,6 +5,7 @@ L8_8 can be configured for 8 subbands or 1
 Designs were compiled against:
 * https://github.com/ska-sa/mlib_devel  f505ed55c8c9af9c1d7c5004db9265b15c7a8a6d
 ** Modification: vegas_devel/mdls/gen_ucf.m replaces mlib_devel/xps_library/@xps_adc5g/gen_ucf.m to fix ROACH 2 Rev 2 routing issue
+** vegas_devel/mdls/startup.m.ptcs and vegas_devel/mdls/StartCasper.sh.ptcs are the XSG startup scripts used on PTCS to build the designs
 
 * http://github.com/casper-astro/xblocks_devel 8a521d51187604efcf795169ab86e83c165d31e3
 
