@@ -1,5 +1,8 @@
 ### DESIGNS ###
 
+h16k_ver110 - Fixed bug in SSG block: 4 control bits were being taken from top (MSB) of ssg_ms_sel rather 
+              than bottom (LSB) as intended
+
 h16k_ver107 - Fix spec_tick interval to proper 2048 cycles. Built at NRAO
 
 h16k_ver106 - Re-integrated fftwbr_core_ver101, added version control blocks
