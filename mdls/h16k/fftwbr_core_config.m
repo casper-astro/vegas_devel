@@ -11,7 +11,7 @@ function fftwbr_core_config(this_block)
 
   this_block.setTopLevelLanguage('VHDL');
 
-  this_block.setEntityName('fftwbr_core');
+  this_block.setEntityName('fftwbr_core_ver101');
 
   % System Generator has to assume that your entity  has a combinational feed through; 
   %   if it  doesn't, then comment out the following line:
