@@ -1,5 +1,10 @@
 h1k design, previously known as mode 01
 
+h1k_ver106.mdl - making small inconsequential change (increasing depth of stokes snap) 
+                 to see if design will meet timing when compiled
+
+h1k_ver105.mdl - Tested good model except for timing error in PFB on pol 0
+
 h1k_ver103.mdl - Fixing the 1/8the band issue. This involves setting latency 
 to 1 in the relation block of the mirror_spectrum_init.m script in casper_library
 
