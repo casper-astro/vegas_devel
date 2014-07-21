@@ -51,7 +51,7 @@ function fft11_bb_config(this_block)
   this_block.addSimulinkOutport('oflow');
 
   oflow_port = this_block.port('oflow');
-  oflow_port.setType('UFix_32_0');
+  oflow_port.setType('UFix_4_0');
   out0_port = this_block.port('out0');
   out0_port.setType('UFix_36_0');
   out1_port = this_block.port('out1');
