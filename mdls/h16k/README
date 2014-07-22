@@ -1,11 +1,17 @@
 ### DESIGNS ###
 
-h16k_ver112c_1500.slx - Made small inconsequential changes from ver110_1080.slx to fix the timing errors. Timing reports are available in logs/*_system.twx
+h16k_ver112c_1500.slx - Made small inconsequential changes from ver110_1080.slx 
+                        to fix the timing errors. Timing reports are available in 
+                        logs/*_system.twx
 
-h16k_ver110_1080.slx - Updated blocks using update_casper_blocks(gcs) function to newer libraries (sma-wideband/mlib_devel: 404989f) to fix the ADC MMCM problem. Manually replaced software registers and other blocks that didn't succesfully update automatically.
+h16k_ver110_1080.slx - Updated blocks using update_casper_blocks(gcs) function 
+                       to newer libraries (sma-wideband/mlib_devel: 404989f) 
+                       to fix the ADC MMCM problem. Manually replaced software 
+                       registers and other blocks that didn't succesfully 
+                       update automatically.
 
-h16k_ver110 - Fixed bug in SSG block: 4 control bits were being taken from top (MSB) of ssg_ms_sel rather
-              than bottom (LSB) as intended
+h16k_ver110 - Fixed bug in SSG block: 4 control bits were being taken from
+              top (MSB) of ssg_ms_sel rather than bottom (LSB) as intended
 
 h16k_ver107 - Fix spec_tick interval to proper 2048 cycles. Built at NRAO
 
@@ -16,14 +22,14 @@ h16k_ver106 - Re-integrated fftwbr_core_ver101, added version control blocks
 h16k_ver105 - Fixing order of the status bits
 
 h16k_ver104 - This design has been updated with the new FFT core that has
-the 1/8 band fix (fftbr_core_ver101).
+              the 1/8 band fix (fftbr_core_ver101).
 
 h16k_ver101 - Changed the order of the status bits to coincide with the
-HPC code. The ordering is now 3. BLANK 2. SR1 1. SR0 0. CAL
+              HPC code. The ordering is now 3. BLANK 2. SR1 1. SR0 0. CAL
 
 fftwbr_core_ver101 - This fft core has been redrawn with the 1/8 band fix...
-latency in relational block in the mirror_spectrum
-script has been set to 1
+                     latency in relational block in the mirror_spectrum
+                     script has been set to 1
 
 ### COMPILING ###
 
