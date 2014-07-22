@@ -37,14 +37,16 @@ h16k_verXXX.mdl uses the "Black Boxing" trick to improve the development efficie
 
 ~~Since some of the steps (Extract entity, place pcores in the design, etc) have been done already, so to compile h16k_ver100.mdl, there's no need to run through every steps described in the memo.~~ (This is true only if there is no change in the library that could lead to changes of the port data types, etc.)
 
-To compile h16k_verXXX.mdl (using the provided pre-generated netlists):
+To compile h16k_verXXX.mdl (using the provided pre-generated netlists)
+
 1. Enter the directory vegas_devel/mdls/h16k
 2. Unpack fftwbr_core.tar.gz
 3. Unpack pfbfirr_core.tar.gz
 4. Open newest h16k model file
 5. Compile it as usual
 
-Or going through the standard black-boxing routine:
+Or going through the standard black-boxing routine
+
 1. Enter the directory vegas_devel/mdls/h16k
 2. Open fftwbr_core_ver101.mdl, use update_casper_blocks(gcs) and ctrl+D to update the design.
 3. Double click on the System Generator block, click the "Generate" button. Wait for the generation to complete.
