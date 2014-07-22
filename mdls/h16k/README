@@ -1,5 +1,9 @@
 ### DESIGNS ###
 
+h16k_ver112c_1500.slx - Made small inconsequential changes from ver110_1080.slx to fix the timing errors. Timing reports are available in logs/*_system.twx
+
+h16k_ver110_1080.slx - Updated blocks using update_casper_blocks(gcs) function to newer libraries (sma-wideband/mlib_devel: 404989f) to fix the ADC MMCM problem. Manually replaced software registers and other blocks that didn't succesfully update automatically. 
+
 h16k_ver110 - Fixed bug in SSG block: 4 control bits were being taken from top (MSB) of ssg_ms_sel rather 
               than bottom (LSB) as intended
 
