@@ -1,1 +1,0 @@
-function res = makeConstraintHeader(blockPath)
