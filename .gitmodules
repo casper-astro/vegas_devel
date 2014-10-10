@@ -1,3 +1,6 @@
 [submodule "mlib_devel"]
 	path = mlib_devel
 	url = https://github.com/sma-wideband/mlib_devel.git
+[submodule "xblocks_devel"]
+	path = xblocks_devel
+	url = https://github.com/casper-astro/xblocks_devel.git
